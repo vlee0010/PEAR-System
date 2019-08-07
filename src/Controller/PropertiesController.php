@@ -23,11 +23,11 @@ class PropertiesController extends AppController
     public function details($id)
     {
 //      Find the post(property and match the $id value passed in);
-        $currentProperty = $this->Properties->find()->where(['id' => $id]);
+        $currentProperty = $this->Properties->find()->where(['id' => $id])->first();
 
 
 //      Pass it into a variable called 'details';
-        $this->set('details', $currentProperty);
+        $this->set('detail', $currentProperty);
     }
 
 

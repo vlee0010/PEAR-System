@@ -2,9 +2,6 @@
 
 
 
-
-
- <?php foreach ($details as $detail): ?>
     <article class="container">
 <!--        title;-->
 
@@ -38,6 +35,6 @@
 
 
 
-<?php endforeach ?>
+
 
 
