@@ -1,14 +1,14 @@
 
 <!-- title -->
-<?php
-$this->assign('title', 'Properties for sale');
-?>
+
+
+
 
 <div class="container">
     <ul class="list-group row properties">
         <?php foreach($properties as $property): ?>
             <li class="list-group-item property">
-                <div class="image" >
+                <div class="image d" >
                     <img src="<?= $property->image_url  ?>" />
                 </div>
                 <div class="description">
