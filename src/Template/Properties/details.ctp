@@ -1,5 +1,6 @@
-
-
+<div class="img-container">
+    <?= $this->Html->image('zyzz-logo.png',array("class"=>"abc"))?>
+</div>
 
 
     <article class="container">
