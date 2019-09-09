@@ -1,196 +1,298 @@
 <?php
-$this->assign('title', 'Foundation System Build');
-?>
+///**
+// * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+// * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+// *
+// * Licensed under The MIT License
+// * For full copyright and license information, please see the LICENSE.txt
+// * Redistributions of files must retain the above copyright notice.
+// *
+// * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+// * @link          https://cakephp.org CakePHP(tm) Project
+// * @since         0.10.0
+// * @license       https://opensource.org/licenses/mit-license.php MIT License
+// */
+//use Cake\Cache\Cache;
+//use Cake\Core\Configure;
+//use Cake\Core\Plugin;
+//use Cake\Datasource\ConnectionManager;
+//use Cake\Error\Debugger;
+//use Cake\Http\Exception\NotFoundException;
+//
+//$this->layout = false;
+//
+//if (!Configure::read('debug')) :
+//    throw new NotFoundException(
+//        'Please replace src/Template/Pages/home.ctp with your own version or re-enable debug mode.'
+//    );
+//endif;
+//
+//$cakeDescription = 'CakePHP: the rapid development PHP framework';
+//?>
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    --><?//= $this->Html->charset() ?>
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>-->
+<!--        --><?//= $cakeDescription ?>
+<!--    </title>-->
+<!---->
+<!--    --><?//= $this->Html->meta('icon') ?>
+<!--    --><?//= $this->Html->css('base.css') ?>
+<!--    --><?//= $this->Html->css('style.css') ?>
+<!--    --><?//= $this->Html->css('home.css') ?>
+<!--    <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">-->
+<!--</head>-->
+<!--<body class="home">-->
+<!---->
+<!--<header class="row">-->
+<!--    <div class="header-image">--><?//= $this->Html->image('cake.logo.svg') ?><!--</div>-->
+<!--    <div class="header-title">-->
+<!--        <h1>Welcome to CakePHP --><?//= Configure::version() ?><!-- Red Velvet. Build fast. Grow solid.</h1>-->
+<!--    </div>-->
+<!--</header>-->
+<!---->
+<!--<div class="row">-->
+<!--    <div class="columns large-12">-->
+<!--        <div class="ctp-warning alert text-center">-->
+<!--            <p>Please be aware that this page will not be shown if you turn off debug mode unless you replace src/Template/Pages/home.ctp with your own version.</p>-->
+<!--        </div>-->
+<!--        <div id="url-rewriting-warning" class="alert url-rewriting">-->
+<!--            <ul>-->
+<!--                <li class="bullet problem">-->
+<!--                    URL rewriting is not properly configured on your server.<br />-->
+<!--                    1) <a target="_blank" href="https://book.cakephp.org/3.0/en/installation.html#url-rewriting">Help me configure it</a><br />-->
+<!--                    2) <a target="_blank" href="https://book.cakephp.org/3.0/en/development/configuration.html#general-configuration">I don't / can't use URL rewriting</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        --><?php //Debugger::checkSecurityKeys(); ?>
+<!--    </div>-->
+<!--</div>-->
+<!---->
+<!--<div class="row">-->
+<!--    <div class="columns large-6">-->
+<!--        <h4>Environment</h4>-->
+<!--        <ul>-->
+<!--            --><?php //if (version_compare(PHP_VERSION, '5.6.0', '>=')) : ?>
+<!--                <li class="bullet success">Your version of PHP is 5.6.0 or higher (detected --><?//= PHP_VERSION ?><!--).</li>-->
+<!--            --><?php //else : ?>
+<!--                <li class="bullet problem">Your version of PHP is too low. You need PHP 5.6.0 or higher to use CakePHP (detected --><?//= PHP_VERSION ?><!--).</li>-->
+<!--            --><?php //endif; ?>
+<!---->
+<!--            --><?php //if (extension_loaded('mbstring')) : ?>
+<!--                <li class="bullet success">Your version of PHP has the mbstring extension loaded.</li>-->
+<!--            --><?php //else : ?>
+<!--                <li class="bullet problem">Your version of PHP does NOT have the mbstring extension loaded.</li>-->
+<!--            --><?php //endif; ?>
+<!---->
+<!--            --><?php //if (extension_loaded('openssl')) : ?>
+<!--                <li class="bullet success">Your version of PHP has the openssl extension loaded.</li>-->
+<!--            --><?php //elseif (extension_loaded('mcrypt')) : ?>
+<!--                <li class="bullet success">Your version of PHP has the mcrypt extension loaded.</li>-->
+<!--            --><?php //else : ?>
+<!--                <li class="bullet problem">Your version of PHP does NOT have the openssl or mcrypt extension loaded.</li>-->
+<!--            --><?php //endif; ?>
+<!---->
+<!--            --><?php //if (extension_loaded('intl')) : ?>
+<!--                <li class="bullet success">Your version of PHP has the intl extension loaded.</li>-->
+<!--            --><?php //else : ?>
+<!--                <li class="bullet problem">Your version of PHP does NOT have the intl extension loaded.</li>-->
+<!--            --><?php //endif; ?>
+<!--        </ul>-->
+<!--    </div>-->
+<!--    <div class="columns large-6">-->
+<!--        <h4>Filesystem</h4>-->
+<!--        <ul>-->
+<!--            --><?php //if (is_writable(TMP)) : ?>
+<!--                <li class="bullet success">Your tmp directory is writable.</li>-->
+<!--            --><?php //else : ?>
+<!--                <li class="bullet problem">Your tmp directory is NOT writable.</li>-->
+<!--            --><?php //endif; ?>
+<!---->
+<!--            --><?php //if (is_writable(LOGS)) : ?>
+<!--                <li class="bullet success">Your logs directory is writable.</li>-->
+<!--            --><?php //else : ?>
+<!--                <li class="bullet problem">Your logs directory is NOT writable.</li>-->
+<!--            --><?php //endif; ?>
+<!---->
+<!--            --><?php //$settings = Cache::getConfig('_cake_core_'); ?>
+<!--            --><?php //if (!empty($settings)) : ?>
+<!--                <li class="bullet success">The <em>--><?//= $settings['className'] ?><!--Engine</em> is being used for core caching. To change the config edit config/app.php</li>-->
+<!--            --><?php //else : ?>
+<!--                <li class="bullet problem">Your cache is NOT working. Please check the settings in config/app.php</li>-->
+<!--            --><?php //endif; ?>
+<!--        </ul>-->
+<!--    </div>-->
+<!--    <hr />-->
+<!--</div>-->
+<!---->
+<!--<div class="row">-->
+<!--    <div class="columns large-6">-->
+<!--        <h4>Database</h4>-->
+<!--        --><?php
+//        try {
+//            $connection = ConnectionManager::get('default');
+//            $connected = $connection->connect();
+//        } catch (Exception $connectionError) {
+//            $connected = false;
+//            $errorMsg = $connectionError->getMessage();
+//            if (method_exists($connectionError, 'getAttributes')) :
+//                $attributes = $connectionError->getAttributes();
+//                if (isset($errorMsg['message'])) :
+//                    $errorMsg .= '<br />' . $attributes['message'];
+//                endif;
+//            endif;
+//        }
+//        ?>
+<!--        <ul>-->
+<!--            --><?php //if ($connected) : ?>
+<!--                <li class="bullet success">CakePHP is able to connect to the database.</li>-->
+<!--            --><?php //else : ?>
+<!--                <li class="bullet problem">CakePHP is NOT able to connect to the database.<br />--><?//= $errorMsg ?><!--</li>-->
+<!--            --><?php //endif; ?>
+<!--        </ul>-->
+<!--    </div>-->
+<!--    <div class="columns large-6">-->
+<!--        <h4>DebugKit</h4>-->
+<!--        <ul>-->
+<!--            --><?php //if (Plugin::isLoaded('DebugKit')) : ?>
+<!--                <li class="bullet success">DebugKit is loaded.</li>-->
+<!--            --><?php //else : ?>
+<!--                <li class="bullet problem">DebugKit is NOT loaded. You need to either install pdo_sqlite, or define the "debug_kit" connection name.</li>-->
+<!--            --><?php //endif; ?>
+<!--        </ul>-->
+<!--    </div>-->
+<!--    <hr />-->
+<!--</div>-->
+<!---->
+<!--<div class="row">-->
+<!--    <div class="columns large-6">-->
+<!--        <h3>Editing this Page</h3>-->
+<!--        <ul>-->
+<!--            <li class="bullet cutlery">To change the content of this page, edit: src/Template/Pages/home.ctp.</li>-->
+<!--            <li class="bullet cutlery">You can also add some CSS styles for your pages at: webroot/css/.</li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--    <div class="columns large-6">-->
+<!--        <h3>Getting Started</h3>-->
+<!--        <ul>-->
+<!--            <li class="bullet book"><a target="_blank" href="https://book.cakephp.org/3.0/en/">CakePHP 3.0 Docs</a></li>-->
+<!--            <li class="bullet book"><a target="_blank" href="https://book.cakephp.org/3.0/en/tutorials-and-examples/cms/installation.html">The 20 min CMS Tutorial</a></li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</div>-->
+<!---->
+<!--<div class="row">-->
+<!--    <div class="columns large-12 text-center">-->
+<!--        <h3 class="more">More about Cake</h3>-->
+<!--        <p>-->
+<!--            CakePHP is a rapid development framework for PHP which uses commonly known design patterns like Front Controller and MVC.<br />-->
+<!--            Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.-->
+<!--        </p>-->
+<!--    </div>-->
+<!--    <hr/>-->
+<!--</div>-->
+<!---->
+<!--<div class="row">-->
+<!--    <div class="columns large-4">-->
+<!--        <i class="icon support">P</i>-->
+<!--        <h3>Help and Bug Reports</h3>-->
+<!--        <ul>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="irc://irc.freenode.net/cakephp">irc.freenode.net #cakephp</a>-->
+<!--                <ul><li>Live chat about CakePHP</li></ul>-->
+<!--            </li>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="http://cakesf.herokuapp.com/">Slack</a>-->
+<!--                <ul><li>CakePHP Slack support</li></ul>-->
+<!--            </li>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="https://github.com/cakephp/cakephp/issues">CakePHP Issues</a>-->
+<!--                <ul><li>CakePHP issues and pull requests</li></ul>-->
+<!--            </li>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="http://discourse.cakephp.org/">CakePHP Forum</a>-->
+<!--                <ul><li>CakePHP official discussion forum</li></ul>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--    <div class="columns large-4">-->
+<!--        <i class="icon docs">r</i>-->
+<!--        <h3>Docs and Downloads</h3>-->
+<!--        <ul>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="https://api.cakephp.org/3.0/">CakePHP API</a>-->
+<!--                <ul><li>Quick Reference</li></ul>-->
+<!--            </li>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="https://book.cakephp.org/3.0/en/">CakePHP Documentation</a>-->
+<!--                <ul><li>Your Rapid Development Cookbook</li></ul>-->
+<!--            </li>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="https://bakery.cakephp.org">The Bakery</a>-->
+<!--                <ul><li>Everything CakePHP</li></ul>-->
+<!--            </li>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="https://plugins.cakephp.org">CakePHP plugins repo</a>-->
+<!--                <ul><li>A comprehensive list of all CakePHP plugins created by the community</li></ul>-->
+<!--            </li>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="https://github.com/cakephp/">CakePHP Code</a>-->
+<!--                <ul><li>For the Development of CakePHP Git repository, Downloads</li></ul>-->
+<!--            </li>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="https://github.com/FriendsOfCake/awesome-cakephp">CakePHP Awesome List</a>-->
+<!--                <ul><li>A curated list of amazingly awesome CakePHP plugins, resources and shiny things.</li></ul>-->
+<!--            </li>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="https://www.cakephp.org">CakePHP</a>-->
+<!--                <ul><li>The Rapid Development Framework</li></ul>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--    <div class="columns large-4">-->
+<!--        <i class="icon training">s</i>-->
+<!--        <h3>Training and Certification</h3>-->
+<!--        <ul>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="https://cakefoundation.org/">Cake Software Foundation</a>-->
+<!--                <ul><li>Promoting development related to CakePHP</li></ul>-->
+<!--            </li>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="https://training.cakephp.org/">CakePHP Training</a>-->
+<!--                <ul><li>Learn to use the CakePHP framework</li></ul>-->
+<!--            </li>-->
+<!--            <li class="bullet cutlery">-->
+<!--                <a href="https://certification.cakephp.org/">CakePHP Certification</a>-->
+<!--                <ul><li>Become a certified CakePHP developer</li></ul>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</div>-->
+<!---->
+<!--</body>-->
+<!--</html>-->
 
-<div class="container">
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>What is this?</h2>
-                <p>A basic website that you are expected to modify as your first individual task in the Industry Experience project.</p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Why do we do this?</h2>
-                <p>There are a couple of reasons why this is the first task we complete in this project.</p>
-                <ul>
-                    <li>Provide a basic understanding of the <?= $this->Html->link('technology', '#introduction-to-mvc')?> we will be using</li>
-                    <li>Showcase your ability to problem solve</li>
-                    <li>Ensure your laptop is setup correctly</li>
-                    <li>Practice deploying a real website</li>
-                </ul>
-                <?= $this->Html->link('Read more', '#why-do-we-do-this') ?>
-            </div>
-            <div class="col-lg-4">
-                <h2>What should you do?</h2>
-                <p>
-                    Follow the guidelines on Moodle to make a copy of this website, set it up on your local laptop, make the requested changes,
-                    then deploy those changes to the IE web server.
-                </p>
-                <p>
-                    View the <?= $this->Html->link('Properties For Sale', ['controller' => 'Properties', 'action' => 'index']) ?> listing, so that
-                    you can start adding a page to display the details of each property.
-                </p>
-            </div>
+<nav class="navbar  navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sign up</a>
+                </li>
+
+            </ul>
         </div>
-    </div>
-
-    <div class="container">
-        <a name="why-do-we-do-this"></a>
-        <h1>Why do we do this?</h1>
-
-        <div class="row">
-            <div class="col-lg-3">
-                <p>
-                    <strong>Provide a basic understanding of the technology we will be using.</strong> In industry, whenever you join a new team,
-                    there is a high probability you will be asked to use a technology you've never used before. Your ability to familiarise yourself
-                    with that technology so that you can start using it is an important skill. This unit (and your future roles in industry) will
-                    involve a large amount of self learning, so we need to get you started early.
-                </p>
-            </div>
-            <div class="col-lg-3">
-                <p>
-                    <strong>Showcase your initiative and ability to think critically.</strong> For most of your university life, you may have
-                    had quite clear guidelines as to exactly what is required. In industry it is a little different: Some clients have no idea
-                    what they want, and it will be your job to figure it out and come up with a suitable solution. In this assessment we want
-                    to provide you an opportunity to show us how you can think independently and critically, and come up with a meaningful solution
-                    based on your better judgement.
-                </p>
-            </div>
-            <div class="col-lg-3">
-                <p>
-                    <strong>Ensure your laptop is setup correctly.</strong> This is an individual task done before we form teams.
-                    Therefore, once the teams are formed, everyone should have their laptop setup ready to contribute to the team.
-                </p>
-            </div>
-            <div class="col-lg-3">
-                <p>
-                    <strong>Practice deploying a real website.</strong> At the end of this foundation system build, you will have
-                    deployed a real live website to our IE web server.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <a name="introduction-to-mvc"></a>
-        <h1>A <em>(very)</em> quick introduction to MVC frameworks</h1>
-        <div class="row">
-            <p>
-                MVC (Model/View/Controller) is one of many different architectures you might use to build a modern application.
-                Many web frameworks make use of this architecture.
-                Below is a <em>very</em> brief introduction to the purpose of each layer of an MVC application.
-            </p>
-        </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Model</h2>
-                <p class="mvc-file-locations">
-                    CakePHP Models are in <code>src/Model/*.php</code>
-                </p>
-                <p>
-                    The Model in MVC refers to application logic which is responsible for talking to the database.
-                    In CakePHP, you might talk to a model like this:
-                </p>
-                <pre>$this->loadModel('Articles');
-$articles = $this->Articles->find()
-            ->where(['user_id' => 3])
-            ->order('created_date');</pre>
-                <p>
-                    If you glance at this, you will notice that it looks a little bit like SQL, but it is indeed PHP code.
-                    The actual SQL which will get generated and then executed by CakePHP will look something like:
-                </p>
-                <pre>SELECT *
-FROM articles
-WHERE user_id = 3
-ORDER BY created_date</pre>
-                <p>(It will actually be more complex, but that is an implementation detail that is unimportant to our understanding).</p>
-            </div>
-            <div class="col-lg-4">
-                <h2>View</h2>
-                <p class="mvc-file-locations">
-                    CakePHP, Views are in <code>src/Template/*.ctp</code>
-                </p>
-                <p>
-                    Views are responsible for outputing something (usually) visual to the user, such as HTML.
-                </p>
-                <pre>&lt;h1&gt;Recent articles&lt;h1&gt;
-&lt;div class="article-list"&gt;
-    &lt;div class="article"&gt;
-        &lt;h2&gt;What is MVC?&lt;/h2&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</pre>
-                <p>
-                    However, views are not normally <code>.html</code> files, because they typically include some sort of dynamic
-                    content - such as records from a database. An example in CakePHP would be the following:
-                </p>
-                <pre>&lt;h1&gt;Recent articles&lt;h1&gt;
-&lt;div class="article-list"&gt;
-  &lt;php foreach($articles as $article): ?&gt;
-    &lt;div class="article"&gt;
-        &lt;h2&gt;&lt;?= $article->title ?&gt;&lt;/h2&gt;
-    &lt;/div&gt;
-  &lt;php endforeach ?&gt;
-&lt;/div&gt;</pre>
-                <p>
-                    Notice how there is a mix of normal HTML code, and PHP code? The end result is that after executing
-                    the PHP code, your application will return only HTML back to the users browser, such as:
-                </p>
-                <pre>&lt;h1&gt;Recent articles&lt;h1&gt;
-&lt;div class="article-list"&gt;
-    &lt;div class="article"&gt;
-        &lt;h2&gt;First article&lt;/h2&gt;
-    &lt;/div&gt;
-    &lt;div class="article"&gt;
-        &lt;h2&gt;Second article&lt;/h2&gt;
-    &lt;/div&gt;
-&lt;/div&gt;</pre>
-                <p>
-                    By doing this, we can have an arbitrary number of articles displayed in our HTML, by passing a longer
-                    list of articles in the <code>$articles</code> (see "<a href="#mvc-controller">Controller</a>" for more info on how this is done).
-                </p>
-            </div>
-            <div class="col-lg-4">
-                <a name="mvc-controller" />
-                <h2>Controller</h2>
-                <p class="mvc-file-locations">
-                    CakePHP Controllers are in <code>src/Controller/*.php</code>
-                </p>
-                <p>Can be thought of as the "glue" which connects models with views, depending on what the user requested. It is responsible for:</p>
-                <ul>
-                    <li>Processes incoming requests from a user (usually HTTP requests from a web browser)</li>
-                    <li>Decides which business logic to run in response (typically by asking the model to do something - insert some new data, analyse existing data, delete old data, etc)</li>
-                    <li>Decide which view to present to the user, and pass the relevant data to the view (typically data from the Model, but not always)</li>
-                </ul>
-
-                <p><strong>Processing incoming requests:</strong></p>
-                <pre>// By default, the 'Users' controller is available at the URL: '/users/'.
-class UsersController {
-
-  // The 'update' function is available at the URL: '/users/update/12',
-  // where the number at the end is available in the $id variable below
-  public function update($id) {
-
-    // Reads the value of the &lt;input name="username" /&gt; input from the HTML form that was just submitted:
-    $username = $this->getRequest()->getData('username');
-
-    // Reads the URL's query string (e.g. "/users/update/12?category_id=1")
-    $categoryId = $this->getRequest()->getQuery('category_id');
-
-    ...
-  }</pre>
-
-                <p><strong>Decide which business logic to run:</strong></p>
-                <pre>// Updates the users profile:
-$user = $this->Users->get($id);
-$user->username = $username;
-$this->Users->save($user);
-
-// Fetch matching users from the database...
-$users = $this->Users->find()->where(['category_id' => $categoryId]);</pre>
-
-                <p><strong>Pass data to the view for display:</strong></p>
-                <pre>$this->set('user', $user);</pre>
-            </div>
-        </div>
-    </div>
-</div>
+    </nav>
+</nav>
