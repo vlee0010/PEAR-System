@@ -39,7 +39,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
     </title>
 
     <?= $this->Html->meta('icon') ?>
-    <?= $this->Html->css('base.css') ?>
+
     <?= $this->Html->css('style.css') ?>
     <?= $this->Html->css('home.css') ?>
     <?= $this->Html->css('nucleo-icons.css') ?>
@@ -129,7 +129,6 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
             <div class="content-center brand">
                 <h1 class="h1-seo">PEAR</h1>
                 <h3>A complete Re-Design for Monash Student Peer Review. </h3>
-                <a href="<?=$this->Url->build(['controller'=>'users','action'=>'login'])?>" class="btn btn-primary">Login</a>
             </div>
 
 

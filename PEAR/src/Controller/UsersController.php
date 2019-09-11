@@ -2,8 +2,13 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\Event\Event;
-
+use Cake\ORM\TableRegistry;
+use Cake\Core\App;
+use Cake\Controller\Exception\SecurityException;
+use Cake\Utility\Security;
+use Cake\Mailer\Email;
 /**
  * Users Controller
  *
@@ -106,36 +111,105 @@ class UsersController extends AppController
     }
 
     public function login(){
-        if ($this->request->is('post')){
-            $user = $this->Auth->identify();
-            if ($user){
-                $this->Auth->setUser($user);
-                return $this->redirect(['controller'=>'users']);
+
+            if ($this->request->is('post')){
+                $user = $this->Auth->identify();
+                if ($user){
+                    $this->Auth->setUser($user);
+                    $user = $this->Users->find()->where(['id'=>$this->Auth->user('id')])->first();
+                    if($user->verified){
+                        $this->redirect(['controller'=>'users','action'=>'studentdash']);
+                    }else{
+                        $this->Flash->error('Please verify your Email address first');
+                        $this->Auth->logout();
+                    }
+                }
+                else {
+                    $this->Flash->error('Unable to Log in, Please Check your Email & Password');
+                }
             }
-            $this->Flash->error('Bad Log in');
-}
-    }
+
+
+        }
 
     public function logout(){
+
+
+        $this->Auth->logout();
         $this->Flash->success('You are logged out');
-        return  $this->redirect($this->Auth->logout());
+        return $this->redirect(['controller'=>'pages', 'action'=>'display']);
+
+
     }
+    public function verification(){
+        $user = TableRegistry::get('Users');
+        $verify = $user->find('all')->where(['token'=>$token])->first();
+        $user->save($verify);
+    }
+    public function studentdash(){
 
-
+    }
     public function register(){
         $user = $this->Users->newEntity();
-        if ($this->request->is('post')){
-            $user = $this->Users->patchEntity($user,$this->request->getData());
+        if($this->request->is('post')){
+            $userTable = TableRegistry::get('Users');
+            $hasher = new DefaultPasswordHasher();
+            $myFirstName = $this->request->getData('firstname');
+            $myLastName = $this->request->getData('lastname');
+            $myEmail = $this->request->getData('email');
+//            $myPassword = Security::hash($this->request->getData('password'),'sha1',false);
+            $myPassword =$this->request->getData('password');
+            $myToken = Security::hash(Security::randomBytes(32));
+
+            $user->firstname = $myFirstName;
+            $user->lastname = $myLastName;
+            $user->email = $myEmail;
+            $user->password = $myPassword;
+//            $user->token = $myToken;
+
             if ($this->Users->save($user)){
-                $this->Flash->success('You are registered and can log in');
-                return $this->redirect(['action' => 'login']);
+                $this->Flash->set('Register successfulo, your confirmation email has been sent',['element'=>'success']);
+
+//                if all info passed in successful, then send email confirmation to users
+                $subject = 'Please Click the link to confirm your Email Verification';
+                $body = 'Hi, ' . $myFirstName . ' ' . $myLastName;
+                $body .= "<br><br>Please Click the link below to verify your registration.";
+                $body .= "<br><br><a href='http://ie.infotech.monash.edu/team123/pear/PEAR/users/verification/'" ;
+
+
+                $email = new Email('default');
+                $email
+                      ->transport('gmail')
+                      ->from(['monashietesting@gmail.com'=>'Team 123 PEAR'])
+                      ->subject($subject)
+                      ->emailFormat('html')
+                      ->to($myEmail)
+                      ->send($body);
+
+
+
             }else{
-                $this->Flash->error('You are not registered.');
+                $this->Flash->set('Register Failed, Please Try Again',['element'=>'error']);
             }
+
         }
         $this->set(compact('user'));
-        $this->set('_serialize',['user']);
     }
+//Backup
+//    public function register(){
+//        $user = $this->Users->newEntity();
+//        if ($this->request->is('post')){
+//            $user = $this->Users->patchEntity($user,$this->request->getData());
+//            if ($this->Users->save($user)){
+//                $this->Flash->success('You are registered and can log in');
+//                return $this->redirect(['action' => 'login']);
+//            }else{
+//                $this->Flash->error('You are not registered.');
+//            }
+//        }
+//        $this->set(compact('user'));
+//        $this->set('_serialize',['user']);
+//    }
     public function beforeFilter(Event $event)
     {
         $this->Auth->allow('register');

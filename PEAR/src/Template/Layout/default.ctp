@@ -41,7 +41,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body class="register-page">
 
-    <nav class="navbar fixed-top navbar-expand-lg navbar-transparent " color-on-scroll="100">
+    <nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
         <div class="container">
             <div class="navbar-translate">
                 <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'pages','action'=>'display'])?>'   data-placement="bottom" >
@@ -69,9 +69,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     </div>
                 </div>
                 <ul class="navbar-nav">
-
-
-
                 <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
                     <?php echo is_null($this->request->session()->read('Auth.User.email'));?>
                     <li class="nav-item p-0">
