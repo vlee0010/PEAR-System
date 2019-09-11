@@ -16,10 +16,6 @@
                             </div>
                             <div class="card-body">
                                 <?= $this->Form->create();?>
-
-
-
-
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">

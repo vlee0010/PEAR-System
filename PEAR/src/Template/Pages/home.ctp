@@ -83,12 +83,15 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item p-0">
-                    <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'page','action'=>'home']);?>" target="_blank">
+                    <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
                         <i class="fas fa-home"></i>
                         <p class="d-lg-none d-xl-none">Home</p>
                     </a>
                 </li>
-                <?php if(is_null($this->request->session()->read('Auth.User.username'))) : ?>
+
+
+                <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
+
                     <li class="nav-item">
                         <a class="nav-link d-lg-block"  href=<?=$this->Url->build(['controller'=>'users','action'=>'login'])?>>
                             <i class="tim-icons icon-single-02"></i> Login
@@ -96,8 +99,14 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                     </li>
                 <?php else :?>
                     <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href='#'>
+                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'users', 'action'=>'index'])?>'>
                             <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.email');?>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link d-lg-block"  href=<?=$this->Url->build(['controller'=>'users','action'=>'logout'])?>>
+                            <i class="tim-icons icon-single-02"></i>Sign Out
                         </a>
                     </li>
                 <?php endif;?>
@@ -120,7 +129,10 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
             <div class="content-center brand">
                 <h1 class="h1-seo">PEAR</h1>
                 <h3>A complete Re-Design for Monash Student Peer Review. </h3>
+                <a href="<?=$this->Url->build(['controller'=>'users','action'=>'login'])?>" class="btn btn-primary">Login</a>
             </div>
+
+
         </div>
     </div>
 

@@ -39,12 +39,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
 </head>
-<body>
+<body class="register-page">
 
-    <nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-transparent " color-on-scroll="100">
         <div class="container">
             <div class="navbar-translate">
-                <a class="navbar-brand" href='#'   data-placement="bottom" target="_blank">
+                <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'pages','action'=>'display'])?>'   data-placement="bottom" >
                     <span>PEAR</span> Monash
                 </a>
                 <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,9 +72,31 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 
 
-                <?php if(is_null($this->request->session()->read('Auth.User.username'))) : ?>
+                <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
+                    <?php echo is_null($this->request->session()->read('Auth.User.email'));?>
+                    <li class="nav-item p-0">
+                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
+                            <i class="fas fa-home"></i>
+                            <p class="d-lg-none d-xl-none">Home</p>
+                        </a>
+                    </li>
+
+
                     <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href='#'>
+                        <a class="nav-link d-lg-block"  href=<?=$this->Url->build(['controller'=>'users','action'=>'register'])?>>
+                            <i class="tim-icons icon-single-02"></i> Sign Up
+                        </a>
+                    </li>
+                    <?php else :?>
+                    <li class="nav-item p-0">
+                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
+                            <i class="fas fa-home"></i>
+                            <p class="d-lg-none d-xl-none">Home</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'users', 'action'=>'index'])?>'>
                             <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.email');?>
                         </a>
                     </li>
@@ -84,14 +106,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                             <i class="tim-icons icon-single-02"></i>Sign Out
                         </a>
                     </li>
-                    <?php else :?>
 
-
-                    <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href=<?=$this->Url->build(['controller'=>'users','action'=>'register'])?>>
-                            <i class="tim-icons icon-single-02"></i> Sign Up
-                        </a>
-                    </li>
                     <?php endif;?>
 
 
@@ -105,7 +120,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         </div>
     </nav>
     <?= $this->Flash->render() ?>
-    <div class="container clearfix">
+    <div class="clearfix">
         <?= $this->fetch('content') ?>
     </div>
     <footer>
