@@ -180,13 +180,13 @@ class UsersController extends AppController
 //            $user->token = $myToken;
 
             if ($this->Users->save($user)){
-                $this->Flash->set('Register successfulo, your confirmation email has been sent',['element'=>'success']);
+                $this->Flash->set('Your Registration is successful, your confirmation email has been sent to your email address. Please Verify.',['element'=>'success']);
 
 //                if all info passed in successful, then send email confirmation to users
                 $subject = 'Please Click the link to confirm your Email Verification';
                 $body = 'Hi, ' . $myFirstName . ' ' . $myLastName;
                 $body .= "<br><br>Please Click the link below to verify your registration.";
-                $body .= "<br><br><a href='http://ie.infotech.monash.edu/team123/pear/PEAR/users/verification/' . $myToken</a>" ;
+                $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/pear/PEAR/users/verification/".$myToken."</a>" ;
 
 
                 $email = new Email('default');
