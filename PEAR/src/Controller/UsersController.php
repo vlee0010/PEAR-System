@@ -75,6 +75,7 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
+
         $user = $this->Users->get($id, [
             'contain' => []
         ]);
@@ -141,8 +142,14 @@ class UsersController extends AppController
 
 
     }
-    public function verification(){
+    public function verification($token){
         $user = TableRegistry::get('Users');
+        $query = $user->query();
+        $query->update()
+            ->set(['verified'=>1])
+            ->where(['token'=>$token])
+            ->execute();
+
         $verify = $user->find('all')->where(['token'=>$token])->first();
         $user->save($verify);
     }
@@ -153,6 +160,11 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if($this->request->is('post')){
             $userTable = TableRegistry::get('Users');
+//            $error_message = var_dump($userTable->find());
+//            foreach ($userTable->find() as $row){
+//                echo "<script type='text/javascript'>alert('$row->email');</script>";
+     //       }
+
             $hasher = new DefaultPasswordHasher();
             $myFirstName = $this->request->getData('firstname');
             $myLastName = $this->request->getData('lastname');
@@ -165,16 +177,16 @@ class UsersController extends AppController
             $user->lastname = $myLastName;
             $user->email = $myEmail;
             $user->password = $myPassword;
-//            $user->token = $myToken;
+            $user->token = $myToken;
 
             if ($this->Users->save($user)){
-                $this->Flash->set('Register successfulo, your confirmation email has been sent',['element'=>'success']);
+                $this->Flash->set('Your Registration is successful, your confirmation email has been sent to your email address. Please Verify.',['element'=>'success']);
 
 //                if all info passed in successful, then send email confirmation to users
                 $subject = 'Please Click the link to confirm your Email Verification';
                 $body = 'Hi, ' . $myFirstName . ' ' . $myLastName;
                 $body .= "<br><br>Please Click the link below to verify your registration.";
-                $body .= "<br><br><a href='http://ie.infotech.monash.edu/team123/pear/PEAR/users/verification/'" ;
+                $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/pear/PEAR/users/verification/".$myToken.">Verification Link</a>" ;
 
 
                 $email = new Email('default');
