@@ -10,7 +10,7 @@
                         <div id="square8" class="square square-8"></div>
                         <div class="card card-register">
                             <div class="card-header">
-                                <img class="card-img" src="/PEAR/PEAR/webroot/img/square1.png" alt="Card image">
+                                <img class="card-img" src="<?= $this->Url->image('square1.png')?>" alt="Card image">
                                 <h5 class="card-title">Sign Up</h5>
                             </div>
                             <div class="card-body">
