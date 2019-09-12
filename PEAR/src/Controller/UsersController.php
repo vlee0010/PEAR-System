@@ -170,14 +170,14 @@ class UsersController extends AppController
             $myLastName = $this->request->getData('lastname');
             $myEmail = $this->request->getData('email');
 //            $myPassword = Security::hash($this->request->getData('password'),'sha1',false);
-            $myPassword =$hasher->hash($this->request->getData('password'));
+            $myPassword =$this->request->getData('password');
             $myToken = Security::hash(Security::randomBytes(32));
 
             $user->firstname = $myFirstName;
             $user->lastname = $myLastName;
             $user->email = $myEmail;
             $user->password = $myPassword;
-//            $user->token = $myToken;
+            $user->token = $myToken;
 
             if ($this->Users->save($user)){
                 $this->Flash->set('Your Registration is successful, your confirmation email has been sent to your email address. Please Verify.',['element'=>'success']);
