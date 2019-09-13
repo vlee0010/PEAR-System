@@ -113,25 +113,27 @@ class UsersController extends AppController
 
     public function login(){
 
-            if ($this->request->is('post')){
+        if ($this->request->is('post')){
+            if($this->request->data('_type')==='login') {
                 $user = $this->Auth->identify();
-                if ($user){
+                if ($user) {
                     $this->Auth->setUser($user);
-                    $user = $this->Users->find()->where(['id'=>$this->Auth->user('id')])->first();
-                    if($user->verified){
-                        $this->redirect(['controller'=>'users','action'=>'studentdash']);
-                    }else{
+                    $user = $this->Users->find()->where(['id' => $this->Auth->user('id')])->first();
+                    if ($user->verified) {
+                        $this->redirect(['controller' => 'users', 'action' => 'studentdash']);
+                    } else {
                         $this->Flash->error('Please verify your Email address first');
                         $this->Auth->logout();
                     }
-                }
-                else {
+                } else {
                     $this->Flash->error('Unable to Log in, Please Check your Email & Password');
                 }
             }
-
-
         }
+
+
+    }
+
 
     public function logout(){
 
@@ -142,6 +144,11 @@ class UsersController extends AppController
 
 
     }
+
+    public function reset($token){
+
+    }
+
     public function verification($token){
         $user = TableRegistry::get('Users');
         $query = $user->query();
@@ -224,6 +231,7 @@ class UsersController extends AppController
 //    }
     public function beforeFilter(Event $event)
     {
+
         $this->Auth->allow('register');
 
     }
