@@ -1,64 +1,109 @@
-create table pear_schema.students
-(
-    id int auto_increment
-        primary key,
-    fname varchar(255) not null,
-    lname varchar(255) not null,
-    email varchar(255) not null,
-    password varchar(255) not null
-);
-
-create table pear_schema.enrollments
-(
-    id int auto_increment
-        primary key,
-    unit varchar(255) not null,
-    code varchar(10) not null,
-    semester int not null,
-    year date not null,
-    student_id int not null
-);
-
-create index enrollments_students_id_fk
-    on pear_schema.enrollments (student_id);
-
-create table pear_schema.questions
+create table Units
 (
     id int auto_increment,
-    question VARCHAR(255) not null,
+    title VARCHAR(1000) not null,
+    semester VARCHAR(1) not null,
+    year DATE not null,
+    constraint Units_pk
+        primary key (id)
+);
+
+create table units_users
+(
+    unit_id int not null,
+    user_id int not null,
+    primary key (unit_id, user_id),
+    constraint units_users_units_id_fk
+        foreign key (unit_id) references units (id),
+    constraint units_users_users_id_fk
+        foreign key (user_id) references users (id)
+);
+
+create table teams
+(
+    id_ int auto_increment
+        primary key,
+    name varchar(255) not null
+);
+
+create table teams_users
+(
+    user_id int not null,
+    team_id int not null,
+    number int not null,
+    constraint teams_users_pk
+        primary key (user_id, team_id),
+    constraint teams_users_teams_id__fk
+        foreign key (team_id) references teams (id_),
+    constraint teams_users_users_id_fk
+        foreign key (user_id) references users (id)
+);
+
+create table questions
+(
+    id int auto_increment,
+    question VARCHAR(2000) not null,
     constraint questions_pk
         primary key (id)
 );
 
-create table pear_schema.peer_reviews
+create table peer_reviews
 (
     id int auto_increment,
     date_start DATETIME not null,
     date_end DATETIME not null,
     date_reminder DATETIME not null,
     title VARCHAR(1000) not null,
-    question_id int not null,
+    unit_id int not null,
     constraint peer_reviews_pk
-        primary key (id, question_id),
-    constraint peer_reviews_questions_id_fk
-        foreign key (question_id) references pear_schema.questions (id)
+        primary key (id),
+    constraint peer_reviews_units_id_fk
+        foreign key (unit_id) references units (id)
 );
 
+create table Peer_reviews_questions
+(
+    peer_review_id int not null,
+    question_id int not null,
+    constraint Peer_reviews_questions_pk
+        primary key (question_id, peer_review_id)
+);
 
-create table pear_schema.responses
+create table peer_reviews_teams
+(
+    peer_review_id int not null,
+    team_id int not null,
+    status BOOLEAN default 0 not null,
+    constraint peer_review_team_pk
+        primary key (peer_review_id, team_id)
+);
+
+create table answers
+(
+    id int auto_increment,
+    answer VARCHAR(1000) not null,
+    constraint answers_pk
+        primary key (id)
+);
+
+create table responses
 (
     id int auto_increment,
     date_response DATETIME not null,
-    response VARCHAR(2000) not null,
+    user_id int not null,
     peer_review_id int not null,
-    student_id int not null,
+    question_id int not null,
+    answer_id int not null,
     constraint responses_pk
         primary key (id),
-    constraint responses_peer_reviews_id_fk
-        foreign key (peer_review_id) references pear_schema.peer_reviews (id),
-    constraint responses_students_id_fk
-        foreign key (student_id) references pear_schema.students (id)
+    constraint responses_answers_id_fk
+        foreign key (answer_id) references answers (id),
+    constraint responses_peer_reviews_questions_peer_review_id_question_id_fk
+        foreign key (peer_review_id, question_id) references peer_reviews_questions (peer_review_id, question_id),
+    constraint responses_users_id_fk
+        foreign key (user_id) references users (id)
 );
+
 
 
 
