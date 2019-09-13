@@ -1,25 +1,30 @@
 <div class="container">
     <div class="card shadow">
-        <h2 class="text-on-back" style="font-size:50px">Peer Review Task</h2>
+        <h2 class="text-on-back" style="font-size:50px">Peer Review Task's Available</h2>
         <table class="table table-flush">
             <thead>
             <tr>
-                <th>Course</th>
-                <th>Year</th>
-                <th>Semster</th>
-                <th>Start Date</th>
-                <th>ENd Date</th>
+                <th>Unit</th>
+                <th>Group</th>
+                <th>Semester</th>
+                <th>Due Date</th>
                 <th>Status</th>
             </tr>
             </thead>
             <tbody>
             <tr>
                 <td>FIT3047</td>
-                <td>2019</td>
+                <td>123</td>
                 <td>1</td>
-                <td>2019/1/1</td>
-                <td>2019/2/1</td>
+                <td>03/10/2019</td>
                 <td><a href="#">Incomplete</a></td>
+            </tr>
+            <tr>
+                <td>FIT4343</td>
+                <td>88</td>
+                <td>1</td>
+                <td>08/10/2019</td>
+                <td><a href="#">Complete</a></td>
             </tr>
 
             </tbody>
