@@ -39,14 +39,6 @@ create table teams_users
         foreign key (user_id) references users (id)
 );
 
-create table questions
-(
-    id int auto_increment,
-    question VARCHAR(2000) not null,
-    constraint questions_pk
-        primary key (id)
-);
-
 create table peer_reviews
 (
     id int auto_increment,
@@ -59,14 +51,6 @@ create table peer_reviews
         primary key (id),
     constraint peer_reviews_units_id_fk
         foreign key (unit_id) references units (id)
-);
-
-create table Peer_reviews_questions
-(
-    peer_review_id int not null,
-    question_id int not null,
-    constraint Peer_reviews_questions_pk
-        primary key (question_id, peer_review_id)
 );
 
 create table peer_reviews_teams
@@ -86,23 +70,40 @@ create table answers
         primary key (id)
 );
 
+create table questions
+(
+    id int auto_increment,
+    question VARCHAR(1000) not null,
+    peer_review_id int not null,
+    constraint questions_pk
+        primary key (id),
+    constraint questions_peer_reviews_id_fk
+        foreign key (peer_review_id) references peer_reviews (id)
+);
+
 create table responses
 (
     id int auto_increment,
     date_response DATETIME not null,
     user_id int not null,
-    peer_review_id int not null,
     question_id int not null,
     answer_id int not null,
     constraint responses_pk
         primary key (id),
     constraint responses_answers_id_fk
         foreign key (answer_id) references answers (id),
-    constraint responses_peer_reviews_questions_peer_review_id_question_id_fk
-        foreign key (peer_review_id, question_id) references peer_reviews_questions (peer_review_id, question_id),
+    constraint responses_questions_id_fk
+        foreign key (question_id) references questions (id),
     constraint responses_users_id_fk
         foreign key (user_id) references users (id)
 );
+
+
+
+
+
+
+
 
 
 
