@@ -233,6 +233,7 @@ class UsersController extends AppController
     {
 
         $this->Auth->allow('register');
+        $this->Auth->allow('verification');
 
     }
 }
