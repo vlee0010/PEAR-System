@@ -16,6 +16,7 @@
                             </div>
                             <div class="card-body">
                                 <?= $this->Form->create();?>
+                                <?= $this->Form->input('_type', ['type'=>'hidden', 'value' => 'login']);?>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -31,6 +32,7 @@
                                         </div>
                                     </div>
                                     <?= $this->Form->text('password', array('type'=>'password','class'=>'form-control', 'placeholder'=>'Password','name'=>'password'));?>
+
                                 </div>
                                 <!--                                    <div class="form-check text-left">-->
                                 <!--                                        <label class="form-check-label">-->
@@ -42,12 +44,41 @@
                                 <!--                                    </div>-->
 
                                 <div class="card-footer">
+<!--                                    //Modal Button-->
+                                    <button type="button" class="btn-link" style="position:relative;top:-30px;" data-toggle="modal" data-target="#exampleModal">
+                                        Reset Password
+                                    </button>
+                                    <?=$this->Form->submit('Login', array('class' => 'btn btn-info btn-round btn-lg'));?>
+                                    <?=$this->Form->end();?>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Password Reset</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <?= $this->Form->create();?>
+                                                    <?= $this->Form->input('_type', ['type'=>'hidden', 'value' => 'reset']);?>
+                                                    <?=$this->Form->text('email',array('type'=>'email','style'=>'color:black','name'=>'email','class'=>'form-control','placeholder'=>'Enter Your Monash Email','pattern'=>'[a-z0-9]+@student+\.+monash+\.+edu'));?>
 
-                                    <?=$this->Form->submit('Log In', array('class' => 'btn btn-info btn-round btn-lg'));?>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <a class="btn btn-success"href="<?= $this->Url->build(['controller'=>'users','action'=>'reset']);?>">Send Resent Email</a>
+                                                    <?=$this->Form->end();?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
 
                                 </div>
-                                <?=$this->Form->end();?>
+
                             </div>
 
                         </div>
