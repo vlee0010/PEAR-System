@@ -140,7 +140,7 @@ class UsersController extends AppController
 
         $this->Auth->logout();
 //        $this->Flash->success('You are logged out');
-//        return $this->redirect(['controller'=>'pages', 'action'=>'display']);
+        return $this->redirect(['controller'=>'pages', 'action'=>'display']);
 
 
     }
