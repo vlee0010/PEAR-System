@@ -70,7 +70,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 </div>
                 <ul class="navbar-nav">
                 <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
-                    <?php echo is_null($this->request->session()->read('Auth.User.email'));?>
+
                     <li class="nav-item p-0">
                         <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
                             <i class="fas fa-home"></i>
@@ -78,10 +78,16 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link d-lg-block"  href=<?=$this->Url->build(['controller'=>'users','action'=>'login'])?>>
+                            <i class="tim-icons icon-single-02"></i> Sign In
+                        </a>
+                    </li>
+
 
                     <li class="nav-item">
                         <a class="nav-link d-lg-block"  href=<?=$this->Url->build(['controller'=>'users','action'=>'register'])?>>
-                            <i class="tim-icons icon-single-02"></i> Sign Up
+                            <i class="tim-icons icon-spaceship"></i> Sign Up
                         </a>
                     </li>
                     <?php else :?>

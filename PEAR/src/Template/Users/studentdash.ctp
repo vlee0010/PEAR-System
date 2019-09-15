@@ -17,14 +17,14 @@
                 <td>123</td>
                 <td>1</td>
                 <td>03/10/2019</td>
-                <td><a href="#">Incomplete</a></td>
+                <td><a href="#" >Incomplete</a></td>
             </tr>
             <tr>
                 <td>FIT4343</td>
                 <td>88</td>
                 <td>1</td>
                 <td>08/10/2019</td>
-                <td><a href="#">Complete</a></td>
+                <td><a  disabled>Complete</a></td>
             </tr>
             <tr>
                 <td>MKC5432</td>
