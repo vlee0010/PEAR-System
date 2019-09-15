@@ -202,6 +202,7 @@ class UsersController extends AppController
 
         $verify = $user->find('all')->where(['token'=>$token])->first();
         $user->save($verify);
+        $this->redirect(['action'=>'login']);
     }
     public function studentdash(){
 
