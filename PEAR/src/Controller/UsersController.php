@@ -131,7 +131,38 @@ class UsersController extends AppController
                     $this->Flash->error('Unable to Log in, Please Check your Email & Password');
                 }
             }
-        }
+//            if($this->request->data('_type') === 'reset'){
+//                $email= $this->request->getData('email');
+//                $user = $this->Users->find()->where(['email' => $email])->first();
+//                $subject = 'Reset Your Password' ;
+//                $body = "Hello, " . $user->firstname . ' ' . $user->lastname .
+//                    "<br> Please Reset Your Password Through the link provided below <br><a href=http://ie.infotech.monash.edu/team123/pear/PEAR/users/reset/".$user->token.">Click This Link To Reset</a>";
+
+
+//                $email = new Email('default');
+//                $email
+//                    ->transport('gmail')
+//                    ->from(['monashietesting@gmail.com'=>'Team 123 PEAR'])
+//                    ->subject($subject)
+//                    ->emailFormat('html')
+//                    ->to($email)
+//                    ->send($body);
+
+//                $this->Flash->success('Check Your Email To Reset Your Password');
+
+
+            if ($this->request->data('_type') === 'reset'){
+                $email = $this->request->getData('email');
+                $user = $this->Users->find()->where(['email'=>$email])->first();
+                $subject="Password reset";
+                $body="Hi ".$user->firstname." ".$user->lastname."<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/pear/PEAR/users/reset/". $user->token.">Click here to reset</a>";
+                $this->sendEmailToUser($email,$subject,$body); $this->Flash->success('Check your email to reset your password');
+                return $this->redirect(['action' => 'login']);
+}
+
+
+            }
+
 
 
     }
@@ -148,7 +179,17 @@ class UsersController extends AppController
     }
 
     public function reset($token){
-
+        $password = $this->request->getData('password');
+        if ($password){
+            $encryptedPassword = (new DefaultPasswordHasher)->hash($password);
+            $user = TableRegistry::get('Users');
+            $query = $user->query();
+            $query->update()
+                ->set(["password" => $encryptedPassword])
+                ->where(["token" => $token])
+                ->execute();
+            return $this->redirect(["action" => 'login']);
+        }
     }
 
     public function verification($token){

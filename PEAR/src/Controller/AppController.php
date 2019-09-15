@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Mailer\Email;
 
 /**
  * Application Controller
@@ -68,6 +69,18 @@ class AppController extends Controller
         //$this->loadComponent('Security');
     }
 
+
+    public function sendEmailToUser($to, $subject, $msg){
+        $email = new Email('default');
+        $email
+            ->transport('gmail')
+            ->from(['monashietesting@gmail.com' => 'PEAR'])
+            ->to($to)
+            ->subject($subject)
+            ->emailFormat('html')
+            ->viewVars(array('msg' => $msg))
+            ->send($msg);
+    }
     public function beforeFilter(Event $event)
     {
         $this->Auth->allow(['display']);
