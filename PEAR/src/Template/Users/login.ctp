@@ -31,7 +31,7 @@
                                             <i class="tim-icons icon-lock-circle"></i>
                                         </div>
                                     </div>
-                                    <?= $this->Form->text('password', array('type'=>'password','class'=>'form-control', 'placeholder'=>'Password','name'=>'password'));?>
+                                    <?= $this->Form->text('password', array('type'=>'password',"autocomplete"=>"new-password",'class'=>'form-control', 'placeholder'=>'Password','name'=>'password'));?>
 
                                 </div>
                                 <!--                                    <div class="form-check text-left">-->
@@ -62,7 +62,7 @@
                                                 <div class="modal-body">
                                                     <?= $this->Form->create();?>
                                                     <?= $this->Form->input('_type', ['type'=>'hidden', 'value' => 'reset']);?>
-                                                    <?=$this->Form->text('email',array('type'=>'email','style'=>'color:black','name'=>'email','class'=>'form-control','placeholder'=>'Enter Your Monash Email','pattern'=>'[a-z0-9]+@student+\.+monash+\.+edu'));?>
+                                                    <?=$this->Form->text('email',array('type'=>'email','auto-complete'=>'none','style'=>'color:black','name'=>'email','class'=>'form-control','placeholder'=>'Enter Your Monash Email','pattern'=>'[a-z0-9]+@student+\.+monash+\.+edu'));?>
 
 
                                                 </div>

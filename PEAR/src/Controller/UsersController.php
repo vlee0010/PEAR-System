@@ -112,7 +112,9 @@ class UsersController extends AppController
     }
 
     public function login(){
-
+        if ($this->Auth->user()){
+            return $this->redirect(["controller"=>"users","action"=>"studentdash"]);
+        }
         if ($this->request->is('post')){
             if($this->request->data('_type')==='login') {
                 $user = $this->Auth->identify();
