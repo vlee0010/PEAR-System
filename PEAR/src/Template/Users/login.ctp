@@ -68,7 +68,8 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <a class="btn btn-success"href="<?= $this->Url->build(['controller'=>'users','action'=>'reset']);?>">Send Resent Email</a>
+
+                                                    <?=$this->Form->text('Submit', ['type'=>'submit','class'=>"btn btn-success", 'style'=>'text-align:center;']);?>
                                                     <?=$this->Form->end();?>
                                                 </div>
                                             </div>
