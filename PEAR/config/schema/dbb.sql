@@ -63,6 +63,21 @@ create table peer_reviews_teams
         primary key (peer_review_id, team_id)
 );
 
+create table peer_reviews_users
+(
+    peer_review_id int not null,
+    user_id int not null,
+    status BOOLEAN default 0 not null,
+    constraint peer_reviews_users_pk
+        primary key (user_id, peer_review_id),
+    constraint peer_reviews_users_peer_reviews_id_fk
+        foreign key (peer_review_id) references peer_reviews (id),
+    constraint peer_reviews_users_users_id_fk
+        foreign key (user_id) references users (id)
+);
+
+
+
 create table answers
 (
     id int auto_increment,
@@ -109,14 +124,13 @@ INSERT INTO units(id, title, code, semester, year) VALUES
 INSERT INTO teams(id_, name) VALUES
 (1,'Team123'), (2,'Team122');
 
--- Jianheng Huang, team 123, number of mem 2
+-- Van, team 123, number of mem 2
 INSERT INTO teams_users(user_id, team_id, number) VALUES
-(6,1,2),(7,1,2);
+(13,1,2);
 
--- Jianheng Huang enrols in FIT3047 sem1 2019, FIT3178 semA 3178
+-- Van enrols in FIT3047 sem1 2019, FIT3178 semA 3178
 INSERT INTO units_users(unit_id, user_id) VALUES
-(1,6),(3,6),
-(1,7),(3,7);
+(1,13),(3,13);
 
 -- FIT3047 sem1 2019 has 3 peer reviews listed below
 INSERT INTO peer_reviews(id, date_start, date_end, date_reminder, title, unit_id) VALUES
@@ -134,11 +148,14 @@ INSERT INTO questions(id, question, peer_review_id) VALUES
 INSERT INTO answers(id, answer) VALUES
 (1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5');
 
--- Jianheng Huang answer FIT3047 sem1 2019 iteration1 q1:5, q2:4, q3:1
+INSERT INTO peer_reviews_users(peer_review_id, user_id, status) VALUES
+(1,13,0),(2,13,0),(3,13,0);
+
+-- Van answer FIT3047 sem1 2019 iteration1 q1:5, q2:4, q3:1
 INSERT INTO responses(id, date_response, user_id, question_id, answer_id) VALUES
-(1,'2018-07-12 02:30:14',6,1,5),
-(2,'2018-07-12 02:30:14',6,2,4),
-(3,'2018-07-12 02:30:14',6,3,1);
+(1,'2018-07-12 02:30:14',13,1,5),
+(2,'2018-07-12 02:30:14',13,2,4),
+(3,'2018-07-12 02:30:14',13,3,1);
 
 -- FIT3047 sem1 2019 iteration1 peer reviews assigns to team123, team122
 INSERT INTO peer_reviews_teams(peer_review_id, team_id) VALUES
