@@ -12,7 +12,7 @@
 </nav>
 <div class="questions index large-9 medium-8 columns content">
     <h3><?= __('Questions') ?></h3>
-    <table class="table table-borderless" cellpadding="0" cellspacing="0" >
+    <table class="table table-flush" cellpadding="0" cellspacing="0" >
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>

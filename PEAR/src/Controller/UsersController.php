@@ -286,5 +286,6 @@ class UsersController extends AppController
         $this->Auth->allow('reset');
         $this->Auth->allow('portal');
 
+
     }
 }
