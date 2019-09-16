@@ -39,8 +39,9 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
+
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => ['PeerReviews', 'Teams','Units','Responses']
         ]);
 
         $this->set('user', $user);
@@ -158,10 +159,10 @@ class UsersController extends AppController
                 $body="Hi ".$user->firstname." ".$user->lastname."<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/pear/PEAR/users/reset/". $user->token.">Click here to reset</a>";
                 $this->sendEmailToUser($email,$subject,$body); $this->Flash->success('Check your email to reset your password');
                 return $this->redirect(['action' => 'login']);
-}
-
-
             }
+
+
+        }
 
 
 
@@ -214,7 +215,7 @@ class UsersController extends AppController
 //            $error_message = var_dump($userTable->find());
 //            foreach ($userTable->find() as $row){
 //                echo "<script type='text/javascript'>alert('$row->email');</script>";
-     //       }
+            //       }
 
             $hasher = new DefaultPasswordHasher();
             $myFirstName = $this->request->getData('firstname');
@@ -242,12 +243,12 @@ class UsersController extends AppController
 
                 $email = new Email('default');
                 $email
-                      ->transport('gmail')
-                      ->from(['monashietesting@gmail.com'=>'Team 123 PEAR'])
-                      ->subject($subject)
-                      ->emailFormat('html')
-                      ->to($myEmail)
-                      ->send($body);
+                    ->transport('gmail')
+                    ->from(['monashietesting@gmail.com'=>'Team 123 PEAR'])
+                    ->subject($subject)
+                    ->emailFormat('html')
+                    ->to($myEmail)
+                    ->send($body);
 
 
 

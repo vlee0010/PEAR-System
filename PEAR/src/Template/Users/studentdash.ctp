@@ -5,7 +5,7 @@
             <thead>
             <tr>
                 <th>Unit</th>
-                <th>Group</th>
+                <th>Team</th>
                 <th>Semester</th>
                 <th>Due Date</th>
                 <th>Status</th>

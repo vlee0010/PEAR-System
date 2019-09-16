@@ -9,6 +9,11 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
+ * @property &\Cake\ORM\Association\HasMany $Responses
+ * @property &\Cake\ORM\Association\BelongsToMany $PeerReviews
+ * @property &\Cake\ORM\Association\BelongsToMany $Teams
+ * @property &\Cake\ORM\Association\BelongsToMany $Units
+ *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
@@ -37,6 +42,25 @@ class UsersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->hasMany('Responses', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->belongsToMany('PeerReviews', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'peer_review_id',
+            'joinTable' => 'peer_reviews_users'
+        ]);
+        $this->belongsToMany('Teams', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'team_id',
+            'joinTable' => 'teams_users'
+        ]);
+        $this->belongsToMany('Units', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'unit_id',
+            'joinTable' => 'units_users'
+        ]);
     }
 
     /**
