@@ -10,7 +10,7 @@
         <li><?= $this->Html->link(__('New Question'), ['action' => 'add']) ?></li>
     </ul>
 </nav>
-<div class="questions index large-9 medium-8 columns content">
+<div class="card shadow">
     <h3><?= __('Questions') ?></h3>
     <table class="table table-flush" cellpadding="0" cellspacing="0" >
         <thead>
