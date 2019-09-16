@@ -209,9 +209,24 @@ class UsersController extends AppController
         $user->save($verify);
         $this->redirect(['action'=>'login']);
     }
-    public function studentdash(){
+    /**
+     * Studentdash method
+     *
+     * @param string|null $id User id.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function studentdash($id = 13)
+    {
+        $user = $this->Users->get($id,[
+            'contain' => ['PeerReviews', 'Teams','Units','Responses']
+        ]);
+        $this->set('user',$user);
 
+        $peer_reviews = $this->Users->PeerReviews->find('list');
+        $this->set(compact('peer_reviews'));
     }
+
     public function register(){
         $user = $this->Users->newEntity();
         if($this->request->is('post')){
