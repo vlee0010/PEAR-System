@@ -15,6 +15,11 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $modified
  * @property string $role
  * @property string $password
+ *
+ * @property \App\Model\Entity\PeerReview[] $peer_reviews
+ * @property \App\Model\Entity\Team[] $teams
+ * @property \App\Model\Entity\Unit[] $units
+ * @property \App\Model\Entity\Response[] $responses
  */
 class User extends Entity
 {
