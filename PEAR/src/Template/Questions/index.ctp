@@ -339,7 +339,7 @@
                                         <label for="second_toggle"><p>Unlikely</p></label>
                                         <label for="third_toggle"><p>Neutral</p></label>
                                         <label for="fourth_toggle"><p>Likely</p></label>
-                                        <label for="fifth_toggle_toggle"><p>Very Likely</p></label>
+                                        <label for="fifth_toggle"><p>Very Likely</p></label>
                                         <div class="toggle_option_slider">
                                         </div>
                                     </div>
