@@ -33,7 +33,10 @@
                 <td>01/10/2019</td>
                 <td><a href="#">Incomplete</a></td>
             </tr>
-
+            <?php
+                $uid = $this->Auth->user('id');
+                var_dump($uid);
+            ?>
             </tbody>
         </table>
 
