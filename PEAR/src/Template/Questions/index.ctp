@@ -23,18 +23,41 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($questions as $question): ?>
-            <tr>
-                <td><?= $this->Number->format($question->id) ?></td>
-                <td><?= h($question->description) ?></td>
-                <td><?= h($question->type) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $question->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $question->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $question->id], ['confirm' => __('Are you sure you want to delete # {0}?', $question->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Question 1 - Do you like your team members?
+                                    <i class="fa fa-plus-circle pull-right"></i>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                <div class="wrapper">
+                                    <div class="toggle_radio">
+                                        <input type="radio" class="toggle_option" id="first_toggle" name="toggle_option">
+                                        <input type="radio" class="toggle_option" id="second_toggle" name="toggle_option">
+                                        <input type="radio" checked class="toggle_option" id="third_toggle" name="toggle_option">
+                                        <input type="radio" class="toggle_option" id="fourth_toggle" name="toggle_option">
+                                        <input type="radio" class="toggle_option" id="fifth_toggle" name="toggle_option">
+                                        <label for="first_toggle"><p>Very Unlikely</p></label>
+                                        <label for="second_toggle"><p>Unlikely</p></label>
+                                        <label for="third_toggle"><p>Neutral</p></label>
+                                        <label for="fourth_toggle"><p>Likely</p></label>
+                                        <label for="fifth_toggle_toggle"><p>Very Likely</p></label>
+                                        <div class="toggle_option_slider">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </tbody>
     </table>
     <div class="paginator">

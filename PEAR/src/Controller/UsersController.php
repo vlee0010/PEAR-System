@@ -285,6 +285,7 @@ class UsersController extends AppController
         $this->Auth->allow('verification');
         $this->Auth->allow('reset');
         $this->Auth->allow('portal');
+        $this->Auth->allow('studentdash');
 
 
     }
