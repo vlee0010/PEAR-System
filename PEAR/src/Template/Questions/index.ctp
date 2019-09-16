@@ -10,8 +10,9 @@
         <li><?= $this->Html->link(__('New Question'), ['action' => 'add']) ?></li>
     </ul>
 </nav>
+<div class="container">
 <div class="card shadow">
-    <h3><?= __('Questions') ?></h3>
+    <h2 class="text-on-back" style="font-size:50px">Questions</h2>
     <table class="table table-flush" cellpadding="0" cellspacing="0" >
         <thead>
             <tr>
@@ -46,4 +47,5 @@
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
+</div>
 </div>
