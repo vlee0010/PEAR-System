@@ -19,7 +19,7 @@
                 <td>123</td>
                 <td>1</td>
                 <td>03/10/2019</td>
-                <td><a href="http://ie.infotech.monash.edu/team123/pear/PEAR/questions/index" >Incomplete</a></td>
+                <td><a href="<?= $this->Url->Build(['controller' => 'questions', 'action' => 'index'])?>">Incomplete</a></td>
             </tr>
             <tr>
                 <td>FIT4343</td>
@@ -33,11 +33,11 @@
                 <td>5</td>
                 <td>1</td>
                 <td>01/10/2019</td>
-                <td><a href="http://ie.infotech.monash.edu/team123/pear/PEAR/questions/index">Incomplete</a></td>
+<!--                <td><a href="http://ie.infotech.monash.edu/team123/pear/PEAR/questions/index">Incomplete</a></td>-->
+                <td><a href="<?= $this->Url->Build(['controller' => 'questions', 'action' => 'index'])?>">Incomplete</a></td>
             </tr>
             <?php
-                $uid = $this->Auth->user('id');
-                var_dump($uid);
+
             ?>
             </tbody>
         </table>
