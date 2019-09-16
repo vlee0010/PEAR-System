@@ -111,6 +111,10 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+    public function portal(){
+
+    }
+
     public function login(){
         if ($this->Auth->user()){
             return $this->redirect(["controller"=>"users","action"=>"studentdash"]);
@@ -279,5 +283,7 @@ class UsersController extends AppController
         $this->Auth->allow('register');
         $this->Auth->allow('verification');
         $this->Auth->allow('reset');
+        $this->Auth->allow('portal');
+
     }
 }

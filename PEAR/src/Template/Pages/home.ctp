@@ -99,7 +99,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                     </li>
                 <?php else :?>
                     <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'users', 'action'=>'index'])?>'>
+                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'users', 'action'=>'studentdash'])?>'>
                             <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.email');?>
                         </a>
                     </li>
