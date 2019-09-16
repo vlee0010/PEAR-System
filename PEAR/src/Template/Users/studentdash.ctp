@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\User $user
+ */
+?>
 <div class="container">
     <div class="card shadow">
         <h2 class="text-on-back" style="font-size:50px">Peer Review Task's Available</h2>
@@ -33,7 +39,6 @@
                 <td>01/10/2019</td>
                 <td><a href="#">Incomplete</a></td>
             </tr>
-
             </tbody>
         </table>
 
