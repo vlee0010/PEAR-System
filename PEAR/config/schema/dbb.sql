@@ -88,14 +88,15 @@ create table answers
 
 create table questions
 (
-    id int auto_increment,
-    question VARCHAR(1000) not null,
+    id int auto_increment
+        primary key,
+    description varchar(1000) not null,
     peer_review_id int not null,
-    constraint questions_pk
-        primary key (id),
     constraint questions_peer_reviews_id_fk
         foreign key (peer_review_id) references peer_reviews (id)
 );
+
+
 
 create table responses
 (
@@ -135,14 +136,16 @@ INSERT INTO units_users(unit_id, user_id) VALUES
 -- FIT3047 sem1 2019 has 3 peer reviews listed below
 INSERT INTO peer_reviews(id, date_start, date_end, date_reminder, title, unit_id) VALUES
 (1,'2019-07-08 02:30:14', '2019-07-14 02:30:14','2018-07-12 02:30:14','Industry Experience Iteration 1 Peer Review',1),
-(2,'2019-09-08 02:30:14', '2019-09-14 02:30:14','2018-09-12 02:30:14','Industry Experience Iteration 2 Peer Review',1),
+(2, '2019-09-08 02:30:14', '2019-09-14 02:30:14', '2018-09-12 02:30:14', 'Industry Experience Iteration 2 Peer Review', 1),
 (3,'2019-10-08 02:30:14', '2019-10-14 02:30:14','2018-10-12 02:30:14','Industry Experience Iteration 3 Peer Review',1);
 
 -- 3 questions for FIT3047 sem1 2019 iteration1 peer reviews
-INSERT INTO questions(id, question, peer_review_id) VALUES
+INSERT INTO questions(id, description, peer_review_id) VALUES
 (1,'Contribute to the teamwork',1),
 (2,'Keeping the team on track',1),
-(3,'Interactive with the team',1);
+(3,'Interactive with the team',1),
+(4,'Expecting Quality',1),
+(5,'Having Related Knowledge, Skills, and Abilities',1);
 
 -- Answer score 1-5
 INSERT INTO answers(id, answer) VALUES
