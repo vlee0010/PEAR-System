@@ -31,7 +31,7 @@
                         <div id="collapse<?php echo $question->id ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <div class="panel-body">
                                 <div class="wrapper">
-                                    <div class="toggle_radio<?php echo $question->id ?>">
+                                    <div class="toggle_radio">
                                         <input type="radio" class="toggle_option" id="first_toggle" name="toggle_option<?php echo $question->id ?>">
                                         <input type="radio" class="toggle_option" id="second_toggle" name="toggle_option<?php echo $question->id ?>">
                                         <input type="radio" checked class="toggle_option" id="third_toggle" name="toggle_option<?php echo $question->id ?>">
