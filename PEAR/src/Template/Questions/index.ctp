@@ -6,7 +6,7 @@
 ?>
 
 <style>
-    <?php include 'webroot/css/cs' ?>
+    <?php include 'CSS/question-slider.css' ?>
 </style>
 
 <div class="container">
