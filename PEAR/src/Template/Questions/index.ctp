@@ -32,16 +32,16 @@
                             <div class="panel-body">
                                 <div class="wrapper">
                                     <div class="toggle_radio">
-                                        <input type="radio" class="toggle_option" id="first_toggle" name="toggle_option<?php echo $question->id ?>">
-                                        <input type="radio" class="toggle_option" id="second_toggle" name="toggle_option<?php echo $question->id ?>">
-                                        <input type="radio" checked class="toggle_option" id="third_toggle" name="toggle_option<?php echo $question->id ?>">
-                                        <input type="radio" class="toggle_option" id="fourth_toggle" name="toggle_option<?php echo $question->id ?>">
-                                        <input type="radio" class="toggle_option" id="fifth_toggle" name="toggle_option<?php echo $question->id ?>">
-                                        <label for="first_toggle"><p>Very Unlikely</p></label>
-                                        <label for="second_toggle"><p>Unlikely</p></label>
-                                        <label for="third_toggle"><p>Neutral</p></label>
-                                        <label for="fourth_toggle"><p>Likely</p></label>
-                                        <label for="fifth_toggle"><p>Very Likely</p></label>
+                                        <input type="radio" class="toggle_option" id="first_toggle<?php echo $question->id ?>" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" class="toggle_option" id="second_toggle<?php echo $question->id ?>" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" checked class="toggle_option" id="third_toggle<?php echo $question->id ?>" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" class="toggle_option" id="fourth_toggle<?php echo $question->id ?>" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" class="toggle_option" id="fifth_toggle<?php echo $question->id ?>" name="toggle_option<?php echo $question->id ?>">
+                                        <label for="first_toggle<?php echo $question->id ?>"><p>Very Unlikely</p></label>
+                                        <label for="second_toggle<?php echo $question->id ?>"><p>Unlikely</p></label>
+                                        <label for="third_toggle<?php echo $question->id ?>"><p>Neutral</p></label>
+                                        <label for="fourth_toggle<?php echo $question->id ?>"><p>Likely</p></label>
+                                        <label for="fifth_toggle<?php echo $question->id ?>"><p>Very Likely</p></label>
                                         <div class="toggle_option_slider">
                                         </div>
                                     </div>
