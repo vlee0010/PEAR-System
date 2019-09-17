@@ -4,8 +4,9 @@
  * @var \App\Model\Entity\Question[]|\Cake\Collection\CollectionInterface $questions
  */
 ?>
+
 <style>
-    <?php include 'CSS/question-slider.css' ?>
+    <?php include 'webroot/css/cs' ?>
 </style>
 
 <div class="container">
@@ -30,12 +31,12 @@
                         <div id="collapse<?php echo $question->id ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <div class="panel-body">
                                 <div class="wrapper">
-                                    <div class="toggle_radio">
-                                        <input type="radio" class="toggle_option" id="first_toggle" name="toggle_option">
-                                        <input type="radio" class="toggle_option" id="second_toggle" name="toggle_option">
-                                        <input type="radio" checked class="toggle_option" id="third_toggle" name="toggle_option">
-                                        <input type="radio" class="toggle_option" id="fourth_toggle" name="toggle_option">
-                                        <input type="radio" class="toggle_option" id="fifth_toggle" name="toggle_option">
+                                    <div class="toggle_radio<?php echo $question->id ?>">
+                                        <input type="radio" class="toggle_option" id="first_toggle" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" class="toggle_option" id="second_toggle" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" checked class="toggle_option" id="third_toggle" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" class="toggle_option" id="fourth_toggle" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" class="toggle_option" id="fifth_toggle" name="toggle_option<?php echo $question->id ?>">
                                         <label for="first_toggle"><p>Very Unlikely</p></label>
                                         <label for="second_toggle"><p>Unlikely</p></label>
                                         <label for="third_toggle"><p>Neutral</p></label>
