@@ -205,8 +205,8 @@ class UsersController extends AppController
             ->where(['token'=>$token])
             ->execute();
 
-        $verify = $user->find('all')->where(['token'=>$token])->first();
-        $user->save($verify);
+//        $verify = $user->find('all')->where(['token'=>$token])->first();
+//        $user->save($verify);
         $this->redirect(['action'=>'login']);
     }
     /**
