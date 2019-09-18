@@ -10,7 +10,7 @@
         <label for="confirm_password"><strong>Confirm password <font
                     style="color:#C3232D;">*</font></strong></label>
         <?= $this->Form->password('confirm_password', ['id' =>
-            'confirm_password','placeholder'=>'has to be same as above']); ?> <section class="text-center"><?= $this->Form->submit('Reset',array('class'=>'btn btn- primary','id'=>'btn_submit','onClick'=>'checkIn()')); ?></section>
+            'confirm_password','placeholder'=>'has to be same as above']); ?> <section class="text-center"><?= $this->Form->submit('Reset',array('class'=>'btn btn- primary','id'=>'btn_submit')); ?></section>
         <?= $this->Form->end(); ?> </div>
 </div>
 
