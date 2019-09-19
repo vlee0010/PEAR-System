@@ -242,6 +242,7 @@ class UsersController extends AppController
         //$peerReviewMatches = $peerReviewsUsersTable->find()->where(['user_id'=>$studentid]);
         $teamMatches = $teamUsersTable->find()->where(['user_id'=>$studentid]);
         $team_id_list=[];
+
         foreach ($teamMatches as $teamMatch){
             $teamID = $teamMatch->team_id;
             $teams=$teamsTable->find()->where(['id_' => $teamID])->first();
@@ -253,12 +254,6 @@ class UsersController extends AppController
             array_push($team_peer_id_list,$peerReviewsTeamsTable->find('list',['keyField'=>'team_id','valueField'=>'peer_review_id'])->where(['team_id'=>$team_id])->toArray());
         }
 
-        foreach($team_peer_id_list as $team_peer_id){
-            foreach($team_peer_id as $key=>$value){
-                echo $key;
-                echo $value;
-            }
-        }
         //$this->set(compact('peerReviewMatches'));
         $this->set(compact('peer_query'));
         $this->set(compact('team_peer_id_list'));
