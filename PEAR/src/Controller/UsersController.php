@@ -240,8 +240,7 @@ class UsersController extends AppController
             foreach($peers as $peer){
                 echo 'title: ' . $peer->title;
             }
-//            echo 'matches: ' . $peerReviewMatch;123
-
+//            echo 'matches: ' . $peerReviewMatch;
 
             //            $peer_title = $peer->title;
 //            echo 'title: ' . $peer_title;
