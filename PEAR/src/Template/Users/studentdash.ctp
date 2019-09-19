@@ -14,7 +14,6 @@
             <tr>
                 <th>Unit</th>
                 <th>Team</th>
-                <th>Title</th>
                 <th>Semester</th>
                 <th>Due Date</th>
                 <th>Status</th>
