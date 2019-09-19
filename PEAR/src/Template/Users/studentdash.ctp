@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 <div class="container">
     <div class="card shadow">
-        <h2 class="text-on-back" style="font-size:50px">Peer Review Task's Available</h2>
+        <h2 class="text-on-front" style="font-size:50px">Available Peer Review Tasks</h2>
         <table class="table table-flush">
             <thead>
             <tr>
