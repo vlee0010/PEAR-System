@@ -53,7 +53,13 @@
                             <td><?=$due_date?> </td>
                             <?php foreach ($peer_review_user_query as $peer_review_user) : ?>
                                 <?php if ($peer_review_user->user_id==$studentid and $peer_review_user->peer_review_id ==$peer_id) : ?>
-                                    <td><?=$peer_review_user->status?></td>
+                                    <td><?php if($peer_review_user->status){
+                                            echo 'Complete';
+                                        }else{
+                                            echo $this->Html->link('Incomplete',['controller'=>'questions','action'=>'index']);
+                                        }
+
+                                        ?></td>
                                 <?php endif; ?>
                             <?php endforeach;?>
                         <?php endforeach;?>
