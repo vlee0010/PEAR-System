@@ -226,40 +226,46 @@ class UsersController extends AppController
     public function studentdash()
     {
         $studentid = $this->Auth->User('id');
-//        var_dump($studentid);
         $teamsTable = TableRegistry::getTableLocator()->get('teams_users');
-        $results = $teamsTable->find()->where(['user_id'=>$studentid]);
-//        var_dump($results);
+        $teamsResults = $teamsTable->find()->where(['user_id'=>$studentid]);
         //  all teams id of one user is now  available
-        $TeamTable = TableRegistry::getTableLocator()->get('teams');
         $peerReviewTable = TableRegistry::getTableLocator()->get('peer_reviews');
+        $peer_query=$peerReviewTable->find();
+        $unitsTable = TableRegistry::getTableLocator()->get('units');
+        $units_query=$unitsTable->find();
         $peerReviewsUsersTable = TableRegistry::getTableLocator()->get('peer_reviews_users');
-        $peerReviewMatches = $peerReviewsUsersTable->find()->where(['user_id'=>$studentid]);
-        $teams = [];   //Create an empty teams array to store all the teams related to logged in user.
-        foreach ($results as $result){
-//            echo 'team: ' . $result->team_id;
-        }
-        foreach ($peerReviewMatches as $peerReviewMatch){
-            $peerReviewID = $peerReviewMatch->peer_review_id;
+        $peer_review_user_query=$peerReviewsUsersTable->find();
+        $peerReviewsTeamsTable = TableRegistry::getTableLocator()->get('peer_reviews_teams');
+        $teamUsersTable = TableRegistry::getTableLocator()->get('teams_users');
+        $teamsTable = TableRegistry::getTableLocator()->get('teams');
+        $teams_query= $teamsTable->find();
+        //$peerReviewMatches = $peerReviewsUsersTable->find()->where(['user_id'=>$studentid]);
+        $teamMatches = $teamUsersTable->find()->where(['user_id'=>$studentid]);
+        $team_id_list=[];
+        foreach ($teamMatches as $teamMatch){
+            $teamID = $teamMatch->team_id;
+            $teams=$teamsTable->find()->where(['id_' => $teamID])->first();
 
-            $peers = $peerReviewTable->find()->where(['id' => $peerReviewID]);
-            foreach($peers as $peer){
-                echo 'title: ' . $peer->title;
+            array_push($team_id_list,$teams->id_);
+        }
+        $team_peer_id_list=[];
+        foreach ($team_id_list as $team_id){
+            array_push($team_peer_id_list,$peerReviewsTeamsTable->find('list',['keyField'=>'team_id','valueField'=>'peer_review_id'])->where(['team_id'=>$team_id])->toArray());
+        }
+
+        foreach($team_peer_id_list as $team_peer_id){
+            foreach($team_peer_id as $key=>$value){
+                echo $key;
+                echo $value;
             }
-//            echo 'matches: ' . $peerReviewMatch;
-
-            //            $peer_title = $peer->title;
-//            echo 'title: ' . $peer_title;
         }
-
-
-        $this->set(compact('results'));
-        $this->set(compact('peerReviewMatches'));
-        $this->set(compact('peers'));
-
-
-
-
+        //$this->set(compact('peerReviewMatches'));
+        $this->set(compact('peer_query'));
+        $this->set(compact('team_peer_id_list'));
+        $this->set(compact('teams_query'));
+        $this->set(compact('units_query'));
+        $this->set(compact('studentid'));
+        $this->set(compact('peer_review_user_query'));
     }
 
     public function register(){
