@@ -20,24 +20,28 @@
             </tr>
             </thead>
             <tbody>
-                <?php foreach($peerReviewMatches as $peerReviewMatch) :?>
-                <tr>
-                    <?php foreach ($peers as $peer) : ?>
-                    <td> <?=$peer->title;?></td>
-                    <?php endforeach;?>
-                    <td><?='unknown';?></td>
-                    <td> Semester Unknown</td>
-                    <td> Due Date Unknown</td>
-                    <td> <?php if ($peerReviewMatch->status) {
-                            echo 'Completed';
-                        }else{
-                            echo '<a style="text-decoration: underline" href="#">Do It Now -></a>';
-                        }
-                        ?>
-                    </td>
-                </tr>
+<!--                --><?php //foreach($peerReviewMatches as $peerReviewMatch) :?>
 
-                <?php endforeach;?>
+
+                    <?php foreach ($id_list as $id) : ?>
+                        <tr>
+                        <?php foreach ($peer_query as $peer_review) : ?>
+                            <?php if($peer_review->id==$id): ?>
+                                <td> <?=$peer_review->title?></td>
+                                <td><?='unknown';?></td>
+                                <td> Semester Unknown</td>
+                                <td> <?=$peer_review->date_end->i18nFormat('dd-MM-YYYY HH:mm:ss')?></td>
+                                <td> <?='status'?></td>
+                            <?php endif;?>
+                        <?php endforeach;?>
+
+                        </tr>
+                    <?php endforeach;?>
+
+
+
+
+<!--
             </tbody>
         </table>
 

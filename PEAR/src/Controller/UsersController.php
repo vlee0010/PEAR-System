@@ -226,36 +226,37 @@ class UsersController extends AppController
     public function studentdash()
     {
         $studentid = $this->Auth->User('id');
-//        var_dump($studentid);
+
         $teamsTable = TableRegistry::getTableLocator()->get('teams_users');
-        $results = $teamsTable->find()->where(['user_id'=>$studentid]);
+        $teamsResults = $teamsTable->find()->where(['user_id'=>$studentid]);
 //        var_dump($results);
         //  all teams id of one user is now  available
         $TeamTable = TableRegistry::getTableLocator()->get('teams');
         $peerReviewTable = TableRegistry::getTableLocator()->get('peer_reviews');
+        $peer_query=$peerReviewTable->find();
         $peerReviewsUsersTable = TableRegistry::getTableLocator()->get('peer_reviews_users');
         $peerReviewMatches = $peerReviewsUsersTable->find()->where(['user_id'=>$studentid]);
-        $teams = [];   //Create an empty teams array to store all the teams related to logged in user.
-        foreach ($results as $result){
-//            echo 'team: ' . $result->team_id;
-        }
+       // debug($peerReviewMatches);
+//        var_dump($peerReviewTable);
+        $id_list=[];
         foreach ($peerReviewMatches as $peerReviewMatch){
             $peerReviewID = $peerReviewMatch->peer_review_id;
+             $peers=$peerReviewTable->find()->where(['id' => $peerReviewID])->first();
 
-            $peers = $peerReviewTable->find()->where(['id' => $peerReviewID]);
-            foreach($peers as $peer){
-                echo 'title: ' . $peer->title;
-            }
-//            echo 'matches: ' . $peerReviewMatch;
+             array_push($id_list,$peers->id);
+//             debug ($peers);
+//             array_push($peers);
 
-            //            $peer_title = $peer->title;
-//            echo 'title: ' . $peer_title;
         }
 
 
-        $this->set(compact('results'));
+
+//        $this->set(compact('results'));
         $this->set(compact('peerReviewMatches'));
-        $this->set(compact('peers'));
+        $this->set(compact('peer_query'));
+        $this->set(compact('studentid'));
+        $this->set(compact('id_list'));
+
 
 
 
