@@ -12,7 +12,7 @@
                         <div class="card card-register">
                             <div class="card-header">
                                 <img class="card-img" src="<?=$this->Url->image('square1.png')?>" alt="Card image">
-                                <h4 class="card-title">Log In</h4>
+                                <h4 style="margin-left:20px;"class="card-title">Log In</h4>
                             </div>
                             <div class="card-body">
                                 <?= $this->Form->create();?>

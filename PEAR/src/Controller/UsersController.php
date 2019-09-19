@@ -29,6 +29,8 @@ class UsersController extends AppController
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
+
+
     }
 
     /**
@@ -113,6 +115,10 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+
+    public function profile(){
+
+    }
     public function portal(){
 
     }
@@ -329,7 +335,7 @@ class UsersController extends AppController
         $this->Auth->allow('verification');
         $this->Auth->allow('reset');
         $this->Auth->allow('portal');
-        $this->Auth->allow('studentdash');
+
 
 
     }
