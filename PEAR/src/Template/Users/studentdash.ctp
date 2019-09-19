@@ -20,31 +20,49 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>FIT3047</td>
-                <td>123</td>
-                <td>1</td>
-                <td>03/10/2019</td>
-                <td><a href="<?= $this->Url->Build(['controller' => 'questions', 'action' => 'index'])?>">Incomplete</a></td>
-            </tr>
-            <tr>
-                <td>FIT4343</td>
-                <td>88</td>
-                <td>1</td>
-                <td>08/10/2019</td>
-                <td><a  disabled>Complete</a></td>
-            </tr>
-            <tr>
-                <td>MKC5432</td>
-                <td>5</td>
-                <td>1</td>
-                <td>01/10/2019</td>
-<!--                <td><a href="http://ie.infotech.monash.edu/team123/pear/PEAR/questions/index">Incomplete</a></td>-->
-                <td><a href="<?= $this->Url->Build(['controller' => 'questions', 'action' => 'index'])?>">Incomplete</a></td>
-            </tr>
-            <?php
+<!--                --><?php //foreach($peerReviewMatches as $peerReviewMatch) :?>
 
-            ?>
+
+                    <?php foreach ($team_peer_id_list as $team_peer_id) : ?>
+                        <tr>
+                            <?php $unit_id=0;
+                            $due_date=null;
+                            $peer_id=0;
+                            ?>
+                        <?php foreach ($team_peer_id as $key=>$value) : ?>
+                            <?php foreach ($peer_query as $peer) : ?>
+                                <?php if ($peer->id==$value) : ?>
+                                    <td><?=$peer->title?></td>
+                                    <?php $unit_id = $peer->unit_id;
+                                    $due_date=$peer->date_end;
+                                    $peer_id=$peer->id;
+                                    ?>
+                                <?php endif; ?>
+                            <?php endforeach;?>
+                            <?php foreach ($teams_query as $team) : ?>
+                                <?php if ($team->id_==$key) : ?>
+                                    <td><?=$team->name?></td>
+                                <?php endif; ?>
+                            <?php endforeach;?>
+                            <?php foreach ($units_query as $unit) : ?>
+                                <?php if ($unit->id==$unit_id) : ?>
+                                    <td><?=$unit->semester?></td>
+                                <?php endif; ?>
+                            <?php endforeach;?>
+                            <td><?=$due_date?> </td>
+                            <?php foreach ($peer_review_user_query as $peer_review_user) : ?>
+                                <?php if ($peer_review_user->user_id==$studentid and $peer_review_user->peer_review_id ==$peer_id) : ?>
+                                    <td><?=$peer_review_user->status?></td>
+                                <?php endif; ?>
+                            <?php endforeach;?>
+                        <?php endforeach;?>
+                        </tr>
+                    <?php endforeach;?>
+
+
+
+
+<!--
             </tbody>
         </table>
 

@@ -100,7 +100,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
                     <li class="nav-item">
                         <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'users', 'action'=>'studentdash'])?>'>
-                            <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.email');?>
+                            <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.firstname');?>
                         </a>
                     </li>
 

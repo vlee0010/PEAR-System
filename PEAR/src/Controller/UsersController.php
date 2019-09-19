@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Event\Event;
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Core\App;
 use Cake\Controller\Exception\SecurityException;
@@ -28,6 +29,8 @@ class UsersController extends AppController
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
+
+
     }
 
     /**
@@ -112,6 +115,10 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+
+    public function profile(){
+
+    }
     public function portal(){
 
     }
@@ -216,15 +223,49 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function studentdash($id = 13)
+    public function studentdash()
     {
-        $user = $this->Users->get($id,[
-            'contain' => ['PeerReviews', 'Teams','Units','Responses']
-        ]);
-        $this->set('user',$user);
+        $studentid = $this->Auth->User('id');
+        $teamsTable = TableRegistry::getTableLocator()->get('teams_users');
+        $teamsResults = $teamsTable->find()->where(['user_id'=>$studentid]);
+        //  all teams id of one user is now  available
+        $peerReviewTable = TableRegistry::getTableLocator()->get('peer_reviews');
+        $peer_query=$peerReviewTable->find();
+        $unitsTable = TableRegistry::getTableLocator()->get('units');
+        $units_query=$unitsTable->find();
+        $peerReviewsUsersTable = TableRegistry::getTableLocator()->get('peer_reviews_users');
+        $peer_review_user_query=$peerReviewsUsersTable->find();
+        $peerReviewsTeamsTable = TableRegistry::getTableLocator()->get('peer_reviews_teams');
+        $teamUsersTable = TableRegistry::getTableLocator()->get('teams_users');
+        $teamsTable = TableRegistry::getTableLocator()->get('teams');
+        $teams_query= $teamsTable->find();
+        //$peerReviewMatches = $peerReviewsUsersTable->find()->where(['user_id'=>$studentid]);
+        $teamMatches = $teamUsersTable->find()->where(['user_id'=>$studentid]);
+        $team_id_list=[];
+        foreach ($teamMatches as $teamMatch){
+            $teamID = $teamMatch->team_id;
+            $teams=$teamsTable->find()->where(['id_' => $teamID])->first();
 
-        $peer_reviews = $this->Users->PeerReviews->find('list');
-        $this->set(compact('peer_reviews'));
+            array_push($team_id_list,$teams->id_);
+        }
+        $team_peer_id_list=[];
+        foreach ($team_id_list as $team_id){
+            array_push($team_peer_id_list,$peerReviewsTeamsTable->find('list',['keyField'=>'team_id','valueField'=>'peer_review_id'])->where(['team_id'=>$team_id])->toArray());
+        }
+
+        foreach($team_peer_id_list as $team_peer_id){
+            foreach($team_peer_id as $key=>$value){
+                echo $key;
+                echo $value;
+            }
+        }
+        //$this->set(compact('peerReviewMatches'));
+        $this->set(compact('peer_query'));
+        $this->set(compact('team_peer_id_list'));
+        $this->set(compact('teams_query'));
+        $this->set(compact('units_query'));
+        $this->set(compact('studentid'));
+        $this->set(compact('peer_review_user_query'));
     }
 
     public function register(){
@@ -300,7 +341,7 @@ class UsersController extends AppController
         $this->Auth->allow('verification');
         $this->Auth->allow('reset');
         $this->Auth->allow('portal');
-        $this->Auth->allow('studentdash');
+
 
 
     }
