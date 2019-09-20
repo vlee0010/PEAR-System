@@ -54,6 +54,14 @@
         </tbody>
 
         <?php endforeach; ?>
+        <?php foreach($user_id_list as $user_id) : ?>
+        <?php foreach ($user_query as $user): ?>
+        <?php if($user->id==$user_id):?>
+                <?= "please rate".$user->firstname." ".$user->lastname?>
+                <br>
+        <?php endif; ?>
+        <?php endforeach; ?>
+        <?php endforeach; ?>
 
     </table>
 </div>

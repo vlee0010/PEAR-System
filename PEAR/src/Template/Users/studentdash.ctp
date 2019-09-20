@@ -15,12 +15,13 @@
                 <th>Unit</th>
                 <th>Team</th>
                 <th>Semester</th>
+                <th>Start Date</th>
                 <th>Due Date</th>
                 <th>Status</th>
             </tr>
             </thead>
             <tbody>
-<!--                --><?php //foreach($peerReviewMatches as $peerReviewMatch) :?>
+
 
 
                     <?php foreach ($team_peer_id_list as $team_peer_id) : ?>
@@ -36,9 +37,13 @@
                                     <?php $unit_id = $peer->unit_id;
                                     $due_date=$peer->date_end;
                                     $peer_id=$peer->id;
+                                    $date_start = $peer->date_start;
                                     ?>
                                 <?php endif; ?>
                             <?php endforeach;?>
+
+
+
                             <?php foreach ($teams_query as $team) : ?>
                                 <?php if ($team->id_==$key) : ?>
                                     <td><?=$team->name?></td>
@@ -49,13 +54,15 @@
                                     <td><?=$unit->semester?></td>
                                 <?php endif; ?>
                             <?php endforeach;?>
-                            <td><?=$due_date?> </td>
+                            <td><?=$date_start->i18nFormat('yyyy-MM-dd')?> </td>
+                            <td><?=$due_date->i18nFormat('yyyy-MM-dd')?> </td>
+
                             <?php foreach ($peer_review_user_query as $peer_review_user) : ?>
                                 <?php if ($peer_review_user->user_id==$studentid and $peer_review_user->peer_review_id ==$peer_id) : ?>
                                     <td><?php if($peer_review_user->status){
                                             echo 'Complete';
                                         }else{
-                                            echo $this->Html->link('Incomplete',['controller'=>'questions','action'=>'index']);
+                                            echo $this->Html->link('Incomplete',['controller'=>'questions','action'=>'index',$peer_id]);
                                         }
 
                                         ?></td>
@@ -67,11 +74,3 @@
 
 
 
-
-<!--
-            </tbody>
-        </table>
-
-    </div>
-
-</div>

@@ -82,12 +82,12 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 </div>
             </div>
             <ul class="navbar-nav">
-                <li class="nav-item p-0">
-                    <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
-                        <i class="fas fa-home"></i>
-                        <p class="d-lg-none d-xl-none">Home</p>
-                    </a>
-                </li>
+<!--                <li class="nav-item p-0">-->
+<!--                    <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="--><?//= $this->Url->build(['controller' => 'pages','action'=>'display']);?><!--">-->
+<!--                        <i class="fas fa-home"></i>-->
+<!--                        <p class="d-lg-none d-xl-none">Home</p>-->
+<!--                    </a>-->
+<!--                </li>-->
 
 
                 <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>

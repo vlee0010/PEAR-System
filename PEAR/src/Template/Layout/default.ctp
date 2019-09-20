@@ -91,12 +91,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         </a>
                     </li>
                     <?php else :?>
-                    <li class="nav-item p-0">
-                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
-                            <i class="fas fa-home"></i>
-                            <p class="d-lg-none d-xl-none">Home</p>
-                        </a>
-                    </li>
+
 
                     <li class="nav-item">
                         <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'users', 'action'=>'studentdash'])?>'>
