@@ -168,7 +168,8 @@ class UsersController extends AppController
                 $user = $this->Users->find()->where(['email'=>$email])->first();
                 $subject="Password reset";
                 $body="Hi ".$user->firstname." ".$user->lastname."<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/pear/PEAR/users/reset/". $user->token.">Click here to reset</a>";
-                $this->sendEmailToUser($email,$subject,$body); $this->Flash->success('Check your email to reset your password');
+                $this->sendEmailToUser($email,$subject,$body);
+                $this->Flash->success('Check your email to reset your password');
                 return $this->redirect(['action' => 'login']);
             }
 

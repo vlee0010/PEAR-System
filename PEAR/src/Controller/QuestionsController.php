@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Questions Controller
@@ -17,11 +18,31 @@ class QuestionsController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
+    public function index($peer_id = null)
     {
         $questions = $this->paginate($this->Questions);
-
+        $student_id = $this->Auth->user('id');
+        $teamUserTable = TableRegistry::getTableLocator()->get('teams_users');
+        $teams_users_query = $teamUserTable->find();
+        $peersTeamsTable = TableRegistry::getTableLocator()->get('peer_reviews_teams');
+        $peers_teams_query = $peersTeamsTable->find();
+        $userTable = TableRegistry::getTableLocator()->get('users');
+        $user_query = $userTable->find();
+        $teamMatches=0;
+        foreach ($peers_teams_query as $peer_team){
+            if ($peer_team->peer_review_id == $peer_id){
+                $teamMatches = $peer_team->team_id;
+            }
+        }
+        $user_id_list=[];
+        foreach($teams_users_query as $team_user){
+            if($team_user->team_id==$teamMatches){
+                array_push($user_id_list,$team_user->user_id);
+            }
+        }
         $this->set(compact('questions'));
+        $this->set(compact('user_id_list'));
+        $this->set(compact('user_query'));
     }
 
     /**
