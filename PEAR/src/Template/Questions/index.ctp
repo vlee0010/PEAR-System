@@ -5,13 +5,16 @@
  */
 ?>
 
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
     <?php include 'CSS/question-slider.css' ?>
+
 </style>
 
 <div class="container">
 <div class="card shadow">
-    <h2 class="text-on-back" style="font-size:50px">Questions</h2>
+    <h2 class="text-on-front" style="font-size:50px">Questions</h2>
     <table class="table table-flush" cellpadding="0" cellspacing="0" >
 
         <?php foreach ($questions as $question):?>
@@ -31,7 +34,7 @@
                         <div id="collapse<?php echo $question->id ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <div class="panel-body">
                                 <div class="wrapper">
-                                    <div class="toggle_radio">
+                                    <div class="toggle_radio" name="toggle_radio_<?php echo $question->id ?>">
                                         <input type="radio" class="toggle_option" id="first_toggle" name="toggle_option<?php echo $question->id ?>">
                                         <input type="radio" class="toggle_option" id="second_toggle" name="toggle_option<?php echo $question->id ?>">
                                         <input type="radio" checked class="toggle_option" id="third_toggle" name="toggle_option<?php echo $question->id ?>">
@@ -42,7 +45,7 @@
                                         <label for="third_toggle"><p>Neutral</p></label>
                                         <label for="fourth_toggle"><p>Likely</p></label>
                                         <label for="fifth_toggle"><p>Very Likely</p></label>
-                                        <div class="toggle_option_slider">
+                                        <div class="toggle_option_slider" id="toggle_option_slider_ <?php echo $question->id ?>">
                                         </div>
                                     </div>
                                 </div>

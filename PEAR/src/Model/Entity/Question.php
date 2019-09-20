@@ -8,7 +8,10 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $description
- * @property string $type
+ * @property int $peer_review_id
+ *
+ * @property \App\Model\Entity\PeerReview[] $peer_reviews
+ * @property \App\Model\Entity\Response[] $responses
  */
 class Question extends Entity
 {
@@ -23,6 +26,8 @@ class Question extends Entity
      */
     protected $_accessible = [
         'description' => true,
-        'type' => true
+        'peer_review_id' => true,
+        'peer_review' => true,
+        'responses' => true
     ];
 }

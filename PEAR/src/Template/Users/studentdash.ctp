@@ -12,7 +12,7 @@
         <table class="table table-flush">
             <thead>
             <tr>
-                <th>Unit</th>
+                <th>Title</th>
                 <th>Team</th>
                 <th>Semester</th>
                 <th>Start Date</th>
