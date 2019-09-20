@@ -40,6 +40,9 @@ class QuestionsController extends AppController
                 array_push($user_id_list,$team_user->user_id);
             }
         }
+        if($this->request->is('post')){
+
+        }
         $this->set(compact('questions'));
         $this->set(compact('user_id_list'));
         $this->set(compact('user_query'));

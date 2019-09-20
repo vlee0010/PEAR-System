@@ -139,6 +139,19 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script('blk-design-system.min.js') ?>
     <?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
 
-
+<!--    <script>-->
+<!--        var slider = document.getElementById('sliderRegular');-->
+<!---->
+<!--        noUiSlider.create(slider, {-->
+<!--            start: 1,-->
+<!--            connect: [true,false],-->
+<!--            range: {-->
+<!--                min: 1,-->
+<!--                max: 5-->
+<!--            }-->
+<!--        });-->
+<!---->
+<!---->
+<!--    </script>-->
 </body>
 </html>
