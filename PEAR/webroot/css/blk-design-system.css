@@ -14374,6 +14374,7 @@ h1 small,
 
 h2,
 .h2 {
+    margin-left: 10px;
   margin-bottom: 30px;
   line-height: 1.2;
 }
@@ -20652,8 +20653,7 @@ input.datetimepicker[data-color="yellow"]+.bootstrap-datetimepicker-widget.dropd
   font-size: 5em;
   font-weight: 900;
   color: #222a42;
-  text-transform: lowercase;
-  margin-left: -5px;
+  margin-left: 5px;
   z-index: 1;
 }
 
