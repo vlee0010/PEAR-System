@@ -47,6 +47,9 @@ class QuestionsController extends AppController
                 array_push($user_id_list,$team_user->user_id);
             }
         }
+        if($this->request->is('post')){
+
+        }
         /**
          * Find all question in Questions Table that have peer_review_id = peer_id that has been passed into
          * and then join with the PeerReviews Table to display data
