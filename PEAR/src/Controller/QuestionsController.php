@@ -128,4 +128,13 @@ class QuestionsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+    public function peerQuestions($id=1){
+        $question = $this->Questions->get($id,[
+            'contain' => [
+                'PeerReviews' =>['Questions']
+            ]
+        ]);
+        $this->set('questions', $question);
+        $this->viewBuilder()->setLayout('default');
+    }
 }

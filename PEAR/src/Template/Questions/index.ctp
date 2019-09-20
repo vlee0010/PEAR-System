@@ -5,13 +5,16 @@
  */
 ?>
 
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
     <?php include 'CSS/question-slider.css' ?>
+
 </style>
 <?= $this->Form->create();?>
 <div class="container">
 <div class="card shadow">
-    <h2 class="text-on-back" style="font-size:50px">Questions</h2>
+    <h2 class="text-on-front" style="font-size:50px">Questions</h2>
     <table class="table table-flush" cellpadding="0" cellspacing="0" >
 
         <?php foreach ($questions as $question):?>
@@ -30,6 +33,7 @@
                         </div>
                         <div id="collapse<?php echo $question->id ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <div class="panel-body">
+<<<<<<< HEAD
                                 <div class="wrapper" style="color:#fff;">
                                     <?php foreach($user_id_list as $user_id) : ?>
                                         <?php foreach ($user_query as $user): ?>
@@ -43,6 +47,23 @@
                                             <?php endif; ?>
                                         <?php endforeach; ?>
                                     <?php endforeach; ?>
+=======
+                                <div class="wrapper">
+                                    <div class="toggle_radio" name="toggle_radio_<?php echo $question->id ?>">
+                                        <input type="radio" class="toggle_option" id="first_toggle" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" class="toggle_option" id="second_toggle" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" checked class="toggle_option" id="third_toggle" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" class="toggle_option" id="fourth_toggle" name="toggle_option<?php echo $question->id ?>">
+                                        <input type="radio" class="toggle_option" id="fifth_toggle" name="toggle_option<?php echo $question->id ?>">
+                                        <label for="first_toggle"><p>Very Unlikely</p></label>
+                                        <label for="second_toggle"><p>Unlikely</p></label>
+                                        <label for="third_toggle"><p>Neutral</p></label>
+                                        <label for="fourth_toggle"><p>Likely</p></label>
+                                        <label for="fifth_toggle"><p>Very Likely</p></label>
+                                        <div class="toggle_option_slider" id="toggle_option_slider_ <?php echo $question->id ?>">
+                                        </div>
+                                    </div>
+>>>>>>> c7bec1364bcae80aabcc9e8f3dc8e8ed54e73ca2
                                 </div>
                             </div>
                         </div>

@@ -205,14 +205,14 @@ sup {
 }
 
 a {
-  color: #e14eca;
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
 }
 
 a:hover {
-  color: #c221a9;
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
 }
 
@@ -14350,13 +14350,13 @@ h6 {
 }
 
 a {
-  color: #ba54f5;
+  color: rgba(255, 255, 255, 0.8);
   font-weight: 300;
 }
 
 a:hover,
 a:focus {
-  color: #e14eca;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 h1,
