@@ -20,7 +20,7 @@
             </tr>
             </thead>
             <tbody>
-<!--                --><?php //foreach($peerReviewMatches as $peerReviewMatch) :?>
+
 
 
                     <?php foreach ($team_peer_id_list as $team_peer_id) : ?>
@@ -67,11 +67,3 @@
 
 
 
-
-<!--
-            </tbody>
-        </table>
-
-    </div>
-
-</div>

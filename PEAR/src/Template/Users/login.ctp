@@ -6,13 +6,18 @@
         <div class="content">
             <div class="container">
                 <div class="row">
+
                     <div class="col-lg-5 col-md-6 offset-lg-0 offset-md-3">
+
+                        <div><p style="font-size:50px;">pear</p></div>
                         <div id="square7" class="square square-7"></div>
                         <div id="square8" class="square square-8"></div>
+
                         <div class="card card-register">
+
                             <div class="card-header">
                                 <img class="card-img" src="<?=$this->Url->image('square1.png')?>" alt="Card image">
-                                <h4 style="margin-left:20px;"class="card-title">Log In</h4>
+                                <h4 style="margin-left:20px;text-transform: capitalize;"class="card-title">Log In</h4>
                             </div>
                             <div class="card-body">
                                 <?= $this->Form->create();?>
