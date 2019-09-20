@@ -9,6 +9,9 @@ use Cake\Validation\Validator;
 /**
  * Questions Model
  *
+ * @property \App\Model\Table\PeerReviewsTable&\Cake\ORM\Association\BelongsTo $PeerReviews
+ * @property \App\Model\Table\ResponsesTable&\Cake\ORM\Association\HasMany $Responses
+ *
  * @method \App\Model\Entity\Question get($primaryKey, $options = [])
  * @method \App\Model\Entity\Question newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Question[] newEntities(array $data, array $options = [])
@@ -33,6 +36,14 @@ class QuestionsTable extends Table
         $this->setTable('questions');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->belongsTo('PeerReviews', [
+            'foreignKey' => 'peer_review_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Responses', [
+            'foreignKey' => 'question_id'
+        ]);
     }
 
     /**
@@ -53,12 +64,20 @@ class QuestionsTable extends Table
             ->requirePresence('description', 'create')
             ->notEmptyString('description');
 
-        $validator
-            ->scalar('type')
-            ->maxLength('type', 255)
-            ->requirePresence('type', 'create')
-            ->notEmptyString('type');
-
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['peer_review_id'], 'PeerReviews'));
+
+        return $rules;
     }
 }
