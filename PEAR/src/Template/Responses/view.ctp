@@ -31,10 +31,6 @@
             <td><?= $response->has('question') ? $this->Html->link($response->question->id, ['controller' => 'Questions', 'action' => 'view', $response->question->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Answer') ?></th>
-            <td><?= $response->has('answer') ? $this->Html->link($response->answer->id, ['controller' => 'Answers', 'action' => 'view', $response->answer->id]) : '' ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($response->id) ?></td>
         </tr>

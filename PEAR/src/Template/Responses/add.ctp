@@ -24,7 +24,6 @@
             echo $this->Form->control('date_response');
             echo $this->Form->control('user_id', ['options' => $users]);
             echo $this->Form->control('question_id', ['options' => $questions]);
-            echo $this->Form->control('answer_id', ['options' => $answers]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
