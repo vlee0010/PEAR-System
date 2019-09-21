@@ -25,7 +25,6 @@
                 <th scope="col"><?= $this->Paginator->sort('date_response') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('question_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('answer_id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -36,7 +35,6 @@
                 <td><?= h($response->date_response) ?></td>
                 <td><?= $response->has('user') ? $this->Html->link($response->user->id, ['controller' => 'Users', 'action' => 'view', $response->user->id]) : '' ?></td>
                 <td><?= $response->has('question') ? $this->Html->link($response->question->id, ['controller' => 'Questions', 'action' => 'view', $response->question->id]) : '' ?></td>
-                <td><?= $response->has('answer') ? $this->Html->link($response->answer->id, ['controller' => 'Answers', 'action' => 'view', $response->answer->id]) : '' ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $response->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $response->id]) ?>

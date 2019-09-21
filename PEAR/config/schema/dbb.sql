@@ -86,6 +86,20 @@ create table answers
         primary key (id)
 );
 
+create table answers
+(
+    id int auto_increment
+        primary key,
+    answer varchar(1000) not null,
+    user_id int not null,
+    response_id int not null,
+    constraint answers_responses_id_fk
+        foreign key (response_id) references responses (id),
+    constraint answers_users_id_fk
+        foreign key (user_id) references users (id)
+);
+
+
 create table questions
 (
     id int auto_increment
@@ -96,24 +110,22 @@ create table questions
         foreign key (peer_review_id) references peer_reviews (id)
 );
 
-
-
 create table responses
 (
-    id int auto_increment,
-    date_response DATETIME not null,
+    id int auto_increment
+        primary key,
+    date_response datetime not null,
     user_id int not null,
     question_id int not null,
-    answer_id int not null,
-    constraint responses_pk
-        primary key (id),
-    constraint responses_answers_id_fk
-        foreign key (answer_id) references answers (id),
     constraint responses_questions_id_fk
         foreign key (question_id) references questions (id),
     constraint responses_users_id_fk
         foreign key (user_id) references users (id)
 );
+
+
+
+
 
 -- Insert some dummy data to database for testing
 INSERT INTO units(id, title, code, semester, year) VALUES
@@ -145,20 +157,17 @@ INSERT INTO questions(id, description, peer_review_id) VALUES
 (2,'Keeping the team on track',1),
 (3,'Interactive with the team',1),
 (4,'Expecting Quality',1),
-(5,'Having Related Knowledge, Skills, and Abilities',1);
+(5,'Having Related Knowledge, Skills, and Abilities',2),
+(6,'Contribute to the teamwork',2),
+(7,'Keeping the team on track',2),
+(8,'Interactive with the team',2),
+(9,'Expecting Quality',2),
+(10,'Having Related Knowledge, Skills, and Abilities',2);
 
--- Answer score 1-5
-INSERT INTO answers(id, answer) VALUES
-(1,'1'),(2,'2'),(3,'3'),(4,'4'),(5,'5');
 
 INSERT INTO peer_reviews_users(peer_review_id, user_id, status) VALUES
 (1,13,0),(2,13,0),(3,13,0);
 
--- Van answer FIT3047 sem1 2019 iteration1 q1:5, q2:4, q3:1
-INSERT INTO responses(id, date_response, user_id, question_id, answer_id) VALUES
-(1,'2018-07-12 02:30:14',13,1,5),
-(2,'2018-07-12 02:30:14',13,2,4),
-(3,'2018-07-12 02:30:14',13,3,1);
 
 -- FIT3047 sem1 2019 iteration1 peer reviews assigns to team123, team122
 INSERT INTO peer_reviews_teams(peer_review_id, team_id) VALUES

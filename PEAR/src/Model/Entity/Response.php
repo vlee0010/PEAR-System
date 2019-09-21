@@ -10,7 +10,6 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $date_response
  * @property int $user_id
  * @property int $question_id
- * @property int $answer_id
  *
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\Question $question
@@ -31,7 +30,6 @@ class Response extends Entity
         'date_response' => true,
         'user_id' => true,
         'question_id' => true,
-        'answer_id' => true,
         'user' => true,
         'question' => true,
         'answer' => true

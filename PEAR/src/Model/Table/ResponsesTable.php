@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\QuestionsTable&\Cake\ORM\Association\BelongsTo $Questions
- * @property \App\Model\Table\AnswersTable&\Cake\ORM\Association\BelongsTo $Answers
+ * @property \App\Model\Table\AnswersTable&\Cake\ORM\Association\HasMany $Answers
  *
  * @method \App\Model\Entity\Response get($primaryKey, $options = [])
  * @method \App\Model\Entity\Response newEntity($data = null, array $options = [])
@@ -46,9 +46,8 @@ class ResponsesTable extends Table
             'foreignKey' => 'question_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Answers', [
-            'foreignKey' => 'answer_id',
-            'joinType' => 'INNER'
+        $this->hasMany('Answers', [
+            'foreignKey' => 'response_id'
         ]);
     }
 
@@ -83,7 +82,6 @@ class ResponsesTable extends Table
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['question_id'], 'Questions'));
-        $rules->add($rules->existsIn(['answer_id'], 'Answers'));
 
         return $rules;
     }

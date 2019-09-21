@@ -14356,7 +14356,17 @@ a {
 
 a:hover,
 a:focus {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 97, 224, 0.8);;
+}
+
+alink {
+    color: rgba(255, 97, 224, 0.8);
+    font-weight: 300;
+}
+
+alink:hover,
+alink:focus {
+    color: rgba(255, 97, 224, 0.8);;
 }
 
 h1,
