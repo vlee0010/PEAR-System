@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
 
 /**
  * Questions Controller
@@ -28,6 +29,9 @@ class QuestionsController extends AppController
         $peers_teams_query = $peersTeamsTable->find();
         $userTable = TableRegistry::getTableLocator()->get('users');
         $user_query = $userTable->find();
+        $questionsTable = TableRegistry::getTableLocator()->get('questions');
+        $question_query = $questionsTable->find();
+        $responsesTable = TableRegistry::getTableLocator()->get('responses');
         $teamMatches=0;
         foreach ($peers_teams_query as $peer_team){
             if ($peer_team->peer_review_id == $peer_id){
@@ -40,7 +44,28 @@ class QuestionsController extends AppController
                 array_push($user_id_list,$team_user->user_id);
             }
         }
+
         if($this->request->is('post')){
+            foreach($question_query as $question){
+                foreach($user_id_list as $user_id){
+                    $response=$responsesTable->newEntity();
+                    $response->date_response= Time::now();
+                    $response->user_id=$this->Auth->user('id');
+                    $response->question_id=$question->id;
+                    $response->ratee_id=$user_id;
+                    if($question->id != 6){
+                        $response->is_text_number = 0;
+                        $response->rate_number = $this->request->getData('sliderRating_'.$question->id.'_'.$user_id);
+                        $responsesTable->save($response);
+                    }
+                    else{
+                        $response->is_text_number = 1;
+                        $response->rate_text = $this->request->getData('textRating_'.$question->id.'_'.$user_id);
+                        $responsesTable->save($response);
+                    }
+
+                }
+            }
 
         }
         $this->set(compact('questions'));

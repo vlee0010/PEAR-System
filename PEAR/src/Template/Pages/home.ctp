@@ -20,12 +20,12 @@ use Cake\Error\Debugger;
 use Cake\Http\Exception\NotFoundException;
 
 $this->layout = false;
-
-if (!Configure::read('debug')) :
-    throw new NotFoundException(
-        'Please replace src/Template/Pages/home.ctp with your own version or re-enable debug mode.'
-    );
-endif;
+//
+//if (!Configure::read('debug')) :
+//    throw new NotFoundException(
+//        'Please replace src/Template/Pages/home.ctp with your own version or re-enable debug mode.'
+//    );
+//endif;
 
 $cakeDescription = 'CakePHP: the rapid development PHP framework';
 ?>
@@ -82,13 +82,6 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 </div>
             </div>
             <ul class="navbar-nav">
-<!--                <li class="nav-item p-0">-->
-<!--                    <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="--><?//= $this->Url->build(['controller' => 'pages','action'=>'display']);?><!--">-->
-<!--                        <i class="fas fa-home"></i>-->
-<!--                        <p class="d-lg-none d-xl-none">Home</p>-->
-<!--                    </a>-->
-<!--                </li>-->
-
 
                 <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
 

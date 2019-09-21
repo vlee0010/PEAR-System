@@ -7,9 +7,9 @@
             <div class="container">
                 <div class="row">
 
-                    <div class="col-lg-5 col-md-6 offset-lg-0 offset-md-3">
+                    <div class="col-lg-5 col-md-6 offset-lg-0 offset-md-3 order-12">
 
-                        <div><p style="font-size:50px;">pear</p></div>
+
                         <div id="square7" class="square square-7"></div>
                         <div id="square8" class="square square-8"></div>
 
@@ -89,9 +89,20 @@
 
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <h3 class="display-3 text-white">
+                            PEAR
+                            <br>
+                            <br>
+                            <br>
+                            <span class="text-white">Peer Evaluation & Assessment Resource </span>
+                        </h3>
+                        <p class="text-white mb-3 text-left"></p>
+
+                    </div>
                 </div>
-                <div class="register-bg"></div>
-                <div id="square1" class="square square-1"></div>
+<!--                <div class="register-bg"></div>-->
+                <div id="square1" class="square square-1" style="display:.d-md-none .d-lg-block;font-size:3rem;vertical-align: middle;"><span style="color:#222a42;font-weight:900;">Monash Pear Review System</span></div>
                 <div id="square2" class="square square-2"></div>
                 <div id="square3" class="square square-3"></div>
                 <div id="square4" class="square square-4"></div>

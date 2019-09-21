@@ -46,7 +46,7 @@ class AppController extends Controller
             'enableBeforeRedirect' => false,
         ]);
         $this->loadComponent('Flash');
-        $this->loadComponent('Security');
+        //$this->loadComponent('Security');
         $this->loadComponent('Auth', [
             'authenticate' =>[
                 'Form' =>[
