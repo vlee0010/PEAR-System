@@ -90,13 +90,13 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <h3 class="display-3 text-white">
+                        <h1 class="display-3 text-white">
                             PEAR
                             <br>
                             <br>
                             <br>
-                            <span class="text-white">Peer Evaluation & Assessment Resource </span>
-                        </h3>
+                            <span class="text-white text-left">Peer Evaluation & Assessment Resource </span>
+                        </h1>
                         <p class="text-white mb-3 text-left"></p>
 
                     </div>

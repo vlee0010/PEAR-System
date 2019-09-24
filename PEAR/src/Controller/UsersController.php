@@ -164,13 +164,23 @@ class UsersController extends AppController
 
 
             if ($this->request->data('_type') === 'reset'){
-                $email = $this->request->getData('email');
-                $user = $this->Users->find()->where(['email'=>$email])->first();
-                $subject="Password reset";
-                $body="Hi ".$user->firstname." ".$user->lastname."<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/pear/PEAR/users/reset/". $user->token.">Click here to reset</a>";
-                $this->sendEmailToUser($email,$subject,$body);
-                $this->Flash->success('Check your email to reset your password');
-                return $this->redirect(['action' => 'login']);
+                $userEmail = $this->request->getData('email');
+                $userTable = TableRegistry::getTableLocator()->get('users');
+
+                    if ($userTable->find()->where(['email'=>$userEmail])->first()){
+                        $email = $this->request->getData('email');
+                        $user = $this->Users->find()->where(['email'=>$email])->first();
+                        $subject="Password reset";
+                        $body="Hi ".$user->firstname." ".$user->lastname."<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/pear/PEAR/users/reset/". $user->token.">Click here to reset</a>";
+                        $this->sendEmailToUser($email,$subject,$body);
+                        $this->Flash->success('Check your email to reset your password');
+                        return $this->redirect(['action' => 'login']);
+                    }
+                    else{
+                        $this->Flash->error('User Email Doesn\'t exist');
+                    }
+
+
             }
 
 
@@ -254,12 +264,12 @@ class UsersController extends AppController
             array_push($team_peer_id_list,$peerReviewsTeamsTable->find('list',['keyField'=>'team_id','valueField'=>'peer_review_id'])->where(['team_id'=>$team_id])->toArray());
         }
 
-        foreach($team_peer_id_list as $team_peer_id){
-            foreach($team_peer_id as $key=>$value){
-                echo $key;
-                echo $value;
-            }
-        }
+//        foreach($team_peer_id_list as $team_peer_id){
+//            foreach($team_peer_id as $key=>$value){
+//                echo $key;
+//                echo $value;
+//            }
+//        }
         //$this->set(compact('peerReviewMatches'));
         $this->set(compact('peer_query'));
         $this->set(compact('team_peer_id_list'));

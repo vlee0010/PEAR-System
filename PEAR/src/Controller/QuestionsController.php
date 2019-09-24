@@ -31,7 +31,8 @@ class QuestionsController extends AppController
     public function index($peer_id = null)
     {
         $questions = $this->paginate($this->Questions);
-
+        $peersUsersTable =  TableRegistry::getTableLocator()->get('peer_reviews_users');
+        $peer_reviews_users_query = $peersUsersTable->find();
         $teamUserTable = TableRegistry::getTableLocator()->get('teams_users');
         $teams_users_query = $teamUserTable->find();
         $peersTeamsTable = TableRegistry::getTableLocator()->get('peer_reviews_teams');
@@ -75,6 +76,16 @@ class QuestionsController extends AppController
 
                 }
             }
+
+
+                    $query = $peersUsersTable->query();
+                    $query->update()
+                        ->set(['status'=>1])
+                        ->where(['peer_review_id'=>$peer_id,'user_id'=>$this->Auth->user('id')])
+                        ->execute();
+                    $this->redirect(['controller'=>'users','action'=>'studentdash']);
+
+
 
         }
         /**
