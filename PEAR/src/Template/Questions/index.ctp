@@ -5,16 +5,10 @@
  */
 ?>
 
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<style>
-    <?php include 'CSS/question-slider.css' ?>
-
-</style>
 <?= $this->Form->create();?>
 <div class="container">
     <div class="card shadow">
-        <h2 class="text-on-front" style="font-size:50px">Questions</h2>
+        <h2 class="text-on-front" style="font-size:50px">PEAR Questions for Industry Experience Iteration 1</h2>
         <table class="table table-flush" cellpadding="0" cellspacing="0" >
 
             <?php foreach ($questions as $question):?>
@@ -41,11 +35,21 @@
                                                         <?= "Please rate ".$user->firstname." ".$user->lastname?>
                                                         <br>
                                                         <?php if($question->id!=6):?>
-                                                            1<input class="custom-range" name="sliderRating_<?=$question->id;?>_<?=$user_id?>"  type="radio"  min="1" max="5"  step="1" value="1">
-                                                            2<input class="custom-range" name="sliderRating_<?=$question->id;?>_<?=$user_id?>"  type="radio"  min="1" max="5"  step="1" value="2">
-                                                            3<input class="custom-range" name="sliderRating_<?=$question->id;?>_<?=$user_id?>"  type="radio"  min="1" max="5"  step="1" value="3">
-                                                            4<input class="custom-range" name="sliderRating_<?=$question->id;?>_<?=$user_id?>"  type="radio"  min="1" max="5"  step="1" value="4">
-                                                            5<input class="custom-range" name="sliderRating_<?=$question->id;?>_<?=$user_id?>"  type="radio"  min="1" max="5"  step="1" value="5">
+                                                            <br>
+                                                            <input id="sliderA_<?=$question->id;?>_<?=$user_id?>" type="range"  name="sliderRating_<?=$question->id;?>_<?=$user_id?>"
+                                                                   data-provide="slider"
+                                                                   data-slider-ticks="[0,1,2,3,4,5]"
+                                                                   data-slider-ticks-labels='["0", "1", "2", "3", "4", "5"]'
+                                                                   data-slider-ticks-positions="[0,20,40,60,80,100]"
+                                                                   data-slider-min="0"
+                                                                   data-slider-max="5"
+                                                                   data-slider-step="1"
+                                                                   data-slider-value="0"
+                                                                   data-slider-tooltip="hide"
+                                                                   data-value="2" value="2" style="display: none;">
+
+                                                            <br>
+
                                                             <br>
                                                         <?php else:?>
                                                             <div class="form-group">
@@ -74,7 +78,23 @@
 </div>
 
 
+<?= $this->Html->script('core/jquery.min.js') ?>
+<?= $this->Html->script('core/popper.min.js') ?>
+<?= $this->Html->script('core/bootstrap.min.js') ?>
+<?= $this->Html->script('plugins/perfect-scrollbar.jquery.min.js') ?>
+<?= $this->Html->script('plugins/bootstrap-switch.js') ?>
+<?= $this->Html->script('plugins/nouislider.min.js') ?>
+
+<?= $this->Html->script('highlight.min.js') ?>
+<?= $this->Html->script('src/js/bootstrap-slider.js') ?>
+<?= $this->Html->script('demo.js') ?>
+<?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
+<?= $this->Html->css('bootstrap-slider.css') ?>
+
 <?= $this->Form->end();?>
+
+
+
 
 
 

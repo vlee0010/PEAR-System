@@ -1,3 +1,18 @@
+create table peer_reviews_teams
+(
+    peer_review_id int not null,
+    team_id int not null,
+    status tinyint(1) default 0 not null,
+    primary key (peer_review_id, team_id)
+);
+
+create table questions
+(
+    id int auto_increment
+        primary key,
+    description varchar(1000) not null
+);
+
 create table units
 (
     id int auto_increment
@@ -8,82 +23,71 @@ create table units
     year year not null
 );
 
-
-create table units_users
+create table peer_reviews
 (
+    id int auto_increment
+        primary key,
+    date_start datetime not null,
+    date_end datetime not null,
+    date_reminder datetime not null,
+    title varchar(1000) not null,
     unit_id int not null,
-    user_id int not null,
-    primary key (unit_id, user_id),
-    constraint units_users_units_id_fk
-        foreign key (unit_id) references units (id),
-    constraint units_users_users_id_fk
-        foreign key (user_id) references users (id)
+    constraint peer_reviews_units_id_fk
+        foreign key (unit_id) references units (id)
 );
 
 create table teams
 (
     id_ int auto_increment
         primary key,
-    name varchar(255) not null
-);
-
-create table teams_users
-(
-    user_id int not null,
-    team_id int not null,
-    number int not null,
-    constraint teams_users_pk
-        primary key (user_id, team_id),
-    constraint teams_users_teams_id__fk
-        foreign key (team_id) references teams (id_),
-    constraint teams_users_users_id_fk
-        foreign key (user_id) references users (id)
-);
-
-create table peer_reviews
-(
-    id int auto_increment,
-    date_start DATETIME not null,
-    date_end DATETIME not null,
-    date_reminder DATETIME not null,
-    title VARCHAR(1000) not null,
+    name varchar(255) not null,
     unit_id int not null,
-    constraint peer_reviews_pk
-        primary key (id),
-    constraint peer_reviews_units_id_fk
+    constraint FK_teamunit
         foreign key (unit_id) references units (id)
 );
 
-create table peer_reviews_teams
+create table users
 (
-    peer_review_id int not null,
-    team_id int not null,
-    status BOOLEAN default 0 not null,
-    constraint peer_review_team_pk
-        primary key (peer_review_id, team_id)
+    id int auto_increment
+        primary key,
+    firstname varchar(255) not null,
+    lastname varchar(255) not null,
+    email varchar(255) not null,
+    created datetime null,
+    modified datetime null,
+    role varchar(255) null,
+    password varchar(255) not null,
+    verified int null,
+    token varchar(255) null
 );
 
 create table peer_reviews_users
 (
     peer_review_id int not null,
     user_id int not null,
-    status BOOLEAN default 0 not null,
-    constraint peer_reviews_users_pk
-        primary key (user_id, peer_review_id),
+    status tinyint(1) default 0 not null,
+    primary key (user_id, peer_review_id),
     constraint peer_reviews_users_peer_reviews_id_fk
         foreign key (peer_review_id) references peer_reviews (id),
     constraint peer_reviews_users_users_id_fk
         foreign key (user_id) references users (id)
 );
 
-
-
-create table answers
+create table responses
 (
-    id int auto_increment,
-    answer VARCHAR(1000) not null,
-    constraint answers_pk
-        primary key (id)
+    id int auto_increment
+        primary key,
+    date_response datetime not null,
+    user_id int not null,
+    question_id int not null,
+    ratee_id int not null,
+    rate_text varchar(1000) default '' null,
+    rate_number int null,
+    is_text_number tinyint(1) not null,
+    constraint responses_questions_id_fk
+        foreign key (question_id) references questions (id),
+    constraint responses_users_id_fk
+        foreign key (user_id) references users (id)
 );
 
 create table answers
@@ -99,98 +103,26 @@ create table answers
         foreign key (user_id) references users (id)
 );
 
-
-create table questions
+create table teams_users
 (
-    id int auto_increment
-        primary key,
-    description varchar(1000) not null,
-    peer_review_id int not null,
-    constraint questions_peer_reviews_id_fk
-        foreign key (peer_review_id) references peer_reviews (id)
-);
-
-create table responses
-(
-    id int auto_increment
-        primary key,
-    date_response datetime not null,
     user_id int not null,
-    question_id int not null,
-    constraint responses_questions_id_fk
-        foreign key (question_id) references questions (id),
-    constraint responses_users_id_fk
+    team_id int not null,
+    number int not null,
+    primary key (user_id, team_id),
+    constraint teams_users_teams_id__fk
+        foreign key (team_id) references teams (id_),
+    constraint teams_users_users_id_fk
         foreign key (user_id) references users (id)
 );
 
-
-
-
-
--- Insert some dummy data to database for testing
-INSERT INTO units(id, title, code, semester, year) VALUES
-(1, 'Industry Experience','FIT3047','1',2019),
-(2, 'Industry Experience','FIT3047','2', 2019),
-(3, 'Ios application development', 'FIT3178','A',2019),
-(4, 'Ios application development','FIT3178','A',2020);
-
-INSERT INTO teams(id_, name) VALUES
-(1,'Team123'), (2,'Team122');
-
--- Van, team 123, number of mem 2
-INSERT INTO teams_users(user_id, team_id, number) VALUES
-(13,1,2);
-
--- Van enrols in FIT3047 sem1 2019, FIT3178 semA 3178
-INSERT INTO units_users(unit_id, user_id) VALUES
-(1,13),(3,13);
-
--- FIT3047 sem1 2019 has 3 peer reviews listed below
-INSERT INTO peer_reviews(id, date_start, date_end, date_reminder, title, unit_id) VALUES
-(1,'2019-07-08 02:30:14', '2019-07-14 02:30:14','2018-07-12 02:30:14','Industry Experience Iteration 1 Peer Review',1),
-(2, '2019-09-08 02:30:14', '2019-09-14 02:30:14', '2018-09-12 02:30:14', 'Industry Experience Iteration 2 Peer Review', 1),
-(3,'2019-10-08 02:30:14', '2019-10-14 02:30:14','2018-10-12 02:30:14','Industry Experience Iteration 3 Peer Review',1);
-
--- 3 questions for FIT3047 sem1 2019 iteration1 peer reviews
-INSERT INTO questions(id, description, peer_review_id) VALUES
-(1,'Contribute to the teamwork',1),
-(2,'Keeping the team on track',1),
-(3,'Interactive with the team',1),
-(4,'Expecting Quality',1),
-(5,'Having Related Knowledge, Skills, and Abilities',2),
-(6,'Contribute to the teamwork',2),
-(7,'Keeping the team on track',2),
-(8,'Interactive with the team',2),
-(9,'Expecting Quality',2),
-(10,'Having Related Knowledge, Skills, and Abilities',2);
-
-
-INSERT INTO peer_reviews_users(peer_review_id, user_id, status) VALUES
-(1,13,0),(2,13,0),(3,13,0);
-
-
--- FIT3047 sem1 2019 iteration1 peer reviews assigns to team123, team122
-INSERT INTO peer_reviews_teams(peer_review_id, team_id) VALUES
-(1,1),(1,2);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+create table units_users
+(
+    unit_id int not null,
+    user_id int not null,
+    primary key (unit_id, user_id),
+    constraint units_users_units_id_fk
+        foreign key (unit_id) references units (id),
+    constraint units_users_users_id_fk
+        foreign key (user_id) references users (id)
+);
 
