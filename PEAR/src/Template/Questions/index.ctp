@@ -19,9 +19,9 @@
                             <div class="panel panel-default" id="panel_<?php echo $question->id ?>">
                                 <div class="panel-heading" role="tab" id="headingTwo">
                                     <h4 class="panel-title">
-                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $question->id ?>" aria-expanded="false" aria-controls="collapseTwo">
+                                        <a class="collapsed" onclick="changeClass()" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $question->id ?>" aria-expanded="false" aria-controls="collapseTwo">
                                             <?php echo "Question " . $question->id. " - ". $question->description ?>
-                                            <i class="fa fa-plus-circle pull-right"></i>
+                                            <i id="ifopen<?php echo $question->id ?>"  class="fa fa-plus-circle pull-right"></i>
                                         </a>
                                     </h4>
                                 </div>
@@ -50,7 +50,7 @@
 
                                                             <br>
 
-                                                                <br>
+                                                            <br>
                                                             <br>
                                                         <?php else:?>
                                                             <div class="form-group">
@@ -72,7 +72,7 @@
                 </tbody>
 
             <?php endforeach; ?>
-            <?=$this->Form->submit('Submit', ['class'=>"btn btn-success", 'style'=>'text-align:center;']);?>
+            <?=$this->Form->submit('Submit', ['class'=>"btn btn-success", 'style'=>'text-align:center;color:black']);?>
 
         </table>
     </div>
@@ -94,7 +94,25 @@
 
 <?= $this->Form->end();?>
 
+<script>
 
+    function changeClass(){
+        if(event.target.className=="fa fa-plus-circle pull-right"){
+            event.target.className="fa fa-minus-circle pull-right";
+
+        }
+        else if(event.target.className=="fa fa-minus-circle pull-right"){
+            event.target.className="fa fa-plus-circle pull-right";
+        }
+        else if(event.target.children[0].className=="fa fa-plus-circle pull-right"){
+            event.target.children[0].className="fa fa-minus-circle pull-right";
+        }
+        else if(event.target.children[0].className=="fa fa-minus-circle pull-right"){
+            event.target.children[0].className="fa fa-plus-circle pull-right";
+        }
+
+    }
+</script>
 
 
 
