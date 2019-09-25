@@ -54,8 +54,8 @@
                                     <td><?=$unit->semester?></td>
                                 <?php endif; ?>
                             <?php endforeach;?>
-                            <td><?=$date_start->i18nFormat('dd-MM-yyyy')?> </td>
-                            <td><?=$due_date->i18nFormat('dd-MM-yyyy')?> </td>
+                            <td><?=$date_start->i18nFormat('dd-MMM-yyyy')?> </td>
+                            <td><?=$due_date->i18nFormat('dd-MMM-yyyy')?> </td>
 
                             <?php foreach ($peer_review_user_query as $peer_review_user) : ?>
                                 <?php if ($peer_review_user->user_id==$studentid and $peer_review_user->peer_review_id ==$peer_id) : ?>

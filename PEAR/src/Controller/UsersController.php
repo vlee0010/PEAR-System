@@ -309,11 +309,8 @@ class UsersController extends AppController
                 $subject = 'Please Click the link to confirm your Email Verification';
                 $body = 'Hi, ' . $myFirstName . ' ' . $myLastName;
                 $body .= "<br><br>Please Click the link below to verify your registration.";
-<<<<<<< HEAD
-                $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/pear/PEAR/users/verification/".$myToken.">Verification Link</a>" ;
-=======
                 $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/development/team123-app/PEAR/users/verification/".$myToken.">Verification Link</a>" ;
->>>>>>> f41e1425af4e72c341eaa2528e1213a52e1af236
+
 
 
                 $email = new Email('default');
