@@ -13,7 +13,7 @@
 
             <?php foreach ($questions as $question):?>
                 <tbody>
-                <div class="row">
+                <div id="myModal" class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default" id="panel_<?php echo $question->id ?>">

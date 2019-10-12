@@ -14,6 +14,11 @@
                                 <h5 class="card-title">Sign Up</h5>
                             </div>
                             <div class="card-body">
+                                    <?php $this->Form->setTemplates([
+                                    'inputContainer' => '<div class="input {{type}}{{required}}">{{content}}</div>',
+                                    'input'         => '<input type="{{type}}" class="form-control" name="{{name}}" {{attrs}}/>',
+                                    'inputContainerError' => '<div class="input {{type}}{{required}} error">{{content}}{{error}}</div>'
+                                ]); ?>
                                 <?= $this->Form->create($user);?>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -21,7 +26,7 @@
                                                 <i class="tim-icons icon-single-02"></i>
                                             </div>
                                         </div>
-                                        <?= $this->Form->text('firstname',array('type'=>'text', 'class'=>'form-control', 'placeholder'=>'First Name'));?>
+                                        <?= $this->Form->text('firstname',array('required' => false, 'type'=>'text', 'placeholder'=>'First Name'));?>
                                     </div>
 
 
@@ -31,7 +36,7 @@
                                             <i class="tim-icons icon-single-02"></i>
                                         </div>
                                     </div>
-                                    <?= $this->Form->text('lastname',array('type'=>'text','class'=>'form-control', 'placeholder'=>'Last Name'));?>
+                                    <?= $this->Form->text('lastname',array('required' => false, 'type'=>'text', 'placeholder'=>'Last Name'));?>
                                 </div>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -39,7 +44,15 @@
                                                 <i class="tim-icons icon-email-85"></i>
                                             </div>
                                         </div>
-                                        <?=$this->Form->text('email',array('type'=>'email','name'=>'email','class'=>'form-control','placeholder'=>'Monash Email','pattern'=>'[a-z0-9]+@student+\.+monash+\.+edu'));?>
+                                        <?=$this->Form->text('email',array('required' => false, 'type'=>'email',
+                                            'name'=>'email',
+                                            'placeholder'=>'Monash Email',
+                                            'pattern'=>'[a-z0-9]+@student+\.+monash+\.+edu'
+                                            //'oninvalid' => 'setCustomValidity(\'Without trailing zero\')'
+                                            ));
+
+                                       ?>
+
                                     </div>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -47,7 +60,7 @@
                                                 <i class="tim-icons icon-lock-circle"></i>
                                             </div>
                                         </div>
-                                        <?= $this->Form->text('password', array('type'=>'password','class'=>'form-control', 'placeholder'=>'Password','name'=>'password'));?>
+                                        <?= $this->Form->text('password', array('required' => false, 'type'=>'password', 'placeholder'=>'Password','name'=>'password'));?>
                                     </div>
 <!--                                    <div class="form-check text-left">-->
 <!--                                        <label class="form-check-label">-->

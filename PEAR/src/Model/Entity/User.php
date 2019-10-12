@@ -55,4 +55,12 @@ class User extends Entity
     protected $_hidden = [
         'password'
     ];
+
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->requirePresence('email', 'create')
+            ->notEmpty('email');
+    }
+
 }

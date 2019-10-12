@@ -10,6 +10,7 @@ use Cake\Core\App;
 use Cake\Controller\Exception\SecurityException;
 use Cake\Utility\Security;
 use Cake\Mailer\Email;
+use App\Model\Entity\Role;
 /**
  * Users Controller
  *
@@ -131,14 +132,27 @@ class UsersController extends AppController
             if($this->request->data('_type')==='login') {
                 $user = $this->Auth->identify();
                 if ($user) {
-                    $this->Auth->setUser($user);
-                    $user = $this->Users->find()->where(['id' => $this->Auth->user('id')])->first();
-                    if ($user->verified) {
-                        $this->redirect(['controller' => 'users', 'action' => 'studentdash']);
-                    } else {
-                        $this->Flash->error('Please verify your Email address first');
-                        $this->Auth->logout();
+                    if (Role::isStaff($user['role'])){
+                        $this->Auth->setUser($user);
+                        $user = $this->Users->find()->where(['id' => $this->Auth->user('id')])->first();
+                        if ($user->verified) {
+                            $this->redirect(['controller' => 'staff', 'action' => 'index']);
+                        } else {
+                            $this->Flash->error('Please verify your Email address first');
+                            $this->Auth->logout();
+                        }
                     }
+                    elseif (Role::isStudent($user['role'])){
+                        $this->Auth->setUser($user);
+                        $user = $this->Users->find()->where(['id' => $this->Auth->user('id')])->first();
+                        if ($user->verified) {
+                            $this->redirect(['controller' => 'users', 'action' => 'studentdash']);
+                        } else {
+                            $this->Flash->error('Please verify your Email address first');
+                            $this->Auth->logout();
+                        }
+                    }
+
                 } else {
                     $this->Flash->error('Unable to Log in, Please Check your Email & Password');
                 }
@@ -301,6 +315,7 @@ class UsersController extends AppController
             $user->email = $myEmail;
             $user->password = $myPassword;
             $user->token = $myToken;
+            $user->role = Role::STUDENT;
 
             if ($this->Users->save($user)){
                 $this->Flash->set('Your Registration is successful, your confirmation email has been sent to your email address. Please Verify.',['element'=>'success']);

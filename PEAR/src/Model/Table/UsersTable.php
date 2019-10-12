@@ -79,18 +79,18 @@ class UsersTable extends Table
             ->scalar('firstname')
             ->maxLength('firstname', 255)
             ->requirePresence('firstname', 'create')
-            ->notEmptyString('firstname');
+            ->notEmptyString('firstname','Please enter your first name');
 
         $validator
             ->scalar('lastname')
             ->maxLength('lastname', 255)
             ->requirePresence('lastname', 'create')
-            ->notEmptyString('lastname');
+            ->notEmptyString('lastname','Please enter your last name');
 
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmptyString('email');
+            ->notEmptyString('email','Please enter your email');
 
 //        $validator
 //            ->scalar('role')
@@ -102,7 +102,7 @@ class UsersTable extends Table
             ->scalar('password')
             ->maxLength('password', 255)
             ->requirePresence('password', 'create')
-            ->notEmptyString('password');
+            ->notEmptyString('password','Please enter your password');
 
         return $validator;
     }
