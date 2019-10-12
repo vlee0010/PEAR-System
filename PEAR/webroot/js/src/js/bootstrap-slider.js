@@ -837,7 +837,7 @@ const windowIsDefined = (typeof window === "object");
 				this.handle1.addEventListener("focus", this.showTooltip, false);
 				this.handle1.addEventListener("blur", this.hideTooltip, false);
 
-				
+
 				this.handle2.addEventListener("focus", this.showTooltip, false);
 				this.handle2.addEventListener("blur", this.hideTooltip, false);
 
@@ -907,8 +907,43 @@ const windowIsDefined = (typeof window === "object");
 				focus: false,
 				tooltip_position: null,
 				labelledby: null,
-				rangeHighlights: []
+				rangeHighlights: [],
+                modify_label_layout:false
 			},
+
+            _modifyLabelOffset: function(){
+                var positions = [];
+                var $sliderContainer=$(this.element).prevAll('.slider');
+                var $ticks = $sliderContainer.find('.slider-tick');
+                var $labels = $sliderContainer.find('.slider-tick-label');
+                $sliderContainer.css('margin-bottom', '12px');
+                $ticks.each(function () {
+                    var $this = $(this);
+                    var tickWidth = $this.width();
+                    var tickLeft = $this.position().left;
+                    positions.push(tickLeft - (tickWidth))
+                });
+                $labels.each(function (i,e) {
+                    var $this = $(this);
+                    $this.css('width', 'auto');
+                    $this.css('position', 'absolute');
+                    $this.css('left', positions[i]+'px');
+                });
+                $this=this;
+                $( window ).resize(function() {
+                    $this._delay(function(){
+                        $this._modifyLabelOffset();
+                    }, 500);
+                });
+            },
+
+            _delay: (function(){
+                var timer = 0;
+                return function(callback, ms){
+                    clearTimeout (timer);
+                    timer = setTimeout(callback, ms);
+                };
+            })(),
 
 			getElement: function() {
 				return this.sliderElem;

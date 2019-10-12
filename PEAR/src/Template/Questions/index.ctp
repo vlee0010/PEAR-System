@@ -36,10 +36,13 @@
                                                         <br>
                                                         <?php if($question->id!=6):?>
                                                             <br>
-                                                            <input id="sliderA_<?=$question->id;?>_<?=$user_id?>" type="range"  name="sliderRating_<?=$question->id;?>_<?=$user_id?>"
+                                                            <input id="sliderA_<?=$question->id;?>_<?=$user_id?>" type="range" name="sliderRating_<?=$question->id;?>_<?=$user_id?>"
+
+                                                                   pattern="[1-5]"
+                                                                   required="required"
                                                                    data-provide="slider"
                                                                    data-slider-ticks="[0,1,2,3,4,5]"
-                                                                   data-slider-ticks-labels='["0", "1", "2", "3", "4", "5"]'
+                                                                   data-slider-ticks-labels='["N/A", "Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]'
                                                                    data-slider-ticks-positions="[0,20,40,60,80,100]"
                                                                    data-slider-min="0"
                                                                    data-slider-max="5"
@@ -72,7 +75,6 @@
                 </tbody>
 
             <?php endforeach; ?>
-            <?=$this->Form->submit('Submit', ['class'=>"btn btn-success", 'style'=>'text-align:center;color:black']);?>
 
         </table>
     </div>
@@ -96,6 +98,7 @@
 
 <script>
 
+
     function changeClass(){
         if(event.target.className=="fa fa-plus-circle pull-right"){
             event.target.className="fa fa-minus-circle pull-right";
@@ -112,6 +115,16 @@
         }
 
     }
+
+    //
+    // function validateInput(input) {
+    //     var string =  input.id.toString();
+    //     var inputValue = document.getElementById(string);
+    //     var idInputValue = inputValue.value.toString();
+    //     if (idInputValue == "0") {
+    //         alert(idInputValue);
+    //     }
+    // }
 </script>
 
 
