@@ -110,9 +110,9 @@
         questionsArray.forEach(function(e){
             e.classList.toggle('show');
             if (e.classList.contains('show')){
-                (e.parentElement.children[0].children[0].children[0].children[0].className = 'fa fa-minus-circle pull right');
+                (e.parentElement.children[0].children[0].children[0].children[0].className = 'fa fa-minus-circle pull-right');
             } else{
-                (e.parentElement.children[0].children[0].children[0].children[0].className = 'fa fa-plus-circle pull right');
+                (e.parentElement.children[0].children[0].children[0].children[0].className = 'fa fa-plus-circle pull-right');
             }
 
         })
