@@ -1,0 +1,47 @@
+.incomplete_link{
+    text-decoration: underline;
+}
+
+#myTable{
+    border:none;
+}
+
+    /*#myTable_wrapper a.paginate_button{*/
+    /*    background-color:#1f2251;*/
+    /*    color:white !important;*/
+    /*}*/
+
+    /*#myTable_wrapper a.paginate_button*/
+
+#myTable_wrapper{
+    padding:20px;
+}
+#myTable_wrapper select{
+    background-color:#1f2251;
+    border:none;
+    color:#fff ;
+    opacity: 0.8;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current{
+    background:none;
+    border:none;
+    color:#fff !important;
+}
+
+
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+    background:none;
+    color:#fff !important;
+    opacity: 1;
+    border:none;
+}
+
+#myTable tbody tr{
+    background-color:#1f2251;
+}
+
+#myTable_info{
+    color:#fff;
+}

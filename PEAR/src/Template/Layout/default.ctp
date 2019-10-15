@@ -33,11 +33,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->Html->css('nucleo-icons.css') ?>
     <?= $this->Html->css('blk-design-system.css') ?>
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="canonical" href="https://www.creative-tim.com/product/blk-design-system">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <?= $this->Html->css('custom.css') ?>
 </head>
 <body class="register-page">
 
@@ -138,6 +139,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->Html->script('blk-design-system.min.js') ?>
     <?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
 <!--    <script>-->
 <!--        var slider = document.getElementById('sliderRegular');-->
@@ -153,5 +155,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <!---->
 <!---->
 <!--    </script>-->
+
+    <script>
+
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
 </body>
 </html>

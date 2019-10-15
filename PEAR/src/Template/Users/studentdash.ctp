@@ -4,12 +4,11 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
-<link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
 <div class="container">
     <div class="card shadow">
         <h2 class="text-on-front" style="font-size:50px">Available Peer Review Tasks</h2>
-        <table class="table table-flush">
+        <table id="myTable" class="table table-flush">
             <thead>
             <tr>
                 <th>Title</th>
@@ -62,7 +61,7 @@
                                     <td><?php if($peer_review_user->status){
                                             echo 'Complete';
                                         }else{
-                                            echo $this->Html->link('Incomplete',['controller'=>'questions','action'=>'index',$peer_id]);
+                                            echo $this->Html->link('Incomplete',['controller'=>'questions','class'=>'incomplete_link','action'=>'index',$peer_id]);
                                         }
 
                                         ?></td>
