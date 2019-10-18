@@ -18,6 +18,7 @@ class StaffController extends AppController
         $this->loadModel('teams_users');
         $this->loadModel('teams');
         $this->loadModel('Classes');
+        $this->loadModel('peer_reviews_users');
 
 
     }
@@ -39,20 +40,30 @@ class StaffController extends AppController
         $this->set(compact('unit_list'));
     }
     public function displayclass($id=null){
-        $class_id_list=$this->units_classes->find('list',array('field',array('class_id')))->where(['unit_id'=>$id]);
+        $unit_class_list=$this->units_classes->find()->where(['unit_id'=>$id]);
+        $class_id_list=[];
+        $peer_review=$this->peer_reviews->find()->where(['unit_id'=>$id,'status'=>0])->first();
+        $peer_id=$peer_review->id;
+        foreach ($unit_class_list as $unit_class) {
+            array_push($class_id_list,$unit_class->class_id);
+        }
         $class_list=[];
         foreach ($class_id_list as $class_id){
             array_push($class_list,$this->Classes->find()->where(['id'=>$class_id])->first());
+
         }
-        $this->set(compact('class_list'));
+        $this->set(compact('class_list','peer_id'));
     }
-    public function displaystudent($id=null){
+    public function displaystudent($id=null,$peer_id=null){
         $student_id_list=$this->students_classes->find('list',array('field',array('student_id')))->where(['class_id'=>$id]);
         $student_list=[];
+        $peer_review_user_list=[];
         foreach ($student_id_list as $student_id){
             array_push($student_list,$this->Users->find()->where(['id'=>$student_id])->first());
+            array_push($peer_review_user_list,$this->peer_reviews_users->find()->where(['peer_review_id'=>$peer_id,'user_id'=>$student_id])->first());
         }
-        $this->set(compact('student_list'));
+        $peer_review=$this->peer_reviews->find()->where(['id'=>$peer_id])->first();
+        $this->set(compact('student_list','peer_review','peer_review_user_list'));
 
     }
 }

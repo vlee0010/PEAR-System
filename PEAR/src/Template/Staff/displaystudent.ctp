@@ -20,8 +20,18 @@
                 <tr>
                     <td>000</td>
                     <td><?=$student->firstname.' '.$student->lastname?></td>
-                    <td>asdas</td>
-                    <td>111</td>
+                    <td><?=$peer_review->title?></td>
+                    <td>
+                        <?php foreach ($peer_review_user_list as $peer_review_user): ?>
+                            <?php if($peer_review_user->user_id==$student->id): ?>
+                                <?php if($peer_review_user->status==0):?>
+                                    <?='Incomplete'?>
+                                <?php else:?>
+                                    <?='Complete'?>
+                                <?php endif;?>
+                            <?php endif; ?>
+                        <?php endforeach;?>
+                    </td>
                 </tr>
             <?php endforeach;?>
         </tbody>
