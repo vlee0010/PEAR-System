@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
-
 <div class="container">
     <div class="card shadow">
         <h2 class="text-on-front" style="font-size:50px">Available Peer Review Tasks</h2>

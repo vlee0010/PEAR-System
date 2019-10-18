@@ -39,7 +39,8 @@ class User extends Entity
         'created' => true,
         'modified' => true,
         'role' => true,
-        'password' => true
+        'password' => true,
+        'token'=>true
     ];
 
 

@@ -270,7 +270,7 @@ class UsersController extends AppController
         foreach ($teamMatches as $teamMatch){
             $teamID = $teamMatch->team_id;
             $teams=$teamsTable->find()->where(['id_' => $teamID])->first();
-
+            //duoyu
             array_push($team_id_list,$teams->id_);
         }
         $team_peer_id_list=[];
@@ -315,6 +315,7 @@ class UsersController extends AppController
             $user->email = $myEmail;
             $user->password = $myPassword;
             $user->token = $myToken;
+            $user->verified = 0;
             $user->role = Role::STUDENT;
 
             if ($this->Users->save($user)){
