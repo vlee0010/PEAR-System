@@ -125,7 +125,7 @@ $this->layout=false;
         <div class="card col-12 col-md-4 col-lg-3">
 
                 <div class="card-img" >
-                    <img src="https://source.unsplash.com/user/vincentyaha/likes?sig=<?=rand()?>" alt="">
+                    <img style="max-width: 100%"src="https://source.unsplash.com/user/vincentyaha/likes?sig=<?=rand()?>" alt="">
                 </div>
                 <div class="card-text">
                     <a id="staff-unit-item" class="" href=<?=$this->Url->build(['action'=>'displayclass',$unit->id]);?>><?=$unit->code.' '.$unit->title?></a>
