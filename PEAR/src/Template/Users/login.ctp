@@ -102,7 +102,7 @@
                     </div>
                 </div>
 <!--                <div class="register-bg"></div>-->
-                <div id="square1" class="square square-1" style="display:.d-md-none .d-lg-block;font-size:3rem;vertical-align: middle;"><span style="color:#222a42;font-weight:900;">Monash Pear Review System</span></div>
+
                 <div id="square2" class="square square-2"></div>
                 <div id="square3" class="square square-3"></div>
                 <div id="square4" class="square square-4"></div>

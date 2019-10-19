@@ -308,6 +308,7 @@ class UsersController extends AppController
             $myEmail = $this->request->getData('email');
 //            $myPassword = Security::hash($this->request->getData('password'),'sha1',false);
             $myPassword =$this->request->getData('password');
+            $myId = $this->request->getData('studentid');
             $myToken = Security::hash(Security::randomBytes(32));
 
             $user->firstname = $myFirstName;
@@ -316,6 +317,7 @@ class UsersController extends AppController
             $user->password = $myPassword;
             $user->token = $myToken;
             $user->verified = 0;
+            $user->id = $myId;
             $user->role = Role::STUDENT;
 
             if ($this->Users->save($user)){
@@ -325,8 +327,8 @@ class UsersController extends AppController
                 $subject = 'Please Click the link to confirm your Email Verification';
                 $body = 'Hi, ' . $myFirstName . ' ' . $myLastName;
                 $body .= "<br><br>Please Click the link below to verify your registration.";
+//                $body .= "<br><br><a href=http://localhost:8888/PEAR/PEAR/users/verification/".$myToken.">Verification Link</a>" ;
                 $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/development/team123-app/PEAR/users/verification/".$myToken.">Verification Link</a>" ;
-
 
 
                 $email = new Email('default');
