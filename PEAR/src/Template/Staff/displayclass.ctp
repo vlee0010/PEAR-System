@@ -4,6 +4,7 @@
  */
 $this->layout=false;
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +63,6 @@ $this->layout=false;
                 <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
 
                     <li class="nav-item p-0">
-
                         <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
                             <i class="fas fa-home"></i>
                             <p class="d-lg-none d-xl-none">Home</p>
@@ -97,46 +97,38 @@ $this->layout=false;
                     </li>
 
                 <?php endif;?>
-
-
-
-
-
-
-
             </ul>
         </div>
     </div>
 </nav>
+
+
+<!--starts here-->
+
+
 <div id="staff-container" class="container">
+    <h1>Class Section List</h1>
+    <div class="row">
 
 
-
-
-
-
-<h1>Class List</h1>
-<div class="row">
-<?php foreach($unit_list as $unit):?>
-
-
-
-
+<?php foreach($class_list as $class):?>
         <div class="card col-12 col-md-4 col-lg-3">
-
-                <div class="card-img" >
-                    <img style="max-width: 100%"src="https://source.unsplash.com/user/vincentyaha/likes?sig=<?=rand()?>" alt="">
-                </div>
-                <div class="card-text">
-                    <a id="staff-unit-item" class="" href=<?=$this->Url->build(['action'=>'displayclass',$unit->id]);?>><?=$unit->code.' '.$unit->title?></a>
-                </div>
+            <div class="card-img" >
+                <img src="https://source.unsplash.com/user/vincentyaha/likes?sig=<?=rand()?>" alt="">
+            </div>
+            <div class="card-text">
+                <a id="class-list-item" href=<?=$this->Url->build(['action'=>'displaystudent',$class->id,$peer_id]);?>><?=$class->class_name?></a>
+            </div>
 
         </div>
 
-
 <?php endforeach;?>
+
 </div>
 </div>
+
+
+
 <?= $this->Html->script('core/jquery.min.js') ?>
 <?= $this->Html->script('core/popper.min.js') ?>
 <?= $this->Html->script('core/bootstrap.min.js') ?>
@@ -152,4 +144,3 @@ $this->layout=false;
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 </body>
 </html>
-

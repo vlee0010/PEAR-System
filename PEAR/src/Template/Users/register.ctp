@@ -38,6 +38,14 @@
                                     </div>
                                     <?= $this->Form->text('lastname',array('required' => false, 'type'=>'text', 'placeholder'=>'Last Name'));?>
                                 </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="tim-icons icon-single-02"></i>
+                                        </div>
+                                    </div>
+                                    <?= $this->Form->text('studentid',array('required' => false, 'type'=>'text', 'placeholder'=>'Student Id'));?>
+                                </div>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
