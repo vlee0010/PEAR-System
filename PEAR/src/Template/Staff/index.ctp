@@ -84,8 +84,9 @@ $this->layout=false;
                 <?php else :?>
 
 
+
                     <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'users', 'action'=>'studentdash'])?>'>
+                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'staff', 'action'=>'index'])?>'>
                             <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.firstname');?>
                         </a>
                     </li>
@@ -118,9 +119,6 @@ $this->layout=false;
 <h1>Class List</h1>
 <div class="row">
 <?php foreach($unit_list as $unit):?>
-
-
-
 
         <div class="card col-12 col-md-4 col-lg-3">
 
