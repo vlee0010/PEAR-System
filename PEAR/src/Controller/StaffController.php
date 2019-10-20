@@ -37,7 +37,33 @@ class StaffController extends AppController
         foreach($unit_id_list as $unit_id){
             array_push($unit_list,$this->Units->find()->where(['id'=>$unit_id])->first());
         }
+
+        $class_query = $this->units_tutors->find()->where(['tutor_id'=>$tutor_id]);
+        $class_activity = $class_query->select([
+            'unitname' => 'u.title',
+            'unitcode' => 'u.code',
+            'activity' => 'p.title',
+            'datestart' => 'p.date_start',
+            'dateend' => 'p.date_end',
+        ])
+            ->join([
+                'u' => [
+                    'table' => 'units',
+                    'conditions' => [
+                        'u.id = units_tutors.unit_id',
+                        ]
+                ],
+                'p' => [
+                    'table' => 'peer_reviews',
+                    'conditions' => [
+                        'p.unit_id = u.id'
+                    ]
+                ],
+            ]);
+
+        $this->set('class_activity',$class_activity);
         $this->set(compact('unit_list'));
+
     }
     public function displayclass($id=null){
         $unit_class_list=$this->units_classes->find()->where(['unit_id'=>$id]);
