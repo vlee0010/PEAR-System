@@ -22,7 +22,7 @@ $this->layout=false;
 
     <?= $this->Html->css('nucleo-icons.css') ?>
     <?= $this->Html->css('blk-design-system.css') ?>
-    <?= $this->Html->css('staff.css')?>
+<!--    --><?//= $this->Html->css('staff.css')?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="canonical" href="https://www.creative-tim.com/product/blk-design-system">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -34,7 +34,7 @@ $this->layout=false;
 <nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
     <div  class="container">
         <div class="navbar-translate">
-            <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'pages','action'=>'display'])?>'   data-placement="bottom" >
+            <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'staff','action'=>'index  '])?>'   data-placement="bottom" >
                 <span>PEAR</span> Monash
             </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,8 +132,34 @@ $this->layout=false;
         </div>
 
 
+
 <?php endforeach;?>
 </div>
+
+    <table class="table" >
+        <thead>
+        <tr>
+            <th>Class</th>
+            <th>Activity (Section)</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>% Comp.</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($class_activity as $class_activity):?>
+        <tr>
+            <td><?=$class_activity->unitname.' '.$class_activity->unitcode?></td>
+            <td><?=$class_activity->activity?></td>
+            <td><?=$class_activity->datestart?></td>
+            <td><?=$class_activity->dateend?></td>
+            <td></td>
+            <td><button type="button" class="btn btn-info">Info</button></td>
+        </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
 <?= $this->Html->script('core/jquery.min.js') ?>
 <?= $this->Html->script('core/popper.min.js') ?>
@@ -150,4 +176,3 @@ $this->layout=false;
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 </body>
 </html>
-

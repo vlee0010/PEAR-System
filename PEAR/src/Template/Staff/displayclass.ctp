@@ -85,7 +85,7 @@ $this->layout=false;
 
 
                     <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'users', 'action'=>'studentdash'])?>'>
+                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'staff', 'action'=>'index'])?>'>
                             <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.firstname');?>
                         </a>
                     </li>
