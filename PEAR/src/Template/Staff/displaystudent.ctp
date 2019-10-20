@@ -116,6 +116,8 @@ $this->layout=false;
 
     <h1>Student Completion</h1>
 
+    <button type="button" class="btn btn-primary">CSV</button>
+
     <table id="student-table" class="table">
         <thead>
         <tr>
