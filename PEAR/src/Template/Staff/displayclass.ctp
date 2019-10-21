@@ -23,7 +23,7 @@ $this->layout=false;
 
     <?= $this->Html->css('nucleo-icons.css') ?>
     <?= $this->Html->css('blk-design-system.css') ?>
-    <?= $this->Html->css('staff.css')?>
+<!--    --><?//= $this->Html->css('staff.css')?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="canonical" href="https://www.creative-tim.com/product/blk-design-system">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -124,6 +124,31 @@ $this->layout=false;
 
 <?php endforeach;?>
 
+
+        <table class="table" >
+            <thead>
+            <tr>
+                <th>Class</th>
+                <th>Activity (Section)</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>% Comp.</th>
+                <th>View</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($class_activity as $class_activity):?>
+                <tr>
+                    <td><?=$class_activity->unitname.' '.$class_activity->unitcode?></td>
+                    <td><?=$class_activity->activity?></td>
+                    <td><?=$class_activity->datestart?></td>
+                    <td><?=$class_activity->dateend?></td>
+                    <td></td>
+                    <td><button type="button" class="btn btn-info">Info</button></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
 </div>
 </div>
 

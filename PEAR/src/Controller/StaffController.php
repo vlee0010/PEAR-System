@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Model\Entity\Role;
+use Cake\Mailer\Email;
+use Cake\Mailer\TransportFactory;
 
 class StaffController extends AppController
 {
@@ -38,30 +40,6 @@ class StaffController extends AppController
             array_push($unit_list,$this->Units->find()->where(['id'=>$unit_id])->first());
         }
 
-        $class_query = $this->units_tutors->find()->where(['tutor_id'=>$tutor_id]);
-        $class_activity = $class_query->select([
-            'unitname' => 'u.title',
-            'unitcode' => 'u.code',
-            'activity' => 'p.title',
-            'datestart' => 'p.date_start',
-            'dateend' => 'p.date_end',
-        ])
-            ->join([
-                'u' => [
-                    'table' => 'units',
-                    'conditions' => [
-                        'u.id = units_tutors.unit_id',
-                        ]
-                ],
-                'p' => [
-                    'table' => 'peer_reviews',
-                    'conditions' => [
-                        'p.unit_id = u.id'
-                    ]
-                ],
-            ]);
-
-        $this->set('class_activity',$class_activity);
         $this->set(compact('unit_list'));
 
     }
@@ -78,6 +56,31 @@ class StaffController extends AppController
             array_push($class_list,$this->Classes->find()->where(['id'=>$class_id])->first());
 
         }
+        $tutor_id=$this->Auth->user('id');
+        $class_query = $this->units_tutors->find()->where(['tutor_id'=>$tutor_id]);
+        $class_activity = $class_query->select([
+            'unitname' => 'u.title',
+            'unitcode' => 'u.code',
+            'activity' => 'p.title',
+            'datestart' => 'p.date_start',
+            'dateend' => 'p.date_end',
+        ])
+            ->join([
+                'u' => [
+                    'table' => 'units',
+                    'conditions' => [
+                        'u.id = units_tutors.unit_id',
+                    ]
+                ],
+                'p' => [
+                    'table' => 'peer_reviews',
+                    'conditions' => [
+                        'p.unit_id = u.id'
+                    ]
+                ],
+            ]);
+
+        $this->set('class_activity',$class_activity);
         $this->set(compact('class_list','peer_id'));
     }
     public function displaystudent($id=null,$peer_id=null){
@@ -89,7 +92,84 @@ class StaffController extends AppController
             array_push($peer_review_user_list,$this->peer_reviews_users->find()->where(['peer_review_id'=>$peer_id,'user_id'=>$student_id])->first());
         }
         $peer_review=$this->peer_reviews->find()->where(['id'=>$peer_id])->first();
+
+
         $this->set(compact('student_list','peer_review','peer_review_user_list'));
 
     }
+
+    public function sendReminderEmail($peer_id=null){
+
+        $peer_review = $this->peer_reviews->find()->where(['peer_reviews.id'=>$peer_id]);
+        $peer_review_title = $peer_review->select([
+            'title' => 'peer_reviews.title'
+        ]);
+
+        $unit_query = $peer_review->select([
+            'code' => 'Units.code',
+            'year' => 'Units.year',
+            'semester' => 'Units.semester'
+        ])  ->innerJoinWith('Units');
+
+        $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_reviews_users.peer_review_id' => $peer_id]);
+        $student_list = $peer_review_user_query->select([
+            'email' => 'us.email'
+        ])  ->join([
+                'us' => [
+                    'table' => 'users',
+                    'conditions' => [
+                        'us.id = peer_reviews_users.user_id',
+                    ]
+                ]
+        ]);
+
+//        $subject = $unit_title. ' Role via PEAR Monash';
+        foreach ($peer_review_title as $peer_review_title):
+            $activity_title = $peer_review_title->title;
+        endforeach;
+
+        foreach ($unit_query as $unit):
+            $unit_code = $unit->code;
+            $unit_year = $unit->year;
+            $unit_semester = $unit->semester;
+            endforeach;
+        $student_email_list = [];
+        foreach ($student_list as $student):
+                array_push($student_email_list,$student->email);
+            endforeach;
+
+
+        $my_list = [];
+        $myEmail = 'levanhai010198@gmail.com';
+        $my2Email   = 'rzan0002@student.monash.edu';
+        array_push($my_list,$myEmail);
+//        array_push($my_list,$my2Email);
+        $from = $unit_code. " Role via Pear Monash";
+
+        $subject = "PEAR Monash upcoming survey deadline";
+        $header = "Activity will be closed soon";
+        $message = "<h1>Activity will be closed soon</h1>";
+        $message .= "The data for the following activity will be closed soon: <br><br>";
+        $message .= "<i>Activity: " . $activity_title . " </i><br> ";
+        $message .= "<i>Unit: " . $unit_code . " " . "$unit_year" . " S" . $unit_semester ."</i><br>";
+        $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/development/team123-app/PEAR'>PEAR Monash</a> ";
+        if($this->request->is('post')){
+            $this->Flash->set('Email Sent.',['element'=>'success']);
+
+            $email = new Email('default');
+            $email
+                ->transport('gmail')
+                ->from(['pearmonash@gmail.com'=> $from])
+                ->subject($subject)
+                ->setHeaders([$header])
+                ->emailFormat('html')
+                ->bcc($my_list)
+                ->send($message);
+        }
+        else{
+            $this->Flash->set('Error sending email',['element'=>'error']);
+        }
+        $this->set('title', $peer_review_title);
+    }
 }
+

@@ -98,13 +98,6 @@ $this->layout=false;
                     </li>
 
                 <?php endif;?>
-
-
-
-
-
-
-
             </ul>
         </div>
     </div>
@@ -136,30 +129,6 @@ $this->layout=false;
 <?php endforeach;?>
 </div>
 
-    <table class="table" >
-        <thead>
-        <tr>
-            <th>Class</th>
-            <th>Activity (Section)</th>
-            <th>Start</th>
-            <th>End</th>
-            <th>% Comp.</th>
-            <th>View</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($class_activity as $class_activity):?>
-        <tr>
-            <td><?=$class_activity->unitname.' '.$class_activity->unitcode?></td>
-            <td><?=$class_activity->activity?></td>
-            <td><?=$class_activity->datestart?></td>
-            <td><?=$class_activity->dateend?></td>
-            <td></td>
-            <td><button type="button" class="btn btn-info">Info</button></td>
-        </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
 </div>
 <?= $this->Html->script('core/jquery.min.js') ?>
 <?= $this->Html->script('core/popper.min.js') ?>
