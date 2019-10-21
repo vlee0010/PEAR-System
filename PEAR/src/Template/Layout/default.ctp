@@ -42,34 +42,35 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body class="register-page">
 
-    <nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
-        <div class="container">
-            <div class="navbar-translate">
-                <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'pages','action'=>'display'])?>'   data-placement="bottom" >
-                    <span>PEAR</span> Monash
-                </a>
-                <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-bar bar1"></span>
-                    <span class="navbar-toggler-bar bar2"></span>
-                    <span class="navbar-toggler-bar bar3"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                <div class="navbar-collapse-header">
-                    <div class="row">
-                        <div class="col-6 collapse-brand">
-                            <a>
-                                PEAR
-                            </a>
-                        </div>
-                        <div class="col-6 collapse-close text-right">
-                            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                                <i class="tim-icons icon-simple-remove"></i>
-                            </button>
-                        </div>
+<nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
+    <div class="container">
+        <div class="navbar-translate">
+            <?php echo $this->Html->image('logo3.png',['style'=>'height:30px']);?>
+            <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'pages','action'=>'display'])?>'   data-placement="bottom" >
+                <span>PEAR</span> Monash
+            </a>
+            <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <div class="navbar-collapse-header">
+                <div class="row">
+                    <div class="col-6 collapse-brand">
+                        <a>
+                            PEAR
+                        </a>
+                    </div>
+                    <div class="col-6 collapse-close text-right">
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="tim-icons icon-simple-remove"></i>
+                        </button>
                     </div>
                 </div>
-                <ul class="navbar-nav">
+            </div>
+            <ul class="navbar-nav">
                 <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
 
                     <li class="nav-item p-0">
@@ -91,7 +92,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                             <i class="tim-icons icon-spaceship"></i> Sign Up
                         </a>
                     </li>
-                    <?php else :?>
+                <?php else :?>
 
 
                     <li class="nav-item">
@@ -106,7 +107,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         </a>
                     </li>
 
-                    <?php endif;?>
+                <?php endif;?>
 
 
 
@@ -114,32 +115,32 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 
 
-                </ul>
-            </div>
+            </ul>
         </div>
-    </nav>
-    <?= $this->Flash->render() ?>
-    <div class="clearfix">
-        <?= $this->fetch('content') ?>
     </div>
-    <footer>
-    </footer>
+</nav>
+<?= $this->Flash->render() ?>
+<div class="clearfix">
+    <?= $this->fetch('content') ?>
+</div>
+<footer>
+</footer>
 
 
 
-    <?= $this->Html->script('core/jquery.min.js') ?>
-    <?= $this->Html->script('core/popper.min.js') ?>
-    <?= $this->Html->script('core/bootstrap.min.js') ?>
-    <?= $this->Html->script('plugins/perfect-scrollbar.jquery.min.js') ?>
-    <?= $this->Html->script('plugins/bootstrap-switch.js') ?>
-    <?= $this->Html->script('plugins/nouislider.min.js') ?>
-    <?= $this->Html->script('plugins/chartjs.min.js') ?>
-    <?= $this->Html->script('plugins/moment.min.js') ?>
-    <?= $this->Html->script('plugins/bootstrap-datetimepicker.js') ?>
+<?= $this->Html->script('core/jquery.min.js') ?>
+<?= $this->Html->script('core/popper.min.js') ?>
+<?= $this->Html->script('core/bootstrap.min.js') ?>
+<?= $this->Html->script('plugins/perfect-scrollbar.jquery.min.js') ?>
+<?= $this->Html->script('plugins/bootstrap-switch.js') ?>
+<?= $this->Html->script('plugins/nouislider.min.js') ?>
+<?= $this->Html->script('plugins/chartjs.min.js') ?>
+<?= $this->Html->script('plugins/moment.min.js') ?>
+<?= $this->Html->script('plugins/bootstrap-datetimepicker.js') ?>
 
-    <?= $this->Html->script('blk-design-system.min.js') ?>
-    <?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<?= $this->Html->script('blk-design-system.min.js') ?>
+<?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 
 <!--    <script>-->
 <!--        var slider = document.getElementById('sliderRegular');-->
@@ -156,11 +157,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <!---->
 <!--    </script>-->
 
-    <script>
+<script>
 
-        $(document).ready( function () {
-            $('#myTable').DataTable();
-        } );
-    </script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
+</script>
 </body>
 </html>

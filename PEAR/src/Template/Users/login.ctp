@@ -49,7 +49,7 @@
                                 <!--                                    </div>-->
 
                                 <div class="card-footer">
-<!--                                    //Modal Button-->
+                                    <!--                                    //Modal Button-->
                                     <button type="button" class="btn-link" style="position:relative;top:-30px;" data-toggle="modal" data-target="#exampleModal">
                                         Reset Password
                                     </button>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="col-lg-6">
                         <h1 class="display-3 text-white">
-                            PEAR
+                            <?php echo $this->Html->image('logo3',['style'=>'height:40px']);?> PEAR
                             <br>
                             <br>
                             <br>
@@ -101,7 +101,7 @@
 
                     </div>
                 </div>
-<!--                <div class="register-bg"></div>-->
+                <!--                <div class="register-bg"></div>-->
 
                 <div id="square2" class="square square-2"></div>
                 <div id="square3" class="square square-3"></div>
