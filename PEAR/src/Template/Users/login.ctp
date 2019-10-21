@@ -91,7 +91,7 @@
                     </div>
                     <div class="col-lg-6">
                         <h1 class="display-3 text-white">
-                            PEAR
+                            <?php echo $this->Html->image('logo3.png',['style'=>'height:150px']);?>
                             <br>
                             <br>
                             <br>
