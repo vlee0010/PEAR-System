@@ -28,6 +28,8 @@ class Question extends Entity
         'description' => true,
         'peer_review_id' => true,
         'peer_review' => true,
-        'responses' => true
+        'response'=>true
+
+
     ];
 }

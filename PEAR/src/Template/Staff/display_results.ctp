@@ -1,9 +1,12 @@
+
 <?php
 /**
  * @var \App\View\AppView $this
  */
 $this->layout=false;
 ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,15 +31,10 @@ $this->layout=false;
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900" rel="stylesheet" type="text/css">
-    <?= $this->Html->script('progressbar.min.js') ?>
-
     <style>
-        .progress-box {
-            margin: 20px;
-            width: 50px;
-            height: 50px;
-            position: relative;
+        .table>tbody>tr>td,
+        .table>thead>tr>th{
+            color:black !important;
         }
     </style>
 </head>
@@ -72,7 +70,6 @@ $this->layout=false;
                 <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
 
                     <li class="nav-item p-0">
-
                         <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
                             <i class="fas fa-home"></i>
                             <p class="d-lg-none d-xl-none">Home</p>
@@ -108,87 +105,42 @@ $this->layout=false;
 
                 <?php endif;?>
 
+
+
+
+
+
+
             </ul>
         </div>
     </div>
 </nav>
-<div id="staff-container" class="container">
-    <h1>Class List</h1>
-    <div class="row">
-        <?php foreach($unit_list as $index => $unit):?>
-            <div class="card col-12 col-md-4 col-lg-3">
-                <div class="card-img" >
-                        <img style="max-width: 100%"src="https://source.unsplash.com/user/vincentyaha/likes?sig=<?=rand()?>" alt="">
-                    </div>
-                    <div class="card-text d-flex justify-content-between" style="padding:50px">
-                        <div>
-                            <div class="progress-box" id="xyz<?=$index?>" style="margin:0 auto;"></div>
-                        </div>
-                        <div style="margin-left: auto">
-                            <a id="staff-unit-item" class="" href=<?=$this->Url->build(['action'=>'displayclass',$unit->id]);?>><?=$unit->code.' '.$unit->title?></a>
-                        </div>
-                    </div>
-            </div>
-    <script>
-        // progressbar.js@1.0.0 version is used
-        // Docs: http://progressbarjs.readthedocs.org/en/1.0.0/
 
-        var bar = new ProgressBar.Circle('#xyz<?=$index?>', {
-            color: '#5972FF',
-            //
-            // This has to be the same size as the maximum width to
-            // prevent clipping
-            strokeWidth: 5,
-            trailWidth: 3,
-            easing: 'easeInOut',
-            duration: 2400,
-            text: {
-                autoStyleContainer: true
-            },
-            from: { color: '#5972FF', width: 3 },
-            to: { color: '#000', width: 4 },
-            // Set default step function for all animate calls
-            step: function(state, circle) {
-                circle.path.setAttribute('stroke', state.color);
-                circle.path.setAttribute('stroke-width', state.width);
+<body>
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Question</th>
+            <th>Ratee</th>
+            <th>Answer</th>
+        </tr>
 
-                var value = Math.round(circle.value() * 100);
-                if (value === 0) {
-                    circle.setText('0%');
-                } else {
-                    circle.setText(value+'%');
-                }
-
-            }
-        });
-        // bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-        bar.text.style.fontSize = '1rem';
-
-        bar.animate(<?=$index?> * 0.1);  // Number from 0.0 to 1.0
-    </script>
-
-
-<?php endforeach;?>
+        </thead>
+        <tbody>
+        <?php foreach ($response_list as $item) :?>
+            <tr>
+                <td><?=$item->question->description?></td>
+                <td><?=$item->user->firstname." ".$item->user->lastname?></td>
+                <?php if($item->is_text_number):?>
+                    <td><?=$item->rate_text?></td>
+                <?php else:?>
+                    <td><?=$item->rate_number?></td>
+                <?php endif;?>
+            </tr>
+        <?php endforeach;?>
+        </tbody>
+    </table>
 </div>
-</div>
-<?= $this->Html->script('core/jquery.min.js') ?>
-<?= $this->Html->script('core/popper.min.js') ?>
-<?= $this->Html->script('core/bootstrap.min.js') ?>
-<?= $this->Html->script('plugins/perfect-scrollbar.jquery.min.js') ?>
-<?= $this->Html->script('plugins/bootstrap-switch.js') ?>
-<?= $this->Html->script('plugins/nouislider.min.js') ?>
-<?= $this->Html->script('plugins/chartjs.min.js') ?>
-<?= $this->Html->script('plugins/moment.min.js') ?>
-<?= $this->Html->script('plugins/bootstrap-datetimepicker.js') ?>
-
-<?= $this->Html->script('blk-design-system.min.js') ?>
-<?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
-
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<!--<script type="text/javascript">-->
-<!--    bar.animate(0.5);-->
-<!--</script>-->
 
 </body>
-</html>
-

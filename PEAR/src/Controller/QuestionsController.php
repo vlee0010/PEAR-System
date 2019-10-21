@@ -63,6 +63,7 @@ class QuestionsController extends AppController
                     $response->user_id=$this->Auth->user('id');
                     $response->question_id=$question->id;
                     $response->ratee_id=$user_id;
+                    $response->peer_review_id = $peer_id;
                     if($question->id != 6){
                         $response->is_text_number = 0;
                         $response->rate_number = $this->request->getData('sliderRating_'.$question->id.'_'.$user_id);

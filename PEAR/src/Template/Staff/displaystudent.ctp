@@ -123,6 +123,7 @@ $this->layout=false;
             <th>Student Name</th>
             <th>Peer Review Name</th>
             <th>Status</th>
+            <th>Action</th>
         </tr>
 
         </thead>
@@ -142,6 +143,9 @@ $this->layout=false;
                                 <?php endif;?>
                             <?php endif; ?>
                         <?php endforeach;?>
+                    </td>
+                    <td>
+                        <a style="color:black;" href=<?=$this->Url->build(['action'=>'displayResults',$student->id,$peer_id]);?>>View Result</a>
                     </td>
                 </tr>
             <?php endforeach;?>

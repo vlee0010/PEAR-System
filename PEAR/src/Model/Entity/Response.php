@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * Response Entity
@@ -34,4 +35,8 @@ class Response extends Entity
         'question' => true,
         'answer' => true
     ];
+
+    Public function getQuestions(){
+        return TableRegistry::get('Questions')->get($this->response_id);
+    }
 }
