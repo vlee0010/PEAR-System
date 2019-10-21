@@ -21,6 +21,10 @@ class StaffController extends AppController
         $this->loadModel('teams');
         $this->loadModel('Classes');
         $this->loadModel('peer_reviews_users');
+        $this->loadModel('Responses');
+        $this->loadModel('Questions');
+
+
 
 
     }
@@ -92,8 +96,30 @@ class StaffController extends AppController
             array_push($peer_review_user_list,$this->peer_reviews_users->find()->where(['peer_review_id'=>$peer_id,'user_id'=>$student_id])->first());
         }
         $peer_review=$this->peer_reviews->find()->where(['id'=>$peer_id])->first();
-        $this->set(compact('student_list','peer_review','peer_review_user_list'));
+        $this->set(compact('student_list','peer_review','peer_review_user_list',"peer_id"));
 
+    }
+
+    public function displayResults($student_id =null, $peer_review_id=null ){
+//        $response_list = $this->Responses->find('all',array(
+//            'field'=>array('Response.*'),
+//            'join'=>array(
+//                array(
+//                    'table'=>'Questions',
+//                    'alias'=>'Question',
+//                    'type'=>'INNER',
+//                    'conditions'=>array('Responses.question_id'=>'Question.id')
+//                ),
+//            )
+//        ))->where(['Responses.user_id'=>$student_id,'Responses.peer_review_id'=>$peer_review_id]);
+        $response_list = $this->Responses->find()->contain([
+            'Questions',
+            'Users'
+        ])->where(['user_id'=>$student_id,'peer_review_id'=>$peer_review_id]);
+//        foreach ($response_list as $response){
+//            debug($response);
+//        }
+        $this->set(compact('response_list'));
     }
     public function export()
     {

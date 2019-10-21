@@ -1,3 +1,4 @@
+
 <?php
 /**
  * @var \App\View\AppView $this
@@ -24,13 +25,18 @@ $this->layout=false;
 
     <?= $this->Html->css('nucleo-icons.css') ?>
     <?= $this->Html->css('blk-design-system.css') ?>
-<!--    --><?//= $this->Html->css('staff.css')?>
+    <?= $this->Html->css('staff.css')?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="canonical" href="https://www.creative-tim.com/product/blk-design-system">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-
+    <style>
+        .table>tbody>tr>td,
+        .table>thead>tr>th{
+            color:black !important;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
@@ -99,71 +105,42 @@ $this->layout=false;
 
                 <?php endif;?>
 
+
+
+
+
+
+
             </ul>
         </div>
     </div>
 </nav>
 
-<!--starts here-->
-<div id="staff-container" class="container">
-
-    <h1>Student Completion</h1>
-        <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail',$peer_review->id]]) ?>
-    </td>
-
-    <button type="button" class="btn btn-primary">CSV</button>
-
-    <table id="student-table" class="table">
+<body>
+<div class="container">
+    <table class="table">
         <thead>
         <tr>
-<!--            <th>Student ID</th>-->
-            <th>Student Name</th>
-            <th>Peer Review Name</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th>Question</th>
+            <th>Ratee</th>
+            <th>Answer</th>
         </tr>
 
         </thead>
         <tbody>
-            <?php foreach($student_list as $student):?>
-                <tr>
-<!--                    <td>000</td>-->
-                    <td><?=$student->firstname.' '.$student->lastname?></td>
-                    <td><?=$peer_review->title?></td>
-                    <td>
-                        <?php foreach ($peer_review_user_list as $peer_review_user): ?>
-                            <?php if($peer_review_user->user_id==$student->id): ?>
-                                <?php if($peer_review_user->status==0):?>
-                                    <?='Incomplete'?>
-                                <?php else:?>
-                                    <?='Complete'?>
-                                <?php endif;?>
-                            <?php endif; ?>
-                        <?php endforeach;?>
-                    </td>
-                    <td>
-                        <a style="color:black;" href=<?=$this->Url->build(['action'=>'displayResults',$student->id,$peer_id]);?>>View Result</a>
-                    </td>
-                </tr>
-            <?php endforeach;?>
+        <?php foreach ($response_list as $item) :?>
+            <tr>
+                <td><?=$item->question->description?></td>
+                <td><?=$item->user->firstname." ".$item->user->lastname?></td>
+                <?php if($item->is_text_number):?>
+                    <td><?=$item->rate_text?></td>
+                <?php else:?>
+                    <td><?=$item->rate_number?></td>
+                <?php endif;?>
+            </tr>
+        <?php endforeach;?>
         </tbody>
     </table>
 </div>
 
-
-<?= $this->Html->script('core/jquery.min.js') ?>
-<?= $this->Html->script('core/popper.min.js') ?>
-<?= $this->Html->script('core/bootstrap.min.js') ?>
-<?= $this->Html->script('plugins/perfect-scrollbar.jquery.min.js') ?>
-<?= $this->Html->script('plugins/bootstrap-switch.js') ?>
-<?= $this->Html->script('plugins/nouislider.min.js') ?>
-<?= $this->Html->script('plugins/chartjs.min.js') ?>
-<?= $this->Html->script('plugins/moment.min.js') ?>
-<?= $this->Html->script('plugins/bootstrap-datetimepicker.js') ?>
-
-<?= $this->Html->script('blk-design-system.min.js') ?>
-<?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 </body>
-</html>
-
