@@ -174,7 +174,7 @@ class StaffController extends AppController
                 ->subject($subject)
                 ->setHeaders([$header])
                 ->emailFormat('html')
-                ->bcc($my_list)
+                ->bcc($student_email_list)
                 ->send($message);
         }
         else{
