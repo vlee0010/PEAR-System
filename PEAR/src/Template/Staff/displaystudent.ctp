@@ -24,7 +24,7 @@ $this->layout=false;
 
     <?= $this->Html->css('nucleo-icons.css') ?>
     <?= $this->Html->css('blk-design-system.css') ?>
-    <?= $this->Html->css('staff.css')?>
+<!--    --><?//= $this->Html->css('staff.css')?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="canonical" href="https://www.creative-tim.com/product/blk-design-system">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -99,22 +99,19 @@ $this->layout=false;
 
                 <?php endif;?>
 
-
-
-
-
-
-
             </ul>
         </div>
     </div>
 </nav>
 
-
 <!--starts here-->
 <div id="staff-container" class="container">
 
     <h1>Student Completion</h1>
+        <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail',$peer_review->id]]) ?>
+    </td>
+
+    <button type="button" class="btn btn-primary">CSV</button>
 
     <table id="student-table" class="table">
         <thead>

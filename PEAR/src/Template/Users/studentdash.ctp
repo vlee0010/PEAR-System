@@ -20,8 +20,6 @@
             </thead>
             <tbody>
 
-
-
                     <?php foreach ($team_peer_id_list as $team_peer_id) : ?>
                         <tr>
                             <?php $unit_id=0;

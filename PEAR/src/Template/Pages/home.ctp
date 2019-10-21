@@ -59,6 +59,8 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         <div class="navbar-translate">
             <a class="navbar-brand" href="#"  title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
                 <span>PEAR</span> Monash
+
+
             </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar bar1"></span>
