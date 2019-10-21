@@ -92,10 +92,21 @@ class StaffController extends AppController
             array_push($peer_review_user_list,$this->peer_reviews_users->find()->where(['peer_review_id'=>$peer_id,'user_id'=>$student_id])->first());
         }
         $peer_review=$this->peer_reviews->find()->where(['id'=>$peer_id])->first();
-
-
         $this->set(compact('student_list','peer_review','peer_review_user_list'));
 
+    }
+    public function export()
+    {
+        $this->response = $this->response->withDownload('class_results.csv');
+        $data = [
+            ['a', 'b', 'c'],
+            [1, 2, 3],
+            ['you', 'and', 'me'],
+        ];
+        $_serialize = 'data';
+
+        $this->viewBuilder()->setClassName('CsvView.Csv');
+        $this->set(compact('data', '_serialize'));
     }
 
     public function sendReminderEmail($peer_id=null){
@@ -172,4 +183,3 @@ class StaffController extends AppController
         $this->set('title', $peer_review_title);
     }
 }
-

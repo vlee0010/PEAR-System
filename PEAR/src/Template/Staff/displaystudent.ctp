@@ -110,6 +110,9 @@ $this->layout=false;
     <h1>Student Completion</h1>
         <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail',$peer_review->id]]) ?>
     </td>
+
+    <button type="button" class="btn btn-primary">CSV</button>
+
     <table id="student-table" class="table">
         <thead>
         <tr>
