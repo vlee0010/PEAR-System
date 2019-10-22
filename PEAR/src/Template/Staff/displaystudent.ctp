@@ -141,7 +141,7 @@ $this->layout=false;
         <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail',$peer_review->id]]) ?>
 
     </div>
-    <br>s
+    <br>
     <table id="student-table" class="table">
         <thead>
         <tr>

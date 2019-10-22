@@ -2,6 +2,9 @@
 /**
  * @var \App\View\AppView $this
  */
+
+use Cake\I18n\Number;
+
 $this->layout=false;
 ?>
 
@@ -113,17 +116,27 @@ $this->layout=false;
             <thead>
             <tr>
                 <th>Student</th>
+                <?php foreach ($questions_desc as $questions_desc):?>
+                    <th class="text-center"><?=$questions_desc->question?></th>
+                <?php endforeach;?>
                 <th>Comment</th>
-                <th>Team ID</th>
-                <th></th>
+
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Van</td>
-                    <td>sht</td>
-                    <td>Zyzz</td>
-                </tr>
+                <?php foreach ($student_list as $student_list):?>
+                    <tr>
+                        <td><?=$student_list->firstname." ".$student_list->lastname?></td>
+                        <?php foreach ($student_result_array as $item):
+                            if ($item->student_id == $student_list->student_id):
+                                $float = (float)$item->average_score;?>
+                                <td align="center"><?=Number::format($float,['precision' => 1])?></td>
+                            <?php endif;
+                        endforeach;?>
+                        <td><?= $this->element('Staff/Buttons/comment', ['url' => []]) ?></td>
+                    </tr>
+                <?php endforeach;?>
+
             </tbody>
         </table>
     </div>

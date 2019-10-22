@@ -105,12 +105,6 @@ $this->layout=false;
 
                 <?php endif;?>
 
-
-
-
-
-
-
             </ul>
         </div>
     </div>

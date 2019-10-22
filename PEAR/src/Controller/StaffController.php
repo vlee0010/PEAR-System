@@ -71,16 +71,29 @@ class StaffController extends AppController
         }
         $peer_review=$this->peer_reviews->find()->where(['id'=>$peer_id])->first();
 
-        $peer_query = $this->peer_reviews->find()->where(['unit_id'=>$id]);
+        $peer_query = $this->units_classes->find()->where(['class_id'=>$id]);
         $unit_activity = $peer_query->select([
-            'unitname' => 'Units.title',
-            'unitcode' => 'Units.code',
-            'activity' => 'peer_reviews.title',
-            'datestart' => 'peer_reviews.date_start',
-            'dateend' => 'peer_reviews.date_end',
-            'peer_id' => 'peer_reviews.id'
-        ])
-            ->innerJoinWith('Units');
+            'unitname' => 'u.title',
+            'unitcode' => 'u.code',
+            'activity' => 'p.title',
+            'datestart' => 'p.date_start',
+            'dateend' => 'p.date_end',
+            'peer_id' => 'p.id'
+        ])   ->join([
+                'u' => [
+                    'table' => 'units',
+                    'conditions' => [
+                        'u.id = units_classes.unit_id',
+                        ]
+                    ],
+                'p' => [
+                    'table' => 'peer_reviews',
+                    'conditions' => [
+                        'p.unit_id = units_classes.unit_id',
+                    ]
+                ]
+
+                ]);
 
         $this->set('unit_activity',$unit_activity);
 
@@ -128,12 +141,64 @@ class StaffController extends AppController
 
     public function viewAllResults($peer_id=null){
         $response_query = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
+
         $questions_desc = $response_query->select([
+            'question_id' => "Questions.id",
             'question' => "Questions.description"
         ])  -> innerJoinWith('Questions')
+            ->where([
+                'Responses.is_text_number' => 0
+            ])
+            -> distinct();
+
+        $response_query_2 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
+        $student_result = $response_query_2->select([
+            'student_id' => 'us.id',
+            'question_id' => 'Responses.question_id',
+            'average_score' => $response_query_2->func()->avg('Responses.rate_number'),
+        ])  ->join([
+                'us' => [
+                    'table' => 'users',
+                    'conditions' => [
+                        'us.id = Responses.ratee_id',
+                    ]
+                ],
+                'q' => [
+                    'table' => 'questions',
+                    'conditions' => [
+                        'q.id = Responses.question_id'
+                    ]
+                ]
+        ])
+            ->where([
+                'Responses.is_text_number' => 0
+            ])
+            ->group(['us.id','Responses.question_id']);
+
+        $student_result_array = [];
+        foreach ($student_result as $item):
+            array_push($student_result_array,$item);
+        endforeach;
+
+        $response_query_3 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
+        $student_list = $response_query_3->select([
+            'student_id' => 'us.id',
+            'firstname' => 'us.firstname',
+            'lastname' => 'us.lastname',
+        ])  ->join([
+            'us' => [
+                'table' => 'users',
+                'conditions' => [
+                    'us.id = Responses.ratee_id',
+                ]
+            ]
+        ])
             -> distinct();
 
         $this->set('questions_desc',$questions_desc);
+        $this->set('student_result_array',$student_result_array);
+        $this->set('student_list',$student_list);
+
     }
 
     public function sendReminderEmail($peer_id=null){
@@ -196,7 +261,7 @@ class StaffController extends AppController
             $this->Flash->success(__('Email Sent'));
             $email = new Email('default');
             $email
-                ->transport('mailjet')
+                ->transport('gmail')
                 ->from(['pearmonash@gmail.com'=> $from])
                 ->subject($subject)
                 ->setHeaders([$header])
