@@ -126,9 +126,10 @@ $this->layout=false;
                     <td><?=$unit_activity->activity?></td>
                     <td><?=$unit_activity->datestart?></td>
                     <td><?=$unit_activity->dateend?></td>
-                    <td class="actions" width = "33.3%">
+                    <td class="actions" width = "45%">
                         <?= $this->element('Staff/Buttons/results', ['url' => ['action' => 'viewAllResults',$unit_activity->peer_id]]) ?>
                         <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail',$unit_activity->peer_id]]) ?>
+                        <?= $this->element('Staff/Buttons/csv', ['url' => ['action' => 'export']]) ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -136,7 +137,7 @@ $this->layout=false;
         </table>
     </div>
     <br>
-    <h1>Student Completion</h1>
+    <h1>Students Yet To Complete</h1>
     <div align="right">
         <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail',$peer_review->id]]) ?>
 
@@ -149,7 +150,6 @@ $this->layout=false;
             <th>Student Name</th>
             <th>Peer Review Name</th>
             <th>Status</th>
-            <th>Action</th>
         </tr>
 
         </thead>
@@ -170,9 +170,7 @@ $this->layout=false;
                             <?php endif; ?>
                         <?php endforeach;?>
                     </td>
-                    <td>
-                        <a style="color:black;" href=<?=$this->Url->build(['action'=>'displayResults',$student->id,$peer_id]);?>>View Result</a>
-                    </td>
+
                 </tr>
             <?php endforeach;?>
         </tbody>

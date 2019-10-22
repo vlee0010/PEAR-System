@@ -110,7 +110,11 @@ $this->layout=false;
 
 
 <div id="staff-container" class="container">
-    <h1>Activity List</h1>
+    <?php foreach ($unit_activity as $unit_activity):?>
+        <h1><?=$unit_activity->unitcode. " " . $unit_activity->activity?></h1>
+    <?php endforeach;?>
+
+
     <div>
         <table class="table" >
             <thead>
@@ -124,7 +128,9 @@ $this->layout=false;
             </tr>
             </thead>
             <tbody>
-                <?php foreach ($student_list as $student_list):?>
+                <?php
+                foreach ($student_list as $student_list):
+                    $comment = "";?>
                     <tr>
                         <td><?=$student_list->firstname." ".$student_list->lastname?></td>
                         <?php foreach ($student_result_array as $item):
@@ -133,7 +139,20 @@ $this->layout=false;
                                 <td align="center"><?=Number::format($float,['precision' => 1])?></td>
                             <?php endif;
                         endforeach;?>
-                        <td><?= $this->element('Staff/Buttons/comment', ['url' => []]) ?></td>
+                        <?php foreach($student_comment_list as $item):
+                            if ($item->ratee_id == $student_list->student_id):
+                                $comment .= $item->student_firstname. " ".$item->student_lastname. ": ".$item->comment;
+                                $comment .= "<br/>";
+                            endif;
+                        endforeach;?>
+                        <td align="center"><button id="button_<?php echo $student_list->student_id?>" " type="button"
+                                    class="btn btn-info btn-simple btn-icon btn-sm"
+                                    data-container="body"
+                                    data-toggle="popover"
+                                    data-placement="top"
+                                    data-content = "<?=$comment?>">
+                                <i class="fas fa-comments"></i>
+                            </button></td>
                     </tr>
                 <?php endforeach;?>
 

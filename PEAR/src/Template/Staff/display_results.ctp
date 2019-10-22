@@ -114,7 +114,7 @@ $this->layout=false;
 <div class="container">
     <h1 align="center">Question Results</h1>
     <div align="right">
-        <?= $this->element('Staff/Buttons/csv', ['url' => ['action' => 'export']]) ?>
+
     </div>
     <table class="table">
         <thead>

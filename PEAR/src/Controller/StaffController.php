@@ -142,6 +142,14 @@ class StaffController extends AppController
     public function viewAllResults($peer_id=null){
         $response_query = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
 
+        $peer_query = $this->peer_reviews->find()->where(['peer_reviews.id' => $peer_id]);
+        $unit_activity = $peer_query->select([
+            'unitname' => 'Units.title',
+            'unitcode' => 'Units.code',
+            'activity' => 'peer_reviews.title',
+        ])   ->innerJoinWith('Units');
+
+
         $questions_desc = $response_query->select([
             'question_id' => "Questions.id",
             'question' => "Questions.description"
@@ -195,10 +203,51 @@ class StaffController extends AppController
         ])
             -> distinct();
 
+        $response_query_4 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
+        $student_comment = $response_query_4->select([
+            'student_id' => 'us.id',
+            'student_firstname' => 'us.firstname',
+            'student_lastname' => 'us.lastname',
+            'question_id' => 'Responses.question_id',
+            'comment' => 'Responses.rate_text',
+            'ratee_id' => 'Responses.ratee_id',
+            'ratee_firstname' => 'rus.firstname',
+            'ratee_lastname' => 'rus.lastname',
+        ])  ->join([
+            'rus' => [
+                'table' => 'users',
+                'conditions' => [
+                    'rus.id = Responses.ratee_id',
+                ]
+            ],
+            'us' => [
+                'table' => 'users',
+                'conditions' => [
+                    'us.id = Responses.user_id',
+                ]
+            ],
+            'q' => [
+                'table' => 'questions',
+                'conditions' => [
+                    'q.id = Responses.question_id'
+                ]
+            ]
+        ])
+            ->where([
+                'Responses.is_text_number' => 1
+            ]);
+
+        $student_comment_list = [];
+        foreach($student_comment as $student_comment):
+            array_push($student_comment_list,$student_comment);
+        endforeach;
+
+
+        $this->set('unit_activity',$unit_activity);
         $this->set('questions_desc',$questions_desc);
         $this->set('student_result_array',$student_result_array);
         $this->set('student_list',$student_list);
-
+        $this->set('student_comment_list',$student_comment_list);
     }
 
     public function sendReminderEmail($peer_id=null){
@@ -261,7 +310,7 @@ class StaffController extends AppController
             $this->Flash->success(__('Email Sent'));
             $email = new Email('default');
             $email
-                ->transport('gmail')
+                ->transport('mailjet')
                 ->from(['pearmonash@gmail.com'=> $from])
                 ->subject($subject)
                 ->setHeaders([$header])
