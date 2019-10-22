@@ -268,7 +268,15 @@ class StaffController extends AppController
             'code' => 'Units.code',
             'year' => 'Units.year',
             'semester' => 'Units.semester'
-        ])  ->innerJoinWith('Units');
+        ])  ->join([
+            'u' => [
+                'table' => 'units',
+                'conditions' => [
+                    'u.id = peer_reviews.unit_id',
+                ]
+            ]
+
+        ]);;
 
         $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_reviews_users.peer_review_id' => $peer_id,'peer_reviews_users.status' => 0]);
         $student_list = $peer_review_user_query->select([
