@@ -66,9 +66,15 @@ class StaffController extends AppController
         $student_id_list=$this->students_classes->find('list',array('field',array('student_id')))->where(['class_id'=>$id]);
         $student_list=[];
         $peer_review_user_list=[];
+        $student_id_list_new=[];
         foreach ($student_id_list as $student_id){
-            array_push($student_list,$this->Users->find()->where(['id'=>$student_id])->first());
-            array_push($peer_review_user_list,$this->peer_reviews_users->find()->where(['peer_review_id'=>$peer_id,'user_id'=>$student_id])->first());
+            if($this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id, 'user_id' => $student_id, 'status' => 0])->first()) {
+                array_push($peer_review_user_list, $this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id, 'user_id' => $student_id, 'status' => 0])->first());
+                array_push($student_id_list_new, $this->peer_reviews_users->find()->select('user_id')->where(['peer_review_id' => $peer_id, 'user_id' => $student_id, 'status' => 0])->first());
+            }
+        }
+        foreach ($student_id_list_new as $student_id){
+            array_push($student_list,$this->Users->find()->where(['id'=>$student_id->user_id])->first());
         }
         $peer_review=$this->peer_reviews->find()->where(['id'=>$peer_id])->first();
 
