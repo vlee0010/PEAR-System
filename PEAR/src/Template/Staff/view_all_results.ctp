@@ -141,7 +141,7 @@ $this->layout=false;
                         endforeach;?>
                         <?php foreach($student_comment_list as $item):
                             if ($item->ratee_id == $student_list->student_id):
-                                $comment .= $item->student_firstname. " ".$item->student_lastname. ": ".$item->comment;
+                                $comment .= "<b>".$item->student_firstname. " ".$item->student_lastname. ":</b>. ".$item->comment;
                                 $comment .= "<br/>";
                             endif;
                         endforeach;?>
@@ -149,7 +149,8 @@ $this->layout=false;
                                     class="btn btn-info btn-simple btn-icon btn-sm"
                                     data-container="body"
                                     data-toggle="popover"
-                                    data-placement="top"
+                                    data-placement="left"
+                                    data-html = "true"
                                     data-content = "<?=$comment?>">
                                 <i class="fas fa-comments"></i>
                             </button></td>
