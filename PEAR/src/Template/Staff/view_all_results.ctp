@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+$this->layout=false;
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,17 +23,17 @@
 
     <?= $this->Html->css('nucleo-icons.css') ?>
     <?= $this->Html->css('blk-design-system.css') ?>
+    <!--    --><?//= $this->Html->css('staff.css')?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="canonical" href="https://www.creative-tim.com/product/blk-design-system">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-    <?= $this->Html->css('custom.css') ?>
-</head>
-<body class="register-page">
 
+</head>
+<body>
 <nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
-    <div class="container">
+    <div  class="container">
         <div class="navbar-translate">
             <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'staff','action'=>'index'])?>'   data-placement="bottom" >
                 <span>PEAR</span> Monash
@@ -53,7 +60,8 @@
                 </div>
             </div>
             <ul class="navbar-nav">
-                <?php if(is_null($this->request->getSession()->read('Auth.User.email'))) : ?>
+                <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
+
                     <li class="nav-item p-0">
                         <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
                             <i class="fas fa-home"></i>
@@ -89,14 +97,37 @@
                     </li>
 
                 <?php endif;?>
-
             </ul>
         </div>
     </div>
 </nav>
 
-<footer>
-</footer>
+
+<!--starts here-->
+
+
+<div id="staff-container" class="container">
+    <h1>Activity List</h1>
+    <div>
+        <table class="table" >
+            <thead>
+            <tr>
+                <th>Student</th>
+                <th>Comment</th>
+                <th>Team ID</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Van</td>
+                    <td>sht</td>
+                    <td>Zyzz</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 
@@ -113,27 +144,5 @@
 <?= $this->Html->script('blk-design-system.min.js') ?>
 <?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-
-<!--    <script>-->
-<!--        var slider = document.getElementById('sliderRegular');-->
-<!---->
-<!--        noUiSlider.create(slider, {-->
-<!--            start: 1,-->
-<!--            connect: [true,false],-->
-<!--            range: {-->
-<!--                min: 1,-->
-<!--                max: 5-->
-<!--            }-->
-<!--        });-->
-<!---->
-<!---->
-<!--    </script>-->
-
-<script>
-
-    $(document).ready( function () {
-        $('#myTable').DataTable();
-    } );
-</script>
 </body>
 </html>

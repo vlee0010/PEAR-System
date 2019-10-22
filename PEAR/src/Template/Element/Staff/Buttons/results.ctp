@@ -6,12 +6,10 @@
  */
 
 echo $this->Form->postLink(
-    'Send Reminder',
+    'View Results',
     isset($disabled) && $disabled ? [] : $url,
     [
-        'class' => 'btn btn-default',
+        'class' => 'btn btn-info',
         'escape' => false,
-        'confirm' => isset($disabled) && $disabled ? false : 'Send Email to All Students?',
-        'disabled' => isset($disabled) && $disabled
     ]
 );

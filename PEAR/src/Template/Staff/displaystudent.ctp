@@ -106,15 +106,42 @@ $this->layout=false;
 
 <!--starts here-->
 <div id="staff-container" class="container">
+    <h1>Activity List</h1>
 
+    <div>
+
+        <table class="table" >
+            <thead>
+            <tr>
+                <th>Unit</th>
+                <th>Activity (Section)</th>
+                <th>Start</th>
+                <th>End</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($unit_activity as $unit_activity):?>
+                <tr>
+                    <td><?=$unit_activity->unitname.' '.$unit_activity->unitcode?></td>
+                    <td><?=$unit_activity->activity?></td>
+                    <td><?=$unit_activity->datestart?></td>
+                    <td><?=$unit_activity->dateend?></td>
+                    <td class="actions" width = "33.3%">
+                        <?= $this->element('Staff/Buttons/results', ['url' => ['action' => 'viewAllResults',$unit_activity->peer_id]]) ?>
+                        <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail',$unit_activity->peer_id]]) ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <br>
     <h1>Student Completion</h1>
     <div align="right">
         <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail',$peer_review->id]]) ?>
 
     </div>
-
-    <br>
-
+    <br>s
     <table id="student-table" class="table">
         <thead>
         <tr>

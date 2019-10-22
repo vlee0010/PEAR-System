@@ -24,9 +24,6 @@ class StaffController extends AppController
         $this->loadModel('Responses');
         $this->loadModel('Questions');
 
-
-
-
     }
 
     public function isAuthorized($user)
@@ -61,30 +58,7 @@ class StaffController extends AppController
 
         }
         $tutor_id=$this->Auth->user('id');
-        $class_query = $this->units_tutors->find()->where(['tutor_id'=>$tutor_id]);
-        $class_activity = $class_query->select([
-            'unitname' => 'u.title',
-            'unitcode' => 'u.code',
-            'activity' => 'p.title',
-            'datestart' => 'p.date_start',
-            'dateend' => 'p.date_end',
-        ])
-            ->join([
-                'u' => [
-                    'table' => 'units',
-                    'conditions' => [
-                        'u.id = units_tutors.unit_id',
-                    ]
-                ],
-                'p' => [
-                    'table' => 'peer_reviews',
-                    'conditions' => [
-                        'p.unit_id = u.id'
-                    ]
-                ],
-            ]);
 
-        $this->set('class_activity',$class_activity);
         $this->set(compact('class_list','peer_id'));
     }
     public function displaystudent($id=null,$peer_id=null){
@@ -96,6 +70,20 @@ class StaffController extends AppController
             array_push($peer_review_user_list,$this->peer_reviews_users->find()->where(['peer_review_id'=>$peer_id,'user_id'=>$student_id])->first());
         }
         $peer_review=$this->peer_reviews->find()->where(['id'=>$peer_id])->first();
+
+        $peer_query = $this->peer_reviews->find()->where(['unit_id'=>$id]);
+        $unit_activity = $peer_query->select([
+            'unitname' => 'Units.title',
+            'unitcode' => 'Units.code',
+            'activity' => 'peer_reviews.title',
+            'datestart' => 'peer_reviews.date_start',
+            'dateend' => 'peer_reviews.date_end',
+            'peer_id' => 'peer_reviews.id'
+        ])
+            ->innerJoinWith('Units');
+
+        $this->set('unit_activity',$unit_activity);
+
         $this->set(compact('student_list','peer_review','peer_review_user_list',"peer_id"));
 
     }
@@ -124,15 +112,28 @@ class StaffController extends AppController
     public function export()
     {
         $this->response = $this->response->withDownload('class_results.csv');
+        $ar =[];
+        array_push($ar,'shit','shit','shit');
         $data = [
             ['a', 'b', 'c'],
             [1, 2, 3],
             ['you', 'and', 'me'],
         ];
+        array_push($data,$ar);
         $_serialize = 'data';
 
         $this->viewBuilder()->setClassName('CsvView.Csv');
         $this->set(compact('data', '_serialize'));
+    }
+
+    public function viewAllResults($peer_id=null){
+        $response_query = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
+        $questions_desc = $response_query->select([
+            'question' => "Questions.description"
+        ])  -> innerJoinWith('Questions')
+            -> distinct();
+
+        $this->set('questions_desc',$questions_desc);
     }
 
     public function sendReminderEmail($peer_id=null){
@@ -148,7 +149,7 @@ class StaffController extends AppController
             'semester' => 'Units.semester'
         ])  ->innerJoinWith('Units');
 
-        $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_reviews_users.peer_review_id' => $peer_id]);
+        $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_reviews_users.peer_review_id' => $peer_id,'peer_reviews_users.status' => 0]);
         $student_list = $peer_review_user_query->select([
             'email' => 'us.email'
         ])  ->join([

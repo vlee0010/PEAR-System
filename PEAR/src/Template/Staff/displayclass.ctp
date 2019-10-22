@@ -107,7 +107,7 @@ $this->layout=false;
 
 
 <div id="staff-container" class="container">
-    <h1>Class Section List</h1>
+    <h1>Class List</h1>
     <div class="row">
 
 
@@ -124,32 +124,9 @@ $this->layout=false;
 
 <?php endforeach;?>
 
+    </div>
+    <br>
 
-        <table class="table" >
-            <thead>
-            <tr>
-                <th>Class</th>
-                <th>Activity (Section)</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>% Comp.</th>
-                <th>View</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($class_activity as $class_activity):?>
-                <tr>
-                    <td><?=$class_activity->unitname.' '.$class_activity->unitcode?></td>
-                    <td><?=$class_activity->activity?></td>
-                    <td><?=$class_activity->datestart?></td>
-                    <td><?=$class_activity->dateend?></td>
-                    <td></td>
-                    <td><button type="button" class="btn btn-info">Info</button></td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-</div>
 </div>
 
 
