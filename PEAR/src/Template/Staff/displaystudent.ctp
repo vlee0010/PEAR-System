@@ -24,7 +24,7 @@ $this->layout=false;
 
     <?= $this->Html->css('nucleo-icons.css') ?>
     <?= $this->Html->css('blk-design-system.css') ?>
-<!--    --><?//= $this->Html->css('staff.css')?>
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="canonical" href="https://www.creative-tim.com/product/blk-design-system">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -150,6 +150,7 @@ $this->layout=false;
             <th>Student Name</th>
             <th>Peer Review Name</th>
             <th>Status</th>
+            <th>Action</th>
         </tr>
 
         </thead>
@@ -170,7 +171,6 @@ $this->layout=false;
                             <?php endif; ?>
                         <?php endforeach;?>
                     </td>
-
                 </tr>
             <?php endforeach;?>
         </tbody>
