@@ -20,5 +20,5 @@ echo $this->Form->postLink(
         'data-content' => "Vivamus sagittis lacus vel augue laoreet rutrum faucibus.",
         'escape' => false,
 
-    ]
-);
+        ]
+    );

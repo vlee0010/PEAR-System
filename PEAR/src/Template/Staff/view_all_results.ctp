@@ -114,7 +114,7 @@ $this->layout=false;
         <h1><?=$unit_activity->unitcode. " " . $unit_activity->activity?></h1>
     <?php endforeach;?>
 
-
+    <div align="right"><?= $this->element('Staff/Buttons/csv', ['url' => ['action' => 'export',$unit_activity->peer_id]]) ?></div>
     <div>
         <table class="table" >
             <thead>

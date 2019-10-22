@@ -125,10 +125,10 @@ $this->layout=false;
                     <td><?=$unit_activity->activity?></td>
                     <td><?=$unit_activity->datestart?></td>
                     <td><?=$unit_activity->dateend?></td>
-                    <td class="actions" width = "44%">
+                    <td class="actions" width = "33.33%">
                         <?= $this->element('Staff/Buttons/results', ['url' => ['action' => 'viewAllResults',$unit_activity->peer_id]]) ?>
                         <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail',$unit_activity->peer_id]]) ?>
-                        <?= $this->element('Staff/Buttons/csv', ['url' => ['action' => 'export']]) ?>
+
                     </td>
                 </tr>
             <?php endforeach; ?>
