@@ -94,49 +94,6 @@
         </div>
     </div>
 </nav>
-<aside class="sidebar">
-    <div class="sidebar-container">
-        <div class="sidebar-header">
-            <div class="brand">
-            </div>
-        </div>
-        <?= $this->element('Staff/menu'); ?>
-    </div>
-    <footer class="sidebar-footer">
-    </footer>
-</aside>
-
-<table class="table">
-    <thead>
-    <tr>
-        <th class="text-center">#</th>
-        <th>Student</th>
-        <th>Team Name</th>
-        <th>Since</th>
-        <th class="text-right">Salary</th>
-        <th class="text-right">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td class="text-center">1</td>
-        <td>Andrew Mike</td>
-        <td>Develop</td>
-        <td>2013</td>
-        <td class="text-right">&euro; 99,225</td>
-        <td class="td-actions text-right">
-            <button type="button" rel="tooltip" class="btn btn-info btn-sm btn-icon">
-                <i class="tim-icons icon-single-02"></i>
-            </button>
-            <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon">
-                <i class="tim-icons icon-settings-gear-63"></i>
-            </button>
-            <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
-                <i class="tim-icons icon-simple-remove"></i>
-            </button>
-        </td>
-    </tr>
-
 
 <footer>
 </footer>

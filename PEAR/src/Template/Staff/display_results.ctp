@@ -118,6 +118,8 @@ $this->layout=false;
 
 <body>
 <div class="container">
+    <h1 align="center">Question Results</h1>
+
     <table class="table">
         <thead>
         <tr>

@@ -1,6 +1,7 @@
 <?php ?>
-<h1>Done</h1>
+<h1 align="center">Email successfully sent to students</h1>
+<h2 align="center">Click the following button to go back</h2>
+<div align="center">
+    <?= $this->element('Staff/Buttons/back', ['url' => []]) ?>
+</div>
 
-<h2><?php foreach ($title as $title):
-        echo $title->title;
-    endforeach;?></h2>

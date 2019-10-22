@@ -191,17 +191,18 @@ class StaffController extends AppController
         $message .= "<i>Unit: " . $unit_code . " " . "$unit_year" . " S" . $unit_semester ."</i><br>";
         $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/development/team123-app/PEAR'>PEAR Monash</a> ";
         if($this->request->is('post')){
-            $this->Flash->set('Email Sent.',['element'=>'success']);
-
+//            $this->Flash->set('Email Sent.',['element'=>'success']);
+            $this->Flash->success(__('Email Sent'));
             $email = new Email('default');
             $email
-                ->transport('gmail')
+                ->transport('mailjet')
                 ->from(['pearmonash@gmail.com'=> $from])
                 ->subject($subject)
                 ->setHeaders([$header])
                 ->emailFormat('html')
                 ->bcc($student_email_list)
                 ->send($message);
+//            return $this->redirect(['action' => 'displaystudent',1,2]);
         }
         else{
             $this->Flash->set('Error sending email',['element'=>'error']);
