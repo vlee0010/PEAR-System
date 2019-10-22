@@ -317,7 +317,7 @@ class StaffController extends AppController
             $this->Flash->success(__('Email Sent'));
             $email = new Email('default');
             $email
-                ->transport('mailjet')
+                ->transport('gmail')
                 ->from(['pearmonash@gmail.com'=> $from])
                 ->subject($subject)
                 ->setHeaders([$header])
