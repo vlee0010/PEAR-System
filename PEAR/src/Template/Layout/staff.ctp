@@ -55,7 +55,7 @@
             <ul class="navbar-nav">
                 <?php if(is_null($this->request->getSession()->read('Auth.User.email'))) : ?>
                     <li class="nav-item p-0">
-                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
+                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'staff','action'=>'index']);?>">
                             <i class="fas fa-home"></i>
                             <p class="d-lg-none d-xl-none">Home</p>
                         </a>
@@ -94,6 +94,10 @@
         </div>
     </div>
 </nav>
+<article class="content dashboard-page">
+    <?= $this->Flash->render(); ?>
+    <?= $this->fetch('content'); ?>
+</article>
 
 <footer>
 </footer>

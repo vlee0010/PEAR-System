@@ -25,7 +25,7 @@ class StaffController extends AppController
         $this->loadModel('peer_reviews_users');
         $this->loadModel('Responses');
         $this->loadModel('Questions');
-
+        $this->viewBuilder()->setLayout('staff');
     }
 
     public function isAuthorized($user)
