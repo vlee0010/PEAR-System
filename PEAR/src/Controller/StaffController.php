@@ -34,6 +34,7 @@ class StaffController extends AppController
 
     public function index()
     {
+
         $tutor_id=$this->Auth->user('id');
         $unit_id_list=$this->units_tutors->find('list',array('field',array('unit_id')))->where(['tutor_id'=>$tutor_id]);
         $unit_list=[];

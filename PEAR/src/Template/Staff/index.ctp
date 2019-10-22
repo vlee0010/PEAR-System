@@ -117,15 +117,16 @@ $this->layout=false;
     <div class="row">
         <?php foreach($unit_list as $index => $unit):?>
             <div class="card col-12 col-md-4 col-lg-3">
-                <div class="card-img" >
-                    <img style="max-width: 100%"src="https://source.unsplash.com/user/vincentyaha/likes?sig=<?=rand()?>" alt="">
+                <div style="display: flex;align-items: center;justify-content: center"class="card-img" >
+                    <h2 style="color:black;margin:0;"><?=$unit->code;?></h2>
+                    <!--                    <img style="max-width: 100%"src="https://source.unsplash.com/user/vincentyaha/likes?sig=--><?//=rand()?><!--" alt="">-->
                 </div>
                 <div class="card-text d-flex justify-content-between" style="padding:50px">
-                    <div>
-                        <div class="progress-box" id="xyz<?=$index?>" style="margin:0 auto;"></div>
-                    </div>
-                    <div style="margin-left: auto">
-                        <a id="staff-unit-item" class="" href=<?=$this->Url->build(['action'=>'displayclass',$unit->id]);?>><?=$unit->code.' '.$unit->title?></a>
+<!--                    <div>-->
+<!--                        <div class="progress-box" id="xyz--><?//=$index?><!--" style="margin:0 auto;"></div>-->
+<!--                    </div>-->
+                    <div style="margin:0 auto">
+                        <a id="staff-unit-item" class="" href=<?=$this->Url->build(['action'=>'displayclass',$unit->id]);?>><?=$unit->title?></a>
                     </div>
                 </div>
             </div>
