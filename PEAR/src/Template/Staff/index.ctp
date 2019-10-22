@@ -19,7 +19,7 @@
 <!--                        <div class="progress-box" id="xyz--><?//=$index?><!--" style="margin:0 auto;"></div>-->
 <!--                    </div>-->
                     <div style="margin:0 auto">
-                        <a id="staff-unit-item" class="" href=<?=$this->Url->build(['action'=>'displayclass',$unit->id]);?>><?=$unit->code .' ' . $unit->title?></a>
+                        <a id="staff-unit-item" class="align-content-center" href=<?=$this->Url->build(['action'=>'displayclass',$unit->id]);?>><?=$unit->code .' ' . $unit->title?></a>
                     </div>
                 </div>
             </div>

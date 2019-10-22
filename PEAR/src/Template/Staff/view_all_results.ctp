@@ -26,7 +26,6 @@ $this->layout=false;
 
     <?= $this->Html->css('nucleo-icons.css') ?>
     <?= $this->Html->css('blk-design-system.css') ?>
-    <!--    --><?//= $this->Html->css('staff.css')?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="canonical" href="https://www.creative-tim.com/product/blk-design-system">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -66,7 +65,7 @@ $this->layout=false;
                 <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
 
                     <li class="nav-item p-0">
-                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
+                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'staff','action'=>'index']);?>">
                             <i class="fas fa-home"></i>
                             <p class="d-lg-none d-xl-none">Home</p>
                         </a>
@@ -110,12 +109,17 @@ $this->layout=false;
 
 
 <div id="staff-container" class="container">
-    <h1>Activity List</h1>
+    <?php foreach ($unit_activity as $unit_activity):?>
+        <h1><?=$unit_activity->unitcode. " " . $unit_activity->activity?></h1>
+    <?php endforeach;?>
+
+    <div align="right"><?= $this->element('Staff/Buttons/csv', ['url' => ['action' => 'export',$unit_activity->peer_id]]) ?></div>
     <div>
         <table class="table" >
             <thead>
             <tr>
                 <th>Student</th>
+                <th>Team</th>
                 <?php foreach ($questions_desc as $questions_desc):?>
                     <th class="text-center"><?=$questions_desc->question?></th>
                 <?php endforeach;?>
@@ -124,16 +128,33 @@ $this->layout=false;
             </tr>
             </thead>
             <tbody>
-                <?php foreach ($student_list as $student_list):?>
+                <?php
+                foreach ($student_list as $student_list):
+                    $comment = "";?>
                     <tr>
                         <td><?=$student_list->firstname." ".$student_list->lastname?></td>
+                        <td><?=$student_list->team?></td>
                         <?php foreach ($student_result_array as $item):
                             if ($item->student_id == $student_list->student_id):
                                 $float = (float)$item->average_score;?>
                                 <td align="center"><?=Number::format($float,['precision' => 1])?></td>
                             <?php endif;
                         endforeach;?>
-                        <td><?= $this->element('Staff/Buttons/comment', ['url' => []]) ?></td>
+                        <?php foreach($student_comment_list as $item):
+                            if ($item->ratee_id == $student_list->student_id):
+                                $comment .= "<b>".$item->student_firstname. " ".$item->student_lastname. ":</b>. ".$item->comment;
+                                $comment .= "<br/>";
+                            endif;
+                        endforeach;?>
+                        <td align="center"><button id="button_<?php echo $student_list->student_id?>" " type="button"
+                                    class="btn btn-info btn-simple btn-icon btn-sm"
+                                    data-container="body"
+                                    data-toggle="popover"
+                                    data-placement="left"
+                                    data-html = "true"
+                                    data-content = "<?=$comment?>">
+                                <i class="fas fa-comments"></i>
+                            </button></td>
                     </tr>
                 <?php endforeach;?>
 
