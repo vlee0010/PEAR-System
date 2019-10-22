@@ -120,6 +120,7 @@ $this->layout=false;
             <thead>
             <tr>
                 <th>Student</th>
+                <th>Team</th>
                 <?php foreach ($questions_desc as $questions_desc):?>
                     <th class="text-center"><?=$questions_desc->question?></th>
                 <?php endforeach;?>
@@ -133,6 +134,7 @@ $this->layout=false;
                     $comment = "";?>
                     <tr>
                         <td><?=$student_list->firstname." ".$student_list->lastname?></td>
+                        <td><?=$student_list->team?></td>
                         <?php foreach ($student_result_array as $item):
                             if ($item->student_id == $student_list->student_id):
                                 $float = (float)$item->average_score;?>

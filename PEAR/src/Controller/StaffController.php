@@ -195,16 +195,36 @@ class StaffController extends AppController
             array_push($student_result_array,$item);
         endforeach;
 
-        $response_query_3 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
+        $response_query_3 = $this->Responses->find()->where(['Responses.peer_review_id' => $peer_id]);
         $student_list = $response_query_3->select([
             'student_id' => 'us.id',
             'firstname' => 'us.firstname',
             'lastname' => 'us.lastname',
+            'team' => 't.name'
         ])  ->join([
             'us' => [
                 'table' => 'users',
                 'conditions' => [
-                    'us.id = Responses.ratee_id',
+                    'us.id = Responses.user_id',
+                ]
+            ],
+            'p' => [
+                'table' => 'peer_reviews',
+                'conditions' => [
+                    'Responses.peer_review_id' => $peer_id,
+                    'p.id = Responses.peer_review_id',
+                ]
+            ],
+            'pt' => [
+                'table' => 'peer_reviews_teams',
+                'conditions' => [
+                    'pt.peer_review_id = p.id',
+                ]
+            ],
+            't' => [
+                'table' => 'teams',
+                'conditions' => [
+                    't.id_ = pt.team_id',
                 ]
             ]
         ])
@@ -257,9 +277,10 @@ class StaffController extends AppController
         $this->set('student_comment_list',$student_comment_list);
     }
 
-    public function sendReminderEmail($peer_id=null){
+    public function sendReminderEmail($peer_id=null)
+    {
 
-        $peer_review = $this->peer_reviews->find()->where(['peer_reviews.id'=>$peer_id]);
+        $peer_review = $this->peer_reviews->find()->where(['peer_reviews.id' => $peer_id]);
         $peer_review_title = $peer_review->select([
             'title' => 'peer_reviews.title'
         ]);
@@ -268,18 +289,18 @@ class StaffController extends AppController
             'code' => 'Units.code',
             'year' => 'Units.year',
             'semester' => 'Units.semester'
-        ])  ->innerJoinWith('Units');
+        ])->innerJoinWith('Units');
 
-        $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_reviews_users.peer_review_id' => $peer_id,'peer_reviews_users.status' => 0]);
+        $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_reviews_users.peer_review_id' => $peer_id, 'peer_reviews_users.status' => 0]);
         $student_list = $peer_review_user_query->select([
             'email' => 'us.email'
-        ])  ->join([
-                'us' => [
-                    'table' => 'users',
-                    'conditions' => [
-                        'us.id = peer_reviews_users.user_id',
-                    ]
+        ])->join([
+            'us' => [
+                'table' => 'users',
+                'conditions' => [
+                    'us.id = peer_reviews_users.user_id',
                 ]
+            ]
         ]);
 
 //        $subject = $unit_title. ' Role via PEAR Monash';
@@ -291,44 +312,45 @@ class StaffController extends AppController
             $unit_code = $unit->code;
             $unit_year = $unit->year;
             $unit_semester = $unit->semester;
-            endforeach;
+        endforeach;
         $student_email_list = [];
         foreach ($student_list as $student):
-                array_push($student_email_list,$student->email);
-            endforeach;
+            array_push($student_email_list, $student->email);
+        endforeach;
 
 
         $my_list = [];
         $myEmail = 'levanhai010198@gmail.com';
-        $my2Email   = 'rzan0002@student.monash.edu';
-        array_push($my_list,$myEmail);
+        $my2Email = 'rzan0002@student.monash.edu';
+        array_push($my_list, $myEmail);
 //        array_push($my_list,$my2Email);
-        $from = $unit_code. " Role via Pear Monash";
 
-        $subject = "PEAR Monash upcoming survey deadline";
-        $header = "Activity will be closed soon";
-        $message = "<h1>Activity will be closed soon</h1>";
-        $message .= "The data for the following activity will be closed soon: <br><br>";
-        $message .= "<i>Activity: " . $activity_title . " </i><br> ";
-        $message .= "<i>Unit: " . $unit_code . " " . "$unit_year" . " S" . $unit_semester ."</i><br>";
-        $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/development/team123-app/PEAR'>PEAR Monash</a> ";
-        if($this->request->is('post')){
-//            $this->Flash->set('Email Sent.',['element'=>'success']);
-            $this->Flash->success(__('Email Sent'));
-            $email = new Email('default');
-            $email
-                ->transport('gmail')
-                ->from(['pearmonash@gmail.com'=> $from])
-                ->subject($subject)
-                ->setHeaders([$header])
-                ->emailFormat('html')
-                ->bcc($student_email_list)
-                ->send($message);
-//            return $this->redirect(['action' => 'displaystudent',1,2]);
+        if (!empty($student_email_list)) {
+            $from = $unit_code . " Role via Pear Monash";
+            $subject = "PEAR Monash upcoming survey deadline";
+            $header = "Activity will be closed soon";
+            $message = "<h1>Activity will be closed soon</h1>";
+            $message .= "The data for the following activity will be closed soon: <br><br>";
+            $message .= "<i>Activity: " . $activity_title . " </i><br> ";
+            $message .= "<i>Unit: " . $unit_code . " " . "$unit_year" . " S" . $unit_semester . "</i><br>";
+            $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/development/team123-app/PEAR'>PEAR Monash</a> ";
+            if ($this->request->is('post')) {
+                //            $this->Flash->set('Email Sent.',['element'=>'success']);
+                $this->Flash->success(__('Email Sent'));
+                $email = new Email('default');
+                $email
+                    ->transport('gmail')
+                    ->from(['pearmonash@gmail.com' => $from])
+                    ->subject($subject)
+                    ->setHeaders([$header])
+                    ->emailFormat('html')
+                    ->bcc($student_email_list)
+                    ->send($message);
+                //            return $this->redirect(['action' => 'displaystudent',1,2]);
+            } else {
+                $this->Flash->set('Error sending email', ['element' => 'error']);
+            }
+            $this->set('title', $peer_review_title);
         }
-        else{
-            $this->Flash->set('Error sending email',['element'=>'error']);
-        }
-        $this->set('title', $peer_review_title);
     }
 }

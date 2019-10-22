@@ -109,7 +109,6 @@ $this->layout=false;
     <h1>Activity List</h1>
 
     <div>
-
         <table class="table" >
             <thead>
             <tr>
@@ -126,7 +125,7 @@ $this->layout=false;
                     <td><?=$unit_activity->activity?></td>
                     <td><?=$unit_activity->datestart?></td>
                     <td><?=$unit_activity->dateend?></td>
-                    <td class="actions" width = "45%">
+                    <td class="actions" width = "44%">
                         <?= $this->element('Staff/Buttons/results', ['url' => ['action' => 'viewAllResults',$unit_activity->peer_id]]) ?>
                         <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail',$unit_activity->peer_id]]) ?>
                         <?= $this->element('Staff/Buttons/csv', ['url' => ['action' => 'export']]) ?>
@@ -150,7 +149,6 @@ $this->layout=false;
             <th>Student Name</th>
             <th>Peer Review Name</th>
             <th>Status</th>
-            <th>Action</th>
         </tr>
 
         </thead>
