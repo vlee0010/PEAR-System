@@ -1,20 +1,13 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @var \App\View\AppView $this
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+use Cake\I18n\Number;
+
+$this->layout=false;
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,28 +31,15 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-    <?= $this->Html->css('custom.css') ?>
+
 </head>
-<body class="register-page">
-
-<<<<<<< .merge_file_dspzHn
-    <nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
-        <div class="container">
-            <div class="navbar-translate">
-                <div>
-                    <?php echo $this->Html->image('logo3.png',['style'=>'height:50px']);?>
-                    <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'pages','action'=>'display'])?>'   data-placement="bottom" >
-                        <span>PEAR</span> Monash
-                    </a>
-                </div>
-                <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-bar bar1"></span>
-                    <span class="navbar-toggler-bar bar2"></span>
-                    <span class="navbar-toggler-bar bar3"></span>
-                </button>
-
-
-            </div>
+<body>
+<nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
+    <div  class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'staff','action'=>'index'])?>'   data-placement="bottom" >
+                <span>PEAR</span> Monash
+            </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar bar1"></span>
                 <span class="navbar-toggler-bar bar2"></span>
@@ -85,7 +65,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
 
                     <li class="nav-item p-0">
-                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
+                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'staff','action'=>'index']);?>">
                             <i class="fas fa-home"></i>
                             <p class="d-lg-none d-xl-none">Home</p>
                         </a>
@@ -107,7 +87,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 
                     <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'users', 'action'=>'studentdash'])?>'>
+                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'staff', 'action'=>'index'])?>'>
                             <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.firstname');?>
                         </a>
                     </li>
@@ -119,23 +99,69 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     </li>
 
                 <?php endif;?>
-
-
-
-
-
-
-
             </ul>
         </div>
     </div>
 </nav>
-<?= $this->Flash->render() ?>
-<div class="clearfix">
-    <?= $this->fetch('content') ?>
+
+
+<!--starts here-->
+
+
+<div id="staff-container" class="container">
+    <?php foreach ($unit_activity as $unit_activity):?>
+        <h1><?=$unit_activity->unitcode. " " . $unit_activity->activity?></h1>
+    <?php endforeach;?>
+
+    <div align="right"><?= $this->element('Staff/Buttons/csv', ['url' => ['action' => 'export',$unit_activity->peer_id]]) ?></div>
+    <div>
+        <table class="table" >
+            <thead>
+            <tr>
+                <th>Student</th>
+                <th>Team</th>
+                <?php foreach ($questions_desc as $questions_desc):?>
+                    <th class="text-center"><?=$questions_desc->question?></th>
+                <?php endforeach;?>
+                <th>Comment</th>
+
+            </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($student_list as $student_list):
+                    $comment = "";?>
+                    <tr>
+                        <td><?=$student_list->firstname." ".$student_list->lastname?></td>
+                        <td><?=$student_list->team?></td>
+                        <?php foreach ($student_result_array as $item):
+                            if ($item->student_id == $student_list->student_id):
+                                $float = (float)$item->average_score;?>
+                                <td align="center"><?=Number::format($float,['precision' => 1])?></td>
+                            <?php endif;
+                        endforeach;?>
+                        <?php foreach($student_comment_list as $item):
+                            if ($item->ratee_id == $student_list->student_id):
+                                $comment .= "<b>".$item->student_firstname. " ".$item->student_lastname. ":</b>. ".$item->comment;
+                                $comment .= "<br/>";
+                            endif;
+                        endforeach;?>
+                        <td align="center"><button id="button_<?php echo $student_list->student_id?>" " type="button"
+                                    class="btn btn-info btn-simple btn-icon btn-sm"
+                                    data-container="body"
+                                    data-toggle="popover"
+                                    data-placement="left"
+                                    data-html = "true"
+                                    data-content = "<?=$comment?>">
+                                <i class="fas fa-comments"></i>
+                            </button></td>
+                    </tr>
+                <?php endforeach;?>
+
+            </tbody>
+        </table>
+    </div>
 </div>
-<footer>
-</footer>
 
 
 
@@ -152,27 +178,5 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <?= $this->Html->script('blk-design-system.min.js') ?>
 <?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-
-<!--    <script>-->
-<!--        var slider = document.getElementById('sliderRegular');-->
-<!---->
-<!--        noUiSlider.create(slider, {-->
-<!--            start: 1,-->
-<!--            connect: [true,false],-->
-<!--            range: {-->
-<!--                min: 1,-->
-<!--                max: 5-->
-<!--            }-->
-<!--        });-->
-<!---->
-<!---->
-<!--    </script>-->
-
-<script>
-
-    $(document).ready( function () {
-        $('#myTable').DataTable();
-    } );
-</script>
 </body>
 </html>

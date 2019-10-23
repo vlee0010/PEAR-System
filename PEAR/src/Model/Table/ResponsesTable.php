@@ -39,7 +39,7 @@ class ResponsesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
+            'foreignKey' => 'ratee_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Questions', [
@@ -47,7 +47,8 @@ class ResponsesTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->hasMany('Answers', [
-            'foreignKey' => 'response_id'
+            'foreignKey' => 'response_id',
+            'joinType' => 'INNER'
         ]);
     }
 

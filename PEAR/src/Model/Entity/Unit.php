@@ -4,16 +4,19 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Question Entity
+ * Unit Entity
  *
  * @property int $id
- * @property string $description
- * @property int $peer_review_id
+ * @property string $title
+ * @property string $code
+ * @property string $semester
+ * @property string $year
  *
  * @property \App\Model\Entity\PeerReview[] $peer_reviews
- * @property \App\Model\Entity\Response[] $responses
+ * @property \App\Model\Entity\Team[] $teams
+ * @property \App\Model\Entity\User[] $users
  */
-class Question extends Entity
+class Unit extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -25,11 +28,12 @@ class Question extends Entity
      * @var array
      */
     protected $_accessible = [
-        'description' => true,
-        'peer_review_id' => true,
-        'peer_review' => true,
-        'response'=>true
-
-
+        'title' => true,
+        'code' => true,
+        'semester' => true,
+        'year' => true,
+        'peer_reviews' => true,
+        'teams' => true,
+        'users' => true
     ];
 }

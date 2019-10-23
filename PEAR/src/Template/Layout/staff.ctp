@@ -1,20 +1,3 @@
-<?php
-/**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
- */
-
-$cakeDescription = 'CakePHP: the rapid development php framework';
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,24 +25,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body class="register-page">
 
-<<<<<<< .merge_file_dspzHn
-    <nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
-        <div class="container">
-            <div class="navbar-translate">
-                <div>
-                    <?php echo $this->Html->image('logo3.png',['style'=>'height:50px']);?>
-                    <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'pages','action'=>'display'])?>'   data-placement="bottom" >
-                        <span>PEAR</span> Monash
-                    </a>
-                </div>
-                <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-bar bar1"></span>
-                    <span class="navbar-toggler-bar bar2"></span>
-                    <span class="navbar-toggler-bar bar3"></span>
-                </button>
-
-
-            </div>
+<nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'staff','action'=>'index'])?>'   data-placement="bottom" >
+                <span>PEAR</span> Monash
+            </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar bar1"></span>
                 <span class="navbar-toggler-bar bar2"></span>
@@ -82,10 +53,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 </div>
             </div>
             <ul class="navbar-nav">
-                <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
-
+                <?php if(is_null($this->request->getSession()->read('Auth.User.email'))) : ?>
                     <li class="nav-item p-0">
-                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
+                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'staff','action'=>'index']);?>">
                             <i class="fas fa-home"></i>
                             <p class="d-lg-none d-xl-none">Home</p>
                         </a>
@@ -107,7 +77,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 
                     <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'users', 'action'=>'studentdash'])?>'>
+                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'staff', 'action'=>'index'])?>'>
                             <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.firstname');?>
                         </a>
                     </li>
@@ -120,20 +90,15 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
                 <?php endif;?>
 
-
-
-
-
-
-
             </ul>
         </div>
     </div>
 </nav>
-<?= $this->Flash->render() ?>
-<div class="clearfix">
-    <?= $this->fetch('content') ?>
-</div>
+<article class="content dashboard-page">
+    <?= $this->Flash->render(); ?>
+    <?= $this->fetch('content'); ?>
+</article>
+
 <footer>
 </footer>
 

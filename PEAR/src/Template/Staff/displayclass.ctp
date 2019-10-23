@@ -23,7 +23,7 @@ $this->layout=false;
 
     <?= $this->Html->css('nucleo-icons.css') ?>
     <?= $this->Html->css('blk-design-system.css') ?>
-    <?= $this->Html->css('staff.css')?>
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="canonical" href="https://www.creative-tim.com/product/blk-design-system">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -35,7 +35,7 @@ $this->layout=false;
 <nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
     <div  class="container">
         <div class="navbar-translate">
-            <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'pages','action'=>'display'])?>'   data-placement="bottom" >
+            <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'staff','action'=>'index'])?>'   data-placement="bottom" >
                 <span>PEAR</span> Monash
             </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@ $this->layout=false;
                 <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
 
                     <li class="nav-item p-0">
-                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'pages','action'=>'display']);?>">
+                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'staff','action'=>'index']);?>">
                             <i class="fas fa-home"></i>
                             <p class="d-lg-none d-xl-none">Home</p>
                         </a>
@@ -107,7 +107,7 @@ $this->layout=false;
 
 
 <div id="staff-container" class="container">
-    <h1>Class Section List</h1>
+    <h1>Class List</h1>
     <div class="row">
 
 
@@ -124,7 +124,9 @@ $this->layout=false;
 
 <?php endforeach;?>
 
-</div>
+    </div>
+    <br>
+
 </div>
 
 
