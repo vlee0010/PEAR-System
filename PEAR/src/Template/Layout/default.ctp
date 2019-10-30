@@ -42,7 +42,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body class="register-page">
 
-<<<<<<< HEAD
 <<<<<<< .merge_file_dspzHn
     <nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
         <div class="container">
@@ -59,16 +58,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <span class="navbar-toggler-bar bar3"></span>
                 </button>
 
-
-
-<nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
-    <div class="container">
-        <div class="navbar-translate">
-            <div>
-                <?php echo $this->Html->image('logo3.png',['style'=>'height:50px']);?>
-                <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'pages','action'=>'display'])?>'   data-placement="bottom" >
-                    <span>PEAR</span> Monash
-                </a>
 
             </div>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">

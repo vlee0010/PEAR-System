@@ -14,9 +14,7 @@
                     <h2 style="margin:0;"><?=$unit->code;?></h2>
                     <!--                    <img style="max-width: 100%"src="https://source.unsplash.com/user/vincentyaha/likes?sig=--><?//=rand()?><!--" alt="">-->
                 </div>
-
-                <div class="card-text d-flex justify-content-between">
-
+                <div class="card-text d-flex justify-content-between" style="padding:50px">
 <!--                    <div>-->
 <!--                        <div class="progress-box" id="xyz--><?//=$index?><!--" style="margin:0 auto;"></div>-->
 <!--                    </div>-->
