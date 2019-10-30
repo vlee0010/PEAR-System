@@ -91,10 +91,7 @@
                     </div>
                     <div class="col-lg-6">
                         <h1 class="display-3 text-white">
-<<<<<<< HEAD
-<<<<<<< .merge_file_9p4p6J
-                            <?php echo $this->Html->image('logo3.png',['style'=>'height:150px']);?>
-=======
+
                             <?php echo $this->Html->image('logo3',['style'=>'height:150px']);?> PEAR
 >>>>>>> .merge_file_ohEH7J
 =======

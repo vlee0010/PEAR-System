@@ -108,23 +108,12 @@ $this->layout=false;
 
 <div id="staff-container" class="container">
     <h1>Class List</h1>
-    <div class="row">
-
 
 <?php foreach($class_list as $class):?>
-        <div class="card col-12 col-md-4 col-lg-3">
-            <div class="card-img" >
-                <img src="https://source.unsplash.com/user/vincentyaha/likes?sig=<?=rand()?>" alt="">
-            </div>
-            <div class="card-text">
-                <a id="class-list-item" href=<?=$this->Url->build(['action'=>'displaystudent',$class->id,$peer_id]);?>><?=$class->class_name?></a>
-            </div>
-
-        </div>
-
+    <h2 class="display-4"><a id="class-list-item" href=<?=$this->Url->build(['action'=>'displaystudent',$class->id,$peer_id]);?>><?=$class->class_name?></a></h2>
 <?php endforeach;?>
 
-    </div>
+
     <br>
 
 </div>

@@ -121,10 +121,10 @@ $this->layout=false;
             <tbody>
             <?php foreach ($unit_activity as $unit_activity):?>
                 <tr>
-                    <td><?=$unit_activity->unitname.' '.$unit_activity->unitcode?></td>
+                    <td><?=$unit_activity->unitcode?></td>
                     <td><?=$unit_activity->activity?></td>
-                    <td><?=$unit_activity->datestart?></td>
-                    <td><?=$unit_activity->dateend?></td>
+                    <td><?=date("d-M-Y", strtotime($unit_activity->datestart))?></td>
+                    <td><?=date("d-M-Y", strtotime($unit_activity->dateend))?></td>
                     <td class="actions" width = "33.33%">
                         <?= $this->element('Staff/Buttons/results', ['url' => ['action' => 'viewAllResults',$unit_activity->peer_id]]) ?>
                         <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail',$unit_activity->peer_id]]) ?>
