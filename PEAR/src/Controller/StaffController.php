@@ -139,7 +139,7 @@ class StaffController extends AppController
 
     public function export($peer_id = null)
     {
-        $this->response = $this->response->withDownload('class_results.csv');
+
 
         $response_query = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
 
@@ -148,6 +148,8 @@ class StaffController extends AppController
             'unitname' => 'Units.title',
             'unitcode' => 'Units.code',
             'activity' => 'peer_reviews.title',
+            'semester' => 'Units.semester',
+            'year' => 'Units.year',
         ])->innerJoinWith('Units');
 
 
@@ -288,6 +290,10 @@ class StaffController extends AppController
             $ar = [];
         endforeach;
 
+        foreach ($unit_activity as $unit):
+                $file_name = $unit->unitcode . ' ' . $unit->year . ' Semester ' . $unit->semester .' '. $unit->activity .' '. 'Result.csv';
+        endforeach;
+
 
         $_header = ['Student Name', 'Team'];
         foreach ($questions_desc as $questions_desc):
@@ -297,6 +303,7 @@ class StaffController extends AppController
 
         $_serialize = 'data';
 
+        $this->response = $this->response->withDownload($file_name);
         $this->viewBuilder()->setClassName('CsvView.Csv');
         $this->set(compact('data', '_serialize', '_header'));
     }

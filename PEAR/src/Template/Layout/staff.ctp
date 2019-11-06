@@ -1,3 +1,7 @@
+<?php
+
+$cakeDescription = 'PEAR Monash: Peer Evaluation & Assessment Resource';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +16,6 @@
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
     <?= $this->Html->meta('icon') ?>
-
-
     <?= $this->Html->css('nucleo-icons.css') ?>
     <?= $this->Html->css('blk-design-system.css') ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
@@ -25,7 +27,7 @@
 </head>
 <body class="register-page">
 
-<nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
+<nav class="navbar navbar-expand-lg navbar-transparent breadcrumb" role="navigation"  color-on-scroll="100">
     <div class="container">
         <div class="navbar-translate">
             <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'staff','action'=>'index'])?>'   data-placement="bottom" >
@@ -74,7 +76,6 @@
                         </a>
                     </li>
                 <?php else :?>
-
 
                     <li class="nav-item">
                         <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'staff', 'action'=>'index'])?>'>

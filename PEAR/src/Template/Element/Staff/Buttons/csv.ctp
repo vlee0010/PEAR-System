@@ -6,12 +6,12 @@
  */
 
 echo $this->Form->postLink(
-    'CSV',
+    'Download CSV',
     isset($disabled) && $disabled ? [] : $url,
     [
         'class' => 'btn btn-default',
         'escape' => false,
-        'confirm' => isset($disabled) && $disabled ? false : 'Download results as CSV?',
-        'disabled' => isset($disabled) && $disabled
+        'disabled' => isset($disabled) && $disabled,
+        'data-dismiss' => 'modal'
     ]
 );
