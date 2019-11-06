@@ -13,7 +13,7 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'PEAR Monash: Peer Evaluation & Assessment Resource';
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,7 +46,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <div class="container">
         <div class="navbar-translate">
             <div>
-                <?php echo $this->Html->image('logo3.png',['style'=>'height:50px']);?>
+<!--                --><?php //echo $this->Html->image('logo3.png',['style'=>'height:50px']);?>
                 <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'pages','action'=>'display'])?>'   data-placement="bottom" >
                     <span>PEAR</span> Monash
                 </a>

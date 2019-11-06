@@ -11,7 +11,7 @@ echo $this->Form->postLink(
     [
         'class' => 'btn btn-default',
         'escape' => false,
-        'confirm' => isset($disabled) && $disabled ? false : 'Send Email to All Students?',
-        'disabled' => isset($disabled) && $disabled
+        'disabled' => isset($disabled) && $disabled,
+        'data-dismiss' => 'modal'
     ]
 );
