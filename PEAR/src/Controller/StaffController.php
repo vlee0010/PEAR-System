@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Model\Entity\Role;
 use Cake\Mailer\Email;
 use Cake\I18n\Number;
+use Cake\View\Helper\BreadcrumbsHelper;
 use Cake\Mailer\TransportFactory;
 
 class StaffController extends AppController
@@ -86,6 +87,7 @@ class StaffController extends AppController
 
         $peer_query = $this->units_classes->find()->where(['class_id' => $id]);
         $unit_activity = $peer_query->select([
+            'unit_id' =>'u.id',
             'unitname' => 'u.title',
             'unitcode' => 'u.code',
             'activity' => 'p.title',
@@ -314,6 +316,7 @@ class StaffController extends AppController
 
         $peer_query = $this->peer_reviews->find()->where(['peer_reviews.id' => $peer_id]);
         $unit_activity = $peer_query->select([
+            'unit_id' =>'Units.id',
             'unitname' => 'Units.title',
             'unitcode' => 'Units.code',
             'peer_id' => 'peer_reviews.id',
@@ -364,7 +367,8 @@ class StaffController extends AppController
             'student_id' => 'us.id',
             'firstname' => 'us.firstname',
             'lastname' => 'us.lastname',
-            'team' => 't.name'
+            'team' => 't.name',
+
         ])->join([
             'us' => [
                 'table' => 'users',

@@ -6,6 +6,12 @@
 ?>
 
 <!--starts here-->
+<?php foreach ($unit_activity as $unit_activity1): ?>
+    <?php $this->Breadcrumbs->add('Class', $this->request->referer()) ?>
+    <?php $this->Breadcrumbs->add('Student List') ?>
+    <?php break; ?>
+<?php endforeach; ?>
+
 <div id="staff-container" class="container">
     <div class="container-fluid">
         <main class="col-12 col-md-12 col-xl-12 py-md-3 pl-md-6 bd-content" role="main">
@@ -63,6 +69,7 @@
             </div>
             <?php endforeach; ?>
             </tbody>
+
             </table>
 
             <br>
@@ -90,7 +97,7 @@
                 </div>
             </div>
             <div align="right">
-                <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal2','data-dismiss' => 'modal']); ?>
+                <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal2', 'data-dismiss' => 'modal']); ?>
 
             </div>
             <br>
