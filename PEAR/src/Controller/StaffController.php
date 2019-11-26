@@ -75,9 +75,9 @@ class StaffController extends AppController
         $peer_review_user_list = [];
         $student_id_list_new = [];
         foreach ($student_id_list as $student_id) {
-            if ($this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id, 'user_id' => $student_id, 'status' => 0])->first()) {
-                array_push($peer_review_user_list, $this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id, 'user_id' => $student_id, 'status' => 0])->first());
-                array_push($student_id_list_new, $this->peer_reviews_users->find()->select('user_id')->where(['peer_review_id' => $peer_id, 'user_id' => $student_id, 'status' => 0])->first());
+            if ($this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id, 'user_id' => $student_id])->first()) {
+                array_push($peer_review_user_list, $this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id, 'user_id' => $student_id])->first());
+                array_push($student_id_list_new, $this->peer_reviews_users->find()->select('user_id')->where(['peer_review_id' => $peer_id, 'user_id' => $student_id])->first());
             }
         }
         foreach ($student_id_list_new as $student_id) {
@@ -139,10 +139,12 @@ class StaffController extends AppController
         $this->set(compact('response_list'));
     }
 
+    public function reset_response($user_id,$peer_id){
+        $this->request->allowMethod(['post','delete']);
+    }
+
     public function export($peer_id = null)
     {
-
-
         $response_query = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
 
         $peer_query = $this->peer_reviews->find()->where(['peer_reviews.id' => $peer_id]);
@@ -163,6 +165,8 @@ class StaffController extends AppController
                 'Responses.is_text_number' => 0
             ])
             ->distinct();
+
+
 
         $response_query_2 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
         $student_result = $response_query_2->select([
@@ -326,12 +330,15 @@ class StaffController extends AppController
 
         $questions_desc = $response_query->select([
             'question_id' => "Questions.id",
-            'question' => "Questions.description"
+            'question' => "Questions.description",
+
         ])->innerJoinWith('Questions')
             ->where([
                 'Responses.is_text_number' => 0
             ])
             ->distinct();
+
+        $count_num_question = $questions_desc->count();
 
         $response_query_2 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
         $student_result = $response_query_2->select([
@@ -356,6 +363,14 @@ class StaffController extends AppController
                 'Responses.is_text_number' => 0
             ])
             ->group(['us.id', 'Responses.question_id']);
+
+//
+//        $student_result_sum = $student_result->select([
+//            'student_id' => 'us.id',
+//            'count' => $student_result->func()->count('average_score'),
+//            'sum_score' => $student_result->func()->sum('average_score'),
+//            'total_score'
+//        ])->group(['us.id']);
 
         $student_result_array = [];
         foreach ($student_result as $item):
@@ -438,6 +453,7 @@ class StaffController extends AppController
         endforeach;
 
 
+        $this->set('count', $count_num_question);
         $this->set('unit_activity', $unit_activity);
         $this->set('questions_desc', $questions_desc);
         $this->set('student_result_array', $student_result_array);

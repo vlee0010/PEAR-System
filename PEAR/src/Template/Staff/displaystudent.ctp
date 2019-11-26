@@ -108,6 +108,7 @@
                     <th>Student Name</th>
                     <th>Peer Review Name</th>
                     <th>Status</th>
+                    <th class="actions"><?= __('Actions') ?></th>
                 </tr>
 
                 </thead>
@@ -116,17 +117,23 @@
                     <tr>
                         <td><?= $student->firstname . ' ' . $student->lastname ?></td>
                         <td><?= $peer_review->title ?></td>
-                        <td>
-                            <?php foreach ($peer_review_user_list as $peer_review_user): ?>
-                                <?php if ($peer_review_user->user_id == $student->id): ?>
-                                    <?php if ($peer_review_user->status == 0): ?>
-                                        <?= 'Incomplete' ?>
-                                    <?php else: ?>
-                                        <?= 'Complete' ?>
-                                    <?php endif; ?>
+
+                        <?php foreach ($peer_review_user_list as $peer_review_user): ?>
+                            <?php if ($peer_review_user->user_id == $student->id): ?>
+                                <?php if ($peer_review_user->status == 0): ?>
+                                    <td><?= 'Incomplete' ?></td>
+                                    <td>
+                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => [],'disabled' => $peer_review_user->status == 0]) ?>
+                                    </td>
+                                <?php else: ?>
+                                    <td><?= 'Complete' ?></td>
+                                    <td>
+                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => []]) ?>
+                                    </td>
                                 <?php endif; ?>
-                            <?php endforeach; ?>
-                        </td>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

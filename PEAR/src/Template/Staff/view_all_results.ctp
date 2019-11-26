@@ -5,6 +5,7 @@
 
 use Cake\I18n\Number;
 
+$EIGHTY_PERCENT = 0.8;
 ?>
 <style>
     .popover {
@@ -61,6 +62,7 @@ use Cake\I18n\Number;
                         <?php foreach ($questions_desc as $questions_desc): ?>
                             <th class="text-center"><?= $questions_desc->question ?></th>
                         <?php endforeach; ?>
+                        <th>Total Score</th>
                         <th>Comment</th>
 
                     </tr>
@@ -68,13 +70,16 @@ use Cake\I18n\Number;
                     <tbody>
                     <?php
                     foreach ($student_list as $student_list):
-                        $comment = ""; ?>
+                        $total_score = $count*5;
+                        $comment = "";
+                        $sum_score = 0;?>
                         <tr>
                             <td><?= $student_list->firstname . " " . $student_list->lastname ?></td>
                             <td><?= $student_list->team ?></td>
                             <?php foreach ($student_result_array as $item):
                                 if ($item->student_id == $student_list->student_id):
-                                    $float = (float)$item->average_score; ?>
+                                    $float = (float)$item->average_score;
+                                    $sum_score += $float?>
                                     <td align="center"><?= Number::format($float, ['precision' => 1]) ?></td>
                                 <?php endif;
                             endforeach; ?>
@@ -84,6 +89,11 @@ use Cake\I18n\Number;
                                     $comment .= "<br/>";
                                 endif;
                             endforeach; ?>
+                            <?php if ($sum_score < $EIGHTY_PERCENT*$total_score):?>
+                                <td class="alert alert-danger" align="center"><?= Number::format($sum_score, ['precision' => 1]). "/".$total_score ?></td>
+                            <?php else:?>
+                                <td  align="center"><?= Number::format($sum_score, ['precision' => 1]). "/".$total_score ?></td>
+                            <?php endif;?>
                             <td align="center">
                                 <button id="button_<?php echo $student_list->student_id ?>"
                                 type="button"
