@@ -75,7 +75,11 @@ $EIGHTY_PERCENT = 0.8;
                         $sum_score = 0;?>
                         <tr>
                             <td><?= $student_list->firstname . " " . $student_list->lastname ?></td>
-                            <td><?= $student_list->team ?></td>
+                            <?php foreach ($team_list as $item):
+                                if ($item->user_id == $student_list->student_id):?>
+                                    <td><?= $item->team ?></td>
+                                <?php endif;
+                            endforeach; ?>
                             <?php foreach ($student_result_array as $item):
                                 if ($item->student_id == $student_list->student_id):
                                     $float = (float)$item->average_score;
