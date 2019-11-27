@@ -70,9 +70,9 @@ $EIGHTY_PERCENT = 0.8;
                     <tbody>
                     <?php
                     foreach ($student_list as $student_list):
-                        $total_score = $count*5;
+                        $total_score = $count * 5;
                         $comment = "";
-                        $sum_score = 0;?>
+                        $sum_score = 0; ?>
                         <tr>
                             <td><?= $student_list->firstname . " " . $student_list->lastname ?></td>
                             <?php foreach ($team_list as $item):
@@ -83,7 +83,7 @@ $EIGHTY_PERCENT = 0.8;
                             <?php foreach ($student_result_array as $item):
                                 if ($item->student_id == $student_list->student_id):
                                     $float = (float)$item->average_score;
-                                    $sum_score += $float?>
+                                    $sum_score += $float ?>
                                     <td align="center"><?= Number::format($float, ['precision' => 1]) ?></td>
                                 <?php endif;
                             endforeach; ?>
@@ -93,22 +93,26 @@ $EIGHTY_PERCENT = 0.8;
                                     $comment .= "<br/>";
                                 endif;
                             endforeach; ?>
-                            <?php if ($sum_score < $EIGHTY_PERCENT*$total_score):?>
-                                <td class="alert alert-danger" align="center"><?= Number::format($sum_score, ['precision' => 1]). "/".$total_score ?></td>
-                            <?php else:?>
-                                <td  align="center"><?= Number::format($sum_score, ['precision' => 1]). "/".$total_score ?></td>
-                            <?php endif;?>
+                            <?php if ($sum_score < $EIGHTY_PERCENT * $total_score): ?>
+                                <td class="alert alert-danger"
+                                    align="center"><?= Number::format($sum_score, ['precision' => 1]) . "/" . $total_score ?></td>
+                            <?php else: ?>
+                                <td align="center"><?= Number::format($sum_score, ['precision' => 1]) . "/" . $total_score ?></td>
+                            <?php endif; ?>
                             <td align="center">
-                                <button id="button_<?php echo $student_list->student_id ?>"
-                                type="button"
-                                class="btn btn-info btn-simple btn-icon btn-sm"
-                                data-container="body"
-                                data-toggle="popover"
-                                data-placement="left"
-                                data-html = "true"
-                                data-content = "<?= $comment ?>">
-                                <i class="fas fa-comments"></i>
-                                </button></td>
+                                <a tabindex="0"
+                                   id="button_<?php echo $student_list->student_id ?>"
+                                   role="button"
+                                   class="btn btn-info btn-simple btn-icon btn-sm"
+                                   data-container="body"
+                                   data-toggle="popover"
+                                   data-placement="left"
+                                   data-trigger="focus"
+                                   data-html="true"
+                                   data-content="<?= $comment ?>">
+                                    <i class="fas fa-comments"></i>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
 
