@@ -123,12 +123,12 @@
                                 <?php if ($peer_review_user->status == 0): ?>
                                     <td><?= 'Incomplete' ?></td>
                                     <td>
-                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => [],'disabled' => $peer_review_user->status == 0]) ?>
+                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse',$student->id,$peer_review->id],'disabled' => $peer_review_user->status == 0]) ?>
                                     </td>
                                 <?php else: ?>
                                     <td><?= 'Complete' ?></td>
                                     <td>
-                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => []]) ?>
+                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse',$student->id,$peer_review->id]]) ?>
                                     </td>
                                 <?php endif; ?>
                             <?php endif; ?>

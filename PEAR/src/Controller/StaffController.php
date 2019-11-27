@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Model\Entity\Role;
 use Cake\Mailer\Email;
 use Cake\I18n\Number;
+use Cake\ORM\TableRegistry;
 use Cake\View\Helper\BreadcrumbsHelper;
 use Cake\Mailer\TransportFactory;
 
@@ -140,9 +141,23 @@ class StaffController extends AppController
         $this->set(compact('response_list'));
     }
 
-    public function reset_response($user_id, $peer_id)
+    public function resetResponse($user_id, $peer_id)
     {
         $this->request->allowMethod(['post', 'delete']);
+        $response = $this->Responses->find('all')->where(['user_id' => $user_id, 'peer_review_id' => $peer_id]);
+        $this->Responses->deleteAll(['user_id' => $user_id, 'peer_review_id' => $peer_id]);
+
+        $this->set('response', $response);
+
+        $peerReviewsUsersTable = TableRegistry::getTableLocator()->get('peer_reviews_users');
+        $peerReviewsUsers = $peerReviewsUsersTable->get([$user_id, $peer_id]);
+        $peerReviewsUsers->status = 0;
+        $peerReviewsUsersTable->save($peerReviewsUsers);
+
+        $this->set('peerReviewsUsers', $peerReviewsUsers);
+
+//        $this->redirect($this->referer());
+
     }
 
     public function export($peer_id = null)
@@ -202,8 +217,8 @@ class StaffController extends AppController
         $student_list = $response_query_3->select([
             'student_id' => 'us.id',
             'firstname' => 'us.firstname',
-            'lastname' => 'us.lastname',
-            'team' => 't.name'
+            'lastname' => 'us.lastname'
+
         ])->join([
             'us' => [
                 'table' => 'users',
@@ -223,15 +238,27 @@ class StaffController extends AppController
                 'conditions' => [
                     'pt.peer_review_id = p.id',
                 ]
-            ],
+            ]
+        ])->distinct();
+
+        $team_query = $this->peer_reviews_teams->find()->where(['peer_review_id' => $peer_id]);
+        $team_list = $team_query->select([
+            'team' => 't.name',
+            'user_id' => 'tu.user_id'
+        ])->join([
             't' => [
                 'table' => 'teams',
                 'conditions' => [
-                    't.id_ = pt.team_id',
+                    'peer_reviews_teams.team_id = t.id_ ',
+                ]
+            ],
+            'tu' => [
+                'table' => 'teams_users',
+                'conditions' => [
+                    'tu.team_id = t.id_ '
                 ]
             ]
-        ])
-            ->distinct();
+        ])->distinct();
 
         $response_query_4 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
         $student_comment = $response_query_4->select([
@@ -277,7 +304,11 @@ class StaffController extends AppController
         foreach ($student_list as $student):
             $comment = "";
             $student_name = $student->firstname . " " . $student->lastname;
-            $team = $student->team;
+            foreach ($team_list as $item):
+                if ($item->user_id == $student->student_id):
+                    $team = $item->team;
+                endif;
+            endforeach;
             array_push($ar, $student_name, $team);
             foreach ($student_result_array as $item):
                 if ($item->student_id == $student->student_id):

@@ -89,17 +89,6 @@ class QuestionsController extends AppController
 
 
         }
-        /**
-         * Find all question in Questions Table that have peer_review_id = peer_id that has been passed into
-         * and then join with the PeerReviews Table to display data
-         */
-
-        $questionQuery = $this->Questions->find()->where([
-            'Questions.peer_review_id ='=> $peer_id,
-        ])
-            ->innerJoinWith('PeerReviews');
-        $this->set('question_query',$questionQuery);
-
 
         $this->set(compact('questions'));
         $this->set(compact('user_id_list'));
