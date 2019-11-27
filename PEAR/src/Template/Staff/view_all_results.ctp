@@ -5,164 +5,119 @@
 
 use Cake\I18n\Number;
 
-$this->layout=false;
+$EIGHTY_PERCENT = 0.8;
 ?>
+<style>
+    .popover {
+        max-width: 500px;
+    }
+</style>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
-    </title>
+<!--starts here-->
+<?php foreach ($unit_activity as $unit_activity1): ?>
+    <?php $this->Breadcrumbs->add('Class', ['controller' => 'staff', 'action' => 'displayclass', $unit_activity1->unit_id]) ?>
+    <?php $this->Breadcrumbs->add('Student List', $this->request->referer()) ?>
+    <?php $this->Breadcrumbs->add('Activity Result') ?>
+    <?php break; ?>
+<?php endforeach; ?>
 
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
-    <?= $this->Html->meta('icon') ?>
+<div id="staff-container" class="container">
+    <div class="container-fluid">
+        <main class="col-12 col-md-12 col-xl-12 py-md-3 pl-md-6 bd-content" role="main">
+            <?php foreach ($unit_activity as $unit_activity): ?>
+                <h1><?= $unit_activity->unitcode . " " . $unit_activity->activity ?></h1>
+            <?php endforeach; ?>
 
-
-    <?= $this->Html->css('nucleo-icons.css') ?>
-    <?= $this->Html->css('blk-design-system.css') ?>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <link rel="canonical" href="https://www.creative-tim.com/product/blk-design-system">
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
-    <div  class="container">
-        <div class="navbar-translate">
-            <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'staff','action'=>'index'])?>'   data-placement="bottom" >
-                <span>PEAR</span> Monash
-            </a>
-            <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-            </button>
-        </div>
-        <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <div class="navbar-collapse-header">
-                <div class="row">
-                    <div class="col-6 collapse-brand">
-                        <a>
-                            PEAR
-                        </a>
-                    </div>
-                    <div class="col-6 collapse-close text-right">
-                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="tim-icons icon-simple-remove"></i>
-                        </button>
+            <div
+                align="right"><?= $this->Form->button('Download CSV', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal']); ?>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="exampleModalLabel">System Alert</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Download results as CSV?
+                        </div>
+                        <div class="modal-footer">
+                            <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
+                            <?= $this->element('Staff/Buttons/csv', ['url' => ['action' => 'export', $unit_activity->peer_id]]) ?>
+                        </div>
                     </div>
                 </div>
             </div>
-            <ul class="navbar-nav">
-                <?php if(is_null($this->request->session()->read('Auth.User.email'))) : ?>
-
-                    <li class="nav-item p-0">
-                        <a class="nav-link"  title="Follow us on Twitter" data-placement="bottom" href="<?= $this->Url->build(['controller' => 'staff','action'=>'index']);?>">
-                            <i class="fas fa-home"></i>
-                            <p class="d-lg-none d-xl-none">Home</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href=<?=$this->Url->build(['controller'=>'users','action'=>'login'])?>>
-                            <i class="tim-icons icon-single-02"></i> Sign In
-                        </a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href=<?=$this->Url->build(['controller'=>'users','action'=>'register'])?>>
-                            <i class="tim-icons icon-spaceship"></i> Sign Up
-                        </a>
-                    </li>
-                <?php else :?>
-
-
-                    <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'staff', 'action'=>'index'])?>'>
-                            <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.firstname');?>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link d-lg-block"  href=<?=$this->Url->build(['controller'=>'users','action'=>'logout'])?>>
-                            <i class="tim-icons icon-single-02"></i>Sign Out
-                        </a>
-                    </li>
-
-                <?php endif;?>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-
-<!--starts here-->
-
-
-<div id="staff-container" class="container">
-    <?php foreach ($unit_activity as $unit_activity):?>
-        <h1><?=$unit_activity->unitcode. " " . $unit_activity->activity?></h1>
-    <?php endforeach;?>
-
-    <div align="right"><?= $this->element('Staff/Buttons/csv', ['url' => ['action' => 'export',$unit_activity->peer_id]]) ?></div>
-    <div>
-        <table class="table" >
-            <thead>
-            <tr>
-                <th>Student</th>
-                <th>Team</th>
-                <?php foreach ($questions_desc as $questions_desc):?>
-                    <th class="text-center"><?=$questions_desc->question?></th>
-                <?php endforeach;?>
-                <th>Comment</th>
-
-            </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($student_list as $student_list):
-                    $comment = "";?>
+            <br>
+            <div>
+                <table class="table">
+                    <thead>
                     <tr>
-                        <td><?=$student_list->firstname." ".$student_list->lastname?></td>
-                        <td><?=$student_list->team?></td>
-                        <?php foreach ($student_result_array as $item):
-                            if ($item->student_id == $student_list->student_id):
-                                $float = (float)$item->average_score;?>
-                                <td align="center"><?=Number::format($float,['precision' => 1])?></td>
-                            <?php endif;
-                        endforeach;?>
-                        <?php foreach($student_comment_list as $item):
-                            if ($item->ratee_id == $student_list->student_id):
-                                $comment .= "<b>".$item->student_firstname. " ".$item->student_lastname. ":</b>. ".$item->comment;
-                                $comment .= "<br/>";
-                            endif;
-                        endforeach;?>
-                        <td align="center"><button id="button_<?php echo $student_list->student_id?>" " type="button"
-                                    class="btn btn-info btn-simple btn-icon btn-sm"
-                                    data-container="body"
-                                    data-toggle="popover"
-                                    data-placement="left"
-                                    data-html = "true"
-                                    data-content = "<?=$comment?>">
-                                <i class="fas fa-comments"></i>
-                            </button></td>
-                    </tr>
-                <?php endforeach;?>
+                        <th>Student</th>
+                        <th>Team</th>
+                        <?php foreach ($questions_desc as $questions_desc): ?>
+                            <th class="text-center"><?= $questions_desc->question ?></th>
+                        <?php endforeach; ?>
+                        <th>Total Score</th>
+                        <th>Comment</th>
 
-            </tbody>
-        </table>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    foreach ($student_list as $student_list):
+                        $total_score = $count*5;
+                        $comment = "";
+                        $sum_score = 0;?>
+                        <tr>
+                            <td><?= $student_list->firstname . " " . $student_list->lastname ?></td>
+                            <?php foreach ($team_list as $item):
+                                if ($item->user_id == $student_list->student_id):?>
+                                    <td><?= $item->team ?></td>
+                                <?php endif;
+                            endforeach; ?>
+                            <?php foreach ($student_result_array as $item):
+                                if ($item->student_id == $student_list->student_id):
+                                    $float = (float)$item->average_score;
+                                    $sum_score += $float?>
+                                    <td align="center"><?= Number::format($float, ['precision' => 1]) ?></td>
+                                <?php endif;
+                            endforeach; ?>
+                            <?php foreach ($student_comment_list as $item):
+                                if ($item->ratee_id == $student_list->student_id):
+                                    $comment .= "<b>" . $item->student_firstname . " " . $item->student_lastname . ":</b>. " . $item->comment;
+                                    $comment .= "<br/>";
+                                endif;
+                            endforeach; ?>
+                            <?php if ($sum_score < $EIGHTY_PERCENT*$total_score):?>
+                                <td class="alert alert-danger" align="center"><?= Number::format($sum_score, ['precision' => 1]). "/".$total_score ?></td>
+                            <?php else:?>
+                                <td  align="center"><?= Number::format($sum_score, ['precision' => 1]). "/".$total_score ?></td>
+                            <?php endif;?>
+                            <td align="center">
+                                <button id="button_<?php echo $student_list->student_id ?>"
+                                type="button"
+                                class="btn btn-info btn-simple btn-icon btn-sm"
+                                data-container="body"
+                                data-toggle="popover"
+                                data-placement="left"
+                                data-html = "true"
+                                data-content = "<?= $comment ?>">
+                                <i class="fas fa-comments"></i>
+                                </button></td>
+                        </tr>
+                    <?php endforeach; ?>
+
+                    </tbody>
+                </table>
+            </div>
+        </main>
     </div>
 </div>
-
 
 
 <?= $this->Html->script('core/jquery.min.js') ?>

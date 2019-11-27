@@ -1,3 +1,7 @@
+<?php
+$cakeDescription = 'PEAR Monash: Peer Evaluation & Assessment Resource';
+use Cake\View\Helper\BreadcrumbsHelper;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +16,6 @@
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
     <?= $this->Html->meta('icon') ?>
-
-
     <?= $this->Html->css('nucleo-icons.css') ?>
     <?= $this->Html->css('blk-design-system.css') ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
@@ -25,7 +27,7 @@
 </head>
 <body class="register-page">
 
-<nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
+<nav class="navbar navbar-expand-lg navbar-transparent breadcrumb" role="navigation"  color-on-scroll="100">
     <div class="container">
         <div class="navbar-translate">
             <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'staff','action'=>'index'])?>'   data-placement="bottom" >
@@ -75,7 +77,6 @@
                     </li>
                 <?php else :?>
 
-
                     <li class="nav-item">
                         <a class="nav-link d-lg-block"  href='<?=$this->Url->build(['controller'=>'staff', 'action'=>'index'])?>'>
                             <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.firstname');?>
@@ -94,6 +95,17 @@
         </div>
     </div>
 </nav>
+<div id="staff-container" class="container">
+    <?php $this->Breadcrumbs->prepend('Home', ['controller' => 'staff','action' => 'index']) ?>
+
+    <?php $this->Breadcrumbs->templates([
+        'wrapper' => '<nav aria-label="breadcrumb" role="navigation"><ol class="breadcrumb">{{content}}</ol></nav>',
+        'item' => '<li class="breadcrumb-item" {{attrs}}>{{icon}}<a href="{{url}}" {{innerAttrs}}> {{title}} </a> </li>{{separator}}',
+        'itemWithoutLink' => '<li class="breadcrumb-item active" aria-current="page" {{attrs}}><span{{innerAttrs}}>{{title}}</span></li>{{separator}}',
+        'separator' => '<li{{attrs}}><span{{innerAttrs}}>{{separator}}</span></li>'
+    ]) ?>
+    <?= $this->Breadcrumbs->render();?>
+</div>
 <article class="content dashboard-page">
     <?= $this->Flash->render(); ?>
     <?= $this->fetch('content'); ?>

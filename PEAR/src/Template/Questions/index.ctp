@@ -37,7 +37,7 @@
                                                         <br>
                                                         <?php if($question->id!=6):?>
                                                             <br>
-                                                            <input id="sliderA_<?=$question->id;?>_<?=$user_id?>" type="range" name="sliderRating_<?=$question->id;?>_<?=$user_id?>"
+                                                            <input id="sliderA_<?=$question->id;?>_<?=$user_id?>" type="range" name="sliderRating_<?=$question->id;?>_<?=$user_id?> "
 
                                                                    pattern="[1-5]"
                                                                    required="required"

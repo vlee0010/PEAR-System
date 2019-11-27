@@ -91,8 +91,11 @@
                     </div>
                     <div class="col-lg-6">
                         <h1 class="display-3 text-white">
-                            <?php echo $this->Html->image('logo3',['style'=>'height:150px']);?> PEAR
+<!--                            --><?php //echo $this->Html->image('webroot/img/logo3',['style'=>'height:150px']);?>
+
                             <br>
+                            <br>
+                            PEAR
                             <br>
                             <br>
                             <span class="text-white text-left">Peer Evaluation & Assessment Resource </span>
