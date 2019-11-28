@@ -93,6 +93,7 @@
                         <h1 class="display-3 text-white">
                             <br>
                             <br>
+                             <?php echo $this->Html->image('logo3.jpg'['style'=>'height:80px']);?>
                             PEAR
                             <br>
                             <br>
