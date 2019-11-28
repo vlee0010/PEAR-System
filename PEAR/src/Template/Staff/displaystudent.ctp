@@ -1,13 +1,15 @@
 <?php
 /**
  * @var \App\View\AppView $this
+ * @var string $query
  */
+
 
 ?>
 
 <!--starts here-->
 <?php foreach ($unit_activity as $unit_activity1): ?>
-    <?php $this->Breadcrumbs->add('Class', $this->request->referer()) ?>
+    <?php $this->Breadcrumbs->add('Class', ['controller' => 'staff', 'action' => 'displayclass', $unit_activity1->unit_id]) ?>
     <?php $this->Breadcrumbs->add('Student List') ?>
     <?php break; ?>
 <?php endforeach; ?>
@@ -29,9 +31,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($unit_activity
-
-                    as $unit_activity): ?>
+                    <?php foreach ($unit_activity as $unit_activity): ?>
                     <tr>
                         <td><?= $unit_activity->unitcode ?></td>
                         <td><?= $unit_activity->activity ?></td>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="modal-footer">
                             <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
-                            <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', $unit_activity->peer_id]]) ?>
+                            <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', ]]) ?>
                         </div>
                     </div>
                 </div>
@@ -96,9 +96,16 @@
                     </div>
                 </div>
             </div>
+
+            <?= $this->Form->create(null, ['method' => 'GET']) ?>
+            <form class="form-inline ml-auto">
+                <div class="form-group no-border" align="left">
+                    <?= $this->Form->control('query', ['label' => '', 'class' => 'form-control', 'placeholder' => 'Search', 'default' => $this->request->query('query'), 'value' => $query]) ?>
+                </div>
+            </form>
+            <?= $this->Form->end() ?>
             <div align="right">
                 <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal2', 'data-dismiss' => 'modal']); ?>
-
             </div>
             <br>
             <table id="student-table" class="table">
@@ -123,12 +130,12 @@
                                 <?php if ($peer_review_user->status == 0): ?>
                                     <td><?= 'Incomplete' ?></td>
                                     <td>
-                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse',$student->id,$peer_review->id],'disabled' => $peer_review_user->status == 0]) ?>
+                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse', $student->id, $peer_review->id], 'disabled' => $peer_review_user->status == 0]) ?>
                                     </td>
                                 <?php else: ?>
                                     <td><?= 'Complete' ?></td>
                                     <td>
-                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse',$student->id,$peer_review->id]]) ?>
+                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse', $student->id, $peer_review->id]]) ?>
                                     </td>
                                 <?php endif; ?>
                             <?php endif; ?>
