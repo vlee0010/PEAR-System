@@ -179,9 +179,8 @@ class StaffController extends AppController
         $peerReviewsUsersTable->save($peerReviewsUsers);
 
         $this->set('peerReviewsUsers', $peerReviewsUsers);
-
-//        $this->redirect($this->referer());
-
+        $this->Flash->success(__('The response has been reset.'));
+        $this->redirect($this->referer());
     }
 
     public function export($peer_id = null)
