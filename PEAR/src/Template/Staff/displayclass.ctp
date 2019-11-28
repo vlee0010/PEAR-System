@@ -5,7 +5,7 @@
 ?>
 
 <!--starts here-->
-
+<?php $this->Breadcrumbs->add('Class') ?>
 <div id="staff-container" class="container">
     <div class="container-fluid">
         <main class="col-12 col-md-auto col-xl-auto py-md-3 pl-md-6 bd-content" role="main">

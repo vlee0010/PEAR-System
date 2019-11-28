@@ -92,7 +92,7 @@
                     <div class="col-lg-6">
                         <h1 class="display-3 text-white">
 <!--                            --><?php //echo $this->Html->image('webroot/img/logo3',['style'=>'height:150px']);?>
-                            
+
                             <br>
                             <br>
                             PEAR

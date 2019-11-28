@@ -1,6 +1,6 @@
 <?php
-
 $cakeDescription = 'PEAR Monash: Peer Evaluation & Assessment Resource';
+use Cake\View\Helper\BreadcrumbsHelper;
 ?>
 <!DOCTYPE html>
 <html>
@@ -95,6 +95,17 @@ $cakeDescription = 'PEAR Monash: Peer Evaluation & Assessment Resource';
         </div>
     </div>
 </nav>
+<div id="staff-container" class="container">
+    <?php $this->Breadcrumbs->prepend('Home', ['controller' => 'staff','action' => 'index']) ?>
+
+    <?php $this->Breadcrumbs->templates([
+        'wrapper' => '<nav aria-label="breadcrumb" role="navigation"><ol class="breadcrumb">{{content}}</ol></nav>',
+        'item' => '<li class="breadcrumb-item" {{attrs}}>{{icon}}<a href="{{url}}" {{innerAttrs}}> {{title}} </a> </li>{{separator}}',
+        'itemWithoutLink' => '<li class="breadcrumb-item active" aria-current="page" {{attrs}}><span{{innerAttrs}}>{{title}}</span></li>{{separator}}',
+        'separator' => '<li{{attrs}}><span{{innerAttrs}}>{{separator}}</span></li>'
+    ]) ?>
+    <?= $this->Breadcrumbs->render();?>
+</div>
 <article class="content dashboard-page">
     <?= $this->Flash->render(); ?>
     <?= $this->fetch('content'); ?>
