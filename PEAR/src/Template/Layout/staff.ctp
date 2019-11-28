@@ -24,6 +24,7 @@ use Cake\View\Helper\BreadcrumbsHelper;
     <link href="https://fonts.googleapis.com/css?family=Raleway:500i|Roboto:300,400,700|Roboto+Mono" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
     <?= $this->Html->css('custom.css') ?>
+    <?= $this->Flash->render(); ?>
 </head>
 <body class="register-page">
 
@@ -107,7 +108,6 @@ use Cake\View\Helper\BreadcrumbsHelper;
     <?= $this->Breadcrumbs->render();?>
 </div>
 <article class="content dashboard-page">
-    <?= $this->Flash->render(); ?>
     <?= $this->fetch('content'); ?>
 </article>
 

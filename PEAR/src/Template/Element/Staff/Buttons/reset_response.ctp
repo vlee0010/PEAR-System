@@ -13,9 +13,8 @@ echo $this->Form->postLink(
     '<i class="tim-icons icon-refresh-01"></i> Reset',
     isset($disabled) && $disabled ? [] : $url,
     [
-        'class' => 'btn btn-info btn-sm',
+        'class' => 'btn btn-info',
         'escape' => false,
-        'confirm' => isset($disabled) && $disabled ? false : 'Are you sure?',
         'disabled' => isset($disabled) && $disabled,
         'data-dismiss' => 'modal'
 
