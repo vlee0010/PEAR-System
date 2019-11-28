@@ -43,27 +43,42 @@
       -->
         <div class="logo">
             <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-                Creative Tim
+                Pear Monash
             </a>
         </div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item active  ">
-                    <a class="nav-link" href="./dashboard.html">
+                <li class="nav-item" id="dashboard">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "index",
+                        ]
+                    );?>>
                         <i class="material-icons">dashboard</i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./user.html">
-                        <i class="material-icons">person</i>
-                        <p>User Profile</p>
+                <li id="create-unit" class="nav-item ">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                        "controller" => "admins",
+                        "action" => "create",
+                        ]
+                    );?>>
+                        <i class="material-icons">queue</i>
+                        <p>Create Units</p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./tables.html">
+                <li class="nav-item " id="pr">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "createPeerReview",
+                        ]
+                    );?>>
                         <i class="material-icons">content_paste</i>
-                        <p>Table List</p>
+                        <p>Create Peer Reviews</p>
                     </a>
                 </li>
                 <li class="nav-item ">
@@ -97,9 +112,9 @@
                     </a>
                 </li>
                 <li class="nav-item active-pro ">
-                    <a class="nav-link" href="./upgrade.html">
-                        <i class="material-icons">unarchive</i>
-                        <p>Upgrade to PRO</p>
+                    <a class="nav-link" href=<?=$this->Url->build(['controller'=>'users','action'=>'logout'])?>>
+                        <i class="material-icons">call_received</i>
+                        <p>Log Out</p>
                     </a>
                 </li>
             </ul>
@@ -110,7 +125,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="#pablo">Dashboard</a>
+<!--                    <a class="navbar-brand" href="#pablo">Dashboard</a>-->
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="sr-only">Toggle navigation</span>
@@ -127,20 +142,25 @@
                                 <p class="d-lg-none d-md-block">
                                     Account
                                 </p>
+                                <i class="tim-icons icon-single-02"></i><?= "Hello, " . $this->request->session()->read('Auth.User.firstname');?>
                             </a>
+
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                                <a class="dropdown-item" href="#">Profile</a>
-                                <a class="dropdown-item" href="#">Settings</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Log out</a>
+<!--                                <a class="dropdown-item" href="#">Profile</a>-->
+<!--                                <a class="dropdown-item" href="#">Settings</a>-->
+<!--                                <div class="dropdown-divider"></div>-->
+                                <a class="dropdown-item" href=<?=$this->Url->build(['controller'=>'users','action'=>'logout'])?>>Log out</a>
                             </div>
+
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- End Navbar -->
+
         <div class="content">
+            <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
         </div>
         <footer class="footer">
