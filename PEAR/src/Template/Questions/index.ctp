@@ -24,7 +24,7 @@
                                  id="panel_<?php echo $question->id ?>">
                                 <div class="panel-heading" role="tab" id="headingTwo">
                                     <h4 class="panel-title">
-                                        <a class="collapsed" onclick="changeClass(this)" role="button"
+                                        <a style="font-size: 1.2em" class="collapsed" onclick="changeClass(this)" role="button"
                                            data-toggle="collapse" data-parent="#accordion"
                                            href="#collapse<?php echo $question->id ?>" aria-expanded="false"
                                            aria-controls="collapseTwo">
@@ -41,10 +41,10 @@
 
                                         <div class="wrapper" style="color:#fff;padding:20px;">
                                             <?php foreach ($userList as $user) : ?>
-                                                <?= "Please rate " . $user->firstname . " " . $user->lastname ?>
+                                                <h3 style="text-align: left"><?= "Please rate " . $user->firstname . " " . $user->lastname ?></h3>
                                                 <br>
                                                 <?php if ($question->id != 6): ?>
-                                                    <br>
+
                                                     <input id="sliderA_<?= $question->id; ?>_<?= $user->id ?>"
                                                            type="range"
                                                            name="sliderRating_<?= $question->id; ?>_<?= $user->id ?>"
