@@ -177,6 +177,15 @@ class UsersController extends AppController
                             $this->Flash->error('Please verify your Email address first');
                             $this->Auth->logout();
                         }
+                    }elseif (Role::isAdmin($user['role'])){
+                        $this->Auth->setUser($user);
+                        $user = $this->Users->find()->where(['id' => $this->Auth->user('id')])->first();
+                        if ($user->verified) {
+                            $this->redirect(['controller' => 'admins', 'action' => 'index']);
+                        } else {
+                            $this->Flash->error('Please verify your Email address first');
+                            $this->Auth->logout();
+                        }
                     }
 
                 } else {
