@@ -1,13 +1,15 @@
 <?php
 /**
  * @var \App\View\AppView $this
+ * @var string $query
  */
+
 
 ?>
 
 <!--starts here-->
 <?php foreach ($unit_activity as $unit_activity1): ?>
-    <?php $this->Breadcrumbs->add('Class', $this->request->referer()) ?>
+    <?php $this->Breadcrumbs->add('Class', ['controller' => 'staff', 'action' => 'displayclass', $unit_activity1->unit_id]) ?>
     <?php $this->Breadcrumbs->add('Student List') ?>
     <?php break; ?>
 <?php endforeach; ?>
@@ -29,9 +31,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($unit_activity
-
-                    as $unit_activity): ?>
+                    <?php foreach ($unit_activity as $unit_activity): ?>
                     <tr>
                         <td><?= $unit_activity->unitcode ?></td>
                         <td><?= $unit_activity->activity ?></td>
@@ -58,11 +58,11 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            Send Email to All Students?
+                            <h4 style="color: #0a0c0d">Send Email to All Students?</h4>
                         </div>
                         <div class="modal-footer">
                             <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
-                            <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', $unit_activity->peer_id]]) ?>
+                            <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', ]]) ?>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            Send Email to All Students?
+                            <h4 style="color: #0a0c0d">Send Email to All Students?</h4>
                         </div>
                         <div class="modal-footer">
                             <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
@@ -96,9 +96,18 @@
                     </div>
                 </div>
             </div>
+
+
+
+            <?= $this->Form->create(null, ['method' => 'GET']) ?>
+            <form class="form-inline ml-auto">
+                <div class="form-group no-border" align="left">
+                    <?= $this->Form->control('query', ['label' => '', 'class' => 'form-control', 'placeholder' => 'Search', 'default' => $this->request->query('query'), 'value' => $query]) ?>
+                </div>
+            </form>
+            <?= $this->Form->end() ?>
             <div align="right">
                 <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal2', 'data-dismiss' => 'modal']); ?>
-
             </div>
             <br>
             <table id="student-table" class="table">
@@ -123,12 +132,34 @@
                                 <?php if ($peer_review_user->status == 0): ?>
                                     <td><?= 'Incomplete' ?></td>
                                     <td>
-                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse',$student->id,$peer_review->id],'disabled' => $peer_review_user->status == 0]) ?>
+                                        <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm disabled', 'data-toggle' => 'modal', 'data-target' => '#exampleModal3']);?>
                                     </td>
                                 <?php else: ?>
                                     <td><?= 'Complete' ?></td>
                                     <td>
-                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse',$student->id,$peer_review->id]]) ?>
+                                        <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm', 'data-toggle' => 'modal', 'data-target' => '#exampleModal_'.$student->id.'_'.$peer_review->id]);?>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal_<?=$student->id.'_'.$peer_review->id?>" tabindex="-1" role="dialog"
+                                             aria-labelledby="exampleModalLabel2"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title" id="exampleModalLabel">System Alert</h3>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body" >
+                                                        <h4 style="color: #0a0c0d">Reset Response for <?= $student->firstname . ' ' . $student->lastname ?>?</h4>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
+                                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse', $student->id, $peer_review->id]]) ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 <?php endif; ?>
                             <?php endif; ?>

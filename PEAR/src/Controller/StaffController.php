@@ -112,8 +112,32 @@ class StaffController extends AppController
 
         ]);
 
-        $this->set('unit_activity', $unit_activity);
+        $queryTerms = $this->getRequest()->getQuery('query');
+        if (!empty($queryTerms)){
+            $student_list = [];
+            $queryTermsWithWildCard = '%' . $queryTerms . '%';
+            foreach ($student_id_list_new as $student_id) {
+                array_push($student_list, $this->Users->find()->where([
+                    'id' => $student_id->user_id,
+                    'OR' => [
+                        'firstname LIKE' => $queryTermsWithWildCard,
+                        'lastname LIKE' => $queryTermsWithWildCard,
+                        'email LIKE' => $queryTermsWithWildCard,
+                    ]
+                ])->first());
+            }
+            $student_list = array_filter($student_list);
+        }
+        else{
+            $student_list = [];
+            foreach ($student_id_list_new as $student_id) {
+                array_push($student_list, $this->Users->find()->where(['id' => $student_id->user_id])->first());
+            }
+        }
 
+
+        $this->set('unit_activity', $unit_activity);
+        $this->set('query', $queryTerms);
         $this->set(compact('student_list', 'peer_review', 'peer_review_user_list', "peer_id"));
 
     }
@@ -155,9 +179,8 @@ class StaffController extends AppController
         $peerReviewsUsersTable->save($peerReviewsUsers);
 
         $this->set('peerReviewsUsers', $peerReviewsUsers);
-
-//        $this->redirect($this->referer());
-
+        $this->Flash->success(__('The response has been reset.'));
+        $this->redirect($this->referer());
     }
 
     public function export($peer_id = null)

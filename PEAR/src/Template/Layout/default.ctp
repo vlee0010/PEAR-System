@@ -46,9 +46,8 @@ $cakeDescription = 'PEAR Monash: Peer Evaluation & Assessment Resource';
     <div class="container">
         <div class="navbar-translate">
             <div>
-<!--                --><?php //echo $this->Html->image('logo3.png',['style'=>'height:50px']);?>
                 <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'pages','action'=>'display'])?>'   data-placement="bottom" >
-                    <span>PEAR</span> Monash
+                <?php echo $this->Html->image('logo3.jpg',['style'=>'height:30px']);?> <span>PEAR</span> Monash
                 </a>
 
             </div>
