@@ -97,13 +97,11 @@ use Cake\View\Helper\BreadcrumbsHelper;
     </div>
 </nav>
 <div id="staff-container" class="container">
-    <?php $this->Breadcrumbs->prepend('Home', ['controller' => 'staff','action' => 'index']) ?>
+    <?php $this->Breadcrumbs->prepend('<i class="fas fa-home"></i> Home', ['controller' => 'staff','action' => 'index']) ?>
 
     <?php $this->Breadcrumbs->templates([
         'wrapper' => '<nav aria-label="breadcrumb" role="navigation"><div class="breadcrumb">
-                        <a  title="Follow us on Twitter" data-placement="bottom" href="/staff">
-                            <i class="fas fa-home"></i>
-                        </a>
+                       
                         &nbsp;&nbsp;{{content}}</div></nav>',
         'item' => '<div class="breadcrumb-item" {{attrs}}><a href="{{url}}" {{innerAttrs}}> {{title}} </a> </div>{{separator}}',
         'itemWithoutLink' => '<div class="breadcrumb-item active" aria-current="page" {{attrs}}><span{{innerAttrs}}> <u>{{title}}</u></span></div>{{separator}}',
