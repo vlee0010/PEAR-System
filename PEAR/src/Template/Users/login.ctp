@@ -91,10 +91,9 @@
                     </div>
                     <div class="col-lg-6">
                         <h1 class="display-3 text-white">
-<!--                            --><?php //echo $this->Html->image('webroot/img/logo3',['style'=>'height:150px']);?>
-
                             <br>
                             <br>
+                             <?php echo $this->Html->image('logo3.jpg', ['style'=>'height:80px']);?>
                             PEAR
                             <br>
                             <br>
@@ -104,8 +103,6 @@
 
                     </div>
                 </div>
-                <!--                <div class="register-bg"></div>-->
-
                 <div id="square2" class="square square-2"></div>
                 <div id="square3" class="square square-3"></div>
                 <div id="square4" class="square square-4"></div>
