@@ -21,7 +21,7 @@
                                 <div class="panel-heading" role="tab" id="headingTwo">
                                     <h4 class="panel-title">
                                         <a class="collapsed" onclick="changeClass(this)" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $question->id ?>" aria-expanded="false" aria-controls="collapseTwo">
-                                            <?php echo "Question " . $question->id. " - ". $question->description ?>
+                                            <strong><?php echo "Question " . $question->id. " - ". $question->description ?></strong>
                                             <i id="ifopen<?php echo $question->id ?>"  class="fa fa-plus-circle pull-right"></i>
                                         </a>
                                     </h4>

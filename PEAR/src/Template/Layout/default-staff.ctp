@@ -84,33 +84,33 @@
                 <li class="nav-item ">
                     <a class="nav-link" href="./typography.html">
                         <i class="material-icons">library_books</i>
-                        <p>Typography</p>
+                        <p>Assign To Groups</p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./icons.html">
-                        <i class="material-icons">bubble_chart</i>
-                        <p>Icons</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./map.html">
-                        <i class="material-icons">location_ons</i>
-                        <p>Maps</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./notifications.html">
-                        <i class="material-icons">notifications</i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./rtl.html">
-                        <i class="material-icons">language</i>
-                        <p>RTL Support</p>
-                    </a>
-                </li>
+<!--                <li class="nav-item ">-->
+<!--                    <a class="nav-link" href="./icons.html">-->
+<!--                        <i class="material-icons">bubble_chart</i>-->
+<!--                        <p>Icons</p>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li class="nav-item ">-->
+<!--                    <a class="nav-link" href="./map.html">-->
+<!--                        <i class="material-icons">location_ons</i>-->
+<!--                        <p>Maps</p>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li class="nav-item ">-->
+<!--                    <a class="nav-link" href="./notifications.html">-->
+<!--                        <i class="material-icons">notifications</i>-->
+<!--                        <p>Notifications</p>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li class="nav-item ">-->
+<!--                    <a class="nav-link" href="./rtl.html">-->
+<!--                        <i class="material-icons">language</i>-->
+<!--                        <p>RTL Support</p>-->
+<!--                    </a>-->
+<!--                </li>-->
                 <li class="nav-item active-pro ">
                     <a class="nav-link" href=<?=$this->Url->build(['controller'=>'users','action'=>'logout'])?>>
                         <i class="material-icons">call_received</i>
@@ -164,39 +164,39 @@
             <?= $this->fetch('content') ?>
         </div>
         <footer class="footer">
-            <div class="container-fluid">
-                <nav class="float-left">
-                    <ul>
-                        <li>
-                            <a href="https://www.creative-tim.com">
-                                Creative Tim
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://creative-tim.com/presentation">
-                                About Us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://blog.creative-tim.com">
-                                Blog
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.creative-tim.com/license">
-                                Licenses
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <div class="copyright float-right">
-                    &copy;
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script>, made with <i class="material-icons">favorite</i> by
-                    <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
-                </div>
-            </div>
+<!--            <div class="container-fluid">-->
+<!--                <nav class="float-left">-->
+<!--                    <ul>-->
+<!--                        <li>-->
+<!--                            <a href="https://www.creative-tim.com">-->
+<!--                                Creative Tim-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="https://creative-tim.com/presentation">-->
+<!--                                About Us-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="http://blog.creative-tim.com">-->
+<!--                                Blog-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="https://www.creative-tim.com/license">-->
+<!--                                Licenses-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </nav>-->
+<!--                <div class="copyright float-right">-->
+<!--                    &copy;-->
+<!--                    <script>-->
+<!--                        document.write(new Date().getFullYear())-->
+<!--                    </script>, made with <i class="material-icons">favorite</i> by-->
+<!--                    <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.-->
+<!--                </div>-->
+<!--            </div>-->
         </footer>
     </div>
 </div>
