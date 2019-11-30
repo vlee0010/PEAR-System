@@ -113,7 +113,7 @@ class StaffController extends AppController
         ]);
 
         $queryTerms = $this->getRequest()->getQuery('query');
-        if (!empty($queryTerms)){
+        if (!empty($queryTerms)) {
             $student_list = [];
             $queryTermsWithWildCard = '%' . $queryTerms . '%';
             foreach ($student_id_list_new as $student_id) {
@@ -127,8 +127,7 @@ class StaffController extends AppController
                 ])->first());
             }
             $student_list = array_filter($student_list);
-        }
-        else{
+        } else {
             $student_list = [];
             foreach ($student_id_list_new as $student_id) {
                 array_push($student_list, $this->Users->find()->where(['id' => $student_id->user_id])->first());
@@ -603,6 +602,22 @@ class StaffController extends AppController
                 $this->Flash->set('Error sending email', ['element' => 'error']);
             }
             $this->set('title', $peer_review_title);
+        }
+    }
+
+    public function beforeFilter($event)
+    {
+        parent::beforeFilter($event);
+        $user = $this->Auth->user();
+
+        //If user's role is 1(students), redirect to students page;
+        if ($user['role'] == 1) {
+
+            $this->redirect(['controller' => 'users', 'action' => 'studentdash']);
+        }
+        if ($user['role'] == 3) {
+
+            $this->redirect(['controller' => 'admins', 'action' => 'index']);
         }
     }
 }
