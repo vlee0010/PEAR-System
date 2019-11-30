@@ -1,6 +1,6 @@
 <?php
-//$this->layout=  false;
-$this->layout = 'default-staff';
+$this->layout=  false;
+//$this->layout = 'default-staff';
 ?>
 
 
@@ -100,49 +100,23 @@ echo $this->Form->create(); ?>
                         <table class="table">
                             <tbody>
 
-
+                <?php foreach ($questions as $index => $question):?>
                             <tr>
                                 <td>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="" checked>
+                                            <input class="form-check-input" name="<?='question'.($index+1)?>"type="checkbox" value="<?=$question->description?>" checked>
                                             <span class="form-check-sign">
                                     <span class="check"></span>
                                   </span>
                                         </label>
                                     </div>
                                 </td>
-                                <td>Sign contract for "What are conference organizers afraid of?"</td>
+                                <td><?= $question->description ;?></td>
 
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="" checked>
-                                            <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Sign contract for "What are conference organizers afraid of?"</td>
+                <?php endforeach;?>
 
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="form-check-input" type="checkbox" value="" checked>
-                                            <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Sign contract for "What are conference organizers afraid of?"</td>
-
-                            </tr>
 
 
 
