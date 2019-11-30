@@ -14,7 +14,6 @@
             Expand <br>Close<br> All
         </button>
         <table class="table table-flush" cellpadding="0" cellspacing="0">
-
             <?php foreach ($questions as $question): ?>
                 <tbody>
                 <div id="myModal" class="row">
@@ -44,7 +43,7 @@
                                                 <h3 style="text-align: left"><?= "Please rate " . $user->firstname . " " . $user->lastname ?></h3>
                                                 <br>
                                                 <?php if ($question->id != 6): ?>
-
+                                                    <i class="fas fa-check" id="checkA_<?= $question->id; ?>_<?= $user->id ?>" style="display: none ;color: #00bf9a; font-size: 20px "></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <input id="sliderA_<?= $question->id; ?>_<?= $user->id ?>"
                                                            type="range"
                                                            name="sliderRating_<?= $question->id; ?>_<?= $user->id ?>"
@@ -52,7 +51,7 @@
                                                            required="required"
                                                            data-provide="slider"
                                                            data-slider-ticks="[0,1,2,3,4,5]"
-                                                           data-slider-ticks-labels='["N/A", "Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]'
+                                                           data-slider-ticks-labels='["N/A", "Strongly <br/> Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]'
                                                            data-slider-ticks-positions="[0,20,40,60,80,100]"
                                                            data-slider-min="0"
                                                            data-slider-max="5"
@@ -99,6 +98,7 @@
 <?= $this->Html->script('highlight.min.js') ?>
 <?= $this->Html->script('src/js/bootstrap-slider.js') ?>
 <?= $this->Html->script('demo.js') ?>
+<?= $this->Html->script('questions.js') ?>
 <?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
 <?= $this->Html->css('bootstrap-slider.css') ?>
 
