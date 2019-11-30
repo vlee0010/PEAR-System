@@ -92,12 +92,12 @@
                         <p>Create Peer Reviews</p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./typography.html">
-                        <i class="material-icons">library_books</i>
-                        <p>Assign To Groups</p>
-                    </a>
-                </li>
+<!--                <li class="nav-item ">-->
+<!--                    <a class="nav-link" href="./typography.html">-->
+<!--                        <i class="material-icons">library_books</i>-->
+<!--                        <p>Assign To Groups</p>-->
+<!--                    </a>-->
+<!--                </li>-->
 
 <!--                <li class="nav-item ">-->
 <!--                    <a class="nav-link" href="./map.html">-->
