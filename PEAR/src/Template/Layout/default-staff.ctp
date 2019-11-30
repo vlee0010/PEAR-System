@@ -70,6 +70,17 @@
                         <p>Create Units</p>
                     </a>
                 </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "addQuestions",
+                        ]
+                    );?>>
+                        <i class="material-icons">bubble_chart</i>
+                        <p>Create Question</p>
+                    </a>
+                </li>
                 <li class="nav-item " id="pr">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
@@ -81,18 +92,13 @@
                         <p>Create Peer Reviews</p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./typography.html">
-                        <i class="material-icons">library_books</i>
-                        <p>Assign To Groups</p>
-                    </a>
-                </li>
 <!--                <li class="nav-item ">-->
-<!--                    <a class="nav-link" href="./icons.html">-->
-<!--                        <i class="material-icons">bubble_chart</i>-->
-<!--                        <p>Icons</p>-->
+<!--                    <a class="nav-link" href="./typography.html">-->
+<!--                        <i class="material-icons">library_books</i>-->
+<!--                        <p>Assign To Groups</p>-->
 <!--                    </a>-->
 <!--                </li>-->
+
 <!--                <li class="nav-item ">-->
 <!--                    <a class="nav-link" href="./map.html">-->
 <!--                        <i class="material-icons">location_ons</i>-->
