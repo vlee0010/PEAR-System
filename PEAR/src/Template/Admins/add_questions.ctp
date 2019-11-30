@@ -9,7 +9,7 @@ echo $this->Form->create(); ?>
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Question description </label>
-            <input name="question" class="form-control"type="input"  >
+            <input name="question" class="form-control" type="input">
         </div>
     </div>
     <?= $this->Form->submit('Submit',['class'=>'btn btn-primary pull-right']);?>
