@@ -5,7 +5,7 @@
  */
 ?>
 
-<?= $this->Form->create(); ?>
+<?= $this->Form->create("",["id"=>"survey-form"]); ?>
 <div class="container">
     <div class="card shadow text-center" style="position:relative;">
         <h2 class="text-on-front" style="font-size:50px">PEAR Questions for Industry Experience Iteration 2</h2>
@@ -40,6 +40,7 @@
 
                                         <div class="wrapper" style="color:#fff;padding:20px;">
                                             <?php foreach ($userList as $user) : ?>
+                                                <div id="sliderRating_<?= $question->id; ?>_<?= $user->id ?>"></div>
                                                 <h3 style="text-align: left"><?= "Please rate " . $user->firstname . " " . $user->lastname ?></h3>
                                                 <br>
                                                 <?php if ($question->id != 6): ?>
