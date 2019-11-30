@@ -44,7 +44,10 @@
                                                 <h3 style="text-align: left"><?= "Please rate " . $user->firstname . " " . $user->lastname ?></h3>
                                                 <br>
                                                 <?php if ($question->id != 6): ?>
-                                                    <i class="fas fa-check" id="checkA_<?= $question->id; ?>_<?= $user->id ?>" style="display: none ;color: #00bf9a; font-size: 20px "></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <i class="fas fa-check" id="checkA_<?= $question->id; ?>_<?= $user->id ?>" style=" display: none ;color: #00bf9a; font-size: 20px "></i>
+                                                    <i class="fas fa-exclamation-triangle" id="EXA_<?= $question->id; ?>_<?= $user->id ?>" style="display: none ;color: #EFC45B; font-size: 18px "></i>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                                                     <input id="sliderA_<?= $question->id; ?>_<?= $user->id ?>"
                                                            type="range"
                                                            name="sliderRating_<?= $question->id; ?>_<?= $user->id ?>"
