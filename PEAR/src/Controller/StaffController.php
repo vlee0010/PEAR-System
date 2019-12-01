@@ -53,6 +53,7 @@ class StaffController extends AppController
 
     public function displayclass($id = null)
     {
+//        bug,tutor class
         $unit_class_list = $this->units_classes->find()->where(['unit_id' => $id]);
         $class_id_list = [];
         $peer_review = $this->peer_reviews->find()->where(['unit_id' => $id, 'status' => 0])->first();
@@ -62,7 +63,9 @@ class StaffController extends AppController
         }
         $class_list = [];
         foreach ($class_id_list as $class_id) {
-            array_push($class_list, $this->Classes->find()->where(['id' => $class_id])->first());
+            if($this->Classes->find()->where(['id' => $class_id, 'tutor_id' => $this->Auth->user('id')])->first()) {
+                array_push($class_list, $this->Classes->find()->where(['id' => $class_id, 'tutor_id' => $this->Auth->user('id')])->first());
+            }
 
         }
         $tutor_id = $this->Auth->user('id');
