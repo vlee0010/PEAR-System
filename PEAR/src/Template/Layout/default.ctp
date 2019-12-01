@@ -19,6 +19,8 @@ $cakeDescription = 'PEAR Monash: Peer Evaluation & Assessment Resource';
 <html>
 <head>
     <?= $this->Html->charset() ?>
+    <?php echo $this->Html->css('missing_action.css')?>
+    <?php echo $this->Html->script('missing_action.js')?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         <?= $cakeDescription ?>:
