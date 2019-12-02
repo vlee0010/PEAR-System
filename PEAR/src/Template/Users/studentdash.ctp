@@ -4,6 +4,11 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
+<style>
+    .incomplete-link{
+        /*color:red;*/
+    }
+</style>
 <div class="container">
     <div class="card shadow">
         <h2 class="text-on-front" style="font-size:50px">Available Peer Review Tasks</h2>
@@ -33,9 +38,9 @@
                             <td><?= date("d-M-Y", strtotime($item->dateEnd)) ?></td>
 
                             <td><?php if ($item->status == 1) {
-                                    echo 'Complete';
+                                    echo '<a href="#" disabled class="btn btn-neutral">Complete&nbsp;&nbsp;&nbsp;</a>';
                                 } else {
-                                    echo $this->Html->link('Incomplete', ['controller' => 'questions', 'class' => 'incomplete_link', 'action' => 'index', $team->teamID,$item->peer_id]);
+                                    echo "<a class='btn btn-warning' href=".$this->Html->Url->build(['controller' => 'questions','action' => 'index', $team->teamID,$item->peer_id]).">Incomplete</a>";
                                 }
 
                                 ?></td>
@@ -47,4 +52,7 @@
             <?php endforeach; ?>
 
 
-
+<script>
+    let incompleteLinks = document.querySelectorAll(('.incomplete_link'));
+    console.log(incompleteLinks);
+    </script>

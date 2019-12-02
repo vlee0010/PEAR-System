@@ -14,3 +14,22 @@ echo $this->Form->create(); ?>
     </div>
     <?= $this->Form->submit('Submit',['class'=>'btn btn-primary pull-right']);?>
     <?php echo $this->Form->end();?>
+
+
+
+
+    <script>
+        // Create Peer Review highlight Tab
+        const cnqTab = document.querySelector('#cnq');
+        cnqTab.classList.add('active');
+        const submit = document.querySelector('.submit');
+        submit.classList.add('m-auto');
+
+        //    "<i class=\"material-icons\">create</i>"
+        //     const submitBtn = document.querySelector('#submit-btn');
+        //     let submitIcon = document.createElement('i');
+        //     submitBtn.setAttribute("class",'material-icons');
+        //     submitBtn.innerText = 'create';
+        // //
+        //     submitBtn.appendChild(submitBtn);
+    </script>

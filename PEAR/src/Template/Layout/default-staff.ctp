@@ -59,18 +59,43 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+
                 <li id="create-unit" class="nav-item ">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
-                        "controller" => "admins",
-                        "action" => "create",
+                            "controller" => "admins",
+                            "action" => "create",
                         ]
                     );?>>
                         <i class="material-icons">queue</i>
                         <p>Create Units</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li id="assignstafftounit" class="nav-item ">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "assignStaffToUnit",
+                        ]
+                    );?>>
+                        <i class="material-icons">assignment_ind</i>
+                        <p>Assign staff to unit</p>
+                    </a>
+                </li>
+
+                <li id="cc" class="nav-item ">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "createClasses",
+                        ]
+                    );?>>
+                        <i class="material-icons">alarm_add</i>
+                        <p>Create Classes</p>
+                    </a>
+                </li>
+
+                <li id="cnq" class="nav-item ">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
                             "controller" => "admins",
