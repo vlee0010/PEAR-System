@@ -76,19 +76,19 @@ $EIGHTY_PERCENT = 0.8;
                         <tr>
                             <td><?= $student_list->firstname . " " . $student_list->lastname ?></td>
                             <?php foreach ($team_list as $item):
-                                if ($item->user_id == $student_list->student_id):?>
+                                if ($item->user_id == $student_list->user_id):?>
                                     <td><?= $item->team ?></td>
                                 <?php endif;
                             endforeach; ?>
                             <?php foreach ($student_result_array as $item):
-                                if ($item->student_id == $student_list->student_id):
+                                if ($item->user_id == $student_list->user_id):
                                     $float = (float)$item->average_score;
                                     $sum_score += $float ?>
                                     <td align="center"><?= Number::format($float, ['precision' => 1]) ?></td>
                                 <?php endif;
                             endforeach; ?>
                             <?php foreach ($student_comment_list as $item):
-                                if ($item->ratee_id == $student_list->student_id):
+                                if ($item->ratee_id == $student_list->user_id):
                                     $comment .= "<b>" . $item->student_firstname . " " . $item->student_lastname . ":</b>. " . $item->comment;
                                     $comment .= "<br/>";
                                 endif;
@@ -101,7 +101,7 @@ $EIGHTY_PERCENT = 0.8;
                             <?php endif; ?>
                             <td align="center">
                                 <a tabindex="0"
-                                   id="button_<?php echo $student_list->student_id ?>"
+                                   id="button_<?php echo $student_list->user_id ?>"
                                    role="button"
                                    class="btn btn-info btn-simple btn-icon btn-sm"
                                    data-container="body"

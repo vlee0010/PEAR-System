@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  */
+
 ?>
 
 <!--starts here-->
@@ -22,12 +23,12 @@
                 </div>
                         <?php endforeach; ?>
 
-
-
-
                 <br>
             </div>
         </main>
+        <?php $urlImport = ['controller' => 'staff','action' => 'import',$unit_id];
+        echo $this->Form->button('Import CSV', ['onclick' => "location.href='".$this->Url->build($urlImport)."'", 'class'=>'delbutton btn btn-default']);?>
+
     </div>
 </div>
 
@@ -45,5 +46,3 @@
 <?= $this->Html->script('blk-design-system.min.js') ?>
 <?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-</body>
-</html>

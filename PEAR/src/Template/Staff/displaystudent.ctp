@@ -44,6 +44,7 @@
                         </td>
 
                     </tr>
+
             </div>
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -73,7 +74,7 @@
             </table>
 
             <br>
-            <h1>Students Yet To Complete</h1>
+            <h1>Student List</h1>
             <!-- Modal -->
             <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
                  aria-labelledby="exampleModalLabel2"
@@ -127,7 +128,7 @@
                         <td><?= $student->firstname . ' ' . $student->lastname ?></td>
                         <td><?= $peer_review->title ?></td>
 
-                        <?php foreach ($peer_review_user_list as $peer_review_user): ?>
+                        <?php foreach ($peerReviewUser as $peer_review_user): ?>
                             <?php if ($peer_review_user->user_id == $student->id): ?>
                                 <?php if ($peer_review_user->status == 0): ?>
                                     <td><?= 'Incomplete' ?></td>
