@@ -29,10 +29,8 @@ $this->layout = 'default-staff';
                 <td><?= h($unit->code) ?></td>
                 <td><?= h($unit->semester) ?></td>
                 <td><?= h($unit->year) ?></td>
-                <td class="actions">
+                <td class="actions" align="center">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $unit->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $unit->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $unit->id], ['confirm' => __('Are you sure you want to delete # {0}?', $unit->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

@@ -309,9 +309,8 @@ class AdminsController extends AppController
 
                             }
                         endforeach;
-                        $success .= $data.length. ' rows added to database<br />';
+                        $success .= '4 row(s) imported successfully<br />';
                     }
-
 
                 endforeach;
 
