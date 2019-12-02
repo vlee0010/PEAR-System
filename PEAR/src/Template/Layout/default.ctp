@@ -19,6 +19,7 @@ $cakeDescription = 'PEAR Monash: Peer Evaluation & Assessment Resource';
 <html>
 <head>
     <?= $this->Html->charset() ?>
+    <?php echo $this->Html->css('missing_action.css')?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         <?= $cakeDescription ?>:
@@ -40,7 +41,7 @@ $cakeDescription = 'PEAR Monash: Peer Evaluation & Assessment Resource';
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
     <?= $this->Html->css('custom.css') ?>
 </head>
-<body class="register-page">
+<body style="overflow: scroll"class="register-page">
 
 <nav class="navbar navbar-expand-lg navbar-transparent " color-on-scroll="100">
     <div class="container">

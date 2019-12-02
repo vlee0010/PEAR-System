@@ -12,12 +12,17 @@ class Role
     // them like "$user->role = Role::STAFF".
     const STUDENT = 1;
     const STAFF = 2;
+    const ADMIN = 3;
 
     public static function isStaff($roleId)
     {
         return $roleId == Role::STAFF;
     }
 
+    public static function isAdmin($roleId)
+    {
+        return $roleId == Role::ADMIN;
+    }
     public static function isStudent($roleId)
     {
         return $roleId == Role::STUDENT || Role::isStaff($roleId);

@@ -2,12 +2,17 @@
 
 namespace App\Controller;
 
+use App\Controller\AppController;
 use App\Model\Entity\Role;
 use Cake\Mailer\Email;
 use Cake\I18n\Number;
 use Cake\ORM\TableRegistry;
 use Cake\View\Helper\BreadcrumbsHelper;
 use Cake\Mailer\TransportFactory;
+use Cake\Event\Event;
+use ArrayObject;
+use Cake\Utility\Security;
+
 
 class StaffController extends AppController
 {
@@ -53,6 +58,7 @@ class StaffController extends AppController
 
     public function displayclass($id = null)
     {
+//        bug,tutor class
         $unit_class_list = $this->units_classes->find()->where(['unit_id' => $id]);
         $class_id_list = [];
         $peer_review = $this->peer_reviews->find()->where(['unit_id' => $id, 'status' => 0])->first();
@@ -62,29 +68,43 @@ class StaffController extends AppController
         }
         $class_list = [];
         foreach ($class_id_list as $class_id) {
-            array_push($class_list, $this->Classes->find()->where(['id' => $class_id])->first());
+            if($this->Classes->find()->where(['id' => $class_id, 'tutor_id' => $this->Auth->user('id')])->first()) {
+                array_push($class_list, $this->Classes->find()->where(['id' => $class_id, 'tutor_id' => $this->Auth->user('id')])->first());
+            }
 
         }
         $tutor_id = $this->Auth->user('id');
 
+        $this->set('unit_id', $id);
         $this->set(compact('class_list', 'peer_id'));
     }
 
     public function displaystudent($id = null, $peer_id = null)
     {
-        $student_id_list = $this->students_classes->find('list', array('field', array('student_id')))->where(['class_id' => $id]);
-        $student_list = [];
-        $peer_review_user_list = [];
-        $student_id_list_new = [];
-        foreach ($student_id_list as $student_id) {
-            if ($this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id, 'user_id' => $student_id])->first()) {
-                array_push($peer_review_user_list, $this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id, 'user_id' => $student_id])->first());
-                array_push($student_id_list_new, $this->peer_reviews_users->find()->select('user_id')->where(['peer_review_id' => $peer_id, 'user_id' => $student_id])->first());
-            }
-        }
-        foreach ($student_id_list_new as $student_id) {
-            array_push($student_list, $this->Users->find()->where(['id' => $student_id->user_id])->first());
-        }
+
+        $students_classes_query = $this->students_classes->find()->where(['class_id' => $id]);
+
+        $studentClassList = $students_classes_query->select([
+            'id' => 'u.id',
+            'firstname' => 'u.firstname',
+            'lastname' => 'u.lastname',
+        ])->join([
+            'c' => [
+                'table' => 'classes',
+                'conditions' => [
+                    'students_classes.class_id = c.id',
+                ]
+            ],
+            'u' => [
+                'table' => 'users',
+                'conditions' => [
+                    'students_classes.user_id = u.id',
+                ]
+            ]
+        ])->distinct();
+
+        $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id]);
+
         $peer_review = $this->peer_reviews->find()->where(['id' => $peer_id])->first();
 
         $peer_query = $this->units_classes->find()->where(['class_id' => $id]);
@@ -113,12 +133,12 @@ class StaffController extends AppController
         ]);
 
         $queryTerms = $this->getRequest()->getQuery('query');
-        if (!empty($queryTerms)){
+        if (!empty($queryTerms)) {
             $student_list = [];
             $queryTermsWithWildCard = '%' . $queryTerms . '%';
-            foreach ($student_id_list_new as $student_id) {
+            foreach ($studentClassList as $user_id) {
                 array_push($student_list, $this->Users->find()->where([
-                    'id' => $student_id->user_id,
+                    'id' => $user_id->id,
                     'OR' => [
                         'firstname LIKE' => $queryTermsWithWildCard,
                         'lastname LIKE' => $queryTermsWithWildCard,
@@ -127,22 +147,23 @@ class StaffController extends AppController
                 ])->first());
             }
             $student_list = array_filter($student_list);
-        }
-        else{
+        } else {
             $student_list = [];
-            foreach ($student_id_list_new as $student_id) {
-                array_push($student_list, $this->Users->find()->where(['id' => $student_id->user_id])->first());
+            foreach ($studentClassList as $user_id) {
+                array_push($student_list, $this->Users->find()->where(['id' => $user_id->id])->first());
             }
         }
 
 
         $this->set('unit_activity', $unit_activity);
+        $this->set('peerReviewUser', $peer_review_user_query);
+        $this->set('studentClassList', $studentClassList);
         $this->set('query', $queryTerms);
-        $this->set(compact('student_list', 'peer_review', 'peer_review_user_list', "peer_id"));
+        $this->set(compact('student_list', 'peer_review', "peer_id"));
 
     }
 
-    public function displayResults($student_id = null, $peer_review_id = null)
+    public function displayResults($user_id = null, $peer_review_id = null)
     {
 //        $response_list = $this->Responses->find('all',array(
 //            'field'=>array('Response.*'),
@@ -154,11 +175,11 @@ class StaffController extends AppController
 //                    'conditions'=>array('Responses.question_id'=>'Question.id')
 //                ),
 //            )
-//        ))->where(['Responses.user_id'=>$student_id,'Responses.peer_review_id'=>$peer_review_id]);
+//        ))->where(['Responses.user_id'=>$user_id,'Responses.peer_review_id'=>$peer_review_id]);
         $response_list = $this->Responses->find()->contain([
             'Questions',
             'Users'
-        ])->where(['user_id' => $student_id, 'peer_review_id' => $peer_review_id]);
+        ])->where(['user_id' => $user_id, 'peer_review_id' => $peer_review_id]);
 //        foreach ($response_list as $response){
 //            debug($response);
 //        }
@@ -209,7 +230,7 @@ class StaffController extends AppController
 
         $response_query_2 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
         $student_result = $response_query_2->select([
-            'student_id' => 'us.id',
+            'user_id' => 'us.id',
             'question_id' => 'Responses.question_id',
             'average_score' => $response_query_2->func()->avg('Responses.rate_number'),
         ])->join([
@@ -238,7 +259,7 @@ class StaffController extends AppController
 
         $response_query_3 = $this->Responses->find()->where(['Responses.peer_review_id' => $peer_id]);
         $student_list = $response_query_3->select([
-            'student_id' => 'us.id',
+            'user_id' => 'us.id',
             'firstname' => 'us.firstname',
             'lastname' => 'us.lastname'
 
@@ -285,7 +306,7 @@ class StaffController extends AppController
 
         $response_query_4 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
         $student_comment = $response_query_4->select([
-            'student_id' => 'us.id',
+            'user_id' => 'us.id',
             'student_firstname' => 'us.firstname',
             'student_lastname' => 'us.lastname',
             'question_id' => 'Responses.question_id',
@@ -328,20 +349,20 @@ class StaffController extends AppController
             $comment = "";
             $student_name = $student->firstname . " " . $student->lastname;
             foreach ($team_list as $item):
-                if ($item->user_id == $student->student_id):
+                if ($item->user_id == $student->user_id):
                     $team = $item->team;
                 endif;
             endforeach;
             array_push($ar, $student_name, $team);
             foreach ($student_result_array as $item):
-                if ($item->student_id == $student->student_id):
+                if ($item->user_id == $student->user_id):
                     $float = (float)$item->average_score;
                     $result = Number::format($float, ['precision' => 1]);
                     array_push($ar, $result);
                 endif;
             endforeach;
             foreach ($student_comment_list as $item):
-                if ($item->ratee_id == $student->student_id):
+                if ($item->ratee_id == $student->user_id):
                     $comment .= "<b>" . $item->student_firstname . " " . $item->student_lastname . ":</b>. " . $item->comment;
                     $comment .= "<br/>";
                 endif;
@@ -397,7 +418,7 @@ class StaffController extends AppController
 
         $response_query_2 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
         $student_result = $response_query_2->select([
-            'student_id' => 'us.id',
+            'user_id' => 'us.id',
             'question_id' => 'Responses.question_id',
             'average_score' => $response_query_2->func()->avg('Responses.rate_number'),
         ])->join([
@@ -421,7 +442,7 @@ class StaffController extends AppController
 
 //
 //        $student_result_sum = $student_result->select([
-//            'student_id' => 'us.id',
+//            'user_id' => 'us.id',
 //            'count' => $student_result->func()->count('average_score'),
 //            'sum_score' => $student_result->func()->sum('average_score'),
 //            'total_score'
@@ -434,7 +455,7 @@ class StaffController extends AppController
 
         $response_query_3 = $this->Responses->find()->where(['Responses.peer_review_id' => $peer_id]);
         $student_list = $response_query_3->select([
-            'student_id' => 'us.id',
+            'user_id' => 'us.id',
             'firstname' => 'us.firstname',
             'lastname' => 'us.lastname'
 
@@ -481,7 +502,7 @@ class StaffController extends AppController
 
         $response_query_4 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
         $student_comment = $response_query_4->select([
-            'student_id' => 'us.id',
+            'user_id' => 'us.id',
             'student_firstname' => 'us.firstname',
             'student_lastname' => 'us.lastname',
             'question_id' => 'Responses.question_id',
@@ -603,6 +624,22 @@ class StaffController extends AppController
                 $this->Flash->set('Error sending email', ['element' => 'error']);
             }
             $this->set('title', $peer_review_title);
+        }
+    }
+
+    public function beforeFilter($event)
+    {
+        parent::beforeFilter($event);
+        $user = $this->Auth->user();
+
+        //If user's role is 1(students), redirect to students page;
+        if ($user['role'] == 1) {
+
+            $this->redirect(['controller' => 'users', 'action' => 'studentdash']);
+        }
+        if ($user['role'] == 3) {
+
+            $this->redirect(['controller' => 'admins', 'action' => 'index']);
         }
     }
 }

@@ -45,7 +45,7 @@
   position: relative;
 }
 .slider.slider-horizontal {
-    width: 100%;
+    width: 90%;
     height: 20px;
 }
 .slider.slider-horizontal .slider-track {

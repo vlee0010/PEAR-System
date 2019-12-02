@@ -37,11 +37,24 @@ class UsersTable extends Table
     {
         parent::initialize($config);
 
+        $options = array(
+            // Refer to php.net fgetcsv for more information
+            'length' => 0,
+            'delimiter' => ',',
+            'enclosure' => '"',
+            'escape' => '\\',
+            // Generates a Model.field headings row from the csv file
+            'headers' => true,
+            // If true, String $content is the data, not a path to the file
+            'text' => false,
+        );
+
         $this->setTable('users');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('CakePHPCSV.Csv', $options);
 
         $this->hasMany('Responses', [
             'foreignKey' => 'user_id'
@@ -55,6 +68,11 @@ class UsersTable extends Table
             'foreignKey' => 'user_id',
             'targetForeignKey' => 'team_id',
             'joinTable' => 'teams_users'
+        ]);
+        $this->belongsToMany('Classes', [
+            'foreignKey' => 'user_id',
+            'targetForeignKey' => 'class_id',
+            'joinTable' => 'students_classes'
         ]);
         $this->belongsToMany('Units', [
             'foreignKey' => 'user_id',

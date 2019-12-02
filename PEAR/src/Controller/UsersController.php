@@ -177,6 +177,15 @@ class UsersController extends AppController
                             $this->Flash->error('Please verify your Email address first');
                             $this->Auth->logout();
                         }
+                    }elseif (Role::isAdmin($user['role'])){
+                        $this->Auth->setUser($user);
+                        $user = $this->Users->find()->where(['id' => $this->Auth->user('id')])->first();
+                        if ($user->verified) {
+                            $this->redirect(['controller' => 'admins', 'action' => 'index']);
+                        } else {
+                            $this->Flash->error('Please verify your Email address first');
+                            $this->Auth->logout();
+                        }
                     }
 
                 } else {
@@ -414,6 +423,16 @@ class UsersController extends AppController
         $this->Auth->allow('reset');
         $this->Auth->allow('portal');
 
+        $user = $this->Auth->user();
 
+        //If user's role is 1(students), redirect to students page;
+        if ( $user['role'] == 2 ) {
+            $this->Auth->deny('index');
+            $this->redirect(['controller'=>'staff','action'=>'index']);
+        }
+        if ( $user['role'] == 3 ) {
+            $this->Auth->deny('index');
+            $this->redirect(['controller'=>'staff','action'=>'index']);
+        }
     }
 }

@@ -10,7 +10,8 @@
         "cakephp/migrations": "^2.0.0",
         "cakephp/plugin-installer": "^1.0",
         "friendsofcake/cakephp-csvview": "^3.4",
-        "mobiledetect/mobiledetectlib": "2.*"
+        "mobiledetect/mobiledetectlib": "2.*",
+        "proloser/cakephp-csv": "*@dev"
     },
     "require-dev": {
         "cakephp/bake": "^1.9.0",
