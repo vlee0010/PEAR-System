@@ -43,6 +43,7 @@
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/phpunit/php-token-stream" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/phpunit/phpunit" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/phpunit/phpunit-mock-objects" />
+      <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/proloser/cakephp-csv" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/psr/log" />
