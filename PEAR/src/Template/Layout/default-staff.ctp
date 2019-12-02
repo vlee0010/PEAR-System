@@ -22,7 +22,7 @@
 <!--    <link rel="icon" type="image/png" href="../assets/img/favicon.png">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
-        Material Dashboard by Creative Tim
+        PEAR Monash
     </title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
@@ -42,7 +42,7 @@
           Tip 2: you can also add an image using data-image tag
       -->
         <div class="logo">
-            <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+            <a href="" class="simple-text logo-normal">
                 Pear Monash
             </a>
         </div>
@@ -61,15 +61,14 @@
                 </li>
 
                 <li id="create-unit" class="nav-item ">
-                    <a class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "admins",
-                            "action" => "create",
-                        ]
-                    );?>>
+                    <a class="nav-link" href="">
                         <i class="material-icons">queue</i>
-                        <p>Create Units</p>
+                        <p>Units</p>
                     </a>
+                    <ul class="sidebar-nav">
+                        <li><?= $this->Html->link('Create Units', ['controller' => 'admins', "action" => "create"]) ?></li>
+                        <li><?= $this->Html->link('View Unit List', ['controller' => 'units', 'action' => 'index']) ?></li>
+                    </ul>
                 </li>
                 <li id="assignstafftounit" class="nav-item ">
                     <a class="nav-link" href=<?php echo $this->Url->build(
@@ -111,6 +110,17 @@
                         [
                             "controller" => "admins",
                             "action" => "createPeerReview",
+                        ]
+                    );?>>
+                        <i class="material-icons">content_paste</i>
+                        <p>Create Peer Reviews</p>
+                    </a>
+                </li>
+                <li class="nav-item " id="pr">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "staff",
+                            "action" => "import",
                         ]
                     );?>>
                         <i class="material-icons">content_paste</i>

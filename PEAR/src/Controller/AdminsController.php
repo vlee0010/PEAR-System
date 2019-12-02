@@ -3,6 +3,7 @@
 
 namespace App\Controller;
 
+use App\Model\Entity\Role;
 use Cake\ORM\TableRegistry;
 
 class AdminsController extends AppController
@@ -180,9 +181,146 @@ class AdminsController extends AppController
 
     }
 
+    public function import($unit_id)
+    {
+        if ($this->request->is('post')) {
+            if (null !== ($this->request->getData('Cancel'))) {
+                $this->Flash->error('Import cancelled', true);
+                return $this->redirect($this->referer());
+            }
+            $err = false;
+            if ($this->request->getData('csvfilename.name') != '') {
+                $fileOK = $this->uploadFiles('DataImport', $this->request->getData('csvfilename'));
+                if (isset($fileOK['errors'])) {
+                    $this->Flash->error('Error uploading file - ' . $fileOK['errors'][0] . ' Please, try again.');
+                    $err = true;
+                } else {
+                    $err = false;
+                }
+            }
+
+            if ((!$err)) {
+                $success = "";
+                $filename = WWW_ROOT . "DataImport" . DS . $this->request->getData('csvfilename.name');
+
+                $data = $this->Users->importCsv($filename, array('Team', 'StudentId', 'Email', 'Firstname', 'Lastname', 'Class'));
+
+                $teamArray = [];
+                $teamArrayUnique = [];
+                $classArray = [];
+                $classArrayUnique = [];
+                $peerTable = TableRegistry::getTableLocator()->get('peer_reviews');
+                $peerReviewUnit = $peerTable->find()->where(['unit_id' => $unit_id]);
+                $peerReviewUnit->toArray();
+
+                foreach ($data as $key => $value):
+                    if ($data[$key]['Email'] == '' or $data[$key]['Firstname'] == '' or ($data[$key]['Lastname'] == '')):
+                        unset($data[$key]);
+                    endif;
+
+                    array_push($teamArray, $data[$key]['Team']);
+                    $teamArrayUnique = array_unique($teamArray);
+                    array_push($classArray, $data[$key]['Class']);
+                    $classArrayUnique = array_unique($classArray);
+                endforeach;
+
+                foreach ($teamArrayUnique as $team):
+                    $teamName = $team;
+                    $teamTable = TableRegistry::getTableLocator()->get('teams');
+                    $newTeam = $teamTable->newEntity();
+                    $newTeam->name = $teamName;
+                    $newTeam->unit_id = $unit_id;
+                    if (!$teamTable->save($newTeam)) {
+                        // $this->Flash->error('The team could not be saved. Please, try again.');
+                    } else {
+                        foreach ($peerReviewUnit as $peerReview):
+                            if (!$teamTable->PeerReviews->link($newTeam, [$peerReview])) {
+                                $this->Flash->error('The peer-team could not be saved. Please, try again.');
+                            } else {
+
+                            }
+                        endforeach;
+//                        $success .= 'User added to database<br />';
+                    }
+                endforeach;
+
+                foreach ($classArrayUnique as $class):
+                    $className = $class;
+                    $classTable = TableRegistry::getTableLocator()->get('classes');
+                    $newClass = $classTable->newEntity();
+                    $newClass->tutor_id = null;
+                    $newClass->class_name = $className;
+                    if (!$classTable->save($newClass)) {
+                        // $this->Flash->error('The class could not be saved. Please, try again.');
+                    } else {
+                        $unit = $classTable->Units->findById($unit_id)->first();
+                        if (!$classTable->Units->link($newClass, [$unit])) {
+                            //$this->Flash->error('The class-unit could not be saved. Please, try again.');
+                        } else {
+//                        $success .= 'User added to database<br />';
+                        }
+//                        $success .= 'User added to database<br />';
+                    }
+                endforeach;
+
+                foreach ($data as $key => $value):
+// User
+                    $userEmail = $data[$key]['Email'];
+                    $arr = explode('@', $userEmail, 2);
+                    $userName = $arr[0];
+                    $usersTable = TableRegistry::getTableLocator()->get('users');
+                    $newUser = $usersTable->newEntity();
+                    $newUser->email = $userEmail;
+                    $newUser->firstname = $data[$key]['Firstname'];
+                    $newUser->lastname = $data[$key]['Lastname'];
+                    $newUser->role = Role::STUDENT;
+                    $newUser->password = $userName;
+                    $newUser->verified = 1;
+                    $newUser->studentid = $data[$key]['StudentId'];
+
+                    if (!$usersTable->save($newUser)) {
+                        // $this->Flash->error('The user could not be saved. Please, try again.');
+                    } else {
+
+                        $unit = $usersTable->Units->findById($unit_id)->first();
+                        if (!$usersTable->Units->link($newUser, [$unit])) {
+                            // $this->Flash->error('The unit could not be saved. Please, try again.');
+                        } else {
+//                        $success .= 'User added to database<br />';
+                        }
+                        $team = $usersTable->Teams->findByName($data[$key]['Team'])->first();
+                        if (!$usersTable->Teams->link($newUser, [$team])) {
+                            // $this->Flash->error('The team-user could not be saved. Please, try again.');
+                        } else {
+
+//                        $success .= 'User added to database<br />';
+                        }
+                        $class = $usersTable->Classes->findByClass_name($data[$key]['Class'])->first();
+                        if (!$usersTable->Classes->link($newUser, [$class])) {
+                            // $this->Flash->error('The class-user could not be saved. Please, try again.');
+                        } else {
+//                        $success .= 'User added to database<br />';
+                        }
+
+                        foreach ($peerReviewUnit as $peerReview):
+                            if (!$usersTable->PeerReviews->link($newUser, [$peerReview])) {
+                                //$this->Flash->error('The peer-user could not be saved. Please, try again.');
+                            } else {
+
+                            }
+                        endforeach;
+                        $success .= $data.length. ' rows added to database<br />';
+                    }
 
 
+                endforeach;
 
+                $this->set('success', $success);
+                $this->set('data', $data);
+            }
+
+        }
+    }
 
     public function  create(){
         $unitTable = TableRegistry::getTableLocator()->get('units');

@@ -3,8 +3,11 @@
 <?php
 if(isset($success))
 { echo $success;}
+$this->layout = 'default-staff';
 ?>
-<?php echo $this->Form->create('Staff', ['type' => 'file'], ['novalidate' => true]); ?>
+<?php echo $this->Form->create('Admins', ['type' => 'file'], ['novalidate' => true]); ?>
+<h1><?= h('Import CSV File') ?></h1>
+<br>
 <table class="table" width="100%">
     <thead></thead>
     <tbody>
@@ -14,8 +17,8 @@ if(isset($success))
     </tr>
 </table>
 <br/><br/>
-<?= $this->Form->button(__('Cancel Import', true), ['name' => 'Cancel', 'div' => false, 'class' => 'delbutton btn btn-warning']); ?>
-<?= $this->Form->button(__('Import', true), ['name' => 'Import', 'div' => false, 'class' => 'delbutton btn btn-default']); ?>
+<?= $this->Form->button(__('Cancel Import', true), ['name' => 'Cancel', 'div' => false, 'class' => 'delbutton btn btn-default']); ?>
+<?= $this->Form->button(__('Import', true), ['name' => 'Import', 'div' => false, 'class' => 'delbutton btn btn-warning']); ?>
 &nbsp;&nbsp;
 
 

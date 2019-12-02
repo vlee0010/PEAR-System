@@ -26,8 +26,7 @@
                 <br>
             </div>
         </main>
-        <?php $urlImport = ['controller' => 'staff','action' => 'import',$unit_id];
-        echo $this->Form->button('Import CSV', ['onclick' => "location.href='".$this->Url->build($urlImport)."'", 'class'=>'delbutton btn btn-default']);?>
+
 
     </div>
 </div>
