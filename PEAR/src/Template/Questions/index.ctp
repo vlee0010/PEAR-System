@@ -5,7 +5,7 @@
  */
 ?>
 
-<?= $this->Form->create(); ?>
+<?= $this->Form->create("",["id"=>"survey-form"]); ?>
 <div class="container">
     <div class="card shadow text-center" style="position:relative;">
         <h2 class="text-on-front" style="font-size:50px">PEAR Questions for Industry Experience Iteration 2</h2>
@@ -14,7 +14,6 @@
             Expand <br>Close<br> All
         </button>
         <table class="table table-flush" cellpadding="0" cellspacing="0">
-
             <?php foreach ($questions as $question): ?>
                 <tbody>
                 <div id="myModal" class="row">
@@ -24,7 +23,7 @@
                                  id="panel_<?php echo $question->id ?>">
                                 <div class="panel-heading" role="tab" id="headingTwo">
                                     <h4 class="panel-title">
-                                        <a class="collapsed" onclick="changeClass(this)" role="button"
+                                        <a style="font-size: 1.2em" class="collapsed" onclick="changeClass(this)" role="button"
                                            data-toggle="collapse" data-parent="#accordion"
                                            href="#collapse<?php echo $question->id ?>" aria-expanded="false"
                                            aria-controls="collapseTwo">
@@ -41,10 +40,14 @@
 
                                         <div class="wrapper" style="color:#fff;padding:20px;">
                                             <?php foreach ($userList as $user) : ?>
-                                                <?= "Please rate " . $user->firstname . " " . $user->lastname ?>
+                                                <div id="sliderRating_<?= $question->id; ?>_<?= $user->id ?>"></div>
+                                                <h3 style="text-align: left"><?= "Please rate " . $user->firstname . " " . $user->lastname ?></h3>
                                                 <br>
                                                 <?php if ($question->id != 6): ?>
-                                                    <br>
+                                                    <i class="fas fa-check" id="checkA_<?= $question->id; ?>_<?= $user->id ?>" style=" display: none ;color: #00bf9a; font-size: 20px "></i>
+                                                    <i class="fas fa-exclamation-triangle" id="EXA_<?= $question->id; ?>_<?= $user->id ?>" style="display: none ;color: #EFC45B; font-size: 18px "></i>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                                                     <input id="sliderA_<?= $question->id; ?>_<?= $user->id ?>"
                                                            type="range"
                                                            name="sliderRating_<?= $question->id; ?>_<?= $user->id ?>"
@@ -52,7 +55,7 @@
                                                            required="required"
                                                            data-provide="slider"
                                                            data-slider-ticks="[0,1,2,3,4,5]"
-                                                           data-slider-ticks-labels='["N/A", "Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]'
+                                                           data-slider-ticks-labels='["N/A", "Strongly <br/> Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]'
                                                            data-slider-ticks-positions="[0,20,40,60,80,100]"
                                                            data-slider-min="0"
                                                            data-slider-max="5"
@@ -99,6 +102,7 @@
 <?= $this->Html->script('highlight.min.js') ?>
 <?= $this->Html->script('src/js/bootstrap-slider.js') ?>
 <?= $this->Html->script('demo.js') ?>
+<?= $this->Html->script('questions.js') ?>
 <?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
 <?= $this->Html->css('bootstrap-slider.css') ?>
 

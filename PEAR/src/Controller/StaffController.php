@@ -58,6 +58,7 @@ class StaffController extends AppController
 
     public function displayclass($id = null)
     {
+//        bug,tutor class
         $unit_class_list = $this->units_classes->find()->where(['unit_id' => $id]);
         $class_id_list = [];
         $peer_review = $this->peer_reviews->find()->where(['unit_id' => $id, 'status' => 0])->first();
@@ -67,7 +68,9 @@ class StaffController extends AppController
         }
         $class_list = [];
         foreach ($class_id_list as $class_id) {
-            array_push($class_list, $this->Classes->find()->where(['id' => $class_id])->first());
+            if($this->Classes->find()->where(['id' => $class_id, 'tutor_id' => $this->Auth->user('id')])->first()) {
+                array_push($class_list, $this->Classes->find()->where(['id' => $class_id, 'tutor_id' => $this->Auth->user('id')])->first());
+            }
 
         }
         $tutor_id = $this->Auth->user('id');
@@ -767,6 +770,22 @@ class StaffController extends AppController
                 $this->Flash->set('Error sending email', ['element' => 'error']);
             }
             $this->set('title', $peer_review_title);
+        }
+    }
+
+    public function beforeFilter($event)
+    {
+        parent::beforeFilter($event);
+        $user = $this->Auth->user();
+
+        //If user's role is 1(students), redirect to students page;
+        if ($user['role'] == 1) {
+
+            $this->redirect(['controller' => 'users', 'action' => 'studentdash']);
+        }
+        if ($user['role'] == 3) {
+
+            $this->redirect(['controller' => 'admins', 'action' => 'index']);
         }
     }
 }

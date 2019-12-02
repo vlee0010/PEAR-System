@@ -1,7 +1,7 @@
 <?php
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
-
+//$this->layout = false;
 $this->layout = 'error';
 
 if (Configure::read('debug')) :

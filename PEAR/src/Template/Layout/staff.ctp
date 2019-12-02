@@ -32,7 +32,7 @@ use Cake\View\Helper\BreadcrumbsHelper;
     <div class="container">
         <div class="navbar-translate">
             <a class="navbar-brand" href='<?=$this->Url->build(['controller'=>'staff','action'=>'index'])?>'   data-placement="bottom" >
-                <span>PEAR</span> Monash
+                <?php echo $this->Html->image('logo3.jpg',['style'=>'height:30px']);?> <span>PEAR</span> Monash
             </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar bar1"></span>
@@ -97,13 +97,15 @@ use Cake\View\Helper\BreadcrumbsHelper;
     </div>
 </nav>
 <div id="staff-container" class="container">
-    <?php $this->Breadcrumbs->prepend('Home', ['controller' => 'staff','action' => 'index']) ?>
+    <?php $this->Breadcrumbs->prepend('<i class="fas fa-home"></i> Home', ['controller' => 'staff','action' => 'index']) ?>
 
     <?php $this->Breadcrumbs->templates([
-        'wrapper' => '<nav aria-label="breadcrumb" role="navigation"><ol class="breadcrumb">{{content}}</ol></nav>',
-        'item' => '<li class="breadcrumb-item" {{attrs}}>{{icon}}<a href="{{url}}" {{innerAttrs}}> {{title}} </a> </li>{{separator}}',
-        'itemWithoutLink' => '<li class="breadcrumb-item active" aria-current="page" {{attrs}}><span{{innerAttrs}}>{{title}}</span></li>{{separator}}',
-        'separator' => '<li{{attrs}}><span{{innerAttrs}}>{{separator}}</span></li>'
+        'wrapper' => '<nav aria-label="breadcrumb" role="navigation"><div class="breadcrumb">
+                       
+                        &nbsp;&nbsp;{{content}}</div></nav>',
+        'item' => '<div class="breadcrumb-item" {{attrs}}><a href="{{url}}" {{innerAttrs}}> {{title}} </a> </div>{{separator}}',
+        'itemWithoutLink' => '<div class="breadcrumb-item active" aria-current="page" {{attrs}}><span{{innerAttrs}}> <u>{{title}}</u></span></div>{{separator}}',
+        'separator' => '<div{{attrs}}><span{{innerAttrs}}>{{separator}}</span></li>'
     ]) ?>
     <?= $this->Breadcrumbs->render();?>
 </div>
