@@ -116,17 +116,6 @@
                         <p>Create Peer Reviews</p>
                     </a>
                 </li>
-                <li class="nav-item " id="pr">
-                    <a class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "staff",
-                            "action" => "import",
-                        ]
-                    );?>>
-                        <i class="material-icons">content_paste</i>
-                        <p>Create Peer Reviews</p>
-                    </a>
-                </li>
 <!--                <li class="nav-item ">-->
 <!--                    <a class="nav-link" href="./typography.html">-->
 <!--                        <i class="material-icons">library_books</i>-->

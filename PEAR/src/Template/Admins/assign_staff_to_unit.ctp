@@ -11,7 +11,7 @@ echo $this->Form->create(); ?>
 <div class="row mt-5">
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">Unit Code(FIT3047) </label>
+            <label class="bmd-label-floating">Unit Code (FIT3047) </label>
             <input name="unitCode" class="form-control"type="input"  >
         </div>
     </div>
@@ -20,14 +20,14 @@ echo $this->Form->create(); ?>
     <!--Semester-->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">Semester(1,2,A,B) </label>
+            <label class="bmd-label-floating">Semester (1,2,A,B) </label>
             <input name="semester" class="form-control"type="input"   >
         </div>
     </div>
     <!--Year-->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">Year(2020) </label>
+            <label class="bmd-label-floating">Year (2020) </label>
             <input name="year" class="form-control"type="input"  >
         </div>
     </div>
