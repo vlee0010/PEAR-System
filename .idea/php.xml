@@ -78,6 +78,7 @@
       <path value="$PROJECT_DIR$/PEAR/vendor/zendframework/zend-diactoros" />
       <path value="$PROJECT_DIR$/PEAR/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/PEAR/vendor/friendsofcake/cakephp-csvview" />
+      <path value="$PROJECT_DIR$/PEAR/vendor/proloser/cakephp-csv" />
     </include_path>
   </component>
   <component name="PhpUnit">

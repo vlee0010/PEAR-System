@@ -1,8 +1,10 @@
 <html>
 <body>
 <?php
-if(isset($success))
-{ echo $success;}
+use Cake\View\Helper\FlashHelper;
+
+if(isset($message))
+{ }
 $this->layout = 'default-staff';
 ?>
 <?php echo $this->Form->create('Admins', ['type' => 'file'], ['novalidate' => true]); ?>

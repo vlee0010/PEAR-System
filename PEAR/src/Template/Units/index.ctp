@@ -8,17 +8,17 @@ $this->layout = 'default-staff';
 
 ?>
 
-<div class="table">
+<div >
     <h1><?= __('Units') ?></h1>
-    <table cellpadding="0" cellspacing="0">
+    <table class="table">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('title') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('code') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('semester') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('year') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th><?= $this->Paginator->sort('id') ?></th>
+                <th><?= $this->Paginator->sort('title') ?></th>
+                <th><?= $this->Paginator->sort('code') ?></th>
+                <th><?= $this->Paginator->sort('semester') ?></th>
+                <th><?= $this->Paginator->sort('year') ?></th>
+                <th class="actions" align="center"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
@@ -29,16 +29,15 @@ $this->layout = 'default-staff';
                 <td><?= h($unit->code) ?></td>
                 <td><?= h($unit->semester) ?></td>
                 <td><?= h($unit->year) ?></td>
-                <td class="actions">
+                <td class="actions" align="center">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $unit->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $unit->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $unit->id], ['confirm' => __('Are you sure you want to delete # {0}?', $unit->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div class="paginator">
+
+    <nav aria-label="Page navigation example">
         <ul class="pagination">
             <?= $this->Paginator->first('<< ' . __('first')) ?>
             <?= $this->Paginator->prev('< ' . __('previous')) ?>
@@ -46,6 +45,6 @@ $this->layout = 'default-staff';
             <?= $this->Paginator->next(__('next') . ' >') ?>
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
+        <p align="right"><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+    </nav>
 </div>
