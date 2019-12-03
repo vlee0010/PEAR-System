@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Model\Entity\Role;
 use Cake\ORM\TableRegistry;
+use Cake\View\Helper\FlashHelper;
 
 class AdminsController extends AppController
 {
@@ -198,9 +199,13 @@ class AdminsController extends AppController
                     $err = false;
                 }
             }
-
+            else {
+                $err = true;
+                $this->Flash->error('No file chosen. Please select a file');
+            }
+            $success = false;
             if ((!$err)) {
-                $success = "";
+
                 $filename = WWW_ROOT . "DataImport" . DS . $this->request->getData('csvfilename.name');
 
                 $data = $this->Users->importCsv($filename, array('Team', 'StudentId', 'Email', 'Firstname', 'Lastname', 'Class'));
@@ -309,12 +314,16 @@ class AdminsController extends AppController
 
                             }
                         endforeach;
-                        $success .= '4 row(s) imported successfully<br />';
+                        $success = true;
                     }
 
                 endforeach;
 
-                $this->set('success', $success);
+                    if($success == true){
+                        $message = "Data successfully added";
+                        $this->Flash->success($message);
+                    }
+                $this->set('message', $message);
                 $this->set('data', $data);
             }
 
