@@ -201,5 +201,8 @@ Type::build('timestamp')
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
+$this->addPlugin('CakePHPCSV', ['bootstrap' => true, 'routes' => true]);
 
-Plugin::load('CakePHPCSV', ['bootstrap' => false, 'routes' => true]);
+
+//Plugin::load('CakePHPCSV', ['bootstrap' => false, 'routes' => true]);
+

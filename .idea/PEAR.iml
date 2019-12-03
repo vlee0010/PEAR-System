@@ -43,6 +43,7 @@
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/phpunit/php-token-stream" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/phpunit/phpunit" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/phpunit/phpunit-mock-objects" />
+      <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/proloser/cakephp-csv" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/psr/log" />
@@ -69,7 +70,6 @@
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/symfony/finder" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/symfony/polyfill-ctype" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/symfony/polyfill-mbstring" />
-      <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/symfony/polyfill-php72" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/symfony/polyfill-php73" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/symfony/process" />
       <excludeFolder url="file://$MODULE_DIR$/PEAR/vendor/symfony/service-contracts" />
