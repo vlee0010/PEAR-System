@@ -25,23 +25,27 @@ class AdminsController extends AppController
     {
 
     }
-    public function addQuestions(){
+
+    public function addQuestions()
+    {
         $questionTable = TableRegistry::getTableLocator()->get('questions');
-        if ($this->request->is('post')){
+        if ($this->request->is('post')) {
             $questionDescription = $this->request->getData('question');
 //            debug($questionDescription);
             $newQuestion = $questionTable->newEntity();
             $newQuestion->description = $questionDescription;
-            if ($this->Questions->save($newQuestion)){
-                $this->Flash->success("New question " .$newQuestion->description." has been added into the Question Bank Successfully!");
+            if ($this->Questions->save($newQuestion)) {
+                $this->Flash->success("New question " . $newQuestion->description . " has been added into the Question Bank Successfully!");
             };
         }
     }
-    public function checkUnitExists(){
+
+    public function checkUnitExists()
+    {
 
         $unitTable = TableRegistry::getTableLocator()->get('units');
 
-        if($this->request->is('post')) {
+        if ($this->request->is('post')) {
             $unitCode = $this->request->getData('unitCode');
             $title = $this->request->getData('title');
             $semester = $this->request->getData('semester');
@@ -54,65 +58,70 @@ class AdminsController extends AppController
                 array_push($matches, $unitMatch->id);
             }
 //            debug($matches);
-            if (count($matches)){
-                return [(count($matches)),$matches[0]];
-            }else{
+            if (count($matches)) {
+                return [(count($matches)), $matches[0]];
+            } else {
                 return false;
             }
 
         }
     }
-    public function assignStaffToUnit(){
+
+    public function assignStaffToUnit()
+    {
         $unitsTutorsTable = TableRegistry::getTableLocator()->get('units_tutors');
-        if ($this->request->is('post')){
+        if ($this->request->is('post')) {
             $newUnitsTutors = $unitsTutorsTable->newEntity();
             $unitCode = $this->request->getData('unitCode');
             $semester = $this->request->getData('semester');
             $year = $this->request->getData('year');
             $staffEmail = $this->request->getData('staffEmail');
 
-            $courseId = $this->Units->find()->where(['code'=>$unitCode,'semester'=>$semester,'year'=>$year])->first();
-            $staffRow = $this->Users->find()->where(['email'=>$staffEmail])->first();
-            if ($staffRow && $courseId){
+            $courseId = $this->Units->find()->where(['code' => $unitCode, 'semester' => $semester, 'year' => $year])->first();
+            $staffRow = $this->Users->find()->where(['email' => $staffEmail])->first();
+            if ($staffRow && $courseId) {
                 $staffId = $staffRow->id;
-                $staffName = $staffRow->firstname .' '. $staffRow->lastname;
+                $staffName = $staffRow->firstname . ' ' . $staffRow->lastname;
 
                 $newUnitsTutors->unit_id = $courseId->id;
                 $newUnitsTutors->tutor_id = $staffId;
-                if($unitsTutorsTable->save($newUnitsTutors)){
-                    $this->Flash->success("Success!". $staffName . ' now has been added to the unit ' . $unitCode .' - Semester'.$semester.' - Year'.$year );
-                }else{
-                    $this->Flash->error("Failed!". $staffName . 'cannot be added to the unit ' . $unitCode .' - '.$semester.' - '.$year );
+                if ($unitsTutorsTable->save($newUnitsTutors)) {
+                    $this->Flash->success("Success!" . $staffName . ' now has been added to the unit ' . $unitCode . ' - Semester' . $semester . ' - Year' . $year);
+                } else {
+                    $this->Flash->error("Failed!" . $staffName . 'cannot be added to the unit ' . $unitCode . ' - ' . $semester . ' - ' . $year);
                 }
-            }else{
+            } else {
                 $this->Flash->error('Unit Or Staff Does not exist in the database; please Double check the input');
             }
 
         }
     }
-    public function createClasses(){
-        $classesTable=TableRegistry::getTableLocator()->get('classes');
-        if ($this->request->is('post')){
+
+    public function createClasses()
+    {
+        $classesTable = TableRegistry::getTableLocator()->get('classes');
+        if ($this->request->is('post')) {
             $newClass = $classesTable->newEntity();
             $tutorEmail = $this->request->getData('tutorEmail');
-            $tutorRow = $this->Users->find()->where(['email'=>$tutorEmail])->firstOrFail();
+            $tutorRow = $this->Users->find()->where(['email' => $tutorEmail])->firstOrFail();
             $tutorId = $tutorRow->id;
             $newClass->tutor_id = $tutorId;
             $classInfo = $this->request->getData('classInfo');
             $newClass->class_name = $classInfo;
             $newClass->id = 6;
 //            $good = false;
-            if ($classesTable->save($newClass)){
+            if ($classesTable->save($newClass)) {
                 $this->Flash->success("New Class has been created.");
-            }else{
+            } else {
                 $this->Flash->error("Sorry, The Class cannot be created.");
             }
 
         }
     }
+
     public function createPeerReview()
     {
-        $peerReviewQuestionTable=TableRegistry::getTableLocator()->get('peer_reviews_questions');
+        $peerReviewQuestionTable = TableRegistry::getTableLocator()->get('peer_reviews_questions');
 
         $questions = $this->paginate($this->Questions);
 
@@ -132,12 +141,12 @@ class AdminsController extends AppController
                 $semester = $this->request->getData('semester');
                 $year = $this->request->getData('year');
                 $start_date = $this->request->getData('start-date');
-                $end_date= $this->request->getData('end-date');
-                $reminder_date= $this->request->getData('reminder-date');
+                $end_date = $this->request->getData('end-date');
+                $reminder_date = $this->request->getData('reminder-date');
 
 //            Unit Exists, Proceed;
 //            FInd correspond unit row..
-            $unitRecord = $this->Units->find()->where(["code"=>$unitCode,"semester"=>$semester,"year"=>$year])->firstOrFail();
+                $unitRecord = $this->Units->find()->where(["code" => $unitCode, "semester" => $semester, "year" => $year])->firstOrFail();
 //
                 $unitId = $unitRecord->id;
 
@@ -147,32 +156,33 @@ class AdminsController extends AppController
                 $newPeerReview = $peerReviewTable->newEntity();
 //            fill the the data from the request like
 //            date_start; date_end; date_reminder;title;unit_id;
-                $newPeerReview->date_start =$start_date;
-                $newPeerReview->date_end= $end_date;
+                $newPeerReview->date_start = $start_date;
+                $newPeerReview->date_end = $end_date;
                 $newPeerReview->date_reminder = $reminder_date;
-                $newPeerReview->title= $title;
+                $newPeerReview->title = $title;
                 $newPeerReview->unit_id = $unitId;
-           if($peerReviewTable->save($newPeerReview)){
+                if ($peerReviewTable->save($newPeerReview)) {
 //               get the newly created peerReview Id;
 
-                $peer_reviews_id = $newPeerReview->id;
-               $questions = ($this->request->getData('question'));
+                    $peer_reviews_id = $newPeerReview->id;
+                    $questions = ($this->request->getData('question'));
 //               debug($questions);
-               $good=0;
-               foreach($questions as $question) {
+                    $good = 0;
+                    foreach ($questions as $question) {
 //                   debug(question);
-                   $newPeerReviewQuestion = $peerReviewQuestionTable->newEntity();
-                   $newPeerReviewQuestion->peer_reviews_id = $peer_reviews_id;
-                   $newPeerReviewQuestion->question_id = $question;
-                   $peerReviewQuestionTable->save($newPeerReviewQuestion);
-                   $good=1;
-                }
-               if($good==1){
-               $this->Flash->success('This peer review has been successfully added!');}
+                        $newPeerReviewQuestion = $peerReviewQuestionTable->newEntity();
+                        $newPeerReviewQuestion->peer_reviews_id = $peer_reviews_id;
+                        $newPeerReviewQuestion->question_id = $question;
+                        $peerReviewQuestionTable->save($newPeerReviewQuestion);
+                        $good = 1;
+                    }
+                    if ($good == 1) {
+                        $this->Flash->success('This peer review has been successfully added!');
+                    }
 
-           }else{
-               $this->Flash->error("Sorry, Unable to save this Peer Review - " . $newPeerReview->title);
-           }
+                } else {
+                    $this->Flash->error("Sorry, Unable to save this Peer Review - " . $newPeerReview->title);
+                }
             } else {
 //            Unit does not exist, Ask User to create the unit first;
                 $this->Flash->error('This unit does not exist in the database; Please create this unit first');
@@ -198,8 +208,7 @@ class AdminsController extends AppController
                 } else {
                     $err = false;
                 }
-            }
-            else {
+            } else {
                 $err = true;
                 $this->Flash->error('No file chosen. Please select a file');
             }
@@ -215,8 +224,7 @@ class AdminsController extends AppController
                 $classArray = [];
                 $classArrayUnique = [];
                 $peerTable = TableRegistry::getTableLocator()->get('peer_reviews');
-                $peerReviewUnit = $peerTable->find()->where(['unit_id' => $unit_id]);
-                $peerReviewUnit->toArray();
+
 
                 foreach ($data as $key => $value):
                     if ($data[$key]['Email'] == '' or $data[$key]['Firstname'] == '' or ($data[$key]['Lastname'] == '')):
@@ -238,6 +246,8 @@ class AdminsController extends AppController
                     if (!$teamTable->save($newTeam)) {
                         // $this->Flash->error('The team could not be saved. Please, try again.');
                     } else {
+                        $peerReviewUnit = $peerTable->find()->where(['unit_id' => $unit_id]);
+                        $peerReviewUnit->toArray();
                         foreach ($peerReviewUnit as $peerReview):
                             if (!$teamTable->PeerReviews->link($newTeam, [$peerReview])) {
                                 $this->Flash->error('The peer-team could not be saved. Please, try again.');
@@ -253,7 +263,7 @@ class AdminsController extends AppController
                     $className = $class;
                     $classTable = TableRegistry::getTableLocator()->get('classes');
                     $newClass = $classTable->newEntity();
-                    $newClass->tutor_id = null;
+                    $newClass->tutor_id = 15;
                     $newClass->class_name = $className;
                     if (!$classTable->save($newClass)) {
                         // $this->Flash->error('The class could not be saved. Please, try again.');
@@ -319,10 +329,10 @@ class AdminsController extends AppController
 
                 endforeach;
 
-                    if($success == true){
-                        $message = "Data successfully added";
-                        $this->Flash->success($message);
-                    }
+                if ($success == true) {
+                    $message = "Data successfully added";
+                    $this->Flash->success($message);
+                }
                 $this->set('message', $message);
                 $this->set('data', $data);
             }
@@ -330,22 +340,23 @@ class AdminsController extends AppController
         }
     }
 
-    public function  create(){
+    public function create()
+    {
         $unitTable = TableRegistry::getTableLocator()->get('units');
 
-        if($this->request->is('post')) {
+        if ($this->request->is('post')) {
             $unitCode = $this->request->getData('unitCode');
             $title = $this->request->getData('title');
             $semester = $this->request->getData('semester');
             $year = $this->request->getData('year');
-            $unitMatches = $unitTable->find()->where(['code'=>$unitCode, 'semester'=>$semester,'year'=>$year]);
+            $unitMatches = $unitTable->find()->where(['code' => $unitCode, 'semester' => $semester, 'year' => $year]);
             $matches = [];
-            foreach($unitMatches as $unitMatch){
-                array_push($matches,$unitMatch);
+            foreach ($unitMatches as $unitMatch) {
+                array_push($matches, $unitMatch);
             }
-            if (count($matches) === 1){
+            if (count($matches) === 1) {
                 $this->Flash->error('Unit Already Existed');
-            }else{
+            } else {
                 $newUnit = $unitTable->newEntity();
                 $newUnit->title = $title;
                 $newUnit->code = $unitCode;
@@ -353,11 +364,11 @@ class AdminsController extends AppController
                 $newUnit->year = $year;
 
                 if ($this->Units->save($newUnit)) {
-                    $this->Flash->success(__('The new unit'.$newUnit->code.' has been saved.'));
+                    $this->Flash->success(__('The new unit ' . $newUnit->code . ' has been saved.'));
 
-                    return $this->redirect(['controller'=>'admins','action' => 'index']);
-                }else{
-                    $this->Flash->error(__('The new unit' .$newUnit->code.'could not be saved. Please, try again.'));
+                    return $this->redirect(['controller' => 'admins', 'action' => 'index']);
+                } else {
+                    $this->Flash->error(__('The new unit ' .    $newUnit->code . '  could not be saved. Please, try again.'));
                 }
 
             }
@@ -368,8 +379,9 @@ class AdminsController extends AppController
 
     }
 
-    public function submit(){
-        if($this->request->is('post')){
+    public function submit()
+    {
+        if ($this->request->is('post')) {
             var_dump($this->request->getData());
         }
     }
@@ -380,20 +392,16 @@ class AdminsController extends AppController
         $user = $this->Auth->user();
 
         //If user's role is 1(students), redirect to students page;
-        if ( $user['role'] == 1 ) {
+        if ($user['role'] == 1) {
 
-            $this->redirect(['controller'=>'users','action'=>'studentdash']);
+            $this->redirect(['controller' => 'users', 'action' => 'studentdash']);
         }
 
 //If user's role is 2(staff), redirect to staff page;
-        if (isset($user['role']) && $user['role'] == 2 ) {
+        if (isset($user['role']) && $user['role'] == 2) {
 
-            $this->redirect(['controller'=>'staff','action'=>'index']);
+            $this->redirect(['controller' => 'staff', 'action' => 'index']);
         }
-
-
-
-
 
 
 //        if (isset($user['role']) && $user['role'] === 'PARTNER') {
