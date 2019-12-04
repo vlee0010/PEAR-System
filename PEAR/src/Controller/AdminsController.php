@@ -35,7 +35,7 @@ class AdminsController extends AppController
             $newQuestion = $questionTable->newEntity();
             $newQuestion->description = $questionDescription;
             if ($this->Questions->save($newQuestion)) {
-                $this->Flash->success("New question " . $newQuestion->description . " has been added into the Question Bank Successfully!");
+                $this->Flash->success("New question ''" . $newQuestion->description . "'' has been added into the Question Bank Successfully!");
             };
         }
     }
