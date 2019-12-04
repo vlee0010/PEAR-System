@@ -202,4 +202,4 @@ Type::build('timestamp')
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 
-Plugin::load('CakePHPCSV', ['bootstrap' => false, 'routes' => true]);
+$this->addPlugin('CakePHPCSV', ['bootstrap' => true, 'routes' => true]);
