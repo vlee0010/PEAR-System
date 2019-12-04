@@ -9,7 +9,7 @@ $this->layout = 'default-staff';
 ?>
 
 <div >
-    <h1><?= __('Units') ?></h1>
+    <h1><?= __('Offerings') ?></h1>
     <table class="table">
         <thead>
             <tr>
