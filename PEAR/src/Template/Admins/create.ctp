@@ -22,10 +22,10 @@ echo $this->Form->create(); ?>
             <input name="title" class="form-control"type="input"  >
         </div>
     </div>
-    <!--Semester-->
+    <!--Teaching Period -->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">Semester (1,2,A,B) </label>
+            <label class="bmd-label-floating">Teaching Period (1,2,A,B) </label>
             <input name="semester" class="form-control"type="input"   >
         </div>
     </div>

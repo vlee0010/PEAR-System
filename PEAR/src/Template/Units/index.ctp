@@ -11,27 +11,24 @@ $this->layout = 'default-staff';
 <div >
     <h1><?= __('Offerings') ?></h1>
     <table class="table">
-        <thead>
+        <thead align="left">
             <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('title') ?></th>
                 <th><?= $this->Paginator->sort('code') ?></th>
+                <th><?= $this->Paginator->sort('title') ?></th>
                 <th><?= $this->Paginator->sort('semester') ?></th>
-                <th><?= $this->Paginator->sort('year') ?></th>
+                <th align="center"><?= $this->Paginator->sort('year') ?></th>
                 <th class="actions" align="center"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($units as $unit): ?>
             <tr>
-                <td><?= $this->Number->format($unit->id) ?></td>
-                <td><?= h($unit->title) ?></td>
                 <td><?= h($unit->code) ?></td>
+                <td><?= h($unit->title) ?></td>
                 <td><?= h($unit->semester) ?></td>
                 <td><?= h($unit->year) ?></td>
                 <td class="actions" align="center">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $unit->id]) ?>
-                </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
