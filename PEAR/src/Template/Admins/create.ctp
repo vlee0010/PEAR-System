@@ -12,7 +12,7 @@ echo $this->Form->create(); ?>
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Unit Code (FIT3047) </label>
-            <input name="unitCode" class="form-control"type="input"  >
+            <input name="unitCode" class="form-control"type="input" onkeyup="this.value = this.value.toUpperCase();" >
         </div>
     </div>
     <!-- Title   -->
@@ -52,5 +52,11 @@ echo $this->Form->create(); ?>
 <script>
     const unitTab = document.querySelector('#create-unit');
     unitTab.classList.add('active');
+
+    // $(document).ready(function() {
+    //     $("input[name='unitCode']").change(function() {
+    //         $(this).val($(this).val().toUpperCase());
+    //     });
+    // });
 </script>
 
