@@ -45,3 +45,15 @@ $this->layout = 'default-staff';
         <p align="right"><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </nav>
 </div>
+
+<script>
+    const unitTab = document.querySelector('#create-unit');
+    unitTab.classList.add('active');
+
+    // $(document).ready(function() {
+    //     $("input[name='unitCode']").change(function() {
+    //         $(this).val($(this).val().toUpperCase());
+    //     });
+    // });
+</script>
+

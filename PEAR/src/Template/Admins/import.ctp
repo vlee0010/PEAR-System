@@ -43,3 +43,15 @@ $this->layout = 'default-staff';
 </html>
 
 
+<script>
+    const unitTab = document.querySelector('#create-unit');
+    unitTab.classList.add('active');
+
+    // $(document).ready(function() {
+    //     $("input[name='unitCode']").change(function() {
+    //         $(this).val($(this).val().toUpperCase());
+    //     });
+    // });
+</script>
+
+

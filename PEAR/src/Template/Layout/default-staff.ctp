@@ -31,6 +31,12 @@
     <!-- CSS Files -->
 <!--    <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />-->
     <?php echo $this->Html->css('material-dashboard.css')?>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+
+
+
+
 </head>
 
 <body class="">
@@ -47,7 +53,7 @@
             </a>
         </div>
         <div class="sidebar-wrapper">
-            <ul class="nav">
+            <ul class="nav nav-pills">
                 <li class="nav-item" id="dashboard">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
@@ -60,16 +66,30 @@
                     </a>
                 </li>
 
-                <li id="create-unit" class="nav-item ">
-                    <a class="nav-link" href="">
+                <li id="create-unit" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+
                         <i class="material-icons">queue</i>
-                        <p>Units</p>
+                        <span>Units</span>
                     </a>
-                    <ul class="sidebar-nav">
-                        <li><?= $this->Html->link('Create Units', ['controller' => 'admins', "action" => "create"]) ?></li>
-                        <li><?= $this->Html->link('View Unit List', ['controller' => 'units', 'action' => 'index']) ?></li>
-                    </ul>
+                    <div class="dropdown-menu">
+
+                        <?php echo $this->Html->link(
+                        'Create Units',
+                        '/admins/create',
+                        ['class' => 'dropdown-item','controller'=>'admins','action'=>'create']
+                        );?>
+
+                        <?php echo $this->Html->link(
+                            'View Units List',
+                            '/units',
+                            ['class' => 'dropdown-item','controller'=>'units','action'=>'index']
+                        );?>
+                    </div>
+
+
                 </li>
+
                 <li id="assignstafftounit" class="nav-item ">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
@@ -538,6 +558,17 @@
 
     });
 </script>
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
+</script>
+
+
+<!--datatable-->
+
+
 </body>
 
 </html>

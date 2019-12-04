@@ -345,7 +345,8 @@ class AdminsController extends AppController
         $unitTable = TableRegistry::getTableLocator()->get('units');
 
         if ($this->request->is('post')) {
-            $unitCode = $this->request->getData('unitCode');
+            $unitCode =$this->request->getData('unitCode');
+            $unitCode = str_replace(' ','',$unitCode);
             $title = $this->request->getData('title');
             $semester = $this->request->getData('semester');
             $year = $this->request->getData('year');
