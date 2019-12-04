@@ -81,7 +81,7 @@
                         );?>
 
                         <?php echo $this->Html->link(
-                            'View Units List',
+                            'View All Units',
                             '/units',
                             ['class' => 'dropdown-item','controller'=>'units','action'=>'index']
                         );?>
