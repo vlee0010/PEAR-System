@@ -1,0 +1,5 @@
+{
+    "require": {
+        "proloser/cakephp-csv": "^2.0"
+    }
+}

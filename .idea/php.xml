@@ -51,7 +51,6 @@
       <path value="$PROJECT_DIR$/PEAR/vendor/symfony/console" />
       <path value="$PROJECT_DIR$/PEAR/vendor/symfony/filesystem" />
       <path value="$PROJECT_DIR$/PEAR/vendor/symfony/yaml" />
-      <path value="$PROJECT_DIR$/PEAR/vendor/symfony/polyfill-php72" />
       <path value="$PROJECT_DIR$/PEAR/vendor/symfony/polyfill-php73" />
       <path value="$PROJECT_DIR$/PEAR/vendor/jdorn/sql-formatter" />
       <path value="$PROJECT_DIR$/PEAR/vendor/symfony/config" />

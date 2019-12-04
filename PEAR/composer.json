@@ -11,7 +11,7 @@
         "cakephp/plugin-installer": "^1.0",
         "friendsofcake/cakephp-csvview": "^3.4",
         "mobiledetect/mobiledetectlib": "2.*",
-        "proloser/cakephp-csv": "*@dev"
+        "proloser/cakephp-csv": "^2.0"
     },
     "require-dev": {
         "cakephp/bake": "^1.9.0",
