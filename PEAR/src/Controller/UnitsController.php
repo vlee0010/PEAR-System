@@ -105,4 +105,20 @@ class UnitsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function generateStudentCsv($unit_id){
+        $_header = ['Team', 'StudentId', 'Email', 'Firstname', 'Lastname', 'Class'];
+        $_serialize = 'data';
+
+        $unit = $this->Units->get($unit_id);
+        foreach ($unit as $unit):
+            $file_name = $unit->unitcode . '_S' . $unit->semester . '_' . $unit->year . '_' . 'student_list.csv';
+        endforeach;
+
+        $this->response = $this->response->withDownload($file_name);
+
+        $this->viewBuilder()->setClassName('CsvView.Csv');
+        $this->set(compact('data', '_serialize', '_header'));
+    }
+
 }
