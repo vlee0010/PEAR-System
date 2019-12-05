@@ -67,7 +67,7 @@ class StaffController extends AppController
 
         if($peer_review) {
             $peer_id = $peer_review->id;
-            debug($peer_id);
+
             $this->set(compact('peer_id'));
 
         }else{

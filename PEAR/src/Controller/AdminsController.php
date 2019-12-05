@@ -125,7 +125,6 @@ class AdminsController extends AppController
                     $newClass->tutor_id = $tutorId;
                     $classInfo = $this->request->getData('classInfo');
                     $newClass->class_name = $classInfo;
-                    $newClass->id = 6;
 //            $good = false;
                     if ($classesTable->save($newClass)) {
                         $newClassId = $newClass->id;
