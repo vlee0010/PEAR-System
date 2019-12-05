@@ -14,7 +14,7 @@
                 <?php foreach ($unit_list as $index => $unit): ?>
                     <div style="min-height:120px; min-width:1000px;" class="d-flex card col-12 col-md-4 col-lg-3">
                         <div style="height:70%;display: flex;align-items: center;justify-content: center" class="card-img">
-                            <h2 style="margin:0;"><?= $unit->code; ?></h2>
+                            <h2 style="margin:0;"><?= $unit->code . " Semester ".$unit->semester ." Year ". $unit->year; ?></h2>
                             <!--                    <img style="max-width: 100%"src="https://source.unsplash.com/user/vincentyaha/likes?sig=-->
                             <? //=rand()?><!--" alt="">-->
                         </div>
@@ -26,8 +26,8 @@
                             <? //=$index?><!--" style="margin:0 auto;"></div>-->
                             <!--                    </div>-->
                             <div style="margin:0 auto">
-                               <h4><a id="staff-unit-item" class="align-content-center"
-                                      href=<?= $this->Url->build(['action' => 'displayclass', $unit->id]); ?>><?= $unit->code . ' ' . $unit->title ?></a></h4>
+                               <h4><a id="staff-unit-item" class="btn btn-success align-content-center"
+                                      href=<?= $this->Url->build(['action' => 'displayclass', $unit->id]); ?>><?= "View ".$unit->code . ' ' . $unit->title ?></a></h4>
                             </div>
                         </div>
                     </div>

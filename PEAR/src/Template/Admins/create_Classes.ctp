@@ -8,23 +8,44 @@ $this->layout = 'default-staff';
 <?php
 echo $this->Form->create(); ?>
 <!--Tutor Email-->
-<div class="row mt-5">
+    <div class="row mt-5">
 
-    <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">Class Information (FIT3047 - Mon - 10AM) </label>
-            <input name="classInfo" class="form-control"type="input"  >
+        <div class="col-md-6">
+            <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Unit Code (FIT3047) </label>
+                <input name="unitCode" required class="form-control" type="input" onkeyup="this.value = this.value.toUpperCase();" >
+            </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">Tutor For This Class (Tutor Email Address)</label>
-            <input name="tutorEmail" class="form-control"type="input"  >
-        </div>
-    </div>
-    <!-- Class Name   -->
 
-    <!--Semester-->
+<!--        Teaching Period-->
+        <div class="col-md-6">
+            <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Teaching Period (1,2,A,B) </label>
+                <input name="semester" required class="form-control" type="input">
+            </div>
+        </div>
+<!--        Year-->
+        <div class="col-md-6">
+            <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Year (2020) </label>
+                <input name="year" required maxlength="4" class="form-control" type="input"  >
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Class Information (FIT3047 - Mon - 10AM) </label>
+                <input name="classInfo" required class="form-control"type="input"  >
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group bmd-form-group">
+                <label class="bmd-label-floating">Tutor For This Class (Tutor Email Address)</label>
+                <input name="tutorEmail" required class="form-control"type="email"  >
+            </div>
+        </div>
+        <!-- Class Name   -->
+
+        <!--Semester-->
 
 </div>
 

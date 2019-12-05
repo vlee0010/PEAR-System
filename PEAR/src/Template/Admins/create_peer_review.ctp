@@ -12,14 +12,14 @@ echo $this->Form->create(); ?>
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Unit Code (FIT3047) </label>
-            <input name="unitCode" class="form-control"type="input"  >
+            <input name="unitCode" maxlength="7" required onkeyup="value=this.value = this.value.toUpperCase();" class="form-control"type="text"  >
         </div>
     </div>
     <!-- Title   -->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Peer Review Title (Industrial Experience Week 4) </label>
-            <input name="title" class="form-control"type="input"  >
+            <input required name="title" class="form-control" type="text"  >
         </div>
     </div>
 </div>
@@ -28,14 +28,14 @@ echo $this->Form->create(); ?>
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Teaching Period (1,2,A,B) </label>
-            <input name="semester" class="form-control"type="input"   >
+            <input required name="semester" maxlength="1" onkeyup="value=this.value = this.value.toUpperCase();" class="form-control"type="text"   >
         </div>
     </div>
     <!--Year-->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Year (2020) </label>
-            <input name="year" class="form-control"type="input"  >
+            <input name="year"  maxlength="4" class="form-control"type="input"  >
         </div>
     </div>
 </div>
@@ -45,7 +45,7 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             Start Date
             <label class="bmd-label-floating"> </label>
-            <input name="start-date" class="form-control"type="datetime-local"   >
+            <input required name="start-date" class="form-control"type="date">
         </div>
     </div>
     <!--End Date-->
@@ -54,7 +54,7 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             End Date
             <label class="bmd-label-floating"></label>
-            <input name="end-date" placeholder="123" class="form-control" type="datetime-local"  >
+            <input required name="end-date" class="form-control" type="date">
         </div>
     </div>
 </div>
@@ -65,14 +65,14 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             Reminder Date
             <label class="bmd-label-floating"> </label>
-            <input name="reminder-date" class="form-control"type="datetime-local"   >
+            <input required name="reminder-date" class="form-control"type="date">
         </div>
     </div>
 </div>
 
 
 
-<!--123-->
+
 <div class="row">
     <div class="col-lg-12">
         <div class="card">

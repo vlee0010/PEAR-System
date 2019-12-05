@@ -58,11 +58,22 @@ class StaffController extends AppController
 
     public function displayclass($id = null)
     {
-//        bug,tutor class
+//        15 FIT5050
+//        debug($id);
+ //        bug,tutor class
         $unit_class_list = $this->units_classes->find()->where(['unit_id' => $id]);
         $class_id_list = [];
         $peer_review = $this->peer_reviews->find()->where(['unit_id' => $id, 'status' => 0])->first();
-        $peer_id = $peer_review->id;
+
+        if($peer_review) {
+            $peer_id = $peer_review->id;
+
+            $this->set(compact('peer_id'));
+
+        }else{
+            $peer_id = 0;
+            $this->set(compact('peer_id'));
+        }
         foreach ($unit_class_list as $unit_class) {
             array_push($class_id_list, $unit_class->class_id);
         }
@@ -76,7 +87,7 @@ class StaffController extends AppController
         $tutor_id = $this->Auth->user('id');
 
         $this->set('unit_id', $id);
-        $this->set(compact('class_list', 'peer_id'));
+        $this->set(compact('class_list'));
     }
 
     public function displaystudent($id = null, $peer_id = null)

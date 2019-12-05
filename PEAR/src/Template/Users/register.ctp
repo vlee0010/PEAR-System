@@ -26,7 +26,7 @@
                                                 <i class="tim-icons icon-single-02"></i>
                                             </div>
                                         </div>
-                                        <?= $this->Form->text('firstname',array('required' => false, 'type'=>'text', 'placeholder'=>'First Name'));?>
+                                        <?= $this->Form->text('firstname',array('required' => 'required', 'type'=>'text', 'placeholder'=>'First Name'));?>
                                     </div>
 
 
@@ -36,7 +36,7 @@
                                             <i class="tim-icons icon-single-02"></i>
                                         </div>
                                     </div>
-                                    <?= $this->Form->text('lastname',array('required' => false, 'type'=>'text', 'placeholder'=>'Last Name'));?>
+                                    <?= $this->Form->text('lastname',array('required' => 'required', 'type'=>'text', 'placeholder'=>'Last Name'));?>
                                 </div>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -44,7 +44,8 @@
                                             <i class="tim-icons icon-single-02"></i>
                                         </div>
                                     </div>
-                                    <?= $this->Form->text('studentid',array('required' => false, 'type'=>'text', 'placeholder'=>'Student Id'));?>
+
+                                    <?= $this->Form->text('studentid',array('required' => 'required','oninvalid'=> "this.setCustomValidity(\'Please Enter Your id Correctly(All digits)\')",'oninput'=>"this.setCustomValidity('')" ,'type'=>'text', 'maxlength'=>8, 'pattern'=>"\d*",'required','placeholder'=>'Student Id / Staff Id'));?>
                                 </div>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -52,7 +53,7 @@
                                                 <i class="tim-icons icon-email-85"></i>
                                             </div>
                                         </div>
-                                        <?=$this->Form->text('email',array('required' => false, 'type'=>'email',
+                                        <?=$this->Form->text('email',array('required' => 'required', 'type'=>'email',
                                             'name'=>'email',
                                             'placeholder'=>'Monash Email',
                                             'pattern'=>'[a-z0-9]+@student+\.+monash+\.+edu'
@@ -68,7 +69,7 @@
                                                 <i class="tim-icons icon-lock-circle"></i>
                                             </div>
                                         </div>
-                                        <?= $this->Form->text('password', array('required' => false, 'type'=>'password', 'placeholder'=>'Password','name'=>'password'));?>
+                                        <?= $this->Form->text('password', array('required' => 'required', 'type'=>'password', 'placeholder'=>'Password','name'=>'password'));?>
                                     </div>
 <!--                                    <div class="form-check text-left">-->
 <!--                                        <label class="form-check-label">-->
