@@ -64,10 +64,15 @@ class StaffController extends AppController
         $unit_class_list = $this->units_classes->find()->where(['unit_id' => $id]);
         $class_id_list = [];
         $peer_review = $this->peer_reviews->find()->where(['unit_id' => $id, 'status' => 0])->first();
+
         if($peer_review) {
             $peer_id = $peer_review->id;
+            debug($peer_id);
             $this->set(compact('peer_id'));
 
+        }else{
+            $peer_id = 0;
+            $this->set(compact('peer_id'));
         }
         foreach ($unit_class_list as $unit_class) {
             array_push($class_id_list, $unit_class->class_id);

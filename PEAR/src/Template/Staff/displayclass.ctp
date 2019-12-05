@@ -15,12 +15,18 @@
                 <?php if(count($class_list)!=0):?>
                 <?php foreach ($class_list as $class): ?>
                 <div style="position:relative; min-height:100px; min-width:600px; justify-content: center" class="d-flex col-12 col-md-4 col-lg-3">
+                    <?php if($peer_id): ?>
                     <div style="position: absolute;top:50%;left:50%;transform: translate(-50%,-50%);" class="card-img">
+
                         <h3 class="display-4" align="center">
                             <a style="justify-content: center"class="btn btn-success" id="class-list-item"
                                href=<?= $this->Url->build(['action' => 'displaystudent', $class->id, $peer_id]); ?>><?= $class->class_name ?></a>
                         </h3>
                     </div>
+                    <?php else:?>
+                    <h3>no class</h3>
+                    <?php endif;?>
+
                 </div>
                 <?php endforeach; ?>
                 <?php else:?>
