@@ -192,7 +192,7 @@ class AdminsController extends AppController
 
     }
 
-    public function import($unit_id)
+    public function importStudent($unit_id)
     {
         if ($this->request->is('post')) {
             if (null !== ($this->request->getData('Cancel'))) {

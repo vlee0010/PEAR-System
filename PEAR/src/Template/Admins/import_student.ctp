@@ -20,7 +20,7 @@ $this->layout = 'default-staff';
 </table>
 <br/><br/>
 <?= $this->Form->button(__('Cancel Import', true), ['name' => 'Cancel', 'div' => false, 'class' => 'delbutton btn btn-default']); ?>
-<?= $this->Form->button(__('Import', true), ['name' => 'Import', 'div' => false, 'class' => 'delbutton btn btn-warning']); ?>
+<?= $this->Form->button(__('Import', true), ['name' => 'Import Student', 'div' => false, 'class' => 'delbutton btn btn-warning']); ?>
 &nbsp;&nbsp;
 
 

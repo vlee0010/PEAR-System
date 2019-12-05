@@ -5,7 +5,7 @@
 
 use Cake\I18n\Number;
 
-$EIGHTY_PERCENT = 0.8;
+$SEVENTY_PERCENT = 0.7;
 ?>
 <style>
     .popover {
@@ -57,10 +57,11 @@ $EIGHTY_PERCENT = 0.8;
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Student</th>
                         <th>Team</th>
-                        <?php foreach ($questions_desc as $questions_desc): ?>
-                            <th class="text-center"><?= $questions_desc->question ?></th>
+                        <th>Student</th>
+
+                        <?php foreach ($questions_desc as $item): ?>
+                            <th class="text-center"><?= $item->question ?></th>
                         <?php endforeach; ?>
                         <th>Total Score</th>
                         <th>Comment</th>
@@ -69,51 +70,57 @@ $EIGHTY_PERCENT = 0.8;
                     </thead>
                     <tbody>
                     <?php
-                    foreach ($student_list as $student_list):
-                        $total_score = $count * 5;
-                        $comment = "";
-                        $sum_score = 0; ?>
-                        <tr>
-                            <td><?= $student_list->firstname . " " . $student_list->lastname ?></td>
-                            <?php foreach ($team_list as $item):
-                                if ($item->user_id == $student_list->user_id):?>
-                                    <td><?= $item->team ?></td>
-                                <?php endif;
-                            endforeach; ?>
-                            <?php foreach ($student_result_array as $item):
-                                if ($item->user_id == $student_list->user_id):
-                                    $float = (float)$item->average_score;
-                                    $sum_score += $float ?>
-                                    <td align="center"><?= Number::format($float, ['precision' => 1]) ?></td>
-                                <?php endif;
-                            endforeach; ?>
-                            <?php foreach ($student_comment_list as $item):
-                                if ($item->ratee_id == $student_list->user_id):
-                                    $comment .= "<b>" . $item->student_firstname . " " . $item->student_lastname . ":</b>. " . $item->comment;
-                                    $comment .= "<br/>";
-                                endif;
-                            endforeach; ?>
-                            <?php if ($sum_score < $EIGHTY_PERCENT * $total_score): ?>
-                                <td class="alert alert-danger"
-                                    align="center"><?= Number::format($sum_score, ['precision' => 1]) . "/" . $total_score ?></td>
-                            <?php else: ?>
-                                <td align="center"><?= Number::format($sum_score, ['precision' => 1]) . "/" . $total_score ?></td>
-                            <?php endif; ?>
-                            <td align="center">
-                                <a tabindex="0"
-                                   id="button_<?php echo $student_list->user_id ?>"
-                                   role="button"
-                                   class="btn btn-info btn-simple btn-icon btn-sm"
-                                   data-container="body"
-                                   data-toggle="popover"
-                                   data-placement="left"
-                                   data-trigger="focus"
-                                   data-html="true"
-                                   data-content="<?= $comment ?>">
-                                    <i class="fas fa-comments"></i>
-                                </a>
-                            </td>
-                        </tr>
+                    foreach ($teamList as $key => $value):
+                        foreach ($value as $sth):
+                            $total_score = $count * 5;
+                            $comment = "";
+                            $sum_score = 0; ?>
+                            <tr>
+                                <td><?= $sth[3] ?></td>
+                                <td><?= $sth[1] ?></td>
+
+                                <?php if ($sth[4] == 1):
+                                    foreach ($student_result_array as $item):
+                                        if ($item->user_id == $sth[0]):
+                                            $float = (float)$item->average_score;
+                                            $sum_score += $float ?>
+                                            <td align="center"><?= Number::format($float, ['precision' => 1]) ?></td>
+                                        <?php endif;
+                                    endforeach;
+                                else:
+                                    foreach ($questions_desc as $value): ?>
+                                        <td  align="center"><?= 0 ?></td>
+                                    <?php endforeach; ?>
+
+                                <?php endif; ?>
+                                <?php foreach ($student_comment_list as $item):
+                                    if ($item->ratee_id == $sth[0]):
+                                        $comment .= "<b>" . $item->student_firstname . " " . $item->student_lastname . ":</b>. " . $item->comment;
+                                        $comment .= "<br/>";
+                                    endif;
+                                endforeach; ?>
+                                <?php if ($sum_score < $SEVENTY_PERCENT * $total_score): ?>
+                                    <td class="alert alert-danger"
+                                        align="center"><?= Number::format($sum_score, ['precision' => 1]) . "/" . $total_score ?></td>
+                                <?php else: ?>
+                                    <td align="center"><?= Number::format($sum_score, ['precision' => 1]) . "/" . $total_score ?></td>
+                                <?php endif; ?>
+                                <td align="center">
+                                    <a tabindex="0"
+                                       id="button_<?php echo $sth[0] ?>"
+                                       role="button"
+                                       class="btn btn-info btn-simple btn-icon btn-sm"
+                                       data-container="body"
+                                       data-toggle="popover"
+                                       data-placement="left"
+                                       data-trigger="focus"
+                                       data-html="true"
+                                       data-content="<?= $comment ?>">
+                                        <i class="fas fa-comments"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     <?php endforeach; ?>
 
                     </tbody>

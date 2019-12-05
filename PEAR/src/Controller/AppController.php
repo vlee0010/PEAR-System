@@ -115,7 +115,7 @@ class AppController extends Controller
         }
 
         // list of permitted file types
-        $permitted = array('image/gif','image/jpeg','image/pjpeg','image/png','text/plain','application/vnd.ms-excel','text/x-csv','text/csv' );
+        $permitted = array('application/vnd.ms-excel','text/x-csv','text/csv' );
 
         // replace spaces with underscores
         $filename = str_replace(' ', '_', $formdata['name']);
