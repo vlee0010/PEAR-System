@@ -31,7 +31,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($unit_activity as $unit_activity): ?>
+                    <?php foreach ($unit_activity
+
+                    as $unit_activity): ?>
                     <tr>
                         <td><?= $unit_activity->unitcode ?></td>
                         <td><?= $unit_activity->activity ?></td>
@@ -39,35 +41,36 @@
                         <td><?= date("d-M-Y", strtotime($unit_activity->dateend)) ?></td>
                         <td class="actions" align="center">
                             <?= $this->element('Staff/Buttons/results', ['url' => ['action' => 'viewAllResults', $unit_activity->peer_id]]) ?>
-                            <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal']); ?>
-
+                            <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal'.$unit_activity->peer_id]); ?>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal<?=$unit_activity->peer_id ?>" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="exampleModalLabel">System Alert</h3>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h4 style="color: #0a0c0d" align="left">Send Email to All Students?</h4>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
+                                            <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', $unit_activity->peer_id]]) ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
+
 
                     </tr>
 
             </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                 aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="modal-title" id="exampleModalLabel">System Alert</h3>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <h4 style="color: #0a0c0d">Send Email to All Students?</h4>
-                        </div>
-                        <div class="modal-footer">
-                            <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
-                            <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', ]]) ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <?php endforeach; ?>
             </tbody>
 
@@ -97,7 +100,6 @@
                     </div>
                 </div>
             </div>
-
 
 
             <?= $this->Form->create(null, ['method' => 'GET']) ?>
@@ -133,26 +135,31 @@
                                 <?php if ($peer_review_user->status == 0): ?>
                                     <td><?= 'Incomplete' ?></td>
                                     <td>
-                                        <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm disabled', 'data-toggle' => 'modal', 'data-target' => '#exampleModal3']);?>
+                                        <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm disabled', 'data-toggle' => 'modal', 'data-target' => '#exampleModal3']); ?>
                                     </td>
                                 <?php else: ?>
                                     <td><?= 'Complete' ?></td>
                                     <td>
-                                        <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm', 'data-toggle' => 'modal', 'data-target' => '#exampleModal_'.$student->id.'_'.$peer_review->id]);?>
+                                        <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm', 'data-toggle' => 'modal', 'data-target' => '#exampleModal_' . $student->id . '_' . $peer_review->id]); ?>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal_<?=$student->id.'_'.$peer_review->id?>" tabindex="-1" role="dialog"
+                                        <div class="modal fade"
+                                             id="exampleModal_<?= $student->id . '_' . $peer_review->id ?>"
+                                             tabindex="-1" role="dialog"
                                              aria-labelledby="exampleModalLabel2"
                                              aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h3 class="modal-title" id="exampleModalLabel">System Alert</h3>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
-                                                    <div class="modal-body" >
-                                                        <h4 style="color: #0a0c0d">Reset Response for <?= $student->firstname . ' ' . $student->lastname ?>?</h4>
+                                                    <div class="modal-body">
+                                                        <h4 style="color: #0a0c0d">Reset Response
+                                                            for <?= $student->firstname . ' ' . $student->lastname ?>
+                                                            ?</h4>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
