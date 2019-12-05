@@ -36,6 +36,8 @@ class Application extends BaseApplication
     {
         $this->addPlugin('CakePHPCSV');
 
+        $this->addPlugin('CakePHPCSV');
+
         $this->addPlugin('CsvView');
 
         // Call parent to load bootstrap from files.
