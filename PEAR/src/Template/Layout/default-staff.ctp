@@ -77,13 +77,13 @@
                         <?php echo $this->Html->link(
                         'Create Units',
                         '/admins/create',
-                        ['class' => 'dropdown-item','controller'=>'admins','action'=>'create']
+                        ['class' => 'dropdown-item']
                         );?>
 
                         <?php echo $this->Html->link(
                             'View All Units',
                             '/units',
-                            ['class' => 'dropdown-item','controller'=>'units','action'=>'index']
+                            ['class' => 'dropdown-item']
                         );?>
                     </div>
 

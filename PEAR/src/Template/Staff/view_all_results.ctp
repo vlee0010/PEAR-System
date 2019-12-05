@@ -69,6 +69,7 @@ $SEVENTY_PERCENT = 0.7;
                     </tr>
                     </thead>
                     <tbody>
+
                     <?php
                     foreach ($teamList as $key => $value):
                         foreach ($value as $sth):
@@ -119,7 +120,10 @@ $SEVENTY_PERCENT = 0.7;
                                         <i class="fas fa-comments"></i>
                                     </a>
                                 </td>
+
                             </tr>
+
+
                         <?php endforeach; ?>
                     <?php endforeach; ?>
 

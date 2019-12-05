@@ -5,15 +5,16 @@
  */
 $this->layout = 'default-staff';
 //$this->layout = false;
-
+echo $this->Html->css('dt.css');
+echo $this->Html->css('dtutil.css');
 ?>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.material.min.css">
+
+<!--https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css-->
 
 <div >
     <h1><?= __('Offerings') ?></h1>
-    <table  class="table">
+    <table class="table">
         <thead align="left">
             <tr>
                 <th><?= $this->Paginator->sort('code') ?></th>
@@ -31,7 +32,7 @@ $this->layout = 'default-staff';
                 <td><?= h($unit->semester) ?></td>
                 <td><?= h($unit->year) ?></td>
                 <td class="actions" style="text-align=center">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $unit->id]) ?>
+                    <?= $this->Html->link('<i class="material-icons">search</i><span></span>', ['action' => 'view', $unit->id],['escape'=>false]) ?>
             </tr>
             <?php endforeach; ?>
         </tbody>

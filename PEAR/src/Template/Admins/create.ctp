@@ -12,28 +12,28 @@ echo $this->Form->create(); ?>
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Unit Code (FIT3047) </label>
-            <input name="unitCode" class="form-control"type="input" onkeyup="this.value = this.value.toUpperCase();" >
+            <input name="unitCode" required maxlength="7" class="form-control"type="input" onkeyup="this.value = this.value.toUpperCase();" >
         </div>
     </div>
     <!-- Title   -->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Title (Industrial Experience) </label>
-            <input name="title" class="form-control"type="input"  >
+            <input name="title" required class="form-control"type="input">
         </div>
     </div>
     <!--Teaching Period -->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Teaching Period (1,2,A,B) </label>
-            <input name="semester" class="form-control"type="input"   >
+            <input name="semester" required class="form-control" maxlength="1" type="input"   >
         </div>
     </div>
     <!--Year-->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Year (2020) </label>
-            <input name="year" class="form-control"type="input"  >
+            <input name="year" required class="form-control" maxlength="4" type="input"  >
         </div>
     </div>
 

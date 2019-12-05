@@ -100,21 +100,62 @@ class AdminsController extends AppController
     public function createClasses()
     {
         $classesTable = TableRegistry::getTableLocator()->get('classes');
+
         if ($this->request->is('post')) {
-            $newClass = $classesTable->newEntity();
-            $tutorEmail = $this->request->getData('tutorEmail');
-            $tutorRow = $this->Users->find()->where(['email' => $tutorEmail])->firstOrFail();
-            $tutorId = $tutorRow->id;
-            $newClass->tutor_id = $tutorId;
-            $classInfo = $this->request->getData('classInfo');
-            $newClass->class_name = $classInfo;
-            $newClass->id = 6;
+
+            $unitCode = $this->request->getData('unitCode');
+            $unitCode = str_replace(' ','',$unitCode);
+            $semester = $this->request->getData('semester');
+            $semester = str_replace(' ','',$semester);
+            $year = $this->request->getData('year');
+
+
+//            Check if unit exists
+            if($this->Units->find()->where(['code'=>$unitCode,'semester'=>$semester,'year'=>$year])->count()){
+//                fetching unitId for linking classes and units
+                $unitRow = $this->Units->find()->where(['code'=>$unitCode,'semester'=>$semester,'year'=>$year])->firstOrFail();
+                $unitId = $unitRow->id;
+//            Create classes
+                $newClass = $classesTable->newEntity();
+                $tutorEmail = $this->request->getData('tutorEmail');
+
+                if($this->Users->find()->where(['email' => $tutorEmail])->count()){
+                    $tutorRow = $this->Users->find()->where(['email' => $tutorEmail])->firstOrFail();
+                    $tutorId = $tutorRow->id;
+                    $newClass->tutor_id = $tutorId;
+                    $classInfo = $this->request->getData('classInfo');
+                    $newClass->class_name = $classInfo;
+                    $newClass->id = 6;
 //            $good = false;
-            if ($classesTable->save($newClass)) {
-                $this->Flash->success("New Class has been created.");
-            } else {
-                $this->Flash->error("Sorry, The Class cannot be created.");
+                    if ($classesTable->save($newClass)) {
+                        $newClassId = $newClass->id;
+                        $unitsClassesTable = TableRegistry::getTableLocator()->get('units_classes');
+                        $newUnitsClassEntity = $unitsClassesTable->newEntity();
+                        $newUnitsClassEntity->class_id = $newClassId;
+                        $newUnitsClassEntity->unit_id = $unitId;
+                        if($unitsClassesTable->save($newUnitsClassEntity)){
+                            $this->Flash->success("New Class has been created & linked to the unit.");
+                        }else{
+                            $this->Flash->error("New Class has been created but unable to link to the unit.");
+                        }
+
+
+                    } else {
+                        $this->Flash->error("Sorry, The Class cannot be created.");
+                    }
+                }else{
+                    $this->Flash->error("Tutor with ". $tutorEmail . ' does not exist in the database');
+                }
+            }else{
+                $this->Flash->error('Unit Does not found in the database, unable to create classes. Please Check if You enter the right Unit Information.');
             }
+
+
+
+
+
+
+
 
         }
     }
