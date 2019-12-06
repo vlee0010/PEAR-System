@@ -3,7 +3,6 @@
 ?>
 
 
-
 <h1>Assign Staff To Unit</h1>
 <?php
 echo $this->Form->create(); ?>
@@ -14,6 +13,23 @@ echo $this->Form->create(); ?>
             <label class="bmd-label-floating">Unit Code (FIT3047) </label>
             <input name="unitCode" class="form-control"type="input"  >
         </div>
+    </div>
+
+    <div class="dropdown bootstrap-select">
+        <?php
+        $unitAll = [];
+        foreach($unitList as $unit){
+            $unitInformation = $unit->code . ' '.$unit->title. ' Semester ' . $unit->semester .' '. $unit->year;
+            array_push($unitAll,$unitInformation);
+        }
+
+        echo $this->Form->select(
+            'unitSelect',
+            $unitAll,
+            ['empty' => '(choose one)','default'=>'123'],
+            ['class'=>'xxyyzz']
+        );
+        ?>
     </div>
 
 
@@ -48,6 +64,8 @@ echo $this->Form->create(); ?>
 <!--    <input type="checkbox" name="question3" value="How do you like Your mentors?" checked> How do you like Your mentors? <br><br>-->
 <?= $this->Form->submit('Submit',['class'=>'btn btn-primary pull-right']);?>
 <?php echo $this->Form->end();?>
+
+
 
 <script>
     const AssignStaffToUnitTab = document.querySelector('#assignstafftounit');

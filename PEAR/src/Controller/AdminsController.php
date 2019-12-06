@@ -95,6 +95,10 @@ class AdminsController extends AppController
             }
 
         }
+
+        $unitList = $this->Units->find()->order(['year'=>'DESC']);
+        $this->set('unitList',$unitList);
+
     }
 
     public function createClasses()
@@ -235,7 +239,7 @@ class AdminsController extends AppController
             }
             $err = false;
             if ($this->request->getData('csvfilename.name') != '') {
-                $fileOK = $this->uploadFiles('DataImport', $this->request->getData('csvfilename'));
+                $fileOK = $this->uploadFiles(WWW_ROOT.'DataImport', $this->request->getData('csvfilename'));
                 if (isset($fileOK['errors'])) {
                     $this->Flash->error('Error uploading file - ' . $fileOK['errors'][0] . ' Please, try again.');
                     $err = true;
