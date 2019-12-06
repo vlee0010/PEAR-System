@@ -96,7 +96,8 @@ class AdminsController extends AppController
 
         }
 
-        $unitList = $this->Units->find();
+        $unitList = $this->Units->find()->order(['year'=>'DESC']);
+        $this->set('unitList',$unitList);
 
     }
 

@@ -54,6 +54,16 @@ echo $this->Html->css('dtutil.css');
     const unitTab = document.querySelector('#create-unit');
     unitTab.classList.add('active');
 
+    const unit = document.querySelector('#va');
+    unit.classList.add('active');
+
+    const unitLink = document.querySelector('#unit-link');
+    unitLink['aria-expanded'] = true;
+    unitLink.classList.remove('collapsed');
+
+    const unitExpand = document.querySelector('#unitExpand');
+
+    unitExpand.classList.add('show');
     // $(document).ready(function() {
     //     $("input[name='unitCode']").change(function() {
     //         $(this).val($(this).val().toUpperCase());

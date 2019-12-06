@@ -15,6 +15,23 @@ echo $this->Form->create(); ?>
         </div>
     </div>
 
+    <div class="dropdown bootstrap-select">
+        <?php
+        $unitAll = [];
+        foreach($unitList as $unit){
+            $unitInformation = $unit->code . ' '.$unit->title. ' Semester ' . $unit->semester .' '. $unit->year;
+            array_push($unitAll,$unitInformation);
+        }
+
+        echo $this->Form->select(
+            'unitSelect',
+            $unitAll,
+            ['empty' => '(choose one)','default'=>'123'],
+            ['class'=>'xxyyzz']
+        );
+        ?>
+    </div>
+
 
     <!--Semester-->
     <div class="col-md-6">

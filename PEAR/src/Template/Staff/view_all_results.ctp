@@ -148,5 +148,9 @@ $SEVENTY_PERCENT = 0.7;
 <?= $this->Html->script('blk-design-system.min.js') ?>
 <?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script>
+    let unit = document.querySelector('#va');
+    unit.classList.add('active');
+</script>
 </body>
 </html>

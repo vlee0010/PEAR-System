@@ -53,6 +53,9 @@ echo $this->Form->create(); ?>
     const unitTab = document.querySelector('#create-unit');
     unitTab.classList.add('active');
 
+
+    const crt = document.querySelector('#crt');
+    crt.classList.add('active');
     // $(document).ready(function() {
     //     $("input[name='unitCode']").change(function() {
     //         $(this).val($(this).val().toUpperCase());

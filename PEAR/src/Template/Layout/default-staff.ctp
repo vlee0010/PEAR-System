@@ -30,14 +30,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
 <!--    <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />-->
-    <?php echo $this->Html->css('material-dashboard.css')?>
+
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <?php echo $this->Html->css('material-dashboard.css')?>
+    <?php echo $this->Html->css('material-pro/material-dashboard.css')?>
 
 
 
 
 
 </head>
+
 
 <body class="">
 <div class="wrapper ">
@@ -47,13 +50,13 @@
 
           Tip 2: you can also add an image using data-image tag
       -->
-        <div class="logo">
+        <div style="text-align: center" class="logo">
             <a href="" class="simple-text logo-normal">
                 Pear Monash
             </a>
         </div>
         <div class="sidebar-wrapper">
-            <ul class="nav nav-pills">
+            <ul class="nav">
                 <li class="nav-item" id="dashboard">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
@@ -66,25 +69,34 @@
                     </a>
                 </li>
 
-                <li id="create-unit" class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 
+                <li id="create-unit" class="nav-item">
+                    <a id="unit-link" class="nav-link" data-toggle="collapse" href="#unitExpand">
                         <i class="material-icons">queue</i>
-                        <span>Units</span>
+                        <p>Units
+                        <b class="caret"></b>
+                        </p>
                     </a>
-                    <div class="dropdown-menu">
+                    <div class="collapse" id="unitExpand">
+                        <ul class="nav">
+                            <li id="crt" class="nav-item">
+                                <?php echo $this->Html->link(
+                                    'Create Units',
+                                    '/admins/create',
+                                    ['class' => 'nav-link']
+                                );?>
+                            </li>
 
-                        <?php echo $this->Html->link(
-                        'Create Units',
-                        '/admins/create',
-                        ['class' => 'dropdown-item']
-                        );?>
 
-                        <?php echo $this->Html->link(
-                            'View All Units',
-                            '/units',
-                            ['class' => 'dropdown-item']
-                        );?>
+                            <li id="va" class="nav-item">
+                                <?php echo $this->Html->link(
+                                    'View All Units',
+                                    '/units',
+                                    ['class' => 'nav-link']
+                                );?>
+                            </li>
+
+                        </ul>
                     </div>
 
 
@@ -322,64 +334,67 @@
 <!--</div>-->
 <!--   Core JS Files   -->
 <!--<script src="../assets/js/core/jquery.min.js"></script>-->
-<?php echo $this->Html->script('core/jquery.min.js');?>
+<?php echo $this->Html->script('material-pro/core/jquery.min.js');?>
 <!--<script src="../assets/js/core/popper.min.js"></script>-->
-<?php echo $this->Html->script('core/popper.min.js');?>
+<?php echo $this->Html->script('material-pro/core/popper.min.js');?>
 <!--<script src="../assets/js/core/bootstrap-material-design.min.js"></script>-->
-<?php echo $this->Html->script('core/bootstrap-material-design.min.js');?>
+<?php echo $this->Html->script('material-pro/core/bootstrap-material-design.min.js');?>
 <!--<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>-->
-<?php echo $this->Html->script('plugins/perfect-scrollbar.jquery.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/perfect-scrollbar.jquery.min.js');?>
 <!-- Plugin for the momentJs  -->
 <!--<script src="../assets/js/plugins/moment.min.js"></script>-->
-<?php echo $this->Html->script('plugins/moment.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/moment.min.js');?>
 <!--  Plugin for Sweet Alert -->
 <!--<script src="../assets/js/plugins/sweetalert2.js"></script>-->
-<?php echo $this->Html->script('plugins/sweetalert2.js');?>
+<?php echo $this->Html->script('material-pro/plugins/sweetalert2.js');?>
 <!-- Forms Validations Plugin -->
 <!--<script src="../assets/js/plugins/jquery.validate.min.js"></script>-->
-<?php echo $this->Html->script('plugins/jquery.validate.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/jquery.validate.min.js');?>
 <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
 <!--<script src="../assets/js/plugins/jquery.bootstrap-wizard.js"></script>-->
-<?php echo $this->Html->script('plugins/jquery.bootstrap-wizard.js');?>
+<?php echo $this->Html->script('material-pro/plugins/jquery.bootstrap-wizard.js');?>
 <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
 <!--<script src="../assets/js/plugins/bootstrap-selectpicker.js"></script>-->
-<?php echo $this->Html->script('plugins/bootstrap-selectpicker.js');?>
+<?php echo $this->Html->script('material-pro/plugins/bootstrap-selectpicker.js');?>
 <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
 <!--<script src="../assets/js/plugins/bootstrap-datetimepicker.min.js"></script>-->
-<?php echo $this->Html->script('plugins/bootstrap-datetimepicker.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/bootstrap-datetimepicker.min.js');?>
 <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
 <!--<script src="../assets/js/plugins/jquery.dataTables.min.js"></script>-->
-<?php echo $this->Html->script('plugins/jquery.dataTables.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/jquery.dataTables.min.js');?>
 <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
 <!--<script src="../assets/js/plugins/bootstrap-tagsinput.js"></script>-->
-<?php echo $this->Html->script('plugins/bootstrap-tagsinput.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/bootstrap-tagsinput.min.js');?>
 <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
 <!--<script src="../assets/js/plugins/jasny-bootstrap.min.js"></script>-->
-<?php echo $this->Html->script('plugins/jasny-bootstrap.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/jasny-bootstrap.min.js');?>
 <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
 <!--<script src="../assets/js/plugins/fullcalendar.min.js"></script>-->
-<?php echo $this->Html->script('plugins/fullcalendar.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/fullcalendar.min.js');?>
 <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
 <!--<script src="../assets/js/plugins/jquery-jvectormap.js"></script>-->
-<?php echo $this->Html->script('plugins/jquery-jvectormap.js');?>
+<?php echo $this->Html->script('material-pro/plugins/plugins/jquery-jvectormap.js');?>
 <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
 <!--<script src="../assets/js/plugins/nouislider.min.js"></script>-->
-<?php echo $this->Html->script('plugins/nouislider.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/plugins/nouislider.min.js');?>
+
 <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
+
 <!-- Library for adding dinamically elements -->
 <!--<script src="../assets/js/plugins/arrive.min.js"></script>-->
-<?php echo $this->Html->script('plugins/arrive.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/arrive.min.js');?>
 <!--  Google Maps Plugin    -->
 <!-- Chartist JS -->
 <!--<script src="../assets/js/plugins/chartist.min.js"></script>-->
-<?php echo $this->Html->script('plugins/chartist.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/chartist.min.js');?>
 <!--  Notifications Plugin    -->
 <!--<script src="../assets/js/plugins/bootstrap-notify.js"></script>-->
-<?php echo $this->Html->script('plugins/bootstrap-notify.js');?>
+<?php echo $this->Html->script('material-pro/plugins/bootstrap-notify.js');?>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 <!--<script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>-->
-<?php echo $this->Html->script('material-dashboard.js?v=2.1.1');?>
+<?php echo $this->Html->script('material-pro/material-dashboard.js?v=2.1.1');?>
 <script>
     $(document).ready(function() {
         $().ready(function() {
