@@ -90,7 +90,7 @@ class AppController extends Controller
         //$fileOK = $this->uploadFiles('img/horse_images', $this->data['Horse']['horse_image']);
         // setup dir names absolute and relative
         //WWW_ROOT is a CakePHP constant which returns the full path to the webroot folder
-        $folder_url = WWW_ROOT.$folder;
+        $folder_url = $folder;
         $rel_url = $folder;
 
 
@@ -104,7 +104,7 @@ class AppController extends Controller
         if($itemId)
         {
             // set new absolute folder
-            $folder_url = WWW_ROOT.$folder.'/'.$itemId;
+            $folder_url = WWW_ROOT.$folder.DS.$itemId;
             // set new relative folder
             $rel_url = $folder.'/'.$itemId;
             // create directory
@@ -140,6 +140,8 @@ class AppController extends Controller
                     // create full filename
                     $full_url = $folder_url.'/'.$formdata['name'];
                     $url = $rel_url.'/'.$formdata['name'];
+                    debug($url);
+                    debug($folder);
                     // upload the file - overwrite existing file
                     $success = move_uploaded_file($formdata['tmp_name'], $url);
 
