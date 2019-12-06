@@ -104,22 +104,22 @@ class AdminsController extends AppController
         if ($this->request->is('post')) {
 
             $unitCode = $this->request->getData('unitCode');
-            $unitCode = str_replace(' ','',$unitCode);
+            $unitCode = str_replace(' ', '', $unitCode);
             $semester = $this->request->getData('semester');
-            $semester = str_replace(' ','',$semester);
+            $semester = str_replace(' ', '', $semester);
             $year = $this->request->getData('year');
 
 
 //            Check if unit exists
-            if($this->Units->find()->where(['code'=>$unitCode,'semester'=>$semester,'year'=>$year])->count()){
+            if ($this->Units->find()->where(['code' => $unitCode, 'semester' => $semester, 'year' => $year])->count()) {
 //                fetching unitId for linking classes and units
-                $unitRow = $this->Units->find()->where(['code'=>$unitCode,'semester'=>$semester,'year'=>$year])->firstOrFail();
+                $unitRow = $this->Units->find()->where(['code' => $unitCode, 'semester' => $semester, 'year' => $year])->firstOrFail();
                 $unitId = $unitRow->id;
 //            Create classes
                 $newClass = $classesTable->newEntity();
                 $tutorEmail = $this->request->getData('tutorEmail');
 
-                if($this->Users->find()->where(['email' => $tutorEmail])->count()){
+                if ($this->Users->find()->where(['email' => $tutorEmail])->count()) {
                     $tutorRow = $this->Users->find()->where(['email' => $tutorEmail])->firstOrFail();
                     $tutorId = $tutorRow->id;
                     $newClass->tutor_id = $tutorId;
@@ -132,9 +132,9 @@ class AdminsController extends AppController
                         $newUnitsClassEntity = $unitsClassesTable->newEntity();
                         $newUnitsClassEntity->class_id = $newClassId;
                         $newUnitsClassEntity->unit_id = $unitId;
-                        if($unitsClassesTable->save($newUnitsClassEntity)){
+                        if ($unitsClassesTable->save($newUnitsClassEntity)) {
                             $this->Flash->success("New Class has been created & linked to the unit.");
-                        }else{
+                        } else {
                             $this->Flash->error("New Class has been created but unable to link to the unit.");
                         }
 
@@ -142,18 +142,12 @@ class AdminsController extends AppController
                     } else {
                         $this->Flash->error("Sorry, The Class cannot be created.");
                     }
-                }else{
-                    $this->Flash->error("Tutor with ". $tutorEmail . ' does not exist in the database');
+                } else {
+                    $this->Flash->error("Tutor with " . $tutorEmail . ' does not exist in the database');
                 }
-            }else{
+            } else {
                 $this->Flash->error('Unit Does not found in the database, unable to create classes. Please Check if You enter the right Unit Information.');
             }
-
-
-
-
-
-
 
 
         }
@@ -385,8 +379,8 @@ class AdminsController extends AppController
         $unitTable = TableRegistry::getTableLocator()->get('units');
 
         if ($this->request->is('post')) {
-            $unitCode =$this->request->getData('unitCode');
-            $unitCode = str_replace(' ','',$unitCode);
+            $unitCode = $this->request->getData('unitCode');
+            $unitCode = str_replace(' ', '', $unitCode);
             $title = $this->request->getData('title');
             $semester = $this->request->getData('semester');
             $year = $this->request->getData('year');
@@ -409,7 +403,7 @@ class AdminsController extends AppController
 
                     return $this->redirect(['controller' => 'admins', 'action' => 'index']);
                 } else {
-                    $this->Flash->error(__('The new unit ' .    $newUnit->code . '  could not be saved. Please, try again.'));
+                    $this->Flash->error(__('The new unit ' . $newUnit->code . '  could not be saved. Please, try again.'));
                 }
 
             }
