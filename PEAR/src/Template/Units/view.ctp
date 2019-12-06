@@ -9,7 +9,29 @@ $this->layout = 'default-staff';
 <div class="units view large-9 medium-8 columns content">
     <h1><?= h($unit->code.' '. $unit->title.' Semester '.$unit->semester.' '. $unit->year) ?></h1>
     <?php $urlImport = ['controller' => 'admins','action' => 'importStudent',$unit->id];
-    echo $this->Form->button('Import Student CSV', ['onclick' => "location.href='".$this->Url->build($urlImport)."'", 'class'=>'delbutton btn btn-default']);?>
+    echo $this->Form->button('Import Student CSV', ['onclick' => "location.href='".$this->Url->build($urlImport)."'", 'class'=>'delbutton btn btn-default']);
+    echo $this->Form->button('Generate Student CSV', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal'.$unit->id])?>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal<?=$unit->id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">System Alert</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Download results as CSV?
+                </div>
+                <div class="modal-footer">
+                    <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
+                    <?= $this->element('Staff/Buttons/generate_csv', ['url' => ['controller' => 'units','action' => 'generateStudentCsv', $unit->id]])?>
+                </div>
+            </div>
+        </div>
+    </div>
     <table class="table">
         <tr>
             <th scope="row"><?= __('Title') ?></th>

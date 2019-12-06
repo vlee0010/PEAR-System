@@ -38,6 +38,7 @@ class ClassesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        // delete
         $this->belongsTo('Users', [
             'foreignKey' => 'tutor_id'
         ]);
