@@ -33,8 +33,13 @@ echo $this->Form->create(); ?>
 
         <div class="col-md-6">
             <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Class Information (FIT3047 - Mon - 10AM) </label>
-                <input name="classInfo" required class="form-control"type="input"  >
+
+
+                <?php
+
+                $dayAll = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
+                echo $this->Form->input('classDay',['type'=>'select','options'=>$dayAll,'label'=>'','empty'=>'Select Class Day','data-style'=>'btn btn-link','class'=>'form-control']);
+                ?>
             </div>
         </div>
         <div class="col-md-6">
@@ -45,7 +50,17 @@ echo $this->Form->create(); ?>
             </div>
         </div>
         <!-- Class Name   -->
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group">
 
+
+            <?php
+
+            $timeAll = array('7:00 AM','7:30 AM','8:00 AM',"8:30 AM","9:00 AM","9:30 AM","10:00 AM","10:30 AM",'11:00 AM',"11:30 AM","12:00 PM","12:30 PM","1:00 PM","1:30 PM","2:00 PM","2:30 PM","3:00 PM","3:30 PM","4:00 PM","4:30 PM", "5:00 PM","5:30 PM","6:00 PM","6:30 PM","7:00 PM","7:30 PM","8:00 PM","8:30 PM","9:00 PM","9:30 PM","10:00 PM");
+            echo $this->Form->input('classTime',['type'=>'select','options'=>$timeAll,'label'=>'','empty'=>'Select Class Time','data-style'=>'btn btn-link','class'=>'form-control']);
+            ?>
+        </div>
+    </div>
         <!--Semester-->
 
 </div>
