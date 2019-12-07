@@ -44,9 +44,7 @@
                                                 <h3 style="text-align: left"><?= "Please rate " . $user->firstname . " " . $user->lastname ?></h3>
                                                 <br>
                                                 <?php if ($question->id != 6): ?>
-                                                    <i class="fas fa-check" id="checkA_<?= $question->id; ?>_<?= $user->id ?>" style=" display: none ;color: #00bf9a; font-size: 20px "></i>
-                                                    <i class="fas fa-exclamation-triangle" id="EXA_<?= $question->id; ?>_<?= $user->id ?>" style="display: none ;color: #EFC45B; font-size: 18px "></i>
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <i class="fas fa-check" id="checkA_<?= $question->id; ?>_<?= $user->id ?>" style=" display: none ;color: #00bf9a; font-size: 20px "></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                                                     <input id="sliderA_<?= $question->id; ?>_<?= $user->id ?>"
                                                            type="range"
@@ -66,6 +64,10 @@
 
                                                     <br>
                                                     <br>
+                                                    <div id="messageA_<?= $question->id; ?>_<?= $user->id ?>" style="width: 100%; color: #EFC45B; display: none">
+                                                        <i class="fas fa-exclamation-triangle"  style="color: #EFC45B; font-size: 18px "></i>
+                                                        &nbsp;Please complete this question
+                                                    </div>
                                                     <br>
                                                 <?php else: ?>
                                                     <div class="form-group">
