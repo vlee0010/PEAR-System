@@ -25,7 +25,7 @@ echo $this->Form->create(); ?>
                     array_push($staffAll,$staffInformation);
                 }
 
-                echo $this->Form->input('selectUnit',['type'=>'select','options'=>$unitAll,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control']);?>
+                echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitAll,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control']);?>
             </div>
 
         </div>
@@ -37,15 +37,15 @@ echo $this->Form->create(); ?>
 
                 <?php
 
-                $dayAll = array('Mon','Tue','Wed','Thu','Fri','Sat','Sun');
-                echo $this->Form->input('classDay',['type'=>'select','options'=>$dayAll,'label'=>'','empty'=>'Select Class Day','data-style'=>'btn btn-link','class'=>'form-control']);
+                $dayAll = array('Mon'=>'Mon','Tue'=>'Tue','Wed'=>'Wed','Thu'=>'Thu','Fri'=>'Fri','Sat'=>'Sat','Sun'=>'Sun');
+                echo $this->Form->input('classDay',['required'=>true,'type'=>'select','options'=>$dayAll,'label'=>'','empty'=>'Select Class Day','data-style'=>'btn btn-link','class'=>'form-control']);
                 ?>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group bmd-form-group">
                 <?php
-                echo $this->Form->input('selectStaff',['type'=>'select','options'=>$staffAll,'label'=>'','empty'=>'Select Staff','data-style'=>'btn btn-link','class'=>'form-control ']);
+                echo $this->Form->input('selectStaff',['required'=>true,'type'=>'select','options'=>$staffAll,'label'=>'','empty'=>'Select Staff','data-style'=>'btn btn-link','class'=>'form-control ']);
                 ?>
             </div>
         </div>
@@ -56,8 +56,8 @@ echo $this->Form->create(); ?>
 
             <?php
 
-            $timeAll = array('7:00 AM','7:30 AM','8:00 AM',"8:30 AM","9:00 AM","9:30 AM","10:00 AM","10:30 AM",'11:00 AM',"11:30 AM","12:00 PM","12:30 PM","1:00 PM","1:30 PM","2:00 PM","2:30 PM","3:00 PM","3:30 PM","4:00 PM","4:30 PM", "5:00 PM","5:30 PM","6:00 PM","6:30 PM","7:00 PM","7:30 PM","8:00 PM","8:30 PM","9:00 PM","9:30 PM","10:00 PM");
-            echo $this->Form->input('classTime',['type'=>'select','options'=>$timeAll,'label'=>'','empty'=>'Select Class Time','data-style'=>'btn btn-link','class'=>'form-control']);
+            $timeAll = array('7:00 AM'=>'7:00 AM','7:30 AM'=>'7:30 AM','8:00 AM'=>'8:00 AM',"8:30 AM"=>'8:30 AM',"9:00 AM"=>'9:00 AM',"9:30 AM" =>'9:30 AM',"10:00 AM"=>'10:00 AM',"10:30 AM" => '10:30 AM','11:00 AM' =>'11:00 AM',"11:30 AM" =>'11:30 AM',"12:00 PM" => '12:00 PM',"12:30 PM" =>'12:30 PM',"1:00 PM" => '1:00 PM',"1:30 PM" =>'1:30 PM',"2:00 PM"=>'2:00 PM',"2:30 PM"=>'2:30 PM',"3:00 PM"=>'3:00 PM',"3:30 PM" => '3:30 PM',"4:00 PM" => '4:00 PM',"4:30 PM" => '4:30 PM', "5:00 PM" => '5:00 PM',"5:30 PM" => '5:30 PM',"6:00 PM" => '6:00 PM',"6:30 PM" =>'6:30 PM',"7:00 PM" => '7:00 PM',"7:30 PM" => '7:30 PM',"8:00 PM" => '8:00 PM',"8:30 PM" => '8:30 PM',"9:00 PM" =>'9:00 PM',"9:30 PM" => '9:30 PM',"10:00 PM"=>'10:00 PM');
+            echo $this->Form->input('classTime',['required'=>true,'type'=>'select','options'=>$timeAll,'label'=>'','empty'=>'Select Class Time','data-style'=>'btn btn-link','class'=>'form-control']);
             ?>
         </div>
     </div>
@@ -73,6 +73,44 @@ echo $this->Form->create(); ?>
 <!--    <input type="checkbox" name="question3" value="How do you like Your mentors?" checked> How do you like Your mentors? <br><br>-->
 <?= $this->Form->submit('Submit',['class'=>'btn btn-primary pull-right']);?>
 <?php echo $this->Form->end();?>
+
+<h1>All Classes</h1>
+
+
+    <table id="myTable" class="material-datatables">
+        <thead>
+            <th>Class Info</th>
+            <th>Year</th>
+            <th>Semester</th>
+
+        </thead>
+        <tbody>
+        <?php
+//找到class_id // 去到classTable// 找到 class name// / 找到所有Class表所有實例 / 提取class_id / 找到classesUnits 表所有實例 / 找出對應的unitId / 找到UnitTables表中所有實例 找出Year屬性
+        foreach($classesInUnitsClasses as $class):?>
+        <tr>
+
+            <?php
+            $className = $classesAllRecords->find()->where(['id'=>$class->class_id])->first()->class_name;
+//            debug($className);
+            $classId = $classesAllRecords->find()->where(['id'=>$class->class_id])->first()->id;
+//            debug($classId);
+            $unitId = $classesUnitsTable->find()->where(['class_id'=>$classId])->first()->unit_id;
+//            debug($unitId);
+            $year = $unitsTable->find()->where(['id'=>$unitId])->first()->year;
+//            debug($year);
+            $semester = $unitsTable->find()->where(['id'=>$unitId])->first()->semester;
+//            debug($semester);
+
+            ?>
+            <td><?=$className?></td>
+            <td><?=$year?></td>
+            <td><?=$semester?></td>
+        </tr>
+
+        <?php endforeach;?>
+        </tbody>
+    </table>
 
 
 
