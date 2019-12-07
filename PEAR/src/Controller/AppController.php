@@ -106,7 +106,7 @@ class AppController extends Controller
             // set new absolute folder
             $folder_url = WWW_ROOT.$folder.DS.$itemId;
             // set new relative folder
-            $rel_url = $folder.'/'.$itemId;
+            $rel_url = $folder.DS.$itemId;
             // create directory
             if(!is_dir($folder_url))
             {
@@ -140,8 +140,6 @@ class AppController extends Controller
                     // create full filename
                     $full_url = $folder_url.'/'.$formdata['name'];
                     $url = $rel_url.'/'.$formdata['name'];
-                    debug($url);
-                    debug($folder);
                     // upload the file - overwrite existing file
                     $success = move_uploaded_file($formdata['tmp_name'], $url);
 

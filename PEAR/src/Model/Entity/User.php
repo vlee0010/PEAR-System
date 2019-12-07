@@ -1,7 +1,6 @@
 <?php
 namespace App\Model\Entity;
 
-use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
 /**
@@ -11,15 +10,19 @@ use Cake\ORM\Entity;
  * @property string $firstname
  * @property string $lastname
  * @property string $email
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
- * @property string $role
+ * @property \Cake\I18n\FrozenTime|null $created
+ * @property \Cake\I18n\FrozenTime|null $modified
+ * @property string|null $role
  * @property string $password
+ * @property int|null $verified
+ * @property string|null $token
+ * @property string|null $studentid
  *
+ * @property \App\Model\Entity\Response[] $responses
  * @property \App\Model\Entity\PeerReview[] $peer_reviews
  * @property \App\Model\Entity\Team[] $teams
+ * @property \App\Model\Entity\Class[] $classes
  * @property \App\Model\Entity\Unit[] $units
- * @property \App\Model\Entity\Response[] $responses
  */
 class User extends Entity
 {
@@ -40,28 +43,23 @@ class User extends Entity
         'modified' => true,
         'role' => true,
         'password' => true,
-        'token'=>true
+        'verified' => true,
+        'token' => true,
+        'studentid' => true,
+        'responses' => true,
+        'peer_reviews' => true,
+        'teams' => true,
+        'classes' => true,
+        'units' => true
     ];
 
-
-
-    protected function _setPassword($password){
-        return (new DefaultPasswordHasher)->hash($password);
-    }
     /**
      * Fields that are excluded from JSON versions of the entity.
      *
      * @var array
      */
     protected $_hidden = [
-        'password'
+        'password',
+        'token'
     ];
-
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->requirePresence('email', 'create')
-            ->notEmpty('email');
-    }
-
 }

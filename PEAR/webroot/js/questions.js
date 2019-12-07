@@ -4,37 +4,38 @@
 $('[id^=sliderA_]').on("change", function(slideEvt) {
     let isHide = slideEvt.currentTarget.value === '0';
     let checkId = slideEvt.currentTarget.id.replace('sliderA_','checkA_');
-    let exId = checkId.replace("checkA","EXA");
+    let errorId = checkId.replace("check","message");
+
     document.getElementById(checkId).style.display = isHide ? "none" : "";
-    document.getElementById(exId).style.display = isHide ? "" : "none";
+    document.getElementById(errorId).style.display = isHide ? "" : "none";
 });
 
 $("#survey-form").submit(function (event) {
     let sliderGroup = $('[id^=sliderA_]');
-    let firstErr = 0;
+    let firstErr = -1;
 
     for (let i = 0; i < sliderGroup.length; i++ )
     {
-        let exId = sliderGroup[i].id.replace('sliderA_', 'EXA_');
+        let errorId = sliderGroup[i].id.replace('sliderA_', 'messageA_');
 
         if(sliderGroup[i].value === "0")
         {
-            if(firstErr === 0)
+            if(firstErr === -1)
             {
                 firstErr = sliderGroup[i].name;
             }
 
 
-            document.getElementById(exId).style.display =  "";
+            document.getElementById(errorId).style.display =  "";
             event.preventDefault();
         }
         else
         {
-            document.getElementById(exId).style.display =  "none";
+            document.getElementById(errorId).style.display =  "none";
         }
     }
 
-    if(firstErr !== 0) {
+    if(firstErr !== -1) {
         $("html, body").animate({
             scrollTop: $("#" + firstErr).offset().top
         }, {duration: 500, easing: "swing"});

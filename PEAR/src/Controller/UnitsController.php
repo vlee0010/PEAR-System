@@ -110,10 +110,14 @@ class UnitsController extends AppController
         $_header = ['Team', 'StudentId', 'Email', 'Firstname', 'Lastname', 'Class'];
         $_serialize = 'data';
 
-        $unit = $this->Units->get($unit_id);
-        foreach ($unit as $unit):
-            $file_name = $unit->unitcode . '_S' . $unit->semester . '_' . $unit->year . '_' . 'student_list.csv';
+        $unitQuery = $this->Units->find()->where(['id'=>$unit_id]);
+        $unitArray = [];
+        $unitSelect = $unitQuery->select($this->Units);
+        $unitSelect->toArray();
+        foreach ($unitSelect as $unit):
+            $file_name = $unit->code . '_S' . $unit->semester . '_' . $unit->year . '_' . 'student_list.csv';
         endforeach;
+        $data = [];
 
         $this->response = $this->response->withDownload($file_name);
 

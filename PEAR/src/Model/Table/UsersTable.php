@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Users Model
  *
  * @property &\Cake\ORM\Association\HasMany $Responses
+ * @property &\Cake\ORM\Association\BelongsToMany $Classes
  * @property &\Cake\ORM\Association\BelongsToMany $PeerReviews
  * @property &\Cake\ORM\Association\BelongsToMany $Teams
  * @property &\Cake\ORM\Association\BelongsToMany $Units
