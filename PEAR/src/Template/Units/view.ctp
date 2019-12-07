@@ -9,7 +9,7 @@ $this->layout = 'default-staff';
 <div class="units view large-9 medium-8 columns content">
     <h1><?= h($unit->code.' '. $unit->title.' Semester '.$unit->semester.' '. $unit->year) ?></h1>
     <?php $urlImport = ['controller' => 'admins','action' => 'importStudent',$unit->id];
-    echo $this->Form->button('Import Student CSV', ['onclick' => "location.href='".$this->Url->build($urlImport)."'", 'class'=>'delbutton btn btn-default']);
+    echo $this->Form->button('Import Student CSV', ['onclick' => "location.href='".$this->Url->build($urlImport)."'", 'class'=>'delbutton btn btn-warning']);
     echo $this->Form->button('Generate Student CSV', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal'.$unit->id])?>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal<?=$unit->id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
