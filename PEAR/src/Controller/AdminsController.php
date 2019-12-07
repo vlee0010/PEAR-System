@@ -96,8 +96,8 @@ class AdminsController extends AppController
 
         }
 
-        $unitList = $this->Units->find()->order(['year'=>'DESC']);
-        $this->set('unitList',$unitList);
+        $unitList = $this->Units->find()->order(['year' => 'DESC']);
+        $this->set('unitList', $unitList);
 
     }
 
@@ -239,7 +239,7 @@ class AdminsController extends AppController
             }
             $err = false;
             if ($this->request->getData('csvfilename.name') != '') {
-                $fileOK = $this->uploadFiles(WWW_ROOT.'DataImport', $this->request->getData('csvfilename'));
+                $fileOK = $this->uploadFiles(WWW_ROOT . 'DataImport', $this->request->getData('csvfilename'));
                 if (isset($fileOK['errors'])) {
                     $this->Flash->error('Error uploading file - ' . $fileOK['errors'][0] . ' Please, try again.');
                     $err = true;
@@ -322,47 +322,91 @@ class AdminsController extends AppController
                     $arr = explode('@', $userEmail, 2);
                     $userName = $arr[0];
                     $usersTable = TableRegistry::getTableLocator()->get('users');
-                    $newUser = $usersTable->newEntity();
-                    $newUser->email = $userEmail;
-                    $newUser->firstname = $data[$key]['Firstname'];
-                    $newUser->lastname = $data[$key]['Lastname'];
-                    $newUser->role = Role::STUDENT;
-                    $newUser->password = $userName;
-                    $newUser->verified = 1;
-                    $newUser->studentid = $data[$key]['StudentId'];
+                    $userQuery = $this->Users->find('all')->where(['email' => $userEmail]);
 
-                    if (!$usersTable->save($newUser)) {
-                        // $this->Flash->error('The user could not be saved. Please, try again.');
-                    } else {
+                    if ($userQuery == null) {
+                        $newUser = $usersTable->newEntity();
+                        $newUser->email = $userEmail;
+                        $newUser->firstname = $data[$key]['Firstname'];
+                        $newUser->lastname = $data[$key]['Lastname'];
+                        $newUser->role = Role::STUDENT;
+                        $newUser->password = Security::hash($userName,'sha1',false);;
+                        $newUser->verified = 1;
+                        $newUser->studentid = $data[$key]['StudentId'];
 
-                        $unit = $usersTable->Units->findById($unit_id)->first();
-                        if (!$usersTable->Units->link($newUser, [$unit])) {
-                            // $this->Flash->error('The unit could not be saved. Please, try again.');
-                        } else {
-//                        $success .= 'User added to database<br />';
-                        }
-                        $team = $usersTable->Teams->findByName($data[$key]['Team'])->first();
-                        if (!$usersTable->Teams->link($newUser, [$team])) {
-                            // $this->Flash->error('The team-user could not be saved. Please, try again.');
+                        if (!$usersTable->save($newUser)) {
+                            // $this->Flash->error('The user could not be saved. Please, try again.');
                         } else {
 
+                            $unit = $usersTable->Units->findById($unit_id)->first();
+                            if (!$usersTable->Units->link($newUser, [$unit])) {
+                                // $this->Flash->error('The unit could not be saved. Please, try again.');
+                            } else {
 //                        $success .= 'User added to database<br />';
-                        }
-                        $class = $usersTable->Classes->findByClass_name($data[$key]['Class'])->first();
-                        if (!$usersTable->Classes->link($newUser, [$class])) {
-                            // $this->Flash->error('The class-user could not be saved. Please, try again.');
-                        } else {
-//                        $success .= 'User added to database<br />';
-                        }
-
-                        foreach ($peerReviewUnit as $peerReview):
-                            if (!$usersTable->PeerReviews->link($newUser, [$peerReview])) {
-                                //$this->Flash->error('The peer-user could not be saved. Please, try again.');
+                            }
+                            $team = $usersTable->Teams->findByName($data[$key]['Team'])->first();
+                            if (!$usersTable->Teams->link($newUser, [$team])) {
+                                // $this->Flash->error('The team-user could not be saved. Please, try again.');
                             } else {
 
+//                        $success .= 'User added to database<br />';
                             }
-                        endforeach;
-                        $success = true;
+                            $class = $usersTable->Classes->findByClass_name($data[$key]['Class'])->first();
+                            if (!$usersTable->Classes->link($newUser, [$class])) {
+                                // $this->Flash->error('The class-user could not be saved. Please, try again.');
+                            } else {
+//                        $success .= 'User added to database<br />';
+                            }
+                            $peerReviewUnit = $peerTable->find()->where(['unit_id' => $unit_id]);
+                            $peerReviewUnit->toArray();
+                            foreach ($peerReviewUnit as $peerReview):
+                                if (!$usersTable->PeerReviews->link($newUser, [$peerReview])) {
+                                    //$this->Flash->error('The peer-user could not be saved. Please, try again.');
+                                } else {
+
+                                }
+                            endforeach;
+                            $success = true;
+                        }
+                    }
+                    else {
+
+                        $userArray = [];
+                        $userSelect = $userQuery->select($this->Users);
+                        foreach($userSelect as $user){
+                            array_push($userArray,$user);
+                        }
+                        foreach ($userArray as $user) {
+                            $unit = $usersTable->Units->findById($unit_id)->first();
+                            if (!$usersTable->Units->link($user, [$unit])) {
+                                // $this->Flash->error('The unit could not be saved. Please, try again.');
+                            } else {
+//                        $success .= 'User added to database<br />';
+                            }
+                            $team = $usersTable->Teams->findByName($data[$key]['Team'])->first();
+                            if (!$usersTable->Teams->link($user, [$team])) {
+                                // $this->Flash->error('The team-user could not be saved. Please, try again.');
+                            } else {
+
+//                        $success .= 'User added to database<br />';
+                            }
+                            $class = $usersTable->Classes->findByClass_name($data[$key]['Class'])->first();
+                            if (!$usersTable->Classes->link($user, [$class])) {
+                                // $this->Flash->error('The class-user could not be saved. Please, try again.');
+                            } else {
+//                        $success .= 'User added to database<br />';
+                            }
+                            $peerReviewUnit = $peerTable->find()->where(['unit_id' => $unit_id]);
+                            $peerReviewUnit->toArray();
+                            foreach ($peerReviewUnit as $peerReview):
+                                if (!$usersTable->PeerReviews->link($user, [$peerReview])) {
+                                    //$this->Flash->error('The peer-user could not be saved. Please, try again.');
+                                } else {
+
+                                }
+                            endforeach;
+                            $success = true;
+                        }
                     }
 
                 endforeach;
