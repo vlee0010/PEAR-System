@@ -53,7 +53,9 @@ echo $this->Form->create(); ?>
     const unitTab = document.querySelector('#create-unit');
     unitTab.classList.add('active');
 
+    const unitExpand = document.querySelector('#unitExpand');
 
+    unitExpand.classList.add('show');
     const crt = document.querySelector('#crt');
     crt.classList.add('active');
     // $(document).ready(function() {

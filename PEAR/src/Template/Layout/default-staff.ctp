@@ -32,7 +32,7 @@
 <!--    <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />-->
 
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <?php echo $this->Html->css('material-dashboard.css')?>
+
     <?php echo $this->Html->css('material-pro/material-dashboard.css')?>
 
 
@@ -385,7 +385,6 @@
 <!-- Library for adding dinamically elements -->
 <!--<script src="../assets/js/plugins/arrive.min.js"></script>-->
 <?php echo $this->Html->script('material-pro/plugins/arrive.min.js');?>
-<!--  Google Maps Plugin    -->
 <!-- Chartist JS -->
 <!--<script src="../assets/js/plugins/chartist.min.js"></script>-->
 <?php echo $this->Html->script('material-pro/plugins/chartist.min.js');?>

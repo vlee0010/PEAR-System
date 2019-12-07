@@ -8,29 +8,29 @@ $this->layout = 'default-staff';
 <?php
 echo $this->Form->create(); ?>
 <!--Tutor Email-->
-    <div class="row mt-5">
+<div class="row mt-5">
 
         <div class="col-md-6">
-            <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Unit Code (FIT3047) </label>
-                <input name="unitCode" required class="form-control" type="input" onkeyup="this.value = this.value.toUpperCase();" >
-            </div>
-        </div>
+            <div class="form-group">
+                <?php
+                $unitAll = [];
+                $staffAll = [];
 
+                foreach($unitList as $unit){
+                    $unitInformation =array( ''. $unit->id =>$unit->code . ' '.$unit->title. ' Semester ' . $unit->semester .' '. $unit->year);
+                    array_push($unitAll,$unitInformation);
+                }
+                foreach($staffList as $staff){
+                    $staffInformation = array(''.$staff->id => $staff->firstname . ' '. $staff->lastname );
+                    array_push($staffAll,$staffInformation);
+                }
+
+                echo $this->Form->input('selectUnit',['type'=>'select','options'=>$unitAll,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control']);?>
+            </div>
+
+        </div>
 <!--        Teaching Period-->
-        <div class="col-md-6">
-            <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Teaching Period (1,2,A,B) </label>
-                <input name="semester" required class="form-control" type="input">
-            </div>
-        </div>
-<!--        Year-->
-        <div class="col-md-6">
-            <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Year (2020) </label>
-                <input name="year" required maxlength="4" class="form-control" type="input"  >
-            </div>
-        </div>
+
         <div class="col-md-6">
             <div class="form-group bmd-form-group">
                 <label class="bmd-label-floating">Class Information (FIT3047 - Mon - 10AM) </label>
@@ -39,8 +39,9 @@ echo $this->Form->create(); ?>
         </div>
         <div class="col-md-6">
             <div class="form-group bmd-form-group">
-                <label class="bmd-label-floating">Tutor For This Class (Tutor Email Address)</label>
-                <input name="tutorEmail" required class="form-control"type="email"  >
+                <?php
+                echo $this->Form->input('selectStaff',['type'=>'select','options'=>$staffAll,'label'=>'','empty'=>'Select Staff','data-style'=>'btn btn-link','class'=>'form-control ']);
+                ?>
             </div>
         </div>
         <!-- Class Name   -->
