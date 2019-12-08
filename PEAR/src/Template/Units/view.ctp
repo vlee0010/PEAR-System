@@ -4,15 +4,24 @@
  * @var \App\Model\Entity\Unit $unit
  */
 $this->layout = 'default-staff';
+use App\Model\Entity\Role;
 ?>
 
 <div class="units view large-9 medium-8 columns content">
-    <h1><?= h($unit->code.' '. $unit->title.' Semester '.$unit->semester.' '. $unit->year) ?></h1>
-    <?php $urlImport = ['controller' => 'admins','action' => 'importStudent',$unit->id];
-    echo $this->Form->button('Import Student CSV', ['onclick' => "location.href='".$this->Url->build($urlImport)."'", 'class'=>'delbutton btn btn-warning']);
-    echo $this->Form->button('Generate Student CSV', ['class' => 'btn btn-behance"', 'data-toggle' => 'modal', 'data-target' => '#exampleModal'.$unit->id])?>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal<?=$unit->id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <h1><?= h($unit->code . ' ' . $unit->title . ' Semester ' . $unit->semester . ' ' . $unit->year) ?></h1>
+    <?php $urlImport = ['controller' => 'admins', 'action' => 'importStudent', $unit->id];
+    echo $this->Form->button('Import Student CSV', ['onclick' => "location.href='" . $this->Url->build($urlImport) . "'", 'class' => 'delbutton btn btn-warning']);
+    ?>
+    <div class="btn-group">
+        <?= $this->Form->button('Generate CSV', ['class' => 'btn btn-secondary dropdown-toggle', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'true', 'aria-expanded' => 'false']) ?>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#studentModal<?= $unit->id ?>">Student CSV</a>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#staffModal<?= $unit->id ?>">Staff CSV</a>
+        </div>
+    </div>
+    <!-- Student Modal -->
+    <div class="modal fade" id="studentModal<?= $unit->id ?>" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -27,7 +36,29 @@ $this->layout = 'default-staff';
                 </div>
                 <div class="modal-footer">
                     <?= $this->Form->button('Close', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
-                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-behance','url' => ['controller' => 'units','action' => 'generateStudentCsv', $unit->id]])?>
+                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-behance', 'url' => ['controller' => 'units', 'action' => 'generateCsv', $unit->id,Role::STUDENT]]) ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Staff Modal -->
+    <div class="modal fade" id="staffModal<?= $unit->id ?>" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" align="left">
+                    <h3 class="modal-title" id="exampleModalLabel" align="left">System Alert</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Generate Staff CSV Template
+                </div>
+                <div class="modal-footer">
+                    <?= $this->Form->button('Close', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
+                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-behance', 'url' => ['controller' => 'units', 'action' => 'generateCsv', $unit->id,Role::STAFF]]) ?>
                 </div>
             </div>
         </div>
