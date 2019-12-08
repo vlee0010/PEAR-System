@@ -25,7 +25,6 @@ class ClassesTableTest extends TestCase
     public $fixtures = [
         'app.Classes',
         'app.Users',
-        'app.StudentsClasses',
         'app.Units'
     ];
 
