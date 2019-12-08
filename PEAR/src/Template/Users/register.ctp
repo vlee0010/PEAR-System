@@ -56,7 +56,7 @@
                                         <?=$this->Form->text('email',array('required' => 'required', 'type'=>'email',
                                             'name'=>'email',
                                             'placeholder'=>'Monash Email',
-                                            'pattern'=>'[a-z0-9]+@student+\.+monash+\.+edu'
+                                            'pattern'=>'[a-z0-9]+@student+\.+monash+\.+edu|(?:[a-z]{4}[0-9]{3}@student.monash.edu)|(?:[a-z]+.+?@monash.edu.?.+)|(?:.+\..+@monash.edu.*)'
                                             //'oninvalid' => 'setCustomValidity(\'Without trailing zero\')'
                                             ));
 
