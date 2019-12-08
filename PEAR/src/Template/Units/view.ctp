@@ -16,18 +16,18 @@ $this->layout = 'default-staff';
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalLabel">System Alert</h3>
+                <div class="modal-header" align="left">
+                    <h3 class="modal-title" id="exampleModalLabel" align="left">System Alert</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Download results as CSV?
+                    Generate Student CSV Template
                 </div>
                 <div class="modal-footer">
-                    <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
-                    <?= $this->element('Staff/Buttons/generate_csv', ['url' => ['controller' => 'units','action' => 'generateStudentCsv', $unit->id]])?>
+                    <?= $this->Form->button('Close', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
+                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-secondary','url' => ['controller' => 'units','action' => 'generateStudentCsv', $unit->id]])?>
                 </div>
             </div>
         </div>

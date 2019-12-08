@@ -6,6 +6,15 @@ namespace App\Controller;
 use App\Model\Entity\Role;
 use Cake\ORM\TableRegistry;
 use Cake\View\Helper\FlashHelper;
+use App\Controller\AppController;
+use Cake\Auth\DefaultPasswordHasher;
+use Cake\Event\Event;
+use Cake\ORM\Table;
+use Cake\Core\App;
+use Cake\Controller\Exception\SecurityException;
+use Cake\Utility\Security;
+use Cake\Mailer\Email;
+
 
 class AdminsController extends AppController
 {
@@ -80,27 +89,22 @@ class AdminsController extends AppController
             $unitId = $this->request->getData('selectUnit');
             $staffId = $this->request->getData('selectStaff');
 
-            $unitRecord = $this->Units->find()->where(['id'=>$unitId])->first();
-            $staffRecord = $this->Users->find()->where(['id'=>$staffId])->first();
+            $unitRecord = $this->Units->find()->where(['id' => $unitId])->first();
+            $staffRecord = $this->Users->find()->where(['id' => $staffId])->first();
 
-            $promptUnitInfo = $unitRecord->code . ' ' . 'Semester ' . $unitRecord->semester . ' Year '. $unitRecord->year;
+            $promptUnitInfo = $unitRecord->code . ' ' . 'Semester ' . $unitRecord->semester . ' Year ' . $unitRecord->year;
             $promptStaffInfo = $staffRecord->firstname . ' ' . $staffRecord->lastname;
 
 
-
-            $newUnitsTutor->unit_id  = $unitId;
+            $newUnitsTutor->unit_id = $unitId;
             $newUnitsTutor->tutor_id = $staffId;
 
 
-
-
-            if($unitsTutorsTable->save($newUnitsTutor)){
-                $this->Flash->success( $promptStaffInfo.' has been added to the ' .$promptUnitInfo);
-            }else{
-                $this->Flash->error('Sorry, ' . $promptStaffInfo.' can not be added to the ' .$promptUnitInfo);
+            if ($unitsTutorsTable->save($newUnitsTutor)) {
+                $this->Flash->success($promptStaffInfo . ' has been added to the ' . $promptUnitInfo);
+            } else {
+                $this->Flash->error('Sorry, ' . $promptStaffInfo . ' can not be added to the ' . $promptUnitInfo);
             }
-
-
 
 
 //            $newUnitsTutors = $unitsTutorsTable->newEntity();
@@ -130,10 +134,10 @@ class AdminsController extends AppController
 
 
 //        Get All Units and all staffs and admins, passing into view
-        $unitList = $this->Units->find()->order(['year'=>'DESC']);
-        $this->set('unitList',$unitList);
-        $staffList = $this->Users->find()->where(['role'=>'2'])->orWhere(['role'=>'3']);
-        $this->set('staffList',$staffList);
+        $unitList = $this->Units->find()->order(['year' => 'DESC']);
+        $this->set('unitList', $unitList);
+        $staffList = $this->Users->find()->where(['role' => '2'])->orWhere(['role' => '3']);
+        $this->set('staffList', $staffList);
 
 
     }
@@ -144,10 +148,10 @@ class AdminsController extends AppController
         $unitId = $this->request->getData('selectUnit');
         $staffId = $this->request->getData('selectStaff');
 
-        $unitList = $this->Units->find()->order(['year'=>'DESC']);
-        $this->set('unitList',$unitList);
-        $staffList = $this->Users->find()->where(['role'=>'2'])->orWhere(['role'=>'3']);
-        $this->set('staffList',$staffList);
+        $unitList = $this->Units->find()->order(['year' => 'DESC']);
+        $this->set('unitList', $unitList);
+        $staffList = $this->Users->find()->where(['role' => '2'])->orWhere(['role' => '3']);
+        $this->set('staffList', $staffList);
 
         if ($this->request->is('post')) {
 
@@ -298,7 +302,13 @@ class AdminsController extends AppController
                 $err = true;
                 $this->Flash->error('No file chosen. Please select a file');
             }
-            $success = false;
+
+            $dataCount = 0;
+            $dataStatus = [];
+            $successData = [];
+            $unSuccessData = [];
+
+
             if ((!$err)) {
 
                 $filename = WWW_ROOT . "DataImport" . DS . $this->request->getData('csvfilename.name');
@@ -313,10 +323,14 @@ class AdminsController extends AppController
 
 
                 foreach ($data as $key => $value):
-                    if ($data[$key]['Email'] == '' or $data[$key]['Firstname'] == '' or ($data[$key]['Lastname'] == '')):
+                    if ($data[$key]['Email'] == '' and $data[$key]['Firstname'] == '' and ($data[$key]['Lastname'] == '')):
                         unset($data[$key]);
                     endif;
 
+                    if (($data[$key]['Email'] == '') or ($data[$key]['StudentId'] == '') or ($data[$key]['Class'] == '') or ($data[$key]['Team'] == '')):
+                        array_push($unSuccessData, $data[$key]);
+                        unset($data[$key]);
+                    endif;
                     array_push($teamArray, $data[$key]['Team']);
                     $teamArrayUnique = array_unique($teamArray);
                     array_push($classArray, $data[$key]['Class']);
@@ -341,7 +355,6 @@ class AdminsController extends AppController
 
                             }
                         endforeach;
-//                        $success .= 'User added to database<br />';
                     }
                 endforeach;
 
@@ -358,27 +371,32 @@ class AdminsController extends AppController
                         if (!$classTable->Units->link($newClass, [$unit])) {
                             //$this->Flash->error('The class-unit could not be saved. Please, try again.');
                         } else {
-//                        $success .= 'User added to database<br />';
+
                         }
-//                        $success .= 'User added to database<br />';
                     }
                 endforeach;
 
                 foreach ($data as $key => $value):
 // User
+                    $unitUserSuccess = false;
+                    $teamUserSuccess = false;
+                    $classUserSuccess = false;
+                    $peerUserSuccess = false;
+                    $success = 0;
                     $userEmail = $data[$key]['Email'];
                     $arr = explode('@', $userEmail, 2);
                     $userName = $arr[0];
                     $usersTable = TableRegistry::getTableLocator()->get('users');
                     $userQuery = $this->Users->find('all')->where(['email' => $userEmail]);
-
-                    if ($userQuery == null) {
+                    $selectQ = $userQuery->select($this->Users);
+                    $selectArray = $selectQ->toArray();
+                    if (count($selectArray) == 0) {
                         $newUser = $usersTable->newEntity();
                         $newUser->email = $userEmail;
                         $newUser->firstname = $data[$key]['Firstname'];
                         $newUser->lastname = $data[$key]['Lastname'];
                         $newUser->role = Role::STUDENT;
-                        $newUser->password = Security::hash($userName,'sha1',false);;
+                        $newUser->password = Security::hash($userName, 'sha1', false);
                         $newUser->verified = 1;
                         $newUser->studentid = $data[$key]['StudentId'];
 
@@ -390,20 +408,19 @@ class AdminsController extends AppController
                             if (!$usersTable->Units->link($newUser, [$unit])) {
                                 // $this->Flash->error('The unit could not be saved. Please, try again.');
                             } else {
-//                        $success .= 'User added to database<br />';
+                                $unitUserSuccess = true;
                             }
                             $team = $usersTable->Teams->findByName($data[$key]['Team'])->first();
                             if (!$usersTable->Teams->link($newUser, [$team])) {
                                 // $this->Flash->error('The team-user could not be saved. Please, try again.');
                             } else {
-
-//                        $success .= 'User added to database<br />';
+                                $teamUserSuccess = true;
                             }
                             $class = $usersTable->Classes->findByClass_name($data[$key]['Class'])->first();
                             if (!$usersTable->Classes->link($newUser, [$class])) {
                                 // $this->Flash->error('The class-user could not be saved. Please, try again.');
                             } else {
-//                        $success .= 'User added to database<br />';
+                                $classUserSuccess = true;
                             }
                             $peerReviewUnit = $peerTable->find()->where(['unit_id' => $unit_id]);
                             $peerReviewUnit->toArray();
@@ -411,38 +428,40 @@ class AdminsController extends AppController
                                 if (!$usersTable->PeerReviews->link($newUser, [$peerReview])) {
                                     //$this->Flash->error('The peer-user could not be saved. Please, try again.');
                                 } else {
-
+                                    $peerUserSuccess = true;
                                 }
                             endforeach;
-                            $success = true;
+                            if ($unitUserSuccess && $peerUserSuccess && $classUserSuccess && $teamUserSuccess) {
+                                $success = 1;
+                                array_push($successData, $value);
+                            }
                         }
-                    }
-                    else {
+                    } else {
 
                         $userArray = [];
                         $userSelect = $userQuery->select($this->Users);
-                        foreach($userSelect as $user){
-                            array_push($userArray,$user);
+                        foreach ($userSelect as $user) {
+                            array_push($userArray, $user);
                         }
                         foreach ($userArray as $user) {
                             $unit = $usersTable->Units->findById($unit_id)->first();
                             if (!$usersTable->Units->link($user, [$unit])) {
                                 // $this->Flash->error('The unit could not be saved. Please, try again.');
                             } else {
-//                        $success .= 'User added to database<br />';
+                                $unitUserSuccess = true;
                             }
                             $team = $usersTable->Teams->findByName($data[$key]['Team'])->first();
                             if (!$usersTable->Teams->link($user, [$team])) {
                                 // $this->Flash->error('The team-user could not be saved. Please, try again.');
                             } else {
+                                $teamUserSuccess = true;
 
-//                        $success .= 'User added to database<br />';
                             }
                             $class = $usersTable->Classes->findByClass_name($data[$key]['Class'])->first();
                             if (!$usersTable->Classes->link($user, [$class])) {
                                 // $this->Flash->error('The class-user could not be saved. Please, try again.');
                             } else {
-//                        $success .= 'User added to database<br />';
+                                $classUserSuccess = true;
                             }
                             $peerReviewUnit = $peerTable->find()->where(['unit_id' => $unit_id]);
                             $peerReviewUnit->toArray();
@@ -450,21 +469,41 @@ class AdminsController extends AppController
                                 if (!$usersTable->PeerReviews->link($user, [$peerReview])) {
                                     //$this->Flash->error('The peer-user could not be saved. Please, try again.');
                                 } else {
-
+                                    $peerUserSuccess = true;
                                 }
                             endforeach;
-                            $success = true;
+                            if ($unitUserSuccess && $peerUserSuccess && $classUserSuccess && $teamUserSuccess) {
+                                $success = 1;
+                                array_push($successData, $value);
+                            }
                         }
                     }
-
+                    array_push($dataStatus, $success);
                 endforeach;
 
-                if ($success == true) {
-                    $message = "Data successfully added";
-                    $this->Flash->success($message);
+                $counts = array_count_values($dataStatus);
+                if (count($data) > 0) {
+                    if (count($counts) > 0) {
+                        $message = $counts[true] . " row(s) successfully added";
+                        $this->Flash->success($message);
+                        $this->set('message', $message);
+                        if (count($unSuccessData) > 0) {
+                            $errorMessage = "Cannot import data from ";
+                            foreach ($unSuccessData as $unSuccessData ){
+                                $errorMessage .= $unSuccessData.' ';
+                            }
+                            $this->Flash->error($errorMessage);
+                            }
+                    }
+                } else {
+                    $this->Flash->error("There's no data in CSV file");
                 }
-                $this->set('message', $message);
+
                 $this->set('data', $data);
+                if (!empty($successData)){
+                    $this->set('successData', $successData);
+                }
+
             }
 
         }

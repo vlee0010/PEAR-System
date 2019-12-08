@@ -1,6 +1,7 @@
 <html>
 <body>
 <?php
+
 use Cake\View\Helper\FlashHelper;
 
 $this->layout = 'default-staff';
@@ -23,6 +24,35 @@ $this->layout = 'default-staff';
 
 
 <?= $this->Form->end() ?>
+<br>
+<?php
+if (isset($successData)): ?>
+    <table class="table" width="100%">
+        <thead>
+            <th>Id</th>
+            <th>Team</th>
+            <th>Student ID</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Class</th>
+        </thead>
+        <tbody>
+        <tr>
+            <?php foreach ($successData as $key => $value): ?>
+
+                <td><?= $key+1?></td>
+                <td><?= $successData[$key]['Team']?></td>
+                <td><?= $successData[$key]['StudentId']?></td>
+                <td><?= $successData[$key]['Email']?></td>
+                <td><?= $successData[$key]['Firstname']?></td>
+                <td><?= $successData[$key]['Lastname']?></td>
+                <td><?= $successData[$key]['Class']?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+<?php endif; ?>
+
 
 <?= $this->Html->script('core/jquery.min.js') ?>
 <?= $this->Html->script('core/popper.min.js') ?>
