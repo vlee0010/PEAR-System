@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Entity;
 
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
 /**
@@ -52,6 +53,17 @@ class User extends Entity
         'classes' => true,
         'units' => true
     ];
+
+    protected function _setPassword($password){
+        return (new DefaultPasswordHasher)->hash($password);
+    }
+
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->requirePresence('email', 'create')
+            ->notEmpty('email');
+    }
 
     /**
      * Fields that are excluded from JSON versions of the entity.

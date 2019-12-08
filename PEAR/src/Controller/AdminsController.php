@@ -365,7 +365,7 @@ class AdminsController extends AppController
                     $classArrayUnique = array_unique($classArray);
                 endforeach;
 
-                foreach ($teamArrayUnique as $team):
+                    foreach ($teamArrayUnique as $team):
                     $teamName = $team;
                     $teamTable = TableRegistry::getTableLocator()->get('teams');
                     $newTeam = $teamTable->newEntity();
@@ -425,7 +425,7 @@ class AdminsController extends AppController
                         $newUser->firstname = $data[$key]['Firstname'];
                         $newUser->lastname = $data[$key]['Lastname'];
                         $newUser->role = Role::STUDENT;
-                        $newUser->password = Security::hash($userName, 'sha1', false);
+                        $newUser->password = $userName;
                         $newUser->verified = 1;
                         $newUser->studentid = $data[$key]['StudentId'];
 
