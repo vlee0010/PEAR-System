@@ -112,4 +112,20 @@ class PeerReviewsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function beforeFilter($event)
+    {
+        parent::beforeFilter($event);
+        $user = $this->Auth->user();
+
+        //If user's role is 1(students), redirect to students page;
+        if ($user['role'] == 1) {
+
+            $this->redirect(['controller' => 'users', 'action' => 'studentdash']);
+        }
+        if ($user['role'] == 2) {
+
+            $this->redirect(['controller' => 'staff', 'action' => 'displayclass']);
+        }
+    }
 }
