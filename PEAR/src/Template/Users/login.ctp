@@ -39,14 +39,6 @@
                                     <?= $this->Form->text('password', array('type'=>'password',"autocomplete"=>"new-password",'class'=>'form-control', 'placeholder'=>'Password','name'=>'password'));?>
 
                                 </div>
-                                <!--                                    <div class="form-check text-left">-->
-                                <!--                                        <label class="form-check-label">-->
-                                <!--                                            <input class="form-check-input" type="checkbox" required>-->
-                                <!--                                            <span class="form-check-sign"></span>-->
-                                <!--                                            I agree to the-->
-                                <!--                                            <a href="#">terms and conditions</a>.-->
-                                <!--                                        </label>-->
-                                <!--                                    </div>-->
 
                                 <div class="card-footer">
                                     <!--                                    //Modal Button-->

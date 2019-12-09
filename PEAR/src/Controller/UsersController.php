@@ -260,6 +260,8 @@ class UsersController extends AppController
                 ->set(["password" => $encryptedPassword])
                 ->where(["token" => $token])
                 ->execute();
+             $this->Flash->success(__("Password has now been changed"));
+             sleep(3);
             return $this->redirect(["action" => 'login']);
         }
     }
@@ -275,8 +277,11 @@ class UsersController extends AppController
 
 //        $verify = $user->find('all')->where(['token'=>$token])->first();
 //        $user->save($verify);
+
         $this->Flash->success('Your email has been verified! Please Log in. ');
+        sleep(3);
         $this->redirect(['action' => 'login']);
+
 
     }
 
