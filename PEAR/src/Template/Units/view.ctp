@@ -9,11 +9,18 @@ use App\Model\Entity\Role;
 
 <div class="units view large-9 medium-8 columns content">
     <h1><?= h($unit->code . ' ' . $unit->title . ' Semester ' . $unit->semester . ' ' . $unit->year) ?></h1>
-    <?php $urlImport = ['controller' => 'admins', 'action' => 'importStudent', $unit->id];
-    echo $this->Form->button('Import Student CSV', ['onclick' => "location.href='" . $this->Url->build($urlImport) . "'", 'class' => 'delbutton btn btn-warning']);
-    ?>
+    <?php $urlStudentImport = ['controller' => 'admins', 'action' => 'importStudent', $unit->id];?>
+    <?php $urlStaffImport = ['controller' => 'admins', 'action' => 'importStaff', $unit->id];?>
+
     <div class="btn-group">
-        <?= $this->Form->button('Generate CSV', ['class' => 'btn btn-secondary dropdown-toggle', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'true', 'aria-expanded' => 'false']) ?>
+        <?= $this->Form->button('Import CSV File', ['class' => 'btn btn-primary dropdown-toggle', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'true', 'aria-expanded' => 'false']) ?>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="<?=$this->Url->build($urlStudentImport)?>">Student CSV</a>
+            <a class="dropdown-item" href="<?=$this->Url->build($urlStaffImport)?>">Staff CSV</a>
+        </div>
+    </div>
+    <div class="btn-group">
+        <?= $this->Form->button('Generate CSV File', ['class' => 'btn btn-secondary dropdown-toggle', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'true', 'aria-expanded' => 'false']) ?>
         <div class="dropdown-menu">
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#studentModal<?= $unit->id ?>">Student CSV</a>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#staffModal<?= $unit->id ?>">Staff CSV</a>

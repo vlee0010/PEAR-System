@@ -109,8 +109,6 @@ class AdminsController extends AppController
             }
 
 
-
-
 //            $newUnitsTutors = $unitsTutorsTable->newEntity();
 //            $unitCode = $this->request->getData('unitCode');
 //            $semester = $this->request->getData('semester');
@@ -138,30 +136,30 @@ class AdminsController extends AppController
 
 
 //        Get All Units and all staffs and admins, passing into view
-        $unitList = $this->Units->find()->order(['year'=>'DESC']);
-        $this->set('unitList',$unitList);
-        $staffList = $this->Users->find()->where(['role'=>'2'])->orWhere(['role'=>'3']);
-        $this->set('staffList',$staffList);
+        $unitList = $this->Units->find()->order(['year' => 'DESC']);
+        $this->set('unitList', $unitList);
+        $staffList = $this->Users->find()->where(['role' => '2'])->orWhere(['role' => '3']);
+        $this->set('staffList', $staffList);
 
 
     }
 
     public function createClasses()
     {
-        $unitList = $this->Units->find()->order(['year'=>'DESC']);
-        $this->set('unitList',$unitList);
-        $staffList = $this->Users->find()->where(['role'=>'2'])->orWhere(['role'=>'3']);
-        $this->set('staffList',$staffList);
+        $unitList = $this->Units->find()->order(['year' => 'DESC']);
+        $this->set('unitList', $unitList);
+        $staffList = $this->Users->find()->where(['role' => '2'])->orWhere(['role' => '3']);
+        $this->set('staffList', $staffList);
 
         //            Fetch all records from classes Table;\
         $classesInUnitsClasses = $this->UnitsClasses->find();
         $classesAllRecords = $this->Classes;
         $classesUnitsTable = $this->UnitsClasses;
         $unitsTable = $this->Units;
-        $this->set('classesInUnitsClasses',$classesInUnitsClasses);
-        $this->set('unitsTable',$unitsTable);
-        $this->set('classesUnitsTable',$classesUnitsTable);
-        $this->set('classesAllRecords',$classesAllRecords);
+        $this->set('classesInUnitsClasses', $classesInUnitsClasses);
+        $this->set('unitsTable', $unitsTable);
+        $this->set('classesUnitsTable', $classesUnitsTable);
+        $this->set('classesAllRecords', $classesAllRecords);
         if ($this->request->is('post')) {
 
 
@@ -171,9 +169,9 @@ class AdminsController extends AppController
             $classDay = $this->request->getData('classDay');
             $classTime = $this->request->getData('classTime');
 
-            $unitCode = $this->Units->find()->where(['id'=>$unitId])->firstOrFail()->code;
+            $unitCode = $this->Units->find()->where(['id' => $unitId])->firstOrFail()->code;
             $newClass = $classesTable->newEntity();
-            $classInfo = $unitCode . ' - ' . $classDay . ' - ' .$classTime;
+            $classInfo = $unitCode . ' - ' . $classDay . ' - ' . $classTime;
 
             $newClass->class_name = $classInfo;
             $newClass->tutor_id = $staffId;
@@ -189,7 +187,6 @@ class AdminsController extends AppController
                     $this->Flash->error("New Class has been created but unable to link to the unit.");
                 }
             }
-
 
 
 //            Check if unit exists
@@ -309,6 +306,244 @@ class AdminsController extends AppController
 
     }
 
+    public function importStaff($unit_id)
+    {
+        if ($this->request->is('post')) {
+            if (null !== ($this->request->getData('Cancel'))) {
+                $this->Flash->error('Import cancelled', true);
+                return $this->redirect($this->referer());
+            }
+            $err = false;
+            if ($this->request->getData('csvfilename.name') != '') {
+                $fileOK = $this->uploadFiles(WWW_ROOT . 'DataImport', $this->request->getData('csvfilename'));
+                if (isset($fileOK['errors'])) {
+                    $this->Flash->error('Error uploading file - ' . $fileOK['errors'][0] . ' Please, try again.');
+                    $err = true;
+                } else {
+                    $err = false;
+                }
+            } else {
+                $err = true;
+                $this->Flash->error('No file chosen. Please select a file');
+            }
+
+            $dataCount = 0;
+            $dataStatus = [];
+            $successData = [];
+            $unSuccessData = [];
+
+
+            if ((!$err)) {
+                $filename = WWW_ROOT . "DataImport" . DS . $this->request->getData('csvfilename.name');
+                $data = $this->Users->importCsv($filename, array('StaffId', 'Firstname', 'Lastname', 'Email', 'Class'));
+
+                $classArray = [];
+                $classArrayUnique = [];
+                $peerTable = TableRegistry::getTableLocator()->get('peer_reviews');
+
+                foreach ($data as $key => $value):
+                    if ($data[$key]['Email'] == '' and $data[$key]['Firstname'] == '' and ($data[$key]['Lastname'] == '')):
+                        unset($data[$key]);
+                    endif;
+
+                    if (($data[$key]['Email'] == '') or ($data[$key]['StaffId'] == '') or ($data[$key]['Class'] == '')):
+                        array_push($unSuccessData, $data[$key]);
+                        unset($data[$key]);
+                    endif;
+
+                    array_push($classArray, $data[$key]['Class']);
+                    $classArrayUnique = array_unique($classArray);
+                endforeach;
+
+                foreach ($classArrayUnique as $class):
+                    $className = $class;
+                    $classTable = TableRegistry::getTableLocator()->get('classes');
+                    $newClass = $classTable->newEntity();
+                    $newClass->tutor_id = 15;
+                    $newClass->class_name = $className;
+                    if (!$classTable->save($newClass)) {
+                        // $this->Flash->error('The class could not be saved. Please, try again.');
+                    } else {
+                        $unit = $classTable->Units->findById($unit_id)->first();
+                        if (!$classTable->Units->link($newClass, [$unit])) {
+                            //$this->Flash->error('The class-unit could not be saved. Please, try again.');
+                        } else {
+
+                        }
+                    }
+                endforeach;
+
+                foreach ($data as $key => $value):
+// User
+                    $unitUserSuccess = false;
+                    $classUserSuccess = false;
+                    $success = 0;
+                    $userEmail = $data[$key]['Email'];
+                    $arr = explode('@', $userEmail, 2);
+                    $userName = $arr[0];
+                    $usersTable = TableRegistry::getTableLocator()->get('users');
+                    $userQuery = $this->Users->find('all')->where(['email' => $userEmail]);
+                    $selectQ = $userQuery->select($this->Users);
+                    $selectArray = $selectQ->toArray();
+
+                    if (count($selectArray) == 0) {
+                        $newUser = $usersTable->newEntity();
+                        $newUser->email = $userEmail;
+                        $newUser->firstname = $data[$key]['Firstname'];
+                        $newUser->lastname = $data[$key]['Lastname'];
+                        $newUser->role = Role::STAFF;
+                        $newUser->password = $userName;
+                        $newUser->verified = 1;
+                        $newUser->studentid = $data[$key]['StaffId'];
+
+                        if (!$usersTable->save($newUser)) {
+                            // $this->Flash->error('The user could not be saved. Please, try again.');
+                        } else {
+                            $unitTutorTable = TableRegistry::getTableLocator()->get('units_tutors');
+                            $exists = $unitTutorTable->exists([
+                                'unit_id' => $unit_id,
+                                'tutor_id' => $newUser->id,
+                            ]);
+                            $checkTutorExist = $unitTutorTable->find('all')->where([
+                                'unit_id' => $unit_id,
+                                'tutor_id' => $newUser->id,
+                            ]);
+                            if ($exists !== true) {
+                                $newUnitTutor = $unitTutorTable->newEntity();
+                                $newUnitTutor->unit_id = $unit_id;
+                                $newUnitTutor->tutor_id = $newUser->id;
+                                if (!$unitTutorTable->save($newUnitTutor)) {
+                                    // $this->Flash->error('The class-user could not be saved. Please, try again.');
+                                } else {
+                                    $unitUserSuccess = true;
+                                }
+                            }
+                            else {
+                                $unitUserSuccess = true;
+                            }
+
+                            $classTutorTable = TableRegistry::getTableLocator()->get('classes_tutors');
+                            $classTable = TableRegistry::getTableLocator()->get('classes');
+                            $classQuery = $classTable->find()->where(['class_name'=> $data[$key]['Class']]);
+                            $classSelect = $classQuery->select($this->Classes);
+                            $classSelectarray = $classSelect->toArray();
+                            $chosenClass = $classSelectarray[0];
+                            $classTutorExist = $classTutorTable->exists([
+                                'class_id' => $chosenClass->id,
+                                'tutor_id' => $newUser->id,
+                            ]);
+                            if ($classTutorExist !== true) {
+                                $newClassTutor = $classTutorTable->newEntity();
+                                $newClassTutor->class_id = $chosenClass['Classes']['id'];
+                                $newClassTutor->tutor_id = $newUser->id;
+                                if (!$classTutorTable->save($newClassTutor)) {
+                                    // $this->Flash->error('The class-user could not be saved. Please, try again.');
+                                } else {
+                                    $classUserSuccess = true;
+                                }
+                            }
+                            else {
+                                $classUserSuccess = true;
+                            }
+
+                            if ($unitUserSuccess && $classUserSuccess) {
+                                $success = 1;
+                                array_push($successData, $value);
+                            }
+                        }
+                    } else {
+
+                        $userArray = [];
+                        $userSelect = $userQuery->select($this->Users);
+                        foreach ($userSelect as $user) {
+                            array_push($userArray, $user);
+                        }
+                        foreach ($userArray as $user) {
+                            $unitTutorTable = TableRegistry::getTableLocator()->get('units_tutors');
+                            $exists = $unitTutorTable->exists([
+                                'unit_id' => $unit_id,
+                                'tutor_id' => $user->id,
+                            ]);
+                            $checkTutorExist = $unitTutorTable->find('all')->where([
+                                'unit_id' => $unit_id,
+                                'tutor_id' => $user->id,
+                            ]);
+                            if ($exists !== true) {
+                                $newUnitTutor = $unitTutorTable->newEntity();
+                                $newUnitTutor->unit_id = $unit_id;
+                                $newUnitTutor->tutor_id = $user->id;
+                                if (!$unitTutorTable->save($newUnitTutor)) {
+                                    // $this->Flash->error('The class-user could not be saved. Please, try again.');
+                                } else {
+                                    $unitUserSuccess = true;
+                                }
+                            }
+                            else {
+                                $unitUserSuccess = true;
+                            }
+
+                            $dataClassName = $data[$key]['Class'];
+                            $classTutorTable = TableRegistry::getTableLocator()->get('classes_tutors');
+                            $classTable = TableRegistry::getTableLocator()->get('classes');
+                            $classQuery = $classTable->find()->where(['class_name'=> $dataClassName]);
+                            $classSelect = $classQuery->select($this->Classes);
+
+                            $classSelectArray = $classSelect->toArray();
+                            $chosenClass = $classSelectArray[0];
+                            $classTutorExist = $classTutorTable->exists([
+                                'class_id' => $chosenClass->id,
+                                'tutor_id' => $user->id,
+                            ]);
+                            if ($classTutorExist !== true) {
+                                $newClassTutor = $classTutorTable->newEntity();
+                                $newClassTutor->class_id = $chosenClass['Classes']['id'];
+                                $newClassTutor->tutor_id = $user->id;
+                                if (!$classTutorTable->save($newClassTutor)) {
+                                     $this->Flash->error('The class-user could not be saved. Please, try again.');
+                                } else {
+                                    $classUserSuccess = true;
+                                }
+                            }
+                            else {
+                                $classUserSuccess = true;
+                            }
+
+                            if ($unitUserSuccess && $classUserSuccess) {
+                                $success = 1;
+                                array_push($successData, $value);
+                            }
+                        }
+                    }
+                    array_push($dataStatus, $success);
+                endforeach;
+
+                $counts = array_count_values($dataStatus);
+                if (count($data) > 0) {
+                    if (count($counts) > 0) {
+                        $message = $counts[true] . " row(s) successfully added";
+                        $this->Flash->success($message);
+                        $this->set('message', $message);
+                        if (count($unSuccessData) > 0) {
+                            $errorMessage = "Cannot import data from ";
+                            foreach ($unSuccessData as $unSuccessData) {
+                                $errorMessage .= $unSuccessData . ' ';
+                            }
+                            $this->Flash->error($errorMessage);
+                        }
+                    }
+                } else {
+                    $this->Flash->error("There's no data in CSV file");
+                }
+
+                $this->set('data', $data);
+                if (!empty($successData)) {
+                    $this->set('successData', $successData);
+                }
+            }
+
+        }
+    }
+
     public function importStudent($unit_id)
     {
         if ($this->request->is('post')) {
@@ -365,7 +600,7 @@ class AdminsController extends AppController
                     $classArrayUnique = array_unique($classArray);
                 endforeach;
 
-                    foreach ($teamArrayUnique as $team):
+                foreach ($teamArrayUnique as $team):
                     $teamName = $team;
                     $teamTable = TableRegistry::getTableLocator()->get('teams');
                     $newTeam = $teamTable->newEntity();
@@ -519,18 +754,18 @@ class AdminsController extends AppController
                         $this->set('message', $message);
                         if (count($unSuccessData) > 0) {
                             $errorMessage = "Cannot import data from ";
-                            foreach ($unSuccessData as $unSuccessData ){
-                                $errorMessage .= $unSuccessData.' ';
+                            foreach ($unSuccessData as $unSuccessData) {
+                                $errorMessage .= $unSuccessData . ' ';
                             }
                             $this->Flash->error($errorMessage);
-                            }
+                        }
                     }
                 } else {
                     $this->Flash->error("There's no data in CSV file");
                 }
 
                 $this->set('data', $data);
-                if (!empty($successData)){
+                if (!empty($successData)) {
                     $this->set('successData', $successData);
                 }
 
