@@ -404,9 +404,9 @@ class UsersController extends AppController
             }
 
         }
-            $this->set(compact('user'));
-        }
 
+        }
+        $this->set(compact('user'));
     }
 //Backup
 //    public function register(){
