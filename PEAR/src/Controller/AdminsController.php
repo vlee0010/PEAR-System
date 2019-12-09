@@ -238,6 +238,11 @@ class AdminsController extends AppController
 
     public function createPeerReview()
     {
+
+        $unitList = $this->Units->find()->order(['year'=>'DESC']);
+        $this->set('unitList',$unitList);
+        $staffList = $this->Users->find()->where(['role'=>'2'])->orWhere(['role'=>'3']);
+        $this->set('staffList',$staffList);
         $peerReviewQuestionTable = TableRegistry::getTableLocator()->get('peer_reviews_questions');
 
         $questions = $this->paginate($this->Questions);
@@ -248,24 +253,23 @@ class AdminsController extends AppController
 
 
         if ($this->request->is('post')) {
+
+
 //            debug($this->request->getData('question'));
-            if ($this->checkUnitExists()[0]) {
+
 
 //                fetching data from the form
 
-                $unitCode = $this->request->getData('unitCode');
-                $title = $this->request->getData('title');
-                $semester = $this->request->getData('semester');
-                $year = $this->request->getData('year');
+                $unitId = $this->request->getData('selectUnit');
                 $start_date = $this->request->getData('start-date');
                 $end_date = $this->request->getData('end-date');
                 $reminder_date = $this->request->getData('reminder-date');
-
+                $title = $this->request->getData('title');
 //            Unit Exists, Proceed;
 //            FInd correspond unit row..
-                $unitRecord = $this->Units->find()->where(["code" => $unitCode, "semester" => $semester, "year" => $year])->firstOrFail();
+//                $unitRecord = $this->Units->find()->where(["code" => $unitCode, "semester" => $semester, "year" => $year])->firstOrFail();
 //
-                $unitId = $unitRecord->id;
+//                $unitId = $unitRecord->id;
 
 //            Create a new peer review
 
@@ -300,10 +304,7 @@ class AdminsController extends AppController
                 } else {
                     $this->Flash->error("Sorry, Unable to save this Peer Review - " . $newPeerReview->title);
                 }
-            } else {
-//            Unit does not exist, Ask User to create the unit first;
-                $this->Flash->error('This unit does not exist in the database; Please create this unit first');
-            };
+
         }
 
 

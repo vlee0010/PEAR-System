@@ -34,6 +34,29 @@ class QuestionsController extends AppController
     public function index($team_id = null,$peer_id = null)
     {
         $questions = $this->paginate($this->Questions);
+        $this->loadModel('peer_reviews_questions');
+
+        $peerReviewsQuestionsRecord = $this->peer_reviews_questions->find()->where(['peer_reviews_id'=>$peer_id]);
+        $questionIdList = [];
+        $questionList = [];
+
+        $questionDescriptionList = [];
+        foreach($peerReviewsQuestionsRecord as $question){
+            array_push($questionIdList,$question->question_id);
+
+        }
+        foreach($questionIdList as $individualQuestionId){
+            $questionIdRecord = $this->Questions->find()->where(['id'=>$individualQuestionId])->first();
+            array_push($questionList,$questionIdRecord);
+
+        }
+
+
+        $this->set('questionList',$questionList);
+        $this->set('questionIdList',$questionIdList);
+        $this->set('peerReviewQuestionsRecord',$peerReviewsQuestionsRecord);
+
+
 
         $peersUsersTable =  TableRegistry::getTableLocator()->get('peer_reviews_users');
         $questionsTable = TableRegistry::getTableLocator()->get('questions');

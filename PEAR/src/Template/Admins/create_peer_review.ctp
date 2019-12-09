@@ -10,37 +10,29 @@ echo $this->Form->create(); ?>
 <!--Unit Code-->
 <div class="row mt-5">
     <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">Unit Code (FIT3047) </label>
-            <input name="unitCode" maxlength="7" required onkeyup="value=this.value = this.value.toUpperCase();" class="form-control"type="text"  >
-        </div>
+        <?php
+        $unitAll = [];
+        $staffAll = [];
+
+        foreach($unitList as $unit){
+            $unitInformation =array( ''. $unit->id =>$unit->code . ' '.$unit->title. ' Semester ' . $unit->semester .' '. $unit->year);
+            array_push($unitAll,$unitInformation);
+        }
+        foreach($staffList as $staff){
+            $staffInformation = array(''.$staff->id => $staff->firstname . ' '. $staff->lastname );
+            array_push($staffAll,$staffInformation);
+        }
+
+        echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitAll,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control']);?>
+
     </div>
-    <!-- Title   -->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">Peer Review Title (Industrial Experience Week 4) </label>
-            <input required name="title" class="form-control" type="text"  >
+            Title
+            <label class="bmd-label-floating"> </label>
+            <input required name="title" class="form-control"type="text">
         </div>
     </div>
-</div>
-<div class="row">
-    <!--Semester-->
-    <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">Teaching Period (1,2,A,B) </label>
-            <input required name="semester" maxlength="1" onkeyup="value=this.value = this.value.toUpperCase();" class="form-control"type="text"   >
-        </div>
-    </div>
-    <!--Year-->
-    <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            <label class="bmd-label-floating">Year (2020) </label>
-            <input name="year"  maxlength="4" class="form-control"type="input"  >
-        </div>
-    </div>
-</div>
-<div class="row">
-    <!--Start date-->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             Start Date
@@ -48,7 +40,6 @@ echo $this->Form->create(); ?>
             <input required name="start-date" class="form-control"type="date">
         </div>
     </div>
-    <!--End Date-->
     <div class="col-md-6">
 
         <div class="form-group bmd-form-group">
@@ -58,8 +49,16 @@ echo $this->Form->create(); ?>
         </div>
     </div>
 </div>
+    <!-- Title   -->
 
 <div class="row">
+    <!--Start date-->
+
+    <!--End Date-->
+
+
+
+
     <!--Reminder date-->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
