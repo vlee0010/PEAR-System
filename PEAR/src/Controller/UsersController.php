@@ -281,6 +281,7 @@ class UsersController extends AppController
         $this->Flash->success('Your email has been verified! Please Log in. ');
         sleep(3);
         $this->redirect(['action' => 'login']);
+        $this->Flash->success('Your email has been verified! Please Log in. ');
 
 
     }
