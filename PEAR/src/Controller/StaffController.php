@@ -92,7 +92,8 @@ class StaffController extends AppController
 
     public function displaystudent($id = null, $peer_id = null)
     {
-
+            $this->set('classId',$id);
+            $this->set('peerId',$peer_id);
         $students_classes_query = $this->students_classes->find()->where(['class_id' => $id]);
 
         $studentClassList = $students_classes_query->select([

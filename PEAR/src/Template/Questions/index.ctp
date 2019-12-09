@@ -14,7 +14,10 @@
             Expand <br>Close<br> All
         </button>
         <table class="table table-flush" cellpadding="0" cellspacing="0">
-            <?php foreach ($questions as $question): ?>
+
+        <?php $counter=1;?>
+            <hr>
+            <?php foreach ($questionList as $question):?>
                 <tbody>
                 <div id="myModal" class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="margin: 0 auto">
@@ -27,7 +30,8 @@
                                            data-toggle="collapse" data-parent="#accordion"
                                            href="#collapse<?php echo $question->id ?>" aria-expanded="false"
                                            aria-controls="collapseTwo">
-                                            <?php echo "Question " . $question->id . " - " . $question->description ?>
+                                            <?php echo "Question " . $counter . " - " . $question->description ?>
+                                            <?php $counter=$counter+1; ?>
                                             <i id="ifopen<?php echo $question->id ?>"
                                                class="fa fa-plus-circle pull-right"></i>
                                         </a>
@@ -43,7 +47,7 @@
                                                 <div id="sliderRating_<?= $question->id; ?>_<?= $user->id ?>"></div>
                                                 <h3 style="text-align: left"><?= "Please rate " . $user->firstname . " " . $user->lastname ?></h3>
                                                 <br>
-                                                <?php if ($question->id != 6): ?>
+                                                <?php if ($question->is_text == 0): ?>
                                                     <i class="fas fa-check" id="checkA_<?= $question->id; ?>_<?= $user->id ?>" style=" display: none ;color: #00bf9a; font-size: 20px "></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                                                     <input id="sliderA_<?= $question->id; ?>_<?= $user->id ?>"

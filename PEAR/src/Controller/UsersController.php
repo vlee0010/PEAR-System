@@ -220,7 +220,7 @@ class UsersController extends AppController
                     $email = $this->request->getData('email');
                     $user = $this->Users->find()->where(['email' => $email])->first();
                     $subject = "Password reset";
-                    $body = "Hi " . $user->firstname . " " . $user->lastname . "<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/pear/PEAR/users/reset/" . $user->token . ">Click here to reset</a>";
+                    $body = "Hi " . $user->firstname . " " . $user->lastname . "<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/iteration3/team123-app/PEAR/users/reset/" . $user->token . ">Click here to reset</a>";
                     $this->sendEmailToUser($email, $subject, $body);
                     $this->Flash->success('Check your email to reset your password');
                     return $this->redirect(['action' => 'login']);
@@ -260,6 +260,8 @@ class UsersController extends AppController
                 ->set(["password" => $encryptedPassword])
                 ->where(["token" => $token])
                 ->execute();
+             $this->Flash->success(__("Password has now been changed"));
+             sleep(3);
             return $this->redirect(["action" => 'login']);
         }
     }
@@ -275,7 +277,13 @@ class UsersController extends AppController
 
 //        $verify = $user->find('all')->where(['token'=>$token])->first();
 //        $user->save($verify);
+
+        $this->Flash->success('Your email has been verified! Please Log in. ');
+        sleep(3);
         $this->redirect(['action' => 'login']);
+        $this->Flash->success('Your email has been verified! Please Log in. ');
+
+
     }
 
     /**
@@ -354,23 +362,29 @@ class UsersController extends AppController
 //                echo "<script type='text/javascript'>alert('$row->email');</script>";
             //       }
 
-            $hasher = new DefaultPasswordHasher();
-            $myFirstName = $this->request->getData('firstname');
-            $myLastName = $this->request->getData('lastname');
             $myEmail = $this->request->getData('email');
+            if($this->Users->find()->where(['email'=>$myEmail])->first()){
+                $this->Flash->error('This email has already been registered. Please Log in or check your email for verification link');
+            }else{
+                $hasher = new DefaultPasswordHasher();
+                $myFirstName = $this->request->getData('firstname');
+                $myLastName = $this->request->getData('lastname');
+                $myEmail = $this->request->getData('email');
 //            $myPassword = Security::hash($this->request->getData('password'),'sha1',false);
-            $myPassword = $this->request->getData('password');
-            $myId = $this->request->getData('studentid');
-            $myToken = Security::hash(Security::randomBytes(32));
+                $myPassword = $this->request->getData('password');
+                $myId = $this->request->getData('studentid');
+                $myToken = Security::hash(Security::randomBytes(32));
 
-            $user->firstname = $myFirstName;
-            $user->lastname = $myLastName;
-            $user->email = $myEmail;
-            $user->password = $myPassword;
-            $user->token = $myToken;
-            $user->verified = 0;
-            $user->id = $myId;
-            $user->role = Role::STUDENT;
+                $user->firstname = $myFirstName;
+                $user->lastname = $myLastName;
+                $user->email = $myEmail;
+                $user->password = $myPassword;
+                $user->token = $myToken;
+                $user->verified = 0;
+                $user->id = $myId;
+                $user->role = Role::STUDENT;
+
+
 
             if ($this->Users->save($user)) {
                 $this->Flash->set('Your Registration is successful, your confirmation email has been sent to your email address. Please Verify.', ['element' => 'success']);
@@ -396,6 +410,8 @@ class UsersController extends AppController
             } else {
                 $this->Flash->set('Register Failed, Please Try Again', ['element' => 'error']);
             }
+
+        }
 
         }
         $this->set(compact('user'));
