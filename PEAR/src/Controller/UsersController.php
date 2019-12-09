@@ -354,23 +354,29 @@ class UsersController extends AppController
 //                echo "<script type='text/javascript'>alert('$row->email');</script>";
             //       }
 
-            $hasher = new DefaultPasswordHasher();
-            $myFirstName = $this->request->getData('firstname');
-            $myLastName = $this->request->getData('lastname');
             $myEmail = $this->request->getData('email');
+            if($this->Users->find()->where(['email'=>$myEmail])->first()){
+                $this->Flash->error('This email has already been registered. Please Log in or check your email for verification link');
+            }else{
+                $hasher = new DefaultPasswordHasher();
+                $myFirstName = $this->request->getData('firstname');
+                $myLastName = $this->request->getData('lastname');
+                $myEmail = $this->request->getData('email');
 //            $myPassword = Security::hash($this->request->getData('password'),'sha1',false);
-            $myPassword = $this->request->getData('password');
-            $myId = $this->request->getData('studentid');
-            $myToken = Security::hash(Security::randomBytes(32));
+                $myPassword = $this->request->getData('password');
+                $myId = $this->request->getData('studentid');
+                $myToken = Security::hash(Security::randomBytes(32));
 
-            $user->firstname = $myFirstName;
-            $user->lastname = $myLastName;
-            $user->email = $myEmail;
-            $user->password = $myPassword;
-            $user->token = $myToken;
-            $user->verified = 0;
-            $user->id = $myId;
-            $user->role = Role::STUDENT;
+                $user->firstname = $myFirstName;
+                $user->lastname = $myLastName;
+                $user->email = $myEmail;
+                $user->password = $myPassword;
+                $user->token = $myToken;
+                $user->verified = 0;
+                $user->id = $myId;
+                $user->role = Role::STUDENT;
+
+
 
             if ($this->Users->save($user)) {
                 $this->Flash->set('Your Registration is successful, your confirmation email has been sent to your email address. Please Verify.', ['element' => 'success']);
@@ -398,7 +404,9 @@ class UsersController extends AppController
             }
 
         }
-        $this->set(compact('user'));
+            $this->set(compact('user'));
+        }
+
     }
 //Backup
 //    public function register(){

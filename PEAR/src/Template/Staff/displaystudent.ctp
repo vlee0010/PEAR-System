@@ -6,9 +6,7 @@
 
 
 ?>
-<?php
-debug($classId);
-debug($peerId)?>
+
 <!--starts here-->
 <?php foreach ($unit_activity as $unit_activity1): ?>
     <?php $this->Breadcrumbs->add('Class', ['controller' => 'staff', 'action' => 'displayclass', $unit_activity1->unit_id]) ?>
