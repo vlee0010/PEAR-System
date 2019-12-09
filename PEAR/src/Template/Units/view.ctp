@@ -10,7 +10,7 @@ $this->layout = 'default-staff';
     <h1><?= h($unit->code.' '. $unit->title.' Semester '.$unit->semester.' '. $unit->year) ?></h1>
     <?php $urlImport = ['controller' => 'admins','action' => 'importStudent',$unit->id];
     echo $this->Form->button('Import Student CSV', ['onclick' => "location.href='".$this->Url->build($urlImport)."'", 'class'=>'delbutton btn btn-warning']);
-    echo $this->Form->button('Generate Student CSV', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal'.$unit->id])?>
+    echo $this->Form->button('Generate Student CSV', ['class' => 'btn btn-behance"', 'data-toggle' => 'modal', 'data-target' => '#exampleModal'.$unit->id])?>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal<?=$unit->id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -27,11 +27,13 @@ $this->layout = 'default-staff';
                 </div>
                 <div class="modal-footer">
                     <?= $this->Form->button('Close', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
-                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-secondary','url' => ['controller' => 'units','action' => 'generateStudentCsv', $unit->id]])?>
+                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-behance','url' => ['controller' => 'units','action' => 'generateStudentCsv', $unit->id]])?>
                 </div>
             </div>
         </div>
     </div>
+    <br>
+    <br/>
     <table class="table">
         <tr>
             <th scope="row"><?= __('Title') ?></th>
@@ -51,6 +53,27 @@ $this->layout = 'default-staff';
         </tr>
 
     </table>
+
+    <div class="related">
+        <h2><?= __('Peer Reviews') ?></h2>
+        <?php if (!empty($unit->peer_reviews)): ?>
+            <table class="table">
+                <tr>
+                    <th scope="col"><?= __('Title') ?></th>
+                    <th scope="col"><?= __('Date Start') ?></th>
+                    <th scope="col"><?= __('Date End') ?></th>
+                </tr>
+                <?php foreach ($unit->peer_reviews as $peerReviews): ?>
+                    <tr>
+                        <td><?= $peerReviews->title ?></td>
+                        <td><?= date("d-M-Y", strtotime($peerReviews->date_start)) ?></td>
+                        <td><?= date("d-M-Y", strtotime($peerReviews->date_end)) ?></td>
+
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php endif; ?>
+    </div>
 </div>
 
 <script>
