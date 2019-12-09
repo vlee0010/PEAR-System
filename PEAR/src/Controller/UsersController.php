@@ -220,7 +220,7 @@ class UsersController extends AppController
                     $email = $this->request->getData('email');
                     $user = $this->Users->find()->where(['email' => $email])->first();
                     $subject = "Password reset";
-                    $body = "Hi " . $user->firstname . " " . $user->lastname . "<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/pear/PEAR/users/reset/" . $user->token . ">Click here to reset</a>";
+                    $body = "Hi " . $user->firstname . " " . $user->lastname . "<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/iteration3/team123-pear/PEAR/users/reset/" . $user->token . ">Click here to reset</a>";
                     $this->sendEmailToUser($email, $subject, $body);
                     $this->Flash->success('Check your email to reset your password');
                     return $this->redirect(['action' => 'login']);
@@ -275,7 +275,9 @@ class UsersController extends AppController
 
 //        $verify = $user->find('all')->where(['token'=>$token])->first();
 //        $user->save($verify);
+        $this->Flash->success('Your email has been verified! Please Log in. ');
         $this->redirect(['action' => 'login']);
+
     }
 
     /**
