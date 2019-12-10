@@ -101,7 +101,7 @@ $this->layout = 'default-staff';
             responsive: true,
             language: {
                 search: "_INPUT_",
-                searchPlaceholder: "Search records",
+                searchPlaceholder: "Search",
             }
 
         });

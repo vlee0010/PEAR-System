@@ -6,6 +6,19 @@ use Cake\View\Helper\FlashHelper;
 
 $this->layout = 'default-staff';
 ?>
+<?php $this->Breadcrumbs->templates([
+    'wrapper' => '<nav aria-label="breadcrumb" role="navigation"><div class="breadcrumb">
+                       
+                        &nbsp;&nbsp;{{content}}</div></nav>',
+    'item' => '<div class="breadcrumb-item" {{attrs}}><a href="{{url}}" {{innerAttrs}}> {{title}} </a> </div>{{separator}}',
+    'itemWithoutLink' => '<div class="breadcrumb-item active" aria-current="page" {{attrs}}><span{{innerAttrs}}> <u>{{title}}</u></span></div>{{separator}}',
+    'separator' => '<div{{attrs}}><span{{innerAttrs}}>{{separator}}</span></li>'
+]) ?>
+<?php $this->Breadcrumbs->add('All Units',['controller' => 'units', 'action' => 'index']) ?>
+<?php $this->Breadcrumbs->add($unit->code.' '.$unit->title,['controller' => 'units', 'action' => 'view' ,$unit->id]) ?>
+<?php $this->Breadcrumbs->add('Import Staff') ?>
+<?= $this->Breadcrumbs->render(); ?>
+
 <?php echo $this->Form->create('Admins', ['type' => 'file'], ['novalidate' => true]); ?>
 <h1><?= h('Import CSV File') ?></h1>
 <br>
@@ -19,7 +32,7 @@ $this->layout = 'default-staff';
 </table>
 <br/><br/>
 <?= $this->Form->button(__('Cancel Import', true), ['name' => 'Cancel', 'div' => false, 'class' => 'delbutton btn btn-default']); ?>
-<?= $this->Form->button(__('Import', true), ['name' => 'Import Student', 'div' => false, 'class' => 'delbutton btn btn-primary']); ?>
+<?= $this->Form->button(__('Import', true), ['name' => 'Import', 'div' => false, 'class' => 'delbutton btn btn-primary']); ?>
 &nbsp;&nbsp;
 
 

@@ -543,6 +543,8 @@ class AdminsController extends AppController
             }
 
         }
+        $unitQuery = $this->Units->find('all')->where(['id' => $unit_id])->first();
+        $this->set('unit',$unitQuery);
     }
 
     public function importStudent($unit_id)
@@ -773,6 +775,8 @@ class AdminsController extends AppController
             }
 
         }
+        $unitQuery = $this->Units->find('all')->where(['id' => $unit_id])->first();
+        $this->set('unit',$unitQuery);
     }
 
     public function create()
