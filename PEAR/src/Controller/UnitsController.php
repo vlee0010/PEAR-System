@@ -106,19 +106,33 @@ class UnitsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function generateStudentCsv($unit_id){
-        $_header = ['Team', 'StudentId', 'Email', 'Firstname', 'Lastname', 'Class'];
-        $_serialize = 'data';
-
+    public function generateCsv($unit_id,$role){
         $unitQuery = $this->Units->find()->where(['id'=>$unit_id]);
         $unitArray = [];
         $unitSelect = $unitQuery->select($this->Units);
         $unitSelect->toArray();
-        foreach ($unitSelect as $unit):
-            $file_name = $unit->code . '_S' . $unit->semester . '_' . $unit->year . '_' . 'student_list.csv';
-        endforeach;
-        $data = [];
 
+        switch($role) {
+            case 1:
+                $_header = ['Team', 'StudentId', 'Email', 'Firstname', 'Lastname', 'Class'];
+                foreach ($unitSelect as $unit):
+                    $file_name = $unit->code . '_S' . $unit->semester . '_' . $unit->year . '_' . 'student_list.csv';
+                endforeach;
+                break;
+            case 2:
+                $_header = ['StaffId', 'Firstname', 'Lastname', 'Email', 'Class'];
+                foreach ($unitSelect as $unit):
+                    $file_name = $unit->code . '_S' . $unit->semester . '_' . $unit->year . '_' . 'staff_list.csv';
+                endforeach;
+                break;
+            default:
+                foreach ($unitSelect as $unit):
+                    $file_name = $unit->code . '_S' . $unit->semester . '_' . $unit->year . '.csv';
+                endforeach;
+                break;
+        }
+        $_serialize = 'data';
+        $data = [];
         $this->response = $this->response->withDownload($file_name);
 
         $this->viewBuilder()->setClassName('CsvView.Csv');
