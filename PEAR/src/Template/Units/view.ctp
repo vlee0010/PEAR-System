@@ -4,26 +4,42 @@
  * @var \App\Model\Entity\Unit $unit
  */
 $this->layout = 'default-staff';
+
 use App\Model\Entity\Role;
+
 ?>
 
+
+<?php $this->Breadcrumbs->templates([
+    'wrapper' => '<nav aria-label="breadcrumb" role="navigation"><div class="breadcrumb">
+                       
+                        &nbsp;&nbsp;{{content}}</div></nav>',
+    'item' => '<div class="breadcrumb-item" {{attrs}}><a href="{{url}}" {{innerAttrs}}> {{title}} </a> </div>{{separator}}',
+    'itemWithoutLink' => '<div class="breadcrumb-item active" aria-current="page" {{attrs}}><span{{innerAttrs}}> <u>{{title}}</u></span></div>{{separator}}',
+    'separator' => '<div{{attrs}}><span{{innerAttrs}}>{{separator}}</span></li>'
+]) ?>
+<?php $this->Breadcrumbs->add('All Units',['controller' => 'units', 'action' => 'index']) ?>
+<?php $this->Breadcrumbs->add($unit->code.' '.$unit->title) ?>
+<?= $this->Breadcrumbs->render(); ?>
 <div class="units view large-9 medium-8 columns content">
     <h1><?= h($unit->code . ' ' . $unit->title . ' Semester ' . $unit->semester . ' ' . $unit->year) ?></h1>
-    <?php $urlStudentImport = ['controller' => 'admins', 'action' => 'importStudent', $unit->id];?>
-    <?php $urlStaffImport = ['controller' => 'admins', 'action' => 'importStaff', $unit->id];?>
+    <?php $urlStudentImport = ['controller' => 'admins', 'action' => 'importStudent', $unit->id]; ?>
+    <?php $urlStaffImport = ['controller' => 'admins', 'action' => 'importStaff', $unit->id]; ?>
 
     <div class="btn-group">
         <?= $this->Form->button('Import CSV File', ['class' => 'btn btn-primary dropdown-toggle', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'true', 'aria-expanded' => 'false']) ?>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="<?=$this->Url->build($urlStudentImport)?>">Student CSV</a>
-            <a class="dropdown-item" href="<?=$this->Url->build($urlStaffImport)?>">Staff CSV</a>
+            <a class="dropdown-item" href="<?= $this->Url->build($urlStudentImport) ?>">Student CSV</a>
+            <a class="dropdown-item" href="<?= $this->Url->build($urlStaffImport) ?>">Staff CSV</a>
         </div>
     </div>
     <div class="btn-group">
         <?= $this->Form->button('Generate CSV File', ['class' => 'btn btn-secondary dropdown-toggle', 'data-toggle' => 'dropdown', 'aria-haspopup' => 'true', 'aria-expanded' => 'false']) ?>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#studentModal<?= $unit->id ?>">Student CSV</a>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#staffModal<?= $unit->id ?>">Staff CSV</a>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#studentModal<?= $unit->id ?>">Student
+                CSV</a>
+            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#staffModal<?= $unit->id ?>">Staff
+                CSV</a>
         </div>
     </div>
     <!-- Student Modal -->
@@ -43,7 +59,7 @@ use App\Model\Entity\Role;
                 </div>
                 <div class="modal-footer">
                     <?= $this->Form->button('Close', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
-                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-behance', 'url' => ['controller' => 'units', 'action' => 'generateCsv', $unit->id,Role::STUDENT]]) ?>
+                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-behance', 'url' => ['controller' => 'units', 'action' => 'generateCsv', $unit->id, Role::STUDENT]]) ?>
                 </div>
             </div>
         </div>
@@ -65,7 +81,7 @@ use App\Model\Entity\Role;
                 </div>
                 <div class="modal-footer">
                     <?= $this->Form->button('Close', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
-                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-behance', 'url' => ['controller' => 'units', 'action' => 'generateCsv', $unit->id,Role::STAFF]]) ?>
+                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-behance', 'url' => ['controller' => 'units', 'action' => 'generateCsv', $unit->id, Role::STAFF]]) ?>
                 </div>
             </div>
         </div>

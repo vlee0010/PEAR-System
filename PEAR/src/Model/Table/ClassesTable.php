@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\StudentsClassesTable&\Cake\ORM\Association\HasMany $StudentsClasses
- * @property \App\Model\Table\ClassesTutorsTable&\Cake\ORM\Association\HasMany $ClassesTutors
  * @property \App\Model\Table\UnitsTable&\Cake\ORM\Association\BelongsToMany $Units
  *
  * @method \App\Model\Entity\Class get($primaryKey, $options = [])
@@ -48,11 +47,6 @@ class ClassesTable extends Table
             'foreignKey' => 'class_id',
             'targetForeignKey' => 'user_id',
             'joinTable' => 'students_classes'
-        ]);
-        $this->belongsToMany('Users', [
-            'foreignKey' => 'class_id',
-            'targetForeignKey' => 'user_id',
-            'joinTable' => 'classes_tutors'
         ]);
         $this->belongsToMany('Units', [
             'foreignKey' => 'class_id',

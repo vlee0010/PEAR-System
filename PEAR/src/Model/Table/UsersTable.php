@@ -75,11 +75,6 @@ class UsersTable extends Table
             'targetForeignKey' => 'class_id',
             'joinTable' => 'students_classes'
         ]);
-        $this->belongsToMany('Classes', [
-            'foreignKey' => 'user_id',
-            'targetForeignKey' => 'class_id',
-            'joinTable' => 'classes_tutors'
-        ]);
         $this->belongsToMany('Units', [
             'foreignKey' => 'user_id',
             'targetForeignKey' => 'unit_id',
