@@ -65,6 +65,12 @@ class User extends Entity
             ->notEmpty('email');
     }
 
+    protected function _getFullName()
+    {
+        return $this->_properties['firstname'] . ' ' . $this->_properties['lastname'];
+
+    }
+
     /**
      * Fields that are excluded from JSON versions of the entity.
      *

@@ -11,19 +11,8 @@ echo $this->Form->create(); ?>
 <div class="row mt-5">
     <div class="col-md-6">
         <?php
-        $unitAll = [];
-        $staffAll = [];
 
-        foreach($unitList as $unit){
-            $unitInformation =array( ''. $unit->id =>$unit->code . ' '.$unit->title. ' Semester ' . $unit->semester .' '. $unit->year);
-            array_push($unitAll,$unitInformation);
-        }
-        foreach($staffList as $staff){
-            $staffInformation = array(''.$staff->id => $staff->firstname . ' '. $staff->lastname );
-            array_push($staffAll,$staffInformation);
-        }
-
-        echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitAll,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control']);?>
+        echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single']);?>
 
     </div>
     <div class="col-md-6">
@@ -37,7 +26,8 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             Start Date
             <label class="bmd-label-floating"> </label>
-            <input required name="start-date" class="form-control"type="date">
+            <input required type="date" class="form-control" id="dateStart" name="start-date">
+<!--            <input required name="start-date" class="form-control"type="date">-->
         </div>
     </div>
     <div class="col-md-6">
@@ -45,7 +35,8 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             End Date
             <label class="bmd-label-floating"></label>
-            <input required name="end-date" class="form-control" type="date">
+            <input required type="date" class="form-control" id="dateEnd" name="end-date">
+<!--            <input required name="end-date" class="form-control" type="date">-->
         </div>
     </div>
 </div>
@@ -64,7 +55,8 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             Reminder Date
             <label class="bmd-label-floating"> </label>
-            <input required name="reminder-date" class="form-control"type="date">
+
+            <input required name="reminder-date" class="form-control" type="date">
         </div>
     </div>
 </div>
@@ -114,54 +106,6 @@ echo $this->Form->create(); ?>
 
                             </tr>
                 <?php endforeach;?>
-
-
-
-
-
-<!--                            <tr>-->
-<!--                                <td>-->
-<!--                                    <div class="form-check">-->
-<!--                                        <label class="form-check-label">-->
-<!--                                            <input class="form-check-input" type="checkbox" value="">-->
-<!--                                            <span class="form-check-sign">-->
-<!--                                    <span class="check"></span>-->
-<!--                                  </span>-->
-<!--                                        </label>-->
-<!--                                    </div>-->
-<!--                                </td>-->
-<!--                                <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>-->
-<!---->
-<!--                            </tr>-->
-<!--                            <tr>-->
-<!--                                <td>-->
-<!--                                    <div class="form-check">-->
-<!--                                        <label class="form-check-label">-->
-<!--                                            <input class="form-check-input" type="checkbox" value="">-->
-<!--                                            <span class="form-check-sign">-->
-<!--                                    <span class="check"></span>-->
-<!--                                  </span>-->
-<!--                                        </label>-->
-<!--                                    </div>-->
-<!--                                </td>-->
-<!--                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit-->
-<!--                                </td>-->
-<!---->
-<!--                            </tr>-->
-<!--                            <tr>-->
-<!--                                <td>-->
-<!--                                    <div class="form-check">-->
-<!--                                        <label class="form-check-label">-->
-<!--                                            <input class="form-check-input" type="checkbox" value="" checked>-->
-<!--                                            <span class="form-check-sign">-->
-<!--                                    <span class="check"></span>-->
-<!--                                  </span>-->
-<!--                                        </label>-->
-<!--                                    </div>-->
-<!--                                </td>-->
-<!--                                <td>Create 4 Invisible User Experiences you Never Knew About</td>-->
-<!---->
-<!--                            </tr>-->
                             </tbody>
                         </table>
                     </div>
@@ -172,27 +116,35 @@ echo $this->Form->create(); ?>
 
 
 
-<!--End 123-->
+
 <br>
-<!--    <input type="checkbox" name="question1" value="Do you like your team?"> Do you like your team?<br>-->
-<!--    <input type="checkbox" name="question2" value="Do you want to work with your teammates in the future?"> Do you want to work with your teammates in the future?<br>-->
-<!--    <input type="checkbox" name="question3" value="How do you like Your mentors?" checked> How do you like Your mentors? <br><br>-->
+
 <?= $this->Form->submit('Create Peer Review',['class'=>'btn btn-large btn-primary pull-right', 'id' =>'submit-btn']);?>
 <?php echo $this->Form->end();?>
 
 </div>
+<script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js" defer></script>
+
 <script>
+
+//    select 2
+    const unitSelector = document.querySelector("[name='selectUnit']");
+
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+
+
+
+
     // Create Peer Review highlight Tab
     const cprTab = document.querySelector('#pr');
     cprTab.classList.add('active');
     const submit = document.querySelector('.submit');
     submit.classList.add('m-auto');
 
-//    "<i class=\"material-icons\">create</i>"
-//     const submitBtn = document.querySelector('#submit-btn');
-//     let submitIcon = document.createElement('i');
-//     submitBtn.setAttribute("class",'material-icons');
-//     submitBtn.innerText = 'create';
-// //
-//     submitBtn.appendChild(submitBtn);
 </script>

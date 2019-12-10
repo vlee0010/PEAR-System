@@ -14,6 +14,7 @@
     <?php break; ?>
 <?php endforeach; ?>
 
+
 <div id="staff-container" class="container">
     <div class="container-fluid">
         <main class="col-12 col-md-12 col-xl-12 py-md-3 pl-md-6 bd-content" role="main">
@@ -27,23 +28,36 @@
                         <th>Activity (Section)</th>
                         <th>Start</th>
                         <th>End</th>
+                        <th>P</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($unit_activity
+                    <?php foreach ($unit_activity_array
 
                     as $unit_activity): ?>
+                    <?php
+                    $countStudent=0;
+                    $countComplete=0;
+                    foreach ($unit_activity[0] as $individual){
+                        $countStudent=$countStudent+1;
+                        if($individual->status==true){
+                            $countComplete+=1;
+                        }
+                    }
+
+                    ?>
                     <tr>
-                        <td><?= $unit_activity->unitcode ?></td>
-                        <td><?= $unit_activity->activity ?></td>
-                        <td><?= date("d-M-Y", strtotime($unit_activity->datestart)) ?></td>
-                        <td><?= date("d-M-Y", strtotime($unit_activity->dateend)) ?></td>
+                        <td><?= $unit_activity['unitcode'] ?></td>
+                        <td><?= $unit_activity['activity'] ?></td>
+                        <td><?= date("d-M-Y", strtotime($unit_activity['datestart'])) ?></td>
+                        <td><?= date("d-M-Y", strtotime($unit_activity['dateend'])) ?></td>
+                        <td><?=round(100*($countComplete/$countStudent),2)."%"?></td>
                         <td class="actions" align="center">
-                            <?= $this->element('Staff/Buttons/results', ['url' => ['action' => 'viewAllResults', $unit_activity->peer_id]]) ?>
-                            <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal'.$unit_activity->peer_id]); ?>
+                            <?= $this->element('Staff/Buttons/results', ['url' => ['action' => 'viewAllResults', $unit_activity['peer_id']]]) ?>
+                            <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal'.$unit_activity['peer_id']]); ?>
                             <!-- Modal -->
-                            <div class="modal fade" id="exampleModal<?=$unit_activity->peer_id ?>" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="exampleModal<?=$unit_activity['peer_id'] ?>" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel"
                                  aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -59,7 +73,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
-                                            <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', $unit_activity->peer_id]]) ?>
+                                            <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', $unit_activity['peer_id']]]) ?>
                                         </div>
                                     </div>
                                 </div>

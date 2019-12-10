@@ -80,6 +80,20 @@ class AdminsController extends AppController
 
     public function assignStaffToUnit()
     {
+
+        $unitList = $this->Units->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_title'
+        ])->order(['year'=>'DESC','semester'=>'DESC']);
+        $this->set('unitList',$unitList);
+
+        $staffList = $this->Users->find('list',[
+           'keyField'=>'id',
+           'valueField'=>'full_name'
+        ])->where(['role'=>2])->orWhere(['role'=>3])->order(['role'=>'DESC','created'=>'DESC']);
+        $this->set('staffList',$staffList);
+
+
         $unitsTutorsTable = TableRegistry::getTableLocator()->get('units_tutors');
         if ($this->request->is('post')) {
 
@@ -136,20 +150,25 @@ class AdminsController extends AppController
 
 
 //        Get All Units and all staffs and admins, passing into view
-        $unitList = $this->Units->find()->order(['year' => 'DESC']);
-        $this->set('unitList', $unitList);
-        $staffList = $this->Users->find()->where(['role' => '2'])->orWhere(['role' => '3']);
-        $this->set('staffList', $staffList);
 
 
     }
 
     public function createClasses()
     {
-        $unitList = $this->Units->find()->order(['year' => 'DESC']);
-        $this->set('unitList', $unitList);
-        $staffList = $this->Users->find()->where(['role' => '2'])->orWhere(['role' => '3']);
-        $this->set('staffList', $staffList);
+
+        $unitList = $this->Units->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_title'
+        ])->order(['year'=>'DESC','semester'=>'DESC']);
+        $this->set('unitList',$unitList);
+
+
+        $staffList = $this->Users->find('list',[
+            'keyField'=>'id',
+            'valueField'=>'full_name'
+        ])->where(['role'=>2])->orWhere(['role'=>3])->order(['role'=>'DESC','created'=>'DESC']);
+        $this->set('staffList',$staffList);
 
         //            Fetch all records from classes Table;\
         $classesInUnitsClasses = $this->UnitsClasses->find();
@@ -236,7 +255,10 @@ class AdminsController extends AppController
     public function createPeerReview()
     {
 
-        $unitList = $this->Units->find()->order(['year'=>'DESC']);
+        $unitList = $this->Units->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_title'
+        ])->order(['year'=>'DESC','semester'=>'DESC']);
         $this->set('unitList',$unitList);
         $staffList = $this->Users->find()->where(['role'=>'2'])->orWhere(['role'=>'3']);
         $this->set('staffList',$staffList);
