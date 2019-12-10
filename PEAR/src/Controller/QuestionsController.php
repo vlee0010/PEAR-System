@@ -99,6 +99,9 @@ class QuestionsController extends AppController
             $this->redirect(['controller' => 'users', 'action' => 'studentdash']);
         }
 
+        $peerReview = $this->PeerReviews->find('all')->where(['id'=>$peer_id])->first();
+        $this->set('peerReview',$peerReview);
+
         $this->set(compact('questions'));
         $this->set(compact('userList'));
 

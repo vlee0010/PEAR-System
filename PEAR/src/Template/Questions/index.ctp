@@ -8,7 +8,7 @@
 <?= $this->Form->create("",["id"=>"survey-form"]); ?>
 <div class="container">
     <div class="card shadow text-center" style="position:relative;">
-        <h2 class="text-on-front" style="font-size:50px">PEAR Questions for Industry Experience Iteration 2</h2>
+        <h2 class="text-on-front" style="font-size:50px"><?= $peerReview->title ?></h2>
         <button id="expandCloseBtn" class="btn btn-primary"
                 style="left: 3%;position:fixed;margin-right: 20px;width:100px;height:100px;font-size: 1rem;padding:0; border-radius: 999px;">
             Expand <br>Close<br> All

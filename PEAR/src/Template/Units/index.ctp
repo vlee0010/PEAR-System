@@ -66,8 +66,6 @@ $this->layout = 'default-staff';
 <!--</div>-->
 
 
-
-
 <script>
     const unitTab = document.querySelector('#create-unit');
     unitTab.classList.add('active');
@@ -102,6 +100,7 @@ $this->layout = 'default-staff';
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search",
+                searchClass: "form-control",
             }
 
         });
