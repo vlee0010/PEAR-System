@@ -376,7 +376,7 @@ class UsersController extends AppController
                 $user->password = $myPassword;
                 $user->token = $myToken;
                 $user->verified = 0;
-                $user->id = $myId;
+                $user->studentid = $myId;
                 $user->role = Role::STUDENT;
 
 
