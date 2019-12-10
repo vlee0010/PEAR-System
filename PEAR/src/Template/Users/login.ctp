@@ -38,7 +38,6 @@
                                     </div>
                                     <div>
                                         <?= $this->Form->text('password', array('type'=>'password',"autocomplete"=>"new-password",'class'=>'form-control', 'placeholder'=>'Password','id'=>'myInput','name'=>'password'));?>
-                                        <i id="toggle-password" class="tim-icons icon-world"></i>
                                     </div>
 
 
