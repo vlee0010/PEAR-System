@@ -3,7 +3,15 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\PeerReview[]|\Cake\Collection\CollectionInterface $peerReviews
  */
+
+
 ?>
+
+<?php
+$this->layout = 'default-staff';
+?>
+
+
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
@@ -20,7 +28,7 @@
 </nav>
 <div class="peerReviews index large-9 medium-8 columns content">
     <h3><?= __('Peer Reviews') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+    <table class="table"cellpadding="0" cellspacing="0">
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>

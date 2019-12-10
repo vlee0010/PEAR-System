@@ -145,11 +145,6 @@ class UsersController extends AppController
 
     }
 
-    public function portal()
-    {
-
-    }
-
     public function login()
     {
         if ($this->Auth->user()) {
@@ -381,7 +376,7 @@ class UsersController extends AppController
                 $user->password = $myPassword;
                 $user->token = $myToken;
                 $user->verified = 0;
-                $user->id = $myId;
+                $user->studentid = $myId;
                 $user->role = Role::STUDENT;
 
 
@@ -394,7 +389,7 @@ class UsersController extends AppController
                 $body = 'Hi, ' . $myFirstName . ' ' . $myLastName;
                 $body .= "<br><br>Please Click the link below to verify your registration.";
 //                $body .= "<br><br><a href=http://localhost:8888/PEAR/PEAR/users/verification/".$myToken.">Verification Link</a>" ;
-                $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/development/team123-app/PEAR/users/verification/" . $myToken . ">Verification Link</a>";
+                $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/iteration3/team123-app/pear/team123-app/PEAR/users/verification/" . $myToken . ">Verification Link</a>";
 
 
                 $email = new Email('default');
