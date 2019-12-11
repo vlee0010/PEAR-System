@@ -23,6 +23,7 @@ class StaffController extends AppController
         $this->loadModel('peer_reviews');
         $this->loadModel('Users');
         $this->loadModel('units_tutors');
+        $this->loadModel('classes_tutors');
         $this->loadModel('units_classes');
         $this->loadModel('students_classes');
         $this->loadModel('units_users');
@@ -60,17 +61,40 @@ class StaffController extends AppController
     {
 //        15 FIT5050
 //        debug($id);
- //        bug,tutor class
+        //        bug,tutor class
         $unit_class_list = $this->units_classes->find()->where(['unit_id' => $id]);
         $class_id_list = [];
         $peer_review = $this->peer_reviews->find()->where(['unit_id' => $id, 'status' => 0])->first();
 
-        if($peer_review) {
+        $tutor_id = $this->Auth->user('id');
+
+        $classQuery = $this->classes_tutors->find('all')->where([
+            'unit_id' => $id,
+            'tutor_id' => $tutor_id,
+        ]);
+
+        $classQuery->toArray();
+        $classListAll = $this->Classes->find('all');
+        $classListAll->toArray();
+
+        $selectedClassList =[];
+
+        foreach ($classListAll as $class){
+            foreach ($classQuery as $item){
+                if ($class->id == $item->class_id){
+                    array_push($selectedClassList,$class);
+                }
+            }
+        }
+
+        $this->set('selectedClassList', $selectedClassList);
+
+        if ($peer_review) {
             $peer_id = $peer_review->id;
 
             $this->set(compact('peer_id'));
 
-        }else{
+        } else {
             $peer_id = 0;
             $this->set(compact('peer_id'));
         }
@@ -84,7 +108,7 @@ class StaffController extends AppController
             }
 
         }
-        $tutor_id = $this->Auth->user('id');
+
 
         $this->set('unit_id', $id);
         $this->set(compact('class_list'));
@@ -92,8 +116,8 @@ class StaffController extends AppController
 
     public function displaystudent($id = null, $peer_id = null)
     {
-            $this->set('classId',$id);
-            $this->set('peerId',$peer_id);
+        $this->set('classId', $id);
+        $this->set('peerId', $peer_id);
         $students_classes_query = $this->students_classes->find()->where(['class_id' => $id]);
 
         $studentClassList = $students_classes_query->select([
@@ -165,18 +189,18 @@ class StaffController extends AppController
                 array_push($student_list, $this->Users->find()->where(['id' => $user_id->id])->first());
             }
         }
-        $unit_activity_array=[];
-        foreach ($unit_activity as $item){
-            $unit_activity_item=$item->toArray();
-            $peer_review_user=$this->peer_reviews_users->find()->where(['peer_review_id' => $item->peer_id])->toArray();
-            array_push($unit_activity_item,$peer_review_user );
-            array_push($unit_activity_array,$unit_activity_item);
+        $unit_activity_array = [];
+        foreach ($unit_activity as $item) {
+            $unit_activity_item = $item->toArray();
+            $peer_review_user = $this->peer_reviews_users->find()->where(['peer_review_id' => $item->peer_id])->toArray();
+            array_push($unit_activity_item, $peer_review_user);
+            array_push($unit_activity_array, $unit_activity_item);
         }
         $this->set('unit_activity', $unit_activity);
         $this->set('peerReviewUser', $peer_review_user_query);
         $this->set('studentClassList', $studentClassList);
         $this->set('query', $queryTerms);
-        $this->set(compact('student_list', 'peer_review', "peer_id",'unit_activity_array'));
+        $this->set(compact('student_list', 'peer_review', "peer_id", 'unit_activity_array'));
 
     }
 
@@ -517,11 +541,11 @@ class StaffController extends AppController
                 if ($item->user_id == $student->user_id):
                     $team_id = $item->team_id;
                     $team = $item->team;
-                    array_push($ar,$user_id, $student_name,$team_id,$team,$status);
+                    array_push($ar, $user_id, $student_name, $team_id, $team, $status);
                 endif;
             endforeach;
             array_push($studentList, $ar);
-            $ar =[];
+            $ar = [];
         endforeach;
 
         $teamList = [];
@@ -530,8 +554,8 @@ class StaffController extends AppController
         }
         ksort($teamList, SORT_NUMERIC);
 
-        $this->set('studentList',$studentList);
-        $this->set('teamList',$teamList);
+        $this->set('studentList', $studentList);
+        $this->set('teamList', $teamList);
 
         $response_query_4 = $this->Responses->find()->where(['peer_review_id' => $peer_id]);
         $student_comment = $response_query_4->select([

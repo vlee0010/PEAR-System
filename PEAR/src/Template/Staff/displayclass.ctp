@@ -12,8 +12,8 @@
         <main class="col-12 col-md-auto col-xl-auto py-md-3 pl-md-6 bd-content" role="main">
             <h1>Class List</h1>
             <div style="justify-content: center" class="row" align="center">
-                <?php if(count($class_list)!=0):?>
-                <?php foreach ($class_list as $class): ?>
+                <?php if(count($selectedClassList)!=0):?>
+                <?php foreach ($selectedClassList as $class): ?>
                 <div style="position:relative; min-height:100px; min-width:600px; justify-content: center" class="d-flex col-12 col-md-4 col-lg-3">
                     <?php if($peer_id): ?>
                     <div style="position: absolute;top:50%;left:50%;transform: translate(-50%,-50%);" class="card-img">
