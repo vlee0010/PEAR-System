@@ -165,13 +165,18 @@ class StaffController extends AppController
                 array_push($student_list, $this->Users->find()->where(['id' => $user_id->id])->first());
             }
         }
-
-
+        $unit_activity_array=[];
+        foreach ($unit_activity as $item){
+            $unit_activity_item=$item->toArray();
+            $peer_review_user=$this->peer_reviews_users->find()->where(['peer_review_id' => $item->peer_id])->toArray();
+            array_push($unit_activity_item,$peer_review_user );
+            array_push($unit_activity_array,$unit_activity_item);
+        }
         $this->set('unit_activity', $unit_activity);
         $this->set('peerReviewUser', $peer_review_user_query);
         $this->set('studentClassList', $studentClassList);
         $this->set('query', $queryTerms);
-        $this->set(compact('student_list', 'peer_review', "peer_id"));
+        $this->set(compact('student_list', 'peer_review', "peer_id",'unit_activity_array'));
 
     }
 

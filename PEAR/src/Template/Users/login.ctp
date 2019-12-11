@@ -36,9 +36,11 @@
                                             <i class="tim-icons icon-lock-circle"></i>
                                         </div>
                                     </div>
-                                    <div>
+
                                         <?= $this->Form->text('password', array('type'=>'password',"autocomplete"=>"new-password",'class'=>'form-control', 'placeholder'=>'Password','id'=>'myInput','name'=>'password'));?>
-                                    </div>
+
+
+
 
 
                                 </div>

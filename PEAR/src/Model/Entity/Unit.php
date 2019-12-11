@@ -36,4 +36,10 @@ class Unit extends Entity
         'teams' => true,
         'users' => true
     ];
+
+    protected function _getFullTitle()
+    {
+        return $this->_properties['code'] . ' ' . $this->_properties['title']
+            . ' ' . $this->_properties['year'] . " S " . $this->_properties['semester'];
+    }
 }

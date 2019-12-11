@@ -16,16 +16,16 @@ echo $this->Form->create(); ?>
                 $unitAll = [];
                 $staffAll = [];
 
-                foreach($unitList as $unit){
-                    $unitInformation =array( ''. $unit->id =>$unit->code . ' '.$unit->title. ' Semester ' . $unit->semester .' '. $unit->year);
-                    array_push($unitAll,$unitInformation);
-                }
-                foreach($staffList as $staff){
-                    $staffInformation = array(''.$staff->id => $staff->firstname . ' '. $staff->lastname );
-                    array_push($staffAll,$staffInformation);
-                }
+//                foreach($unitList as $unit){
+//                    $unitInformation =array( ''. $unit->id =>$unit->code . ' '.$unit->full_title);
+//                    array_push($unitAll,$unitInformation);
+//                }
+//                foreach($staffList as $staff){
+//                    $staffInformation = array(''.$staff->id => $staff->firstname . ' '. $staff->lastname );
+//                    array_push($staffAll,$staffInformation);
+//                }
 
-                echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitAll,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control']);?>
+                echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control']);?>
             </div>
 
         </div>
@@ -45,7 +45,7 @@ echo $this->Form->create(); ?>
         <div class="col-md-6">
             <div class="form-group bmd-form-group">
                 <?php
-                echo $this->Form->input('selectStaff',['required'=>true,'type'=>'select','options'=>$staffAll,'label'=>'','empty'=>'Select Staff','data-style'=>'btn btn-link','class'=>'form-control ']);
+                echo $this->Form->input('selectStaff',['required'=>true,'type'=>'select','options'=>$staffList,'label'=>'','empty'=>'Select Staff','data-style'=>'btn btn-link','class'=>'form-control ']);
                 ?>
             </div>
         </div>
