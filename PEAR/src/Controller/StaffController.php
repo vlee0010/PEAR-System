@@ -202,7 +202,7 @@ class StaffController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $response = $this->Responses->find('all')->where(['user_id' => $user_id, 'peer_review_id' => $peer_id]);
-        $this->Responses->deleteAll(['user_id' => $user_id, 'peer_review_id' => $peer_id]);
+        $this->Responses->deleteAll(['user_id' => $user_id, '13' => $peer_id]);
 
         $this->set('response', $response);
 
@@ -617,17 +617,10 @@ class StaffController extends AppController
             array_push($student_email_list, $student->email);
         endforeach;
 
-
-        $my_list = [];
-        $myEmail = 'levanhai010198@gmail.com';
-        $my2Email = 'rzan0002@student.monash.edu';
-        array_push($my_list, $myEmail);
-//        array_push($my_list,$my2Email);
-
         if (!empty($student_email_list)) {
             $from = $unit_code . " Role via Pear Monash";
             $subject = "PEAR Monash upcoming survey deadline";
-            $header = "Activity will be closed soon";
+            $header = "Peer review will be closed soon";
             $message = "<h1>Activity will be closed soon</h1>";
             $message .= "The data for the following activity will be closed soon: <br><br>";
             $message .= "<i>Activity: " . $activity_title . " </i><br> ";

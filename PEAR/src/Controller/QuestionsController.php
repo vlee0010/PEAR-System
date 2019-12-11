@@ -51,7 +51,6 @@ class QuestionsController extends AppController
 
         }
 
-
         $this->set('questionList',$questionList);
         $this->set('questionIdList',$questionIdList);
         $this->set('peerReviewQuestionsRecord',$peerReviewsQuestionsRecord);

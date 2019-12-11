@@ -18,8 +18,8 @@ use App\Model\Entity\Role;
     'itemWithoutLink' => '<div class="breadcrumb-item active" aria-current="page" {{attrs}}><span{{innerAttrs}}> <u>{{title}}</u></span></div>{{separator}}',
     'separator' => '<div{{attrs}}><span{{innerAttrs}}>{{separator}}</span></li>'
 ]) ?>
-<?php $this->Breadcrumbs->add('All Units',['controller' => 'units', 'action' => 'index']) ?>
-<?php $this->Breadcrumbs->add($unit->code.' '.$unit->title) ?>
+<?php $this->Breadcrumbs->add('All Units', ['controller' => 'units', 'action' => 'index']) ?>
+<?php $this->Breadcrumbs->add($unit->code . ' ' . $unit->title) ?>
 <?= $this->Breadcrumbs->render(); ?>
 <div class="units view large-9 medium-8 columns content">
     <h1><?= h($unit->code . ' ' . $unit->title . ' Semester ' . $unit->semester . ' ' . $unit->year) ?></h1>
@@ -42,6 +42,7 @@ use App\Model\Entity\Role;
                 CSV</a>
         </div>
     </div>
+    <?= $this->Html->link('<i class="material-icons">edit</i> Customize Email ',['controller' => 'email', 'action' => 'edit',$unit->id],['class' =>'btn btn-secondary','escape'=>false]) ?>
     <!-- Student Modal -->
     <div class="modal fade" id="studentModal<?= $unit->id ?>" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel"

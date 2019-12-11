@@ -27,9 +27,12 @@ $this->layout = 'default-staff';
     <tbody>
     <tr>
         <h4>Select a file:</h4>
-        <h5 class="data"><?php echo $this->Form->file('csvfilename', ['label' => '', 'size' => '30']); ?></h5>
+        <h5 class="data">
+            <?php echo $this->Form->file('csvfilename', ['label' => '', 'size' => '30']); ?></h5>
+
     </tr>
 </table>
+
 <br/><br/>
 <?= $this->Form->button(__('Cancel Import', true), ['name' => 'Cancel', 'div' => false, 'class' => 'delbutton btn btn-default']); ?>
 <?= $this->Form->button(__('Import', true), ['name' => 'Import', 'div' => false, 'class' => 'delbutton btn btn-primary']); ?>

@@ -405,10 +405,6 @@ class AdminsController extends AppController
                                 'unit_id' => $unit_id,
                                 'tutor_id' => $newUser->id,
                             ]);
-                            $checkTutorExist = $unitTutorTable->find('all')->where([
-                                'unit_id' => $unit_id,
-                                'tutor_id' => $newUser->id,
-                            ]);
                             if ($exists !== true) {
                                 $newUnitTutor = $unitTutorTable->newEntity();
                                 $newUnitTutor->unit_id = $unit_id;
@@ -432,11 +428,13 @@ class AdminsController extends AppController
                             $classTutorExist = $classTutorTable->exists([
                                 'class_id' => $chosenClass->id,
                                 'tutor_id' => $newUser->id,
+                                'unit_id' => $unit_id,
                             ]);
                             if ($classTutorExist !== true) {
                                 $newClassTutor = $classTutorTable->newEntity();
-                                $newClassTutor->class_id = $chosenClass['Classes']['id'];
+                                $newClassTutor->unit_id = $unit_id;
                                 $newClassTutor->tutor_id = $newUser->id;
+                                $newClassTutor->class_id = $chosenClass['Classes']['id'];
                                 if (!$classTutorTable->save($newClassTutor)) {
                                     // $this->Flash->error('The class-user could not be saved. Please, try again.');
                                 } else {
@@ -465,10 +463,6 @@ class AdminsController extends AppController
                                 'unit_id' => $unit_id,
                                 'tutor_id' => $user->id,
                             ]);
-                            $checkTutorExist = $unitTutorTable->find('all')->where([
-                                'unit_id' => $unit_id,
-                                'tutor_id' => $user->id,
-                            ]);
                             if ($exists !== true) {
                                 $newUnitTutor = $unitTutorTable->newEntity();
                                 $newUnitTutor->unit_id = $unit_id;
@@ -494,11 +488,13 @@ class AdminsController extends AppController
                             $classTutorExist = $classTutorTable->exists([
                                 'class_id' => $chosenClass->id,
                                 'tutor_id' => $user->id,
+                                'unit_id' => $unit_id,
                             ]);
                             if ($classTutorExist !== true) {
                                 $newClassTutor = $classTutorTable->newEntity();
-                                $newClassTutor->class_id = $chosenClass['Classes']['id'];
+                                $newClassTutor->unit_id = $unit_id;
                                 $newClassTutor->tutor_id = $user->id;
+                                $newClassTutor->class_id = $chosenClass['Classes']['id'];
                                 if (!$classTutorTable->save($newClassTutor)) {
                                      $this->Flash->error('The class-user could not be saved. Please, try again.');
                                 } else {
