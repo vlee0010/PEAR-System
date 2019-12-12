@@ -42,7 +42,7 @@ use App\Model\Entity\Role;
                 CSV</a>
         </div>
     </div>
-    <?= $this->Html->link('<i class="material-icons">edit</i> Customize Email ',['controller' => 'email', 'action' => 'edit',$unit->id],['class' =>'btn btn-secondary','escape'=>false]) ?>
+    <?= $this->Html->link('<i class="material-icons">edit</i> Customize Email ',['controller' => 'emails', 'action' => 'edit',$unit->id],['class' =>'btn btn-secondary','escape'=>false]) ?>
     <!-- Student Modal -->
     <div class="modal fade" id="studentModal<?= $unit->id ?>" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel"

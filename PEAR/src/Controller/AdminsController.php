@@ -594,24 +594,47 @@ class AdminsController extends AppController
                 endforeach;
 
                 foreach ($teamArrayUnique as $team):
+
                     $teamName = $team;
                     $teamTable = TableRegistry::getTableLocator()->get('teams');
-                    $newTeam = $teamTable->newEntity();
-                    $newTeam->name = $teamName;
-                    $newTeam->unit_id = $unit_id;
-                    if (!$teamTable->save($newTeam)) {
-                        // $this->Flash->error('The team could not be saved. Please, try again.');
-                    } else {
+                    $teamUnitExist = $teamTable->exists([
+                        'name' => $team,
+                        'unit_id' => $unit_id,
+                    ]);
+                    if ($teamUnitExist !== true) {
+                        $newTeam = $teamTable->newEntity();
+                        $newTeam->name = $teamName;
+                        $newTeam->unit_id = $unit_id;
+                        if (!$teamTable->save($newTeam)) {
+                            // $this->Flash->error('The team could not be saved. Please, try again.');
+                        } else {
+                            $peerReviewUnit = $peerTable->find()->where(['unit_id' => $unit_id]);
+                            $peerReviewUnit->toArray();
+                            foreach ($peerReviewUnit as $peerReview):
+                                if (!$teamTable->PeerReviews->link($newTeam, [$peerReview])) {
+                                    $this->Flash->error('The peer-team could not be saved. Please, try again.');
+                                } else {
+
+                                }
+                            endforeach;
+//                        $success .= 'User added to database<br />';
+                        }
+                    }
+                    else {
+                        $existedTeam = $teamTable->find('all')->where([
+                            'name' => $team,
+                            'unit_id' => $unit_id,
+                        ])->first();
                         $peerReviewUnit = $peerTable->find()->where(['unit_id' => $unit_id]);
                         $peerReviewUnit->toArray();
                         foreach ($peerReviewUnit as $peerReview):
-                            if (!$teamTable->PeerReviews->link($newTeam, [$peerReview])) {
+                            if (!$teamTable->PeerReviews->link($existedTeam, [$peerReview])) {
                                 $this->Flash->error('The peer-team could not be saved. Please, try again.');
                             } else {
 
                             }
                         endforeach;
-//                        $success .= 'User added to database<br />';
+
                     }
                 endforeach;
 

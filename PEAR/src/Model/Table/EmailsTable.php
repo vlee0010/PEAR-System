@@ -7,7 +7,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Email Model
+ * Emails Model
  *
  * @property \App\Model\Table\UnitsTable&\Cake\ORM\Association\BelongsTo $Units
  *
@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Email[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Email findOrCreate($search, callable $callback = null, $options = [])
  */
-class EmailTable extends Table
+class EmailsTable extends Table
 {
     /**
      * Initialize method
@@ -32,7 +32,7 @@ class EmailTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('email');
+        $this->setTable('emails');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
@@ -56,8 +56,7 @@ class EmailTable extends Table
         $validator
             ->scalar('sender')
             ->maxLength('sender', 100)
-            ->requirePresence('sender', 'create')
-            ->notEmptyString('sender');
+            ->allowEmptyString('sender');
 
         $validator
             ->scalar('header')
@@ -68,18 +67,19 @@ class EmailTable extends Table
         $validator
             ->scalar('emailSubject')
             ->maxLength('emailSubject', 100)
-            ->allowEmptyString('emailSubject');
+            ->requirePresence('emailSubject', 'create')
+            ->notEmptyString('emailSubject');
 
         $validator
             ->scalar('message')
             ->maxLength('message', 1000)
-            ->allowEmptyString('message');
+            ->requirePresence('message', 'create')
+            ->notEmptyString('message');
 
         $validator
             ->scalar('fromSender')
             ->maxLength('fromSender', 100)
-            ->requirePresence('fromSender', 'create')
-            ->notEmptyString('fromSender');
+            ->allowEmptyString('fromSender');
 
         return $validator;
     }
