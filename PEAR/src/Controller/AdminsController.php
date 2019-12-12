@@ -296,8 +296,26 @@ class AdminsController extends AppController
     }
 
     public function changeAccess(){
-        if($this->request->is('post')){
 
+        $userList = $this->Users->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_name'
+        ])->order(['lastname'=>'DESC','created'=>'ASC']);
+        $this->set('userList',$userList);
+
+
+        if($this->request->is('post')){
+            $userId = $this->request->getData('selectUser');
+            $user = TableRegistry::get('Users');
+            $query = $user->query();
+            $query->update()
+                ->set(["role" => 2])
+                ->where(["id" => $userId])
+                ->execute();
+
+            $user = $this->Users->find()->where(['id'=>$userId])->first();
+            $userName = $user->firstname . ' ' . $user->lastname;
+            $this->Flash->success(__($userName . "'s role has now been changed to tutor"));
         }
     }
 

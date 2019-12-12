@@ -25,7 +25,7 @@ $this->layout = 'default-staff';
                     </div>
                     <h4 class="card-title">Offering</h4>
                 </div>
-                <div class="material-datatables">
+                <div class="material-datatables" style="padding:30px;">
                     <table id="myTable" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                         <tr>

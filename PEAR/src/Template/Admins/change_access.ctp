@@ -3,7 +3,7 @@
 ?>
 
 
-<h1>User Permission</h1>
+<h1>Change User role to Tutor</h1>
 <br>
 <br>
 <br>
@@ -21,22 +21,14 @@ echo $this->Form->create(); ?>
 
 
 
-            echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single']);?>
+            echo $this->Form->input('selectUser',['required'=>true,'type'=>'select','options'=>$userList,'label'=>'','showParents' => true,'empty'=>'Select User','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single']);?>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="form-group">
 
-            <?php
-            echo $this->Form->input('selectStaff',['type'=>'select','options'=>$staffList,'label'=>'','empty'=>'Select Staff','data-style'=>'btn btn-link','class'=>'form-control ']);
-            ?>
-        </div>
-
-    </div>
 </div>
 
 
-<?= $this->Form->submit('Submit',['class'=>'btn btn-primary pull-right']);?>
+<?= $this->Form->submit('Submit',['class'=>'btn btn-primary pull-right','value'=>'Change User to Staff']);?>
 <?php echo $this->Form->end();?>
 
 
