@@ -8,11 +8,11 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int|null $unit_id
- * @property string $sender
+ * @property string|null $sender
  * @property string $header
- * @property string|null $emailSubject
- * @property string|null $message
- * @property string $fromSender
+ * @property string $emailSubject
+ * @property string $message
+ * @property string|null $fromSender
  *
  * @property \App\Model\Entity\Unit $unit
  */

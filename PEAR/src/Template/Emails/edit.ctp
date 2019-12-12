@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Email $email
  */
 $this->layout = 'default-staff';
-$this->setLayout('default-staff')
 ?>
 <head>
     <script src="/team123-app/PEAR/webroot/js/tinymce/js/tinymce/tinymce.min.js"></script>

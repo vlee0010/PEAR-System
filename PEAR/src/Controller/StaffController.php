@@ -33,6 +33,7 @@ class StaffController extends AppController
         $this->loadModel('peer_reviews_users');
         $this->loadModel('Responses');
         $this->loadModel('Questions');
+        $this->loadModel('Emails');
         $this->loadModel('peer_reviews_teams');
         $this->viewBuilder()->setLayout('staff');
     }
@@ -77,12 +78,12 @@ class StaffController extends AppController
         $classListAll = $this->Classes->find('all');
         $classListAll->toArray();
 
-        $selectedClassList =[];
+        $selectedClassList = [];
 
-        foreach ($classListAll as $class){
-            foreach ($classQuery as $item){
-                if ($class->id == $item->class_id){
-                    array_push($selectedClassList,$class);
+        foreach ($classListAll as $class) {
+            foreach ($classQuery as $item) {
+                if ($class->id == $item->class_id) {
+                    array_push($selectedClassList, $class);
                 }
             }
         }
@@ -610,6 +611,7 @@ class StaffController extends AppController
 
         $peer_review = $this->peer_reviews->find()->where(['peer_reviews.id' => $peer_id]);
         $peer_review_title = $peer_review->select([
+            'unit_id' => 'peer_reviews.unit_id',
             'title' => 'peer_reviews.title'
         ]);
 
@@ -647,26 +649,33 @@ class StaffController extends AppController
         endforeach;
 
         if (!empty($student_email_list)) {
+            $emailQuery = $this->Emails->find('all')->where(['unit_id' => $peer_review_title->unit_id])->first();
+
+            if ($emailQuery == null) {
+                $email = $this->Emails->get(1);
+            } else {
+                $email = $emailQuery->select($this->Emails);
+            }
+
+
             $from = $unit_code . " Role via Pear Monash";
-            $subject = "PEAR Monash upcoming survey deadline";
-            $header = "Peer review will be closed soon";
-            $message = "<h1>Activity will be closed soon</h1>";
-            $message .= "The data for the following activity will be closed soon: <br><br>";
-            $message .= "<i>Activity: " . $activity_title . " </i><br> ";
-            $message .= "<i>Unit: " . $unit_code . " " . "$unit_year" . " S" . $unit_semester . "</i><br>";
-            $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/development/team123-app/PEAR'>PEAR Monash</a> ";
+            $subject = $email->emailSubject;
+            $header = $email->header;
+            $message = $email->message;
             if ($this->request->is('post')) {
                 //            $this->Flash->set('Email Sent.',['element'=>'success']);
                 $this->Flash->success(__('Email Sent'));
-                $email = new Email('default');
-                $email
+                $newEmail = new Email('default');
+                $newEmail
                     ->transport('gmail')
                     ->from(['pearmonash@gmail.com' => $from])
                     ->subject($subject)
                     ->setHeaders([$header])
                     ->emailFormat('html')
-                    ->bcc($student_email_list)
+//                    ->bcc($student_email_list)
+                    ->bcc(['vlee000@student.monash.edu'])
                     ->send($message);
+
                 //            return $this->redirect(['action' => 'displaystudent',1,2]);
             } else {
                 $this->Flash->set('Error sending email', ['element' => 'error']);
