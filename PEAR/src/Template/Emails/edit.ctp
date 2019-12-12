@@ -6,6 +6,7 @@
 $this->layout = 'default-staff';
 ?>
 <head>
+    <script src="https://cdn.tiny.cloud/1/3fqsyet5f15rpx9ndtx1cvfssdbibwhgg97q79qsltnlngcj/tinymce/5/tinymce.min.js"></script>
     <script src="/team123-app/PEAR/webroot/js/tinymce/js/tinymce/tinymce.min.js"></script>
     <script>
         tinymce.init({
