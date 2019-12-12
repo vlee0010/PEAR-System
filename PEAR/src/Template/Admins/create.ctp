@@ -12,7 +12,8 @@ echo $this->Form->create(); ?>
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Unit Code (FIT3047) </label>
-            <input name="unitCode" required maxlength="7" class="form-control"type="input" onkeyup="this.value = this.value.toUpperCase();" >
+            <input name="unitCode" required maxlength="7" class="form-control"type="input" onkeyup="this.value = this.value.toUpperCase()" oninvalid="setCustomValidity('Please Enter 3 valid letters faculty code with 4 numeric digits unitCode (E.g. FIT3047)')"
+                   oninput="setCustomValidity('')" pattern="[A-Z]{3}[0-9]{4}">
         </div>
     </div>
     <!-- Title   -->
@@ -26,7 +27,8 @@ echo $this->Form->create(); ?>
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Teaching Period (1,2,A,B) </label>
-            <input name="semester" required class="form-control" maxlength="1" type="input"   >
+            <input name="semester" required class="form-control" maxlength="1" type="input" oninvalid="setCustomValidity('Please Enter 1,2, or Capitalized A or B.')"
+                   oninput="setCustomValidity('')" pattern="[1-2A-B]"  >
         </div>
     </div>
     <!--Year-->
@@ -63,5 +65,8 @@ echo $this->Form->create(); ?>
     //         $(this).val($(this).val().toUpperCase());
     //     });
     // });
+
+
+
 </script>
 

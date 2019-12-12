@@ -63,8 +63,10 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             Reminder Date
             <label class="bmd-label-floating"> </label>
+            <div id="reminderDate">
+                <input required name="reminder-date" class="form-control datetimepicker" type="text">
+            </div>
 
-            <input required name="reminder-date" class="form-control" type="date">
         </div>
     </div>
 </div>
@@ -154,6 +156,10 @@ echo $this->Form->create(); ?>
 
 
 
+
+    // $('#startDate').datepicker();
+
+
     $(document).ready(function(){
 
         $('.datetimepicker').datetimepicker({
@@ -171,29 +177,44 @@ echo $this->Form->create(); ?>
         })
 
 
-        $('#startDate').datetimepicker()
+        $('#startDate').datetimepicker({
+            format: 'LT'
+        });
         $('#endDate').datetimepicker({
-            // useCurrent: false
-        })
+            format: 'LT'
+        });
+        $('#reminderDate').datetimepicker({
+            format: 'LT'
+        });
+        $('#startDate').datetimepicker("DateTimePicker").format('DD/MM/YYYY hh:mm:ss');
+        $('#endDate').datetimepicker("DateTimePicker").format('DD/MM/YYYY hh:mm:ss');
+        $('#reminderDate').data("DateTimePicker").format('DD/MM/YYYY hh:mm:ss');
+
+
         $("#startDate").on("dp.change", function (e) {
 
             $('#endDate').data("DateTimePicker").minDate(e.date)
-
+            $('#reminderDate').date("DateTimePicker").minDate(e.date)
+            $('#endDate').data("DateTimePicker").show()
             console.log('設置了endDate的最低時間')
             console.log(e.date)
         })
         $("#endDate").on("dp.change", function (e) {
-
             $('#startDate').data("DateTimePicker").maxDate(e.date);
+            $('#endDate').data("DateTimePicker").toggle();
             console.log('設置了startDate的最高時間')
             console.log(e.date)
+
         })
 
 
 
+
+    //end
     })
 
 </script>
+
 
 
 
