@@ -76,20 +76,33 @@ class EmailsController extends AppController
         $email = $this->Emails->find('all')->where(['unit_id' => $unit_id])->first();
         if ($email == null) {
             $email = $this->Emails->get(1);
-        }
-        $newEmail = $this->Emails->newEntity();
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $newEmail = $this->Emails->patchEntity($newEmail, $this->request->getData());
-            $newEmail->unit_id = $unit_id;
-            if ($this->Emails->save($newEmail)) {
-                $this->Flash->success(__('The email has been saved.'));
 
-                return $this->redirect(['controller' => 'units','action' => 'view',$unit_id]);
+            $newEmail = $this->Emails->newEntity();
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $newEmail = $this->Emails->patchEntity($newEmail, $this->request->getData());
+                $newEmail->unit_id = $unit_id;
+                if ($this->Emails->save($newEmail)) {
+                    $this->Flash->success(__('The email has been saved.'));
+
+                    return $this->redirect(['controller' => 'units', 'action' => 'view', $unit_id]);
+                }
+                $this->Flash->error(__('The email could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The email could not be saved. Please, try again.'));
+            $this->set(compact('newEmail', 'units'));
+        }
+        else {
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                $email = $this->Emails->patchEntity($email, $this->request->getData());
+                if ($this->Emails->save($email)) {
+                    $this->Flash->success(__('The email has been saved.'));
+
+                    return $this->redirect(['controller' => 'units', 'action' => 'view', $unit_id]);
+                }
+                $this->Flash->error(__('The email could not be saved. Please, try again.'));
+            }
         }
         $units = $this->Emails->Units->find('list', ['limit' => 200]);
-        $this->set(compact('newEmail', 'units'));
+
         $this->set('unit_id',$unit_id);
         $this->set(compact('email'));
     }
