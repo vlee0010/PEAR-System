@@ -80,27 +80,18 @@ class AdminsController extends AppController
 
     public function assignStaffToUnit()
     {
-
         $unitList = $this->Units->find('list', [
             'keyField' => 'id',
             'valueField' => 'full_title'
         ])->order(['year'=>'DESC','semester'=>'DESC']);
         $this->set('unitList',$unitList);
-
         $staffList = $this->Users->find('list',[
            'keyField'=>'id',
            'valueField'=>'full_name'
         ])->where(['role'=>2])->orWhere(['role'=>3])->order(['role'=>'DESC','created'=>'DESC']);
         $this->set('staffList',$staffList);
-
-
         $unitsTutorsTable = TableRegistry::getTableLocator()->get('units_tutors');
         if ($this->request->is('post')) {
-
-//            debug($this->request->getData('selectUnit'));
-//            debug($this->request->getData('selectStaff'));
-
-
             $newUnitsTutor = $unitsTutorsTable->newEntity();
             $unitId = $this->request->getData('selectUnit');
             $staffId = $this->request->getData('selectStaff');
@@ -121,35 +112,10 @@ class AdminsController extends AppController
             } else {
                 $this->Flash->error('Sorry, ' . $promptStaffInfo . ' can not be added to the ' . $promptUnitInfo);
             }
-
-
-//            $newUnitsTutors = $unitsTutorsTable->newEntity();
-//            $unitCode = $this->request->getData('unitCode');
-//            $semester = $this->request->getData('semester');
-//            $year = $this->request->getData('year');
-//            $staffEmail = $this->request->getData('staffEmail');
-//
-//            $courseId = $this->Units->find()->where(['code' => $unitCode, 'semester' => $semester, 'year' => $year])->first();
-//            $staffRow = $this->Users->find()->where(['email' => $staffEmail])->first();
-//            if ($staffRow && $courseId) {
-//                $staffId = $staffRow->id;
-//                $staffName = $staffRow->firstname . ' ' . $staffRow->lastname;
-//
-//                $newUnitsTutors->unit_id = $courseId->id;
-//                $newUnitsTutors->tutor_id = $staffId;
-//                if ($unitsTutorsTable->save($newUnitsTutors)) {
-//                    $this->Flash->success("Success!" . $staffName . ' now has been added to the unit ' . $unitCode . ' - Semester' . $semester . ' - Year' . $year);
-//                } else {
-//                    $this->Flash->error("Failed!" . $staffName . 'cannot be added to the unit ' . $unitCode . ' - ' . $semester . ' - ' . $year);
-//                }
-//            } else {
-//                $this->Flash->error('Unit Or Staff Does not exist in the database; please Double check the input');
-//            }
-
         }
 
 
-//        Get All Units and all staffs and admins, passing into view
+
 
 
     }
@@ -327,6 +293,30 @@ class AdminsController extends AppController
         }
 
 
+    }
+
+    public function changeAccess(){
+
+        $userList = $this->Users->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_name'
+        ])->order(['lastname'=>'DESC','created'=>'ASC']);
+        $this->set('userList',$userList);
+
+
+        if($this->request->is('post')){
+            $userId = $this->request->getData('selectUser');
+            $user = TableRegistry::get('Users');
+            $query = $user->query();
+            $query->update()
+                ->set(["role" => 2])
+                ->where(["id" => $userId])
+                ->execute();
+
+            $user = $this->Users->find()->where(['id'=>$userId])->first();
+            $userName = $user->firstname . ' ' . $user->lastname;
+            $this->Flash->success(__($userName . "'s role has now been changed to tutor"));
+        }
     }
 
     public function importStaff($unit_id)

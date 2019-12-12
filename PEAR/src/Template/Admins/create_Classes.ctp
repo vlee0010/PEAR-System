@@ -74,43 +74,6 @@ echo $this->Form->create(); ?>
 <?= $this->Form->submit('Submit',['class'=>'btn btn-primary pull-right']);?>
 <?php echo $this->Form->end();?>
 
-<h1>All Classes</h1>
-
-
-    <table id="myTable" class="material-datatables">
-        <thead>
-            <th>Class Info</th>
-            <th>Year</th>
-            <th>Semester</th>
-
-        </thead>
-        <tbody>
-        <?php
-//找到class_id // 去到classTable// 找到 class name// / 找到所有Class表所有實例 / 提取class_id / 找到classesUnits 表所有實例 / 找出對應的unitId / 找到UnitTables表中所有實例 找出Year屬性
-        foreach($classesInUnitsClasses as $class):?>
-        <tr>
-
-            <?php
-            $className = $classesAllRecords->find()->where(['id'=>$class->class_id])->first()->class_name;
-//            debug($className);
-            $classId = $classesAllRecords->find()->where(['id'=>$class->class_id])->first()->id;
-//            debug($classId);
-            $unitId = $classesUnitsTable->find()->where(['class_id'=>$classId])->first()->unit_id;
-//            debug($unitId);
-            $year = $unitsTable->find()->where(['id'=>$unitId])->first()->year;
-//            debug($year);
-            $semester = $unitsTable->find()->where(['id'=>$unitId])->first()->semester;
-//            debug($semester);
-
-            ?>
-            <td><?=$className?></td>
-            <td><?=$year?></td>
-            <td><?=$semester?></td>
-        </tr>
-
-        <?php endforeach;?>
-        </tbody>
-    </table>
 
 
 
@@ -122,11 +85,4 @@ echo $this->Form->create(); ?>
     const submit = document.querySelector('.submit');
     submit.classList.add('m-auto');
 
-    //    "<i class=\"material-icons\">create</i>"
-    //     const submitBtn = document.querySelector('#submit-btn');
-    //     let submitIcon = document.createElement('i');
-    //     submitBtn.setAttribute("class",'material-icons');
-    //     submitBtn.innerText = 'create';
-    // //
-    //     submitBtn.appendChild(submitBtn);
 </script>

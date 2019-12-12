@@ -10,9 +10,12 @@ echo $this->Form->create(); ?>
 <!--Unit Code-->
 <div class="row mt-5">
     <div class="col-md-6">
-        <?php
+        <label >Select Unit</label>
+            <?php
 
-        echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single']);?>
+            echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single']);?>
+
+
 
     </div>
     <div class="col-md-6">
@@ -26,8 +29,10 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             Start Date
             <label class="bmd-label-floating"> </label>
-            <input required type="date" class="form-control" id="dateStart" name="start-date">
+            <div id="startDate" class="date">
+            <input required type="text"  class="form-control datetimepicker" id="dateStart" name="start-date">
 <!--            <input required name="start-date" class="form-control"type="date">-->
+            </div>
         </div>
     </div>
     <div class="col-md-6">
@@ -35,7 +40,10 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             End Date
             <label class="bmd-label-floating"></label>
-            <input required type="date" class="form-control" id="dateEnd" name="end-date">
+            <div id="endDate" class="date">
+                <input required type="text" class="form-control datetimepicker" id="dateEnd" name="end-date">
+            </div>
+
 <!--            <input required name="end-date" class="form-control" type="date">-->
         </div>
     </div>
@@ -114,20 +122,17 @@ echo $this->Form->create(); ?>
         </div>
     </div>
 
-
-
-
 <br>
 
 <?= $this->Form->submit('Create Peer Review',['class'=>'btn btn-large btn-primary pull-right', 'id' =>'submit-btn']);?>
 <?php echo $this->Form->end();?>
 
+
+
+
 </div>
-<script
-    src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-    crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js" defer></script>
+
+
 
 <script>
 
@@ -147,4 +152,54 @@ echo $this->Form->create(); ?>
     const submit = document.querySelector('.submit');
     submit.classList.add('m-auto');
 
+
+
+    $(document).ready(function(){
+
+        $('.datetimepicker').datetimepicker({
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-chevron-up",
+                down: "fa fa-chevron-down",
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-screenshot',
+                clear: 'fa fa-trash',
+                close: 'fa fa-remove'
+            }
+        })
+
+
+        $('#startDate').datetimepicker()
+        $('#endDate').datetimepicker({
+            // useCurrent: false
+        })
+        $("#startDate").on("dp.change", function (e) {
+
+            $('#endDate').data("DateTimePicker").minDate(e.date)
+
+            console.log('設置了endDate的最低時間')
+            console.log(e.date)
+        })
+        $("#endDate").on("dp.change", function (e) {
+
+            $('#startDate').data("DateTimePicker").maxDate(e.date);
+            console.log('設置了startDate的最高時間')
+            console.log(e.date)
+        })
+
+
+
+    })
+
 </script>
+
+
+
+
+
+
+
+
+
