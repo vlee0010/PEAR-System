@@ -29,13 +29,18 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <!-- CSS Files -->
 <!--    <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />-->
 
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
     <?php echo $this->Html->css('material-pro/material-dashboard.css')?>
+    <?php echo $this->Html->script('material-pro/core/jquery.min.js');?>
+    <?php echo $this->Html->script('material-pro/plugins/moment.min.js');?>
+    <?php echo $this->Html->script('material-pro/plugins/bootstrap-datetimepicker.min.js');?>
+
+
 
 
 
@@ -104,6 +109,17 @@
 
                 </li>
 
+                <li id="changeAccess" class="nav-item ">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "changeAccess",
+                        ]
+                    );?>>
+                        <i class="material-icons">assignment_ind</i>
+                        <p>Change user Access</p>
+                    </a>
+                </li>
                 <li id="assignstafftounit" class="nav-item ">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
@@ -336,49 +352,40 @@
 <!--</div>-->
 <!--   Core JS Files   -->
 <!--<script src="../assets/js/core/jquery.min.js"></script>-->
-<?php echo $this->Html->script('material-pro/core/jquery.min.js');?>
+
 <!--<script src="../assets/js/core/popper.min.js"></script>-->
 <?php echo $this->Html->script('material-pro/core/popper.min.js');?>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js" defer></script>
 <!--<script src="../assets/js/core/bootstrap-material-design.min.js"></script>-->
 <?php echo $this->Html->script('material-pro/core/bootstrap-material-design.min.js');?>
 <!--<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>-->
 <?php echo $this->Html->script('material-pro/plugins/perfect-scrollbar.jquery.min.js');?>
 <!-- Plugin for the momentJs  -->
 <!--<script src="../assets/js/plugins/moment.min.js"></script>-->
-<?php echo $this->Html->script('material-pro/plugins/moment.min.js');?>
+
 <!--  Plugin for Sweet Alert -->
 <!--<script src="../assets/js/plugins/sweetalert2.js"></script>-->
 <?php echo $this->Html->script('material-pro/plugins/sweetalert2.js');?>
 <!-- Forms Validations Plugin -->
 <!--<script src="../assets/js/plugins/jquery.validate.min.js"></script>-->
-<?php echo $this->Html->script('material-pro/plugins/jquery.validate.min.js');?>
-<!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+<?php //echo $this->Html->script('material-pro/plugins/jquery.validate.min.js');?>
+<!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard-->
 <!--<script src="../assets/js/plugins/jquery.bootstrap-wizard.js"></script>-->
-<?php echo $this->Html->script('material-pro/plugins/jquery.bootstrap-wizard.js');?>
+
 <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
 <!--<script src="../assets/js/plugins/bootstrap-selectpicker.js"></script>-->
 <?php echo $this->Html->script('material-pro/plugins/bootstrap-selectpicker.js');?>
-<!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
-<!--<script src="../assets/js/plugins/bootstrap-datetimepicker.min.js"></script>-->
-<?php echo $this->Html->script('material-pro/plugins/bootstrap-datetimepicker.min.js');?>
+<?php echo $this->Html->script('material-pro/plugins/jquery.bootstrap-wizard.js');?>
 <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
 <!--<script src="../assets/js/plugins/jquery.dataTables.min.js"></script>-->
 <?php echo $this->Html->script('material-pro/plugins/jquery.dataTables.min.js');?>
-<!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-<!--<script src="../assets/js/plugins/bootstrap-tagsinput.js"></script>-->
-<?php echo $this->Html->script('material-pro/plugins/bootstrap-tagsinput.min.js');?>
-<!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-<!--<script src="../assets/js/plugins/jasny-bootstrap.min.js"></script>-->
+
+
 <?php echo $this->Html->script('material-pro/plugins/jasny-bootstrap.min.js');?>
 <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
 <!--<script src="../assets/js/plugins/fullcalendar.min.js"></script>-->
 <?php echo $this->Html->script('material-pro/plugins/fullcalendar.min.js');?>
-<!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
-<!--<script src="../assets/js/plugins/jquery-jvectormap.js"></script>-->
-<?php echo $this->Html->script('material-pro/plugins/plugins/jquery-jvectormap.js');?>
-<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<!--<script src="../assets/js/plugins/nouislider.min.js"></script>-->
-<?php echo $this->Html->script('material-pro/plugins/plugins/nouislider.min.js');?>
 
 <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>

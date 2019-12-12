@@ -28,7 +28,7 @@
                         <th>Activity (Section)</th>
                         <th>Start</th>
                         <th>End</th>
-                        <th>P</th>
+                        <th>Progress</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -52,7 +52,7 @@
                         <td><?= $unit_activity['activity'] ?></td>
                         <td><?= date("d-M-Y", strtotime($unit_activity['datestart'])) ?></td>
                         <td><?= date("d-M-Y", strtotime($unit_activity['dateend'])) ?></td>
-                        <td><?=round(100*($countComplete/$countStudent),2)."%"?></td>
+                        <td><span class="progress-ani"><?=round(100*($countComplete/$countStudent),2)?></span>%</td>
                         <td class="actions" align="center">
                             <?= $this->element('Staff/Buttons/results', ['url' => ['action' => 'viewAllResults', $unit_activity['peer_id']]]) ?>
                             <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal'.$unit_activity['peer_id']]); ?>
@@ -209,6 +209,18 @@
 <?= $this->Html->script('blk-design-system.min.js') ?>
 <?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script>
+    $('.progress-ani').each(function () {
+        var $this = $(this);
+        jQuery({ Counter: 0 }).animate({ Counter: $this.text() }, {
+            duration: 2000,
+            easing: 'swing',
+            step: function () {
+                $this.text(this.Counter.toFixed(2));
+            }
+        });
+    });
+</script>
 </body>
 </html>
 
