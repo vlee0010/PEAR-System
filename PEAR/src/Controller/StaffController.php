@@ -672,8 +672,7 @@ class StaffController extends AppController
                     ->subject($subject)
                     ->setHeaders([$header])
                     ->emailFormat('html')
-//                    ->bcc($student_email_list)
-                    ->bcc(['vlee000@student.monash.edu'])
+                    ->bcc($student_email_list)
                     ->send($message);
 
                 //            return $this->redirect(['action' => 'displaystudent',1,2]);
