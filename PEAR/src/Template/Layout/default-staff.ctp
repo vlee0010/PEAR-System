@@ -130,17 +130,7 @@
                     </a>
                 </li>
 
-                <li id="changeAccess" class="nav-item ">
-                    <a class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "admins",
-                            "action" => "changeAccess",
-                        ]
-                    );?>>
-                        <i class="material-icons">https</i>
-                        <p>Change user Access</p>
-                    </a>
-                </li>
+
                 <li id="assignstafftounit" class="nav-item ">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
