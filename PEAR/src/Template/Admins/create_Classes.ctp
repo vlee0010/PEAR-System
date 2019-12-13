@@ -42,13 +42,7 @@ echo $this->Form->create(); ?>
                 ?>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="form-group bmd-form-group">
-                <?php
-                echo $this->Form->input('selectStaff',['required'=>true,'type'=>'select','options'=>$staffList,'label'=>'','empty'=>'Select Staff','data-style'=>'btn btn-link','class'=>'form-control ']);
-                ?>
-            </div>
-        </div>
+
         <!-- Class Name   -->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">

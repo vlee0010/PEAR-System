@@ -151,7 +151,7 @@ class AdminsController extends AppController
 
             $classesTable = TableRegistry::getTableLocator()->get('classes');
             $unitId = $this->request->getData('selectUnit');
-            $staffId = $this->request->getData('selectStaff');
+            $staffId = $this->Users->find()->first()->id;
             $classDay = $this->request->getData('classDay');
             $classTime = $this->request->getData('classTime');
 
