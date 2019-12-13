@@ -268,9 +268,9 @@ class AdminsController extends AppController
                 }elseif($end_date < $reminder_date){
                     $this->Flash->error('Invalid end date, please pick an end date that is after the reminder date');
                 }else{
-                    $unitId = $unitRecord->id;
+//                    $unitId = $unitRecord->id;
 //            Create a new peer review
-
+//
                     $peerReviewTable = TableRegistry::getTableLocator()->get('peer_reviews');
                     $newPeerReview = $peerReviewTable->newEntity();
 //            fill the the data from the request like

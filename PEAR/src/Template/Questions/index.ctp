@@ -98,20 +98,6 @@
 </div>
 
 
-<?= $this->Html->script('core/jquery.min.js') ?>
-<?= $this->Html->script('core/popper.min.js') ?>
-<?= $this->Html->script('core/bootstrap.min.js') ?>
-<?= $this->Html->script('plugins/perfect-scrollbar.jquery.min.js') ?>
-<?= $this->Html->script('plugins/bootstrap-switch.js') ?>
-<?= $this->Html->script('plugins/nouislider.min.js') ?>
-
-<?= $this->Html->script('highlight.min.js') ?>
-<?= $this->Html->script('src/js/bootstrap-slider.js') ?>
-<?= $this->Html->script('demo.js') ?>
-<?= $this->Html->script('questions.js') ?>
-<?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
-<?= $this->Html->css('bootstrap-slider.css') ?>
-
 <?= $this->Form->end(); ?>
 
 <script>

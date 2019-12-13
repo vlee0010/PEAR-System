@@ -2,7 +2,12 @@
 //$this->layout=  false;
 $this->layout = 'default-staff';
 ?>
-
+<style>
+    .select2-container--default .select2-selection--single{
+        border:none;
+        background-color: transparent;
+    }
+</style>
 
 <h1>Create New Peer Review</h1>
 <?php
@@ -177,14 +182,21 @@ echo $this->Form->create(); ?>
         })
 
 
+
         $('#startDate').datetimepicker({
-            format: 'LT'
+            locale: moment.locale('fr'),
+            format: moment().format('D MMM YY'),
+            format:'DD/MM/YYYY HH:mm:ss',
+            language: 'en',
+            autoclose: true
         });
         $('#endDate').datetimepicker({
-            format: 'LT'
+            format: 'LT',
+            format:'DD/MM/YYYY HH:mm:ss'
         });
         $('#reminderDate').datetimepicker({
-            format: 'LT'
+            format: 'LT',
+            format:'DD/MM/YYYY HH:mm:ss'
         });
         $('#startDate').datetimepicker("DateTimePicker").format('DD/MM/YYYY hh:mm:ss');
         $('#endDate').datetimepicker("DateTimePicker").format('DD/MM/YYYY hh:mm:ss');
@@ -201,7 +213,7 @@ echo $this->Form->create(); ?>
         })
         $("#endDate").on("dp.change", function (e) {
             $('#startDate').data("DateTimePicker").maxDate(e.date);
-            $('#endDate').data("DateTimePicker").toggle();
+            $('#reminderDate').data("DateTimePicker").show();
             console.log('設置了startDate的最高時間')
             console.log(e.date)
 
@@ -213,6 +225,23 @@ echo $this->Form->create(); ?>
     //end
     })
 
+
+//
+// $(function () {
+//     $('#startDate').datetimepicker();
+//     $('#endDate').datetimepicker({
+//         useCurrent: false
+//     });
+//     $("#startDate").on("change.datetimepicker", function (e) {
+//         $('#endDate').datetimepicker('minDate', e.date);
+//     });
+//     $("#endDate").on("change.datetimepicker", function (e) {
+//         $('#startDate').datetimepicker('maxDate', e.date);
+//     });
+// });
+
+
+    document.querySelector('select').parentElement.classList.add('form-control');
 </script>
 
 

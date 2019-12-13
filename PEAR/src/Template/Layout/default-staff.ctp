@@ -36,11 +36,18 @@
 
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
+
     <?php echo $this->Html->css('material-pro/material-dashboard.css')?>
 
     <?php echo $this->Html->script('material-pro/core/jquery.min.js');?>
+
     <?php echo $this->Html->script('material-pro/plugins/moment.min.js');?>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.21/moment-timezone-with-data-2012-2022.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />-->
     <?php echo $this->Html->script('material-pro/plugins/bootstrap-datetimepicker.min.js');?>
+
 
 
 
