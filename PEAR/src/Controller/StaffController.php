@@ -35,6 +35,7 @@ class StaffController extends AppController
         $this->loadModel('Questions');
         $this->loadModel('Emails');
         $this->loadModel('peer_reviews_teams');
+        $this->loadModel('peer_reviews_questions');
         $this->viewBuilder()->setLayout('staff');
     }
 
@@ -447,12 +448,29 @@ class StaffController extends AppController
 
 
         $questions_desc = $response_query->select([
-            'question_id' => "Questions.id",
-            'question' => "Questions.description",
+            'question_id' => "q.id",
+            'question' => "q.description",
 
-        ])->innerJoinWith('Questions')
+        ])->join([
+            'q' => [
+                'table' => 'questions',
+                'conditions' => [
+                    'q.id = Responses.question_id'
+                ]
+
+            ],
+            'pq' => [
+                'table' => 'peer_reviews_questions',
+                'conditions' => [
+                    'q.id = pq.question_id',
+                    'pq.peer_reviews_id' => $peer_id
+
+                ]
+            ]
+        ])
             ->where([
-                'Responses.is_text_number' => 0
+                'Responses.is_text_number' => 0,
+
             ])
             ->distinct();
 
@@ -474,6 +492,14 @@ class StaffController extends AppController
                 'table' => 'questions',
                 'conditions' => [
                     'q.id = Responses.question_id'
+                ]
+            ],
+            'pq' => [
+                'table' => 'peer_reviews_questions',
+                'conditions' => [
+                    'q.id = pq.question_id',
+                    'pq.peer_reviews_id' => $peer_id
+
                 ]
             ]
         ])
@@ -585,6 +611,12 @@ class StaffController extends AppController
                 'table' => 'questions',
                 'conditions' => [
                     'q.id = Responses.question_id'
+                ]
+            ],
+            'pq' => [
+                'table' => 'peer_reviews_questions',
+                'conditions' => [
+                    'q.id = pq.question_id',
                 ]
             ]
         ])

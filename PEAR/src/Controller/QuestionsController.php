@@ -79,7 +79,7 @@ class QuestionsController extends AppController
                     $response->question_id = $question->id;
                     $response->ratee_id = $user->id;
                     $response->peer_review_id = $peer_id;
-                    if ($question->id != 6) {
+                    if ($question->id != 2147483647) {
                         $response->is_text_number = 0;
                         $response->rate_number = $this->request->getData('sliderRating_' . $question->id . '_' . $user->id);
                         $responsesTable->save($response);
