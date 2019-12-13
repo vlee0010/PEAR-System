@@ -118,17 +118,19 @@
 
                 </li>
 
-                <li id="changeAccess" class="nav-item ">
+                <li class="nav-item " id="pr">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
                             "controller" => "admins",
-                            "action" => "changeAccess",
+                            "action" => "createPeerReview",
                         ]
                     );?>>
-                        <i class="material-icons">https</i>
-                        <p>Change user Access</p>
+                        <i class="material-icons">content_paste</i>
+                        <p>Create Peer Reviews</p>
                     </a>
                 </li>
+
+
                 <li id="assignstafftounit" class="nav-item ">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
@@ -164,17 +166,7 @@
                         <p>Create Question</p>
                     </a>
                 </li>
-                <li class="nav-item " id="pr">
-                    <a class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "admins",
-                            "action" => "createPeerReview",
-                        ]
-                    );?>>
-                        <i class="material-icons">content_paste</i>
-                        <p>Create Peer Reviews</p>
-                    </a>
-                </li>
+
 <!--                <li class="nav-item ">-->
 <!--                    <a class="nav-link" href="./typography.html">-->
 <!--                        <i class="material-icons">library_books</i>-->
