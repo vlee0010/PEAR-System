@@ -249,13 +249,8 @@ class UsersController extends AppController
         $password = $this->request->getData('password');
         if ($password) {
             $encryptedPassword = (new DefaultPasswordHasher)->hash($password);
-            $user = TableRegistry::get('Users');
-            $query = $user->query();
-            $query->update()
-                ->set(["password" => $encryptedPassword])
-                ->where(["token" => $token])
-                ->execute();
-             $this->Flash->success(__("Password has now been changed"));
+
+
              sleep(3);
             return $this->redirect(["action" => 'login']);
         }
