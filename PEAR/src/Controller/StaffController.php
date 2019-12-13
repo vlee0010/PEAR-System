@@ -612,12 +612,6 @@ class StaffController extends AppController
                 'conditions' => [
                     'q.id = Responses.question_id'
                 ]
-            ],
-            'pq' => [
-                'table' => 'peer_reviews_questions',
-                'conditions' => [
-                    'q.id = pq.question_id',
-                ]
             ]
         ])
             ->where([
