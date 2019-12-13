@@ -14,6 +14,7 @@ use Cake\Core\App;
 use Cake\Controller\Exception\SecurityException;
 use Cake\Utility\Security;
 use Cake\Mailer\Email;
+use Cake\I18n\Time;
 
 
 class AdminsController extends AppController
@@ -246,49 +247,63 @@ class AdminsController extends AppController
 //                fetching data from the form
 
                 $unitId = $this->request->getData('selectUnit');
-                $start_date = $this->request->getData('start-date');
-                $end_date = $this->request->getData('end-date');
-                $reminder_date = $this->request->getData('reminder-date');
+                $start_date = Time::parse($this->request->getData('start-date'))->i18nFormat('yyyy-MM-dd HH:mm:ss');
+                $end_date = Time::parse($this->request->getData('end-date'))->i18nFormat('yyyy-MM-dd HH:mm:ss');
+                $reminder_date = Time::parse($this->request->getData('reminder-date'))->i18nFormat('yyyy-MM-dd HH:mm:ss');
                 $title = $this->request->getData('title');
 //            Unit Exists, Proceed;
 //            FInd correspond unit row..
 //                $unitRecord = $this->Units->find()->where(["code" => $unitCode, "semester" => $semester, "year" => $year])->firstOrFail();
-//
-//                $unitId = $unitRecord->id;
-
+                if($start_date > $end_date){
+                    $this->Flash->error('Invalid start Date, start date is ahead of end date');
+                }elseif ($start_date > $reminder_date){
+                    $this->Flash->error('Invalid start date. Please re-pick a start date before reminder date.');
+                }elseif ($reminder_date > $end_date){
+                    $this->Flash->error('Invalid reminder date. Please re-pick a reminder date before the end date.');
+                }elseif($reminder_date < $start_date){
+                    $this->Flash->error('Invalid reminder date. Please re-pick a reminder date after the start date.');
+                }
+                elseif($end_date < $start_date){
+                    $this->Flash->error('Invalid end date, please pick an end date that is after the start date');
+                }elseif($end_date < $reminder_date){
+                    $this->Flash->error('Invalid end date, please pick an end date that is after the reminder date');
+                }else{
+//                    $unitId = $unitRecord->id;
 //            Create a new peer review
-
-                $peerReviewTable = TableRegistry::getTableLocator()->get('peer_reviews');
-                $newPeerReview = $peerReviewTable->newEntity();
+//
+                    $peerReviewTable = TableRegistry::getTableLocator()->get('peer_reviews');
+                    $newPeerReview = $peerReviewTable->newEntity();
 //            fill the the data from the request like
 //            date_start; date_end; date_reminder;title;unit_id;
-                $newPeerReview->date_start = $start_date;
-                $newPeerReview->date_end = $end_date;
-                $newPeerReview->date_reminder = $reminder_date;
-                $newPeerReview->title = $title;
-                $newPeerReview->unit_id = $unitId;
-                if ($peerReviewTable->save($newPeerReview)) {
+                    $newPeerReview->date_start = $start_date;
+                    $newPeerReview->date_end = $end_date;
+                    $newPeerReview->date_reminder = $reminder_date;
+                    $newPeerReview->title = $title;
+                    $newPeerReview->unit_id = $unitId;
+                    if ($peerReviewTable->save($newPeerReview)) {
 //               get the newly created peerReview Id;
 
-                    $peer_reviews_id = $newPeerReview->id;
-                    $questions = ($this->request->getData('question'));
-//               debug($questions);
-                    $good = 0;
-                    foreach ($questions as $question) {
-//                   debug(question);
-                        $newPeerReviewQuestion = $peerReviewQuestionTable->newEntity();
-                        $newPeerReviewQuestion->peer_reviews_id = $peer_reviews_id;
-                        $newPeerReviewQuestion->question_id = $question;
-                        $peerReviewQuestionTable->save($newPeerReviewQuestion);
-                        $good = 1;
-                    }
-                    if ($good == 1) {
-                        $this->Flash->success('This peer review has been successfully added!');
-                    }
+                        $peer_reviews_id = $newPeerReview->id;
+                        $questions = ($this->request->getData('question'));
 
-                } else {
-                    $this->Flash->error("Sorry, Unable to save this Peer Review - " . $newPeerReview->title);
+                        $good = 0;
+                        foreach ($questions as $question) {
+
+                            $newPeerReviewQuestion = $peerReviewQuestionTable->newEntity();
+                            $newPeerReviewQuestion->peer_reviews_id = $peer_reviews_id;
+                            $newPeerReviewQuestion->question_id = $question;
+                            $peerReviewQuestionTable->save($newPeerReviewQuestion);
+                            $good = 1;
+                        }
+                        if ($good == 1) {
+                            $this->Flash->success('This peer review has been successfully added!');
+                        }
+
+                    } else {
+                        $this->Flash->error("Sorry, Unable to save this Peer Review - " . $newPeerReview->title);
+                    }
                 }
+//
 
         }
 
@@ -828,19 +843,25 @@ class AdminsController extends AppController
             if (count($matches) === 1) {
                 $this->Flash->error('Unit Already Existed');
             } else {
-                $newUnit = $unitTable->newEntity();
-                $newUnit->title = $title;
-                $newUnit->code = $unitCode;
-                $newUnit->semester = $semester;
-                $newUnit->year = $year;
 
-                if ($this->Units->save($newUnit)) {
-                    $this->Flash->success(__('The new unit ' . $newUnit->code . ' has been saved.'));
+                if($year> (date('Y')) && $year< 2156){
+                    $newUnit = $unitTable->newEntity();
+                    $newUnit->title = $title;
+                    $newUnit->code = $unitCode;
+                    $newUnit->semester = $semester;
+                    $newUnit->year = $year;
 
-                    return $this->redirect(['controller' => 'admins', 'action' => 'index']);
-                } else {
-                    $this->Flash->error(__('The new unit ' . $newUnit->code . '  could not be saved. Please, try again.'));
+                    if ($this->Units->save($newUnit)) {
+                        $this->Flash->success(__('The new unit ' . $newUnit->code . ' has been saved.'));
+
+                        return $this->redirect(['controller' => 'admins', 'action' => 'index']);
+                    } else {
+                        $this->Flash->error(__('The new unit ' . $newUnit->code . '  could not be saved. Please, try again.'));
+                    }
+                }else{
+                    $this->Flash->error('Please a valid year from current year ' .  date('Y') . ' to 2155 inclusive');
                 }
+
 
             }
 //            debug($matches);
