@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use App\Model\Entity\Role;
+use App\Model\Entity\Emails;
 use Cake\Mailer\Email;
 use Cake\I18n\Number;
 use Cake\ORM\TableRegistry;
@@ -12,6 +13,7 @@ use Cake\Mailer\TransportFactory;
 use Cake\Event\Event;
 use ArrayObject;
 use Cake\Utility\Security;
+
 
 
 class StaffController extends AppController
@@ -632,8 +634,9 @@ class StaffController extends AppController
         $this->set('student_comment_list', $student_comment_list);
     }
 
-    public function sendReminderEmail($peer_id = null)
+        public function sendReminderEmail($peer_id = null)
     {
+
 
         $peer_review = $this->peer_reviews->find()->where(['peer_reviews.id' => $peer_id]);
         $peer_review_title = $peer_review->select([
@@ -675,7 +678,7 @@ class StaffController extends AppController
         endforeach;
 
         if (!empty($student_email_list)) {
-            $emailQuery = $this->Emails->find('all')->where(['unit_id' => $peer_review_title->unit_id])->first();
+            $emailQuery = $this->Emails->find('all')->where(['unit_id' => $peer_review_title->unit_id]) ;
 
             if ($emailQuery == null) {
                 $email = $this->Emails->get(1);
@@ -683,11 +686,11 @@ class StaffController extends AppController
                 $email = $emailQuery->select($this->Emails);
             }
 
-
+            $selectEmail = $email->toArray();
             $from = $unit_code . " Role via Pear Monash";
-            $subject = $email->emailSubject;
-            $header = $email->header;
-            $message = $email->message;
+            $subject = $selectEmail[0]->emailSubject;
+            $header = $selectEmail[0]->header;
+            $message = $selectEmail[0]->message;
             $message .= "<br>";
             $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/iteration4/team123-app/PEAR/'>PEAR Monash</a> ";
             if ($this->request->is('post')) {

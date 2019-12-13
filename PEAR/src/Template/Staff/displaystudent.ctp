@@ -109,7 +109,7 @@
                         </div>
                         <div class="modal-footer">
                             <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
-                            <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', $unit_activity->peer_id]]) ?>
+                                <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', $unit_activity->peer_id]]) ?>
                         </div>
                     </div>
                 </div>
