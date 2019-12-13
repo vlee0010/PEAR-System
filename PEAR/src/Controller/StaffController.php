@@ -662,6 +662,8 @@ class StaffController extends AppController
             $subject = $email->emailSubject;
             $header = $email->header;
             $message = $email->message;
+            $message .= "<br>";
+            $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/iteration4/team123-app/PEAR/'>PEAR Monash</a> ";
             if ($this->request->is('post')) {
                 //            $this->Flash->set('Email Sent.',['element'=>'success']);
                 $this->Flash->success(__('Email Sent'));
@@ -672,6 +674,7 @@ class StaffController extends AppController
                     ->subject($subject)
                     ->setHeaders([$header])
                     ->emailFormat('html')
+//                    ->bcc(['vlee0010@student.monash.edu'])
                     ->bcc($student_email_list)
                     ->send($message);
 
