@@ -69,6 +69,7 @@ class QuestionsController extends AppController
             'lastname' => 'Users.lastname'
         ])->innerJoinWith('Teams')
             ->where(['Teams.id_' => $team_id]);
+        $commentId = $this->Questions->find()->where(['is_text'=>'1'])->first()->id;
 
         if ($this->request->is('post')) {
             foreach ($question_query as $question) {
@@ -79,7 +80,7 @@ class QuestionsController extends AppController
                     $response->question_id = $question->id;
                     $response->ratee_id = $user->id;
                     $response->peer_review_id = $peer_id;
-                    if ($question->id != 2147483647) {
+                    if ($question->id != $commentId) {
                         $response->is_text_number = 0;
                         $response->rate_number = $this->request->getData('sliderRating_' . $question->id . '_' . $user->id);
                         $responsesTable->save($response);

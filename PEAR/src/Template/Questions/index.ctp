@@ -17,8 +17,9 @@
 
         <?php $counter=1;?>
             <hr>
+            <tbody>
             <?php foreach ($questionList as $question):?>
-                <tbody>
+                <?php if ($question->is_text == 0): ?>
                 <div id="myModal" class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="margin: 0 auto">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -47,7 +48,7 @@
                                                 <div id="sliderRating_<?= $question->id; ?>_<?= $user->id ?>"></div>
                                                 <h3 style="text-align: left"><?= "Please rate " . $user->firstname . " " . $user->lastname ?></h3>
                                                 <br>
-                                                <?php if ($question->is_text == 0): ?>
+
                                                     <i class="fas fa-check" id="checkA_<?= $question->id; ?>_<?= $user->id ?>" style=" display: none ;color: #00bf9a; font-size: 20px "></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                                                     <input id="sliderA_<?= $question->id; ?>_<?= $user->id ?>"
@@ -73,13 +74,6 @@
                                                         &nbsp;Please complete this question
                                                     </div>
                                                     <br>
-                                                <?php else: ?>
-                                                    <div class="form-group">
-                                                        <label for="comment">Comments</label>
-                                                        <textarea class="form-control" rows="5" id="comment" required
-                                                                  name="textRating_<?= $question->id; ?>_<?= $user->id ?>"></textarea>
-                                                    </div>
-                                                <?php endif; ?>
                                             <?php endforeach; ?>
 
                                         </div>
@@ -89,9 +83,59 @@
                         </div>
                     </div>
                 </div>
-                </tbody>
 
+               <?php endif;?>
             <?php endforeach; ?>
+            <?php foreach ($questionList as $question):?>
+                <?php if ($question->is_text != 0): ?>
+                <div id="myModal" class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="margin: 0 auto">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default" style="margin:0 auto"
+                                 id="panel_<?php echo $question->id ?>">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                        <a style="font-size: 1.2em" class="collapsed" onclick="changeClass(this)" role="button"
+                                           data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapse<?php echo $question->id ?>" aria-expanded="false"
+                                           aria-controls="collapseTwo">
+                                            <?php echo "Question " . $counter . " - " . $question->description ?>
+                                            <?php $counter=$counter+1; ?>
+                                            <i id="ifopen<?php echo $question->id ?>"
+                                               class="fa fa-plus-circle pull-right"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapse<?php echo $question->id ?>"
+                                     class="panel-collapse collapse show toggle-show" role="tabpanel"
+                                     aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+
+                                        <div class="wrapper" style="color:#fff;padding:20px;">
+                                            <?php foreach ($userList as $user) : ?>
+                                                <div id="sliderRating_<?= $question->id; ?>_<?= $user->id ?>"></div>
+                                                <h3 style="text-align: left"><?= "Please rate " . $user->firstname . " " . $user->lastname ?></h3>
+                                                <br>
+
+                                                    <div class="form-group">
+                                                        <label for="comment">Comments</label>
+                                                        <textarea class="form-control" rows="5" id="comment" required
+                                                                  name="textRating_<?= $question->id; ?>_<?= $user->id ?>"></textarea>
+                                                    </div>
+
+                                            <?php endforeach; ?>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <?php endif;?>
+            <?php endforeach; ?>
+            </tbody>
             <?= $this->Form->submit('Submit', ['class' => "btn btn-success", 'id' => 'question-submit', 'style' => 'text-align:center;color:black;margin:0 auto']); ?>
         </table>
     </div>
