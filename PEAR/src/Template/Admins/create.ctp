@@ -13,14 +13,14 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Unit Code (FIT3047) </label>
             <input name="unitCode" required maxlength="7" class="form-control"type="input" onkeyup="this.value = this.value.toUpperCase()" oninvalid="setCustomValidity('Please Enter 3 valid letters faculty code with 4 numeric digits unitCode (E.g. FIT3047)')"
-                   oninput="setCustomValidity('')" pattern="[A-Z]{3}[0-9]{4}">
+                   oninput="setCustomValidity('')" pattern="[A-Z]{3}[0-9]{4}" value="<?php echo isset($_POST['unitCode']) ? $_POST['unitCode'] : '' ?>">
         </div>
     </div>
     <!-- Title   -->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Title (Industrial Experience) </label>
-            <input name="title" required class="form-control"type="input">
+            <input name="title" required class="form-control"type="input" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
     </div>
     <!--Teaching Period -->
@@ -28,14 +28,14 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Teaching Period (1,2,A,B) </label>
             <input name="semester" required class="form-control" maxlength="1" type="input" oninvalid="setCustomValidity('Please Enter 1,2, or Capitalized A or B.')"
-                   oninput="setCustomValidity('')" pattern="[1-2A-B]"  >
+                   oninput="setCustomValidity('')" pattern="[1-2A-B]"  value="<?php echo isset($_POST['semester']) ? $_POST['semester'] : '' ?>">
         </div>
     </div>
     <!--Year-->
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Year (2020) </label>
-            <input name="year" required class="form-control" maxlength="4" type="input"  >
+            <input name="year" required class="form-control" maxlength="4" type="input"  value="<?php echo isset($_POST['year']) ? $_POST['year'] : '' ?>">
         </div>
     </div>
 

@@ -121,9 +121,9 @@ class AdminsController extends AppController
 
     }
 
-    public function createClasses()
+    public function createClasses($unit_id=null)
     {
-
+        $this->set(compact('unit_id'));
         $unitList = $this->Units->find('list', [
             'keyField' => 'id',
             'valueField' => 'full_title'
@@ -219,9 +219,9 @@ class AdminsController extends AppController
         }
     }
 
-    public function createPeerReview()
+    public function createPeerReview($unit_id=null)
     {
-
+        $this->set(compact('unit_id'));
         $unitList = $this->Units->find('list', [
             'keyField' => 'id',
             'valueField' => 'full_title'
@@ -849,7 +849,7 @@ class AdminsController extends AppController
                 $this->Flash->error('Unit Already Existed');
             } else {
 
-                if($year> (date('Y')) && $year< 2156){
+                if($year>= (date('Y')) && $year< 2156){
                     $newUnit = $unitTable->newEntity();
                     $newUnit->title = $title;
                     $newUnit->code = $unitCode;
@@ -857,9 +857,9 @@ class AdminsController extends AppController
                     $newUnit->year = $year;
 
                     if ($this->Units->save($newUnit)) {
-                        $this->Flash->success(__('The new unit ' . $newUnit->code . ' has been saved.'));
+                        $this->Flash->success(__('The new unit ' . $newUnit->code . ' has been created. Now please create a peer review ' ));
 
-                        return $this->redirect(['controller' => 'admins', 'action' => 'index']);
+                        return $this->redirect(['controller' => 'admins', 'action' => 'createPeerReview',$newUnit->id]);
                     } else {
                         $this->Flash->error(__('The new unit ' . $newUnit->code . '  could not be saved. Please, try again.'));
                     }

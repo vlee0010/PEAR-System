@@ -25,7 +25,7 @@ echo $this->Form->create(); ?>
 //                    array_push($staffAll,$staffInformation);
 //                }
 
-                echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control']);?>
+                echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control','value'=>$unit_id]);?>
             </div>
 
         </div>

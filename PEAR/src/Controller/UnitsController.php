@@ -19,8 +19,10 @@ class UnitsController extends AppController
      */
     public function index()
     {
+        $this->loadModel('users');
+//        $units = $this->paginate($this->units->find());
         $units = $this->paginate($this->Units);
-
+        $units = $this->Units->find();
         $this->set(compact('units'));
     }
 
