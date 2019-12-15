@@ -18,7 +18,7 @@ echo $this->Form->create(); ?>
         <label >Select Unit</label>
             <?php
 
-            echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single']);?>
+            echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single','value'=>$unit_id]);?>
 
 
 
@@ -27,54 +27,45 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group">
             Title
             <label class="bmd-label-floating"> </label>
-            <input required name="title" class="form-control"type="text">
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            Start Date
-            <label class="bmd-label-floating"> </label>
-            <div id="startDate" class="date">
-            <input required type="text"  class="form-control datetimepicker" id="dateStart" name="start-date">
-<!--            <input required name="start-date" class="form-control"type="date">-->
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-
-        <div class="form-group bmd-form-group">
-            End Date
-            <label class="bmd-label-floating"></label>
-            <div id="endDate" class="date">
-                <input required type="text" class="form-control datetimepicker" id="dateEnd" name="end-date">
-            </div>
-
-<!--            <input required name="end-date" class="form-control" type="date">-->
+            <input required name="title" class="form-control"type="text" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
     </div>
 </div>
+
     <!-- Title   -->
 
 <div class="row">
-    <!--Start date-->
-
-    <!--End Date-->
-
-
-
-
-    <!--Reminder date-->
     <div class="col-md-6">
-        <div class="form-group bmd-form-group">
-            Reminder Date
-            <label class="bmd-label-floating"> </label>
-            <div id="reminderDate">
-                <input required name="reminder-date" class="form-control datetimepicker" type="text">
-            </div>
+        <div class="form-group bmd-form-group" >
+            <label for="start">Start:</label>
+            <br>
+            <input onpaste="return false;" onkeypress="return false;" required class="form-control" type="text" id="start" placeholder="Please Pick a start date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
+        </div>
+    </div>
 
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group" >
+            <label class="bmd-label-floating" for="end">End:</label>
+            <br>
+            <input onkeypress="return false;" onpaste="return false;" required class="form-control" type="text" id="end" placeholder="Please Pick an end date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
     </div>
 </div>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group bmd-form-group" >
+            <label class="bmd-label-floating" for="reminder">Reminder:</label>
+            <br>
+            <input onpaste="return false;" onkeypress="return false;" required class="form-control" type="text" id="reminder" placeholder="Please Pick start date and end date first" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 
@@ -135,13 +126,21 @@ echo $this->Form->create(); ?>
 <?php echo $this->Form->end();?>
 
 
-
-
-</div>
-
-
+    <script>
+        $("#submit-btn").submit(function(){
+            var checked = $("form input:checked").length > 0;
+            if (!checked){
+                alert("Please check at least one checkbox");
+                return false;
+            }
+        });
+    </script>
 
 <script>
+
+
+
+
 
 //    select 2
     const unitSelector = document.querySelector("[name='selectUnit']");
@@ -150,9 +149,6 @@ echo $this->Form->create(); ?>
             $('.js-example-basic-single').select2();
         });
 
-
-
-
     // Create Peer Review highlight Tab
     const cprTab = document.querySelector('#pr');
     cprTab.classList.add('active');
@@ -160,90 +156,96 @@ echo $this->Form->create(); ?>
     submit.classList.add('m-auto');
 
 
-
-
-    // $('#startDate').datepicker();
-
-
-    $(document).ready(function(){
-
-        $('.datetimepicker').datetimepicker({
-            icons: {
-                time: "fa fa-clock-o",
-                date: "fa fa-calendar",
-                up: "fa fa-chevron-up",
-                down: "fa fa-chevron-down",
-                previous: 'fa fa-chevron-left',
-                next: 'fa fa-chevron-right',
-                today: 'fa fa-screenshot',
-                clear: 'fa fa-trash',
-                close: 'fa fa-remove'
-            }
-        })
-
-
-
-        $('#startDate').datetimepicker({
-            locale: moment.locale('fr'),
-            format: moment().format('D MMM YY'),
-            format:'DD/MM/YYYY HH:mm:ss',
-            language: 'en',
-            autoclose: true
-        });
-        $('#endDate').datetimepicker({
-            format: 'LT',
-            format:'DD/MM/YYYY HH:mm:ss'
-        });
-        $('#reminderDate').datetimepicker({
-            format: 'LT',
-            format:'DD/MM/YYYY HH:mm:ss'
-        });
-        $('#startDate').datetimepicker("DateTimePicker").format('DD/MM/YYYY hh:mm:ss');
-        $('#endDate').datetimepicker("DateTimePicker").format('DD/MM/YYYY hh:mm:ss');
-        $('#reminderDate').data("DateTimePicker").format('DD/MM/YYYY hh:mm:ss');
-
-
-        $("#startDate").on("dp.change", function (e) {
-
-            $('#endDate').data("DateTimePicker").minDate(e.date)
-            $('#reminderDate').date("DateTimePicker").minDate(e.date)
-            $('#endDate').data("DateTimePicker").show()
-            console.log('設置了endDate的最低時間')
-            console.log(e.date)
-        })
-        $("#endDate").on("dp.change", function (e) {
-            $('#startDate').data("DateTimePicker").maxDate(e.date);
-            $('#reminderDate').data("DateTimePicker").show();
-            console.log('設置了startDate的最高時間')
-            console.log(e.date)
-
-        })
-
-
-
-
-    //end
-    })
-
-
-//
-// $(function () {
-//     $('#startDate').datetimepicker();
-//     $('#endDate').datetimepicker({
-//         useCurrent: false
-//     });
-//     $("#startDate").on("change.datetimepicker", function (e) {
-//         $('#endDate').datetimepicker('minDate', e.date);
-//     });
-//     $("#endDate").on("change.datetimepicker", function (e) {
-//         $('#startDate').datetimepicker('maxDate', e.date);
-//     });
-// });
-
-
     document.querySelector('select').parentElement.classList.add('form-control');
 </script>
 
+    <script>
+        // var picker = new Pikaday({ field: document.getElementById('datepicker') });
+        var
+            checkStart = false,
+            checkEnd = false,
+            startDate,
+            endDate,
+            updateStartDate = function () {
+                startPicker.setStartRange(startDate);
+                endPicker.setStartRange(startDate);
+                endPicker.setMinDate(startDate);
+                reminderPicker.setStartRange(startDate);
+                reminderPicker.setMinDate(startDate);
+            },
+            updateEndDate = function () {
+                startPicker.setEndRange(endDate);
+                startPicker.setMaxDate(endDate);
+                endPicker.setEndRange(endDate);
+
+                reminderPicker.setMaxDate(endDate);
+            },
+            startPicker = new Pikaday({
+                field: document.getElementById('start'),
+                toString(date, format) {
+                    return moment(date).format('DD/MM/YYYY');
+                },
+                minDate: new Date(),
+                maxDate: new Date(2030, 12, 31),
+                onSelect: function () {
+                    startDate = this.getDate();
+                    updateStartDate();
+                    checkStart = true;
+                    reminderCheck();
+                }
+            }),
+            endPicker = new Pikaday({
+                field: document.getElementById('end'),
+                format: 'DD/MM/YYYY',
+                toString(date, format) {
+                    return moment(date).format('DD/MM/YYYY');
+                },
+                minDate: new Date(),
+                maxDate: new Date(2030, 12, 31),
+                onSelect: function () {
+
+                    endDate = this.getDate();
+                    updateEndDate();
+                    checkEnd = true;
+                    reminderCheck();
+                }
+            }),
+            reminderPicker = new Pikaday({});
+            function reminderCheck() {
+            if (checkStart && checkEnd) {
+                reminderPicker = new Pikaday({
+                    field: document.getElementById('reminder'),
+                    toString(date, format) {
+                        return moment(date).format('DD/MM/YYYY');
+                    },
+                    minDate: new Date(),
+                    maxDate: new Date(2030, 12, 31),
+
+                    onSelect: function () {
+                        startDate = this.getDate();
+                    }
+                });
+                reminderPicker.setEndRange(endDate);
+                reminderPicker.setMinDate(startDate);
+                reminderPicker.setMaxDate(endDate);
+                reminderPicker.setStartRange(startDate);
+            }
+
+        }
+
+
+
+        _startDate = startPicker.getDate(),
+            _endDate = endPicker.getDate();
+        if (_startDate) {
+            startDate = _startDate;
+            updateStartDate();
+        }
+        if (_endDate) {
+            endDate = _endDate;
+            updateEndDate();
+        }
+    </script>
 
 
 
