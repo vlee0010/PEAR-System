@@ -561,6 +561,9 @@ class AdminsController extends AppController
 
                 $this->set('data', $data);
                 if (!empty($successData)) {
+                    $successDataToArray = (object) $successData;
+                    debug($successDataToArray);
+                    $this->set('successDatatoArray', $successDataToArray);
                     $this->set('successData', $successData);
                 }
             }
@@ -802,7 +805,7 @@ class AdminsController extends AppController
                         $this->Flash->success($message);
                         $this->set('message', $message);
                         if (count($unSuccessData) > 0) {
-                            $errorMessage = "Cannot import data from ";
+                            $errorMessage = "Cannot import data from row ";
                             foreach ($unSuccessData as $unSuccessData) {
                                 $errorMessage .= $unSuccessData . ' ';
                             }
@@ -816,6 +819,8 @@ class AdminsController extends AppController
                 $this->set('data', $data);
                 if (!empty($successData)) {
                     $this->set('successData', $successData);
+
+
                 }
 
             }
