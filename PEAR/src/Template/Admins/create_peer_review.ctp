@@ -126,15 +126,6 @@ echo $this->Form->create(); ?>
 <?php echo $this->Form->end();?>
 
 
-    <script>
-        $("#submit-btn").submit(function(){
-            var checked = $("form input:checked").length > 0;
-            if (!checked){
-                alert("Please check at least one checkbox");
-                return false;
-            }
-        });
-    </script>
 
 <script>
 
@@ -249,6 +240,16 @@ echo $this->Form->create(); ?>
         }
     </script>
 
+
+    <script>
+        $('form').on('submit',function(){
+            var checked = $("form input:checked").length > 0;
+            if (!checked){
+                alert("Please check at least one Peer Review question(checkbox)");
+                return false;
+            }
+        })
+    </script>
 
 
 
