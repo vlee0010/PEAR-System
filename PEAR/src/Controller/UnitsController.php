@@ -118,13 +118,13 @@ class UnitsController extends AppController
             case 1:
                 $_header = ['Team', 'StudentId', 'Email', 'Firstname', 'Lastname', 'Class'];
                 foreach ($unitSelect as $unit):
-                    $file_name = $unit->code . '_S' . $unit->semester . '_' . $unit->year . '_' . 'student_list.csv';
+                    $file_name = 'PEARMONASH'.'_'.$unit->code . '_' . $unit->year . '_S' . $unit->semester . '_' . 'student_list.csv';
                 endforeach;
                 break;
             case 2:
                 $_header = ['StaffId', 'Firstname', 'Lastname', 'Email', 'Class'];
                 foreach ($unitSelect as $unit):
-                    $file_name = $unit->code . '_S' . $unit->semester . '_' . $unit->year . '_' . 'staff_list.csv';
+                    $file_name = 'PEARMONASH'.'_'.$unit->code . '_' . $unit->year . '_S' . $unit->semester . '_' .   'staff_list.csv';
                 endforeach;
                 break;
             default:
