@@ -45,7 +45,7 @@ echo $this->Form->create(); ?>
 
     <div class="col-md-6">
         <div class="form-group bmd-form-group" >
-            <label class="bmd-label-floating" for="end">End:</label>
+            <label for="end">End:</label>
             <br>
             <input onkeypress="return false;" onpaste="return false;" required class="form-control" type="text" id="end" placeholder="Please Pick an end date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
@@ -56,7 +56,7 @@ echo $this->Form->create(); ?>
 <div class="row">
     <div class="col-md-6">
         <div class="form-group bmd-form-group" >
-            <label class="bmd-label-floating" for="reminder">Reminder:</label>
+            <label  for="reminder">Reminder:</label>
             <br>
             <input onpaste="return false;" onkeypress="return false;" required class="form-control" type="text" id="reminder" placeholder="Please Pick start date and end date first" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
@@ -225,10 +225,12 @@ echo $this->Form->create(); ?>
                         startDate = this.getDate();
                     }
                 });
-                reminderPicker.setEndRange(endDate);
-                reminderPicker.setMinDate(startDate);
-                reminderPicker.setMaxDate(endDate);
-                reminderPicker.setStartRange(startDate);
+
+
+                reminderPicker.setEndRange(moment(endDate).add({days: -1}).toDate());
+                reminderPicker.setMinDate(moment(startDate).add({days: 1}).toDate());
+                reminderPicker.setMaxDate(moment(endDate).add({days: -1}).toDate());
+                reminderPicker.setStartRange(moment(startDate).add({days: 1}).toDate());
             }
 
         }
