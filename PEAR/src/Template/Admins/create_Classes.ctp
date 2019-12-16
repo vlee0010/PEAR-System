@@ -128,10 +128,6 @@ echo $this->Form->create(); ?>
                             var p = document.createElement('h4');
                             p.setAttribute('class','text-gray ');
                             p.textContent = "There is no class for this unit yet." ;
-                            var emoji = document.createElement('span');
-                            emoji.innerText = "&#129488;";
-                            p.appendChild(emoji);
-                            ulList.appendChild(p);
                         }
                     }
 
