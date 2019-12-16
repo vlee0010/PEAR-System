@@ -99,7 +99,7 @@ echo $this->Form->create(); ?>
             $.ajax({
 
                 method: 'POST',
-                url:'/admins/returnRelevantClasses',
+                url:"<?php echo $this->Url->build(['controller'=>'admins','action'=>'returnRelevantClasses'])?>",
                 beforeSend: function(xhr){
                     xhr.setRequestHeader('X-CSRF-Token','<?php echo $this->request->getParam('_csrfToken')?>')
                 },
