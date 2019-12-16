@@ -117,6 +117,10 @@ echo $this->Form->create(); ?>
                         console.log(response);
                         console.log(response.name);
                         var ulList = document.querySelector('#ajax');
+                        var noClassP = document.querySelector('.noClass');
+                        if('xxxxx:'+ ulList.contains(noClassP)){
+                            noClassP.remove();
+                        }
                         // ulList.innerHTML = '';
                         let li = document.createElement('li');
                         li.setAttribute('class','list-group-item');
@@ -138,7 +142,7 @@ echo $this->Form->create(); ?>
                         if(ulList.childNodes.length == 0){
                             console.log(3);
                             var p = document.createElement('h4');
-                            p.setAttribute('class','text-gray ');
+                            p.setAttribute('class','text-gray noClass');
                             p.textContent = "There is no class for this unit yet." ;
                             ulList.appendChild(p);
                         }
@@ -178,7 +182,7 @@ echo $this->Form->create(); ?>
                         console.log(ulList.childNodes);
                         if(ulList.childNodes.length == 0){
                             var p = document.createElement('h4');
-                            p.setAttribute('class','text-gray ');
+                            p.setAttribute('class','text-gray noClass');
                             p.textContent = "There is no class for this unit yet." ;
                             ulList.appendChild(p);
                         }
