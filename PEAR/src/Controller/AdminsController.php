@@ -35,6 +35,13 @@ class AdminsController extends AppController
 
     public function index()
     {
+        $this->loadModel('users');
+        $this->loadModel('peer_reviews');
+        $userTable = $this->Users->find();
+        $peerTable = $this->peer_reviews->find();
+        $userCount = $this->Users->find()->count();
+        $peerCount = $this->peer_reviews->find()->count();
+        $this->set(compact(['userCount','peerCount','peerTable']));
 
     }
 
@@ -43,9 +50,11 @@ class AdminsController extends AppController
         $questionTable = TableRegistry::getTableLocator()->get('questions');
         if ($this->request->is('post')) {
             $questionDescription = $this->request->getData('question');
+            $secondLastRow = $questionTable->find('all',[]);
 //            debug($questionDescription);
             $newQuestion = $questionTable->newEntity();
             $newQuestion->description = $questionDescription;
+
             if ($this->Questions->save($newQuestion)) {
                 $this->Flash->success("New question ''" . $newQuestion->description . "'' has been added into the Question Bank Successfully!");
             };

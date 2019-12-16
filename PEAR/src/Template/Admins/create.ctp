@@ -27,7 +27,7 @@ echo $this->Form->create(); ?>
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
             <label class="bmd-label-floating">Teaching Period (1,2,A,B) </label>
-            <input name="semester" required class="form-control" maxlength="1" type="input" oninvalid="setCustomValidity('Please Enter 1,2, or Capitalized A or B.')"
+            <input name="semester" required class="form-control" maxlength="1" type="input" onkeyup="this.value = this.value.toUpperCase()" oninvalid="setCustomValidity('Please Enter 1,2, or Capitalized A or B.')"
                    oninput="setCustomValidity('')" pattern="[1-2A-B]"  value="<?php echo isset($_POST['semester']) ? $_POST['semester'] : '' ?>">
         </div>
     </div>

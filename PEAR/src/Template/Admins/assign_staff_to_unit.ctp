@@ -1,7 +1,12 @@
 <?php $this->layout = 'default-staff';
 //$this->layout = false;
 ?>
-
+<style>
+    .select2-container--default .select2-selection--single{
+        border:none;
+        background-color: transparent;
+    }
+</style>
 
 <h1>Assign Staff To Unit</h1>
 <br>
@@ -28,7 +33,7 @@ echo $this->Form->create(); ?>
         <div class="form-group">
 
             <?php
-            echo $this->Form->input('selectStaff',['type'=>'select','options'=>$staffList,'label'=>'','empty'=>'Select Staff','data-style'=>'btn btn-link','class'=>'form-control ']);
+            echo $this->Form->input('selectStaff',['type'=>'select','options'=>$staffList,'label'=>'','empty'=>'Select Staff','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single']);
             ?>
         </div>
 
@@ -44,6 +49,10 @@ echo $this->Form->create(); ?>
 <script>
     const AssignStaffToUnitTab = document.querySelector('#assignstafftounit');
     AssignStaffToUnitTab.classList.add('active');
+
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
 
 
 

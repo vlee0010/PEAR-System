@@ -2,7 +2,12 @@
 $this->layout = 'default-staff';
 //$this->layout = false;
 ?>
-
+<style>
+    .select2-container--default .select2-selection--single{
+        border:none;
+        background-color: transparent;
+    }
+</style>
 
 <h1>Create Classes</h1>
 <?php
@@ -25,7 +30,7 @@ echo $this->Form->create(); ?>
 //                    array_push($staffAll,$staffInformation);
 //                }
 
-                echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control','value'=>$unit_id]);?>
+                echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single','value'=>$unit_id]);?>
             </div>
 
         </div>
@@ -38,7 +43,7 @@ echo $this->Form->create(); ?>
                 <?php
 
                 $dayAll = array('Mon'=>'Mon','Tue'=>'Tue','Wed'=>'Wed','Thu'=>'Thu','Fri'=>'Fri','Sat'=>'Sat','Sun'=>'Sun');
-                echo $this->Form->input('classDay',['required'=>true,'type'=>'select','options'=>$dayAll,'label'=>'','empty'=>'Select Class Day','data-style'=>'btn btn-link','class'=>'form-control']);
+                echo $this->Form->input('classDay',['required'=>true,'type'=>'select','options'=>$dayAll,'label'=>'','empty'=>'Select Class Day','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single']);
                 ?>
             </div>
         </div>
@@ -51,7 +56,7 @@ echo $this->Form->create(); ?>
             <?php
 
             $timeAll = array('7:00 AM'=>'7:00 AM','7:30 AM'=>'7:30 AM','8:00 AM'=>'8:00 AM',"8:30 AM"=>'8:30 AM',"9:00 AM"=>'9:00 AM',"9:30 AM" =>'9:30 AM',"10:00 AM"=>'10:00 AM',"10:30 AM" => '10:30 AM','11:00 AM' =>'11:00 AM',"11:30 AM" =>'11:30 AM',"12:00 PM" => '12:00 PM',"12:30 PM" =>'12:30 PM',"1:00 PM" => '1:00 PM',"1:30 PM" =>'1:30 PM',"2:00 PM"=>'2:00 PM',"2:30 PM"=>'2:30 PM',"3:00 PM"=>'3:00 PM',"3:30 PM" => '3:30 PM',"4:00 PM" => '4:00 PM',"4:30 PM" => '4:30 PM', "5:00 PM" => '5:00 PM',"5:30 PM" => '5:30 PM',"6:00 PM" => '6:00 PM',"6:30 PM" =>'6:30 PM',"7:00 PM" => '7:00 PM',"7:30 PM" => '7:30 PM',"8:00 PM" => '8:00 PM',"8:30 PM" => '8:30 PM',"9:00 PM" =>'9:00 PM',"9:30 PM" => '9:30 PM',"10:00 PM"=>'10:00 PM');
-            echo $this->Form->input('classTime',['required'=>true,'type'=>'select','options'=>$timeAll,'label'=>'','empty'=>'Select Class Time','data-style'=>'btn btn-link','class'=>'form-control']);
+            echo $this->Form->input('classTime',['required'=>true,'type'=>'select','options'=>$timeAll,'label'=>'','empty'=>'Select Class Time','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single']);
             ?>
         </div>
     </div>
@@ -78,5 +83,11 @@ echo $this->Form->create(); ?>
     ccTab.classList.add('active');
     const submit = document.querySelector('.submit');
     submit.classList.add('m-auto');
+
+
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+
 
 </script>
