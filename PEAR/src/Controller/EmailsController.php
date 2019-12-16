@@ -83,12 +83,12 @@ class EmailsController extends AppController
                 $newEmail->unit_id = $unit_id;
                 if ($this->Emails->save($newEmail)) {
                     $this->Flash->success(__('The email has been saved.'));
-
+                    $this->set(compact('newEmail'));
                     return $this->redirect(['controller' => 'units', 'action' => 'view', $unit_id]);
                 }
                 $this->Flash->error(__('The email could not be saved. Please, try again.'));
             }
-            $this->set(compact('newEmail', 'units'));
+
         }
         else {
             if ($this->request->is(['patch', 'post', 'put'])) {

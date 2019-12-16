@@ -9,7 +9,7 @@ echo $this->Form->postLink(
     'Generate Student CSV',
     isset($disabled) && $disabled ? [] : $url,
     [
-        'class' => 'btn btn-secondary',
+        'class' => 'btn btn-primary',
         'escape' => false,
         'disabled' => isset($disabled) && $disabled,
         'data-dismiss' => 'modal'

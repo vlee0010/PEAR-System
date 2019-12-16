@@ -679,20 +679,24 @@ class StaffController extends AppController
 
         if (!empty($student_email_list)) {
             $emailQuery = $this->Emails->find('all')->where(['unit_id' => $peer_review_title->unit_id]) ;
-
-            if ($emailQuery == null) {
+            $emailQueryArray = $emailQuery->toArray();
+            if ($emailQueryArray == null) {
                 $email = $this->Emails->get(1);
             } else {
                 $email = $emailQuery->select($this->Emails);
+                $emailArray = $email->toArray();
+                $email = $emailArray[0];
             }
-
-            $selectEmail = $email->toArray();
             $from = $unit_code . " Role via Pear Monash";
-            $subject = $selectEmail[0]->emailSubject;
-            $header = $selectEmail[0]->header;
-            $message = $selectEmail[0]->message;
+            $subject = $email->emailSubject;
+            $header = $email->header;
+            $message = "<h1>Activity will be closed soon</h1>";
+            $message .= "The data for the following activity will be closed soon: <br><br>";
+            $message .= "<i>Activity: " . $activity_title . " </i><br> ";
+            $message .= "<i>Unit: " . $unit_code . " " . "$unit_year" . " S" . $unit_semester . "</i><br>";
+            $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/iteration4/team123-app/PEAR/'>PEAR Monash</a></br> ";
             $message .= "<br>";
-            $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/iteration4/team123-app/PEAR/'>PEAR Monash</a> ";
+            $message .= $email->message;
             if ($this->request->is('post')) {
                 //            $this->Flash->set('Email Sent.',['element'=>'success']);
                 $this->Flash->success(__('Email Sent'));
@@ -703,8 +707,8 @@ class StaffController extends AppController
                     ->subject($subject)
                     ->setHeaders([$header])
                     ->emailFormat('html')
-//                    ->bcc(['vlee0010@student.monash.edu'])
-                    ->bcc($student_email_list)
+                    ->bcc(['vlee0010@student.monash.edu'])
+//                    ->bcc($student_email_list)
                     ->send($message);
 
                 //            return $this->redirect(['action' => 'displaystudent',1,2]);
@@ -712,6 +716,10 @@ class StaffController extends AppController
                 $this->Flash->set('Error sending email', ['element' => 'error']);
             }
             $this->set('title', $peer_review_title);
+        }
+        else {
+            $this->Flash->error(__('Cannot Send Email: All students have completed the peer review'));
+            $this->redirect($this->referer());
         }
     }
 
