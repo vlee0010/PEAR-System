@@ -60,7 +60,24 @@ class AdminsController extends AppController
             };
         }
     }
+    public function returnRelevantClasses(){
+        $units_classes_query = $this->loadModel('units_classes');
+        if($this->request->is('post')) {
+            $this->loadComponent('Csrf');
+            $unitId = $this->request->getData('unitId');
+            $units_classes=$units_classes_query->find()->where(['unit_id'=>$unitId]);
+            $classArray=[];
+            foreach ($units_classes as $units_class){
+                $class=TableRegistry::getTableLocator()->get('classes')->find()->where(['id'=>$units_class->class_id])->first();
+                array_push($classArray,$class);
+            }
 
+
+            return $this->response
+                ->withType('application/json')
+                ->withStringBody(json_encode($classArray));
+        }
+    }
     public function checkUnitExists()
     {
 

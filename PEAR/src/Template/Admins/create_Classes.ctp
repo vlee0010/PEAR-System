@@ -30,7 +30,7 @@ echo $this->Form->create(); ?>
 //                    array_push($staffAll,$staffInformation);
 //                }
 
-                echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single','value'=>$unit_id]);?>
+                echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control js-example-basic-single','id'=>'selectUnit','value'=>$unit_id]);?>
             </div>
 
         </div>
@@ -72,8 +72,8 @@ echo $this->Form->create(); ?>
 <!--    <input type="checkbox" name="question3" value="How do you like Your mentors?" checked> How do you like Your mentors? <br><br>-->
 <?= $this->Form->submit('Submit',['class'=>'btn btn-primary pull-right']);?>
 <?php echo $this->Form->end();?>
-
-
+<h2>Classes associated with this unit: </h2>
+<ul id="ajax" class="list-group"></ul>
 
 
 
@@ -87,7 +87,63 @@ echo $this->Form->create(); ?>
 
     $(document).ready(function() {
         $('.js-example-basic-single').select2();
+
+        $('#selectUnit').on('select2:select', function(e){
+            console.log($('#selectUnit').val());
+            $selectedUnitId = $('#selectUnit').val();
+            searchRelevantClasses($selectedUnitId);
+        })
+
+        function searchRelevantClasses(unitId){
+            var data =unitId;
+            $.ajax({
+
+                method: 'POST',
+                url:'/admins/returnRelevantClasses',
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader('X-CSRF-Token','<?php echo $this->request->getParam('_csrfToken')?>')
+                },
+                data: {unitId:data},
+                success:function(response){
+                    console.log(response);
+                    if(response.length != 0){
+                    console.log(response.length);
+                    var ulList = document.querySelector('#ajax');
+                        ulList.innerHTML = '';
+                    response.forEach(function(e){
+                        var li = document.createElement('li');
+                        li.setAttribute('class','list-group-item');
+                        li.textContent = e.class_name;
+                        console.log(li);
+                        ulList.appendChild(li);
+                    })
+                    }else{
+
+                        var ulList = document.querySelector('#ajax');
+                        ulList.innerHTML = '';
+                        console.log(ulList.children == '');
+                        console.log(ulList.childNodes);
+                        if(ulList.childNodes.length == 0){
+                            console.log(3);
+                            var p = document.createElement('h4');
+                            p.setAttribute('class','text-gray ');
+                            p.textContent = "There is no class for this unit yet." ;
+                            var emoji = document.createElement('span');
+                            emoji.innerText = "&#129488;";
+                            p.appendChild(emoji);
+                            ulList.appendChild(p);
+                        }
+                    }
+
+
+
+                }
+            })
+        }
     });
+
+
+
 
 
 </script>
