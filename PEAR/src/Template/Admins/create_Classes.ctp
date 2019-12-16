@@ -70,8 +70,9 @@ echo $this->Form->create(); ?>
 <!--    <input type="checkbox" name="question1" value="Do you like your team?"> Do you like your team?<br>-->
 <!--    <input type="checkbox" name="question2" value="Do you want to work with your teammates in the future?"> Do you want to work with your teammates in the future?<br>-->
 <!--    <input type="checkbox" name="question3" value="How do you like Your mentors?" checked> How do you like Your mentors? <br><br>-->
-<?= $this->Form->submit('Submit',['class'=>'btn btn-primary pull-right']);?>
 <?php echo $this->Form->end();?>
+<button class="btn btn-primary pull-right">Submit
+</button>
 <h2>Classes associated with this unit: </h2>
 <ul id="ajax" class="list-group"></ul>
 
@@ -81,7 +82,7 @@ echo $this->Form->create(); ?>
     // Create Peer Review highlight Tab
     const ccTab = document.querySelector('#cc');
     ccTab.classList.add('active');
-    const submit = document.querySelector('.submit');
+    const submit = document.querySelector('button.btn.btn-primary.pull-right');
     submit.classList.add('m-auto');
 
 
@@ -93,6 +94,58 @@ echo $this->Form->create(); ?>
             $selectedUnitId = $('#selectUnit').val();
             searchRelevantClasses($selectedUnitId);
         })
+
+
+        document.querySelector("button.btn.btn-primary.pull-right").addEventListener('click', function(e){
+            let unitCode = document.querySelector("select[name='selectUnit']").value;
+            let classDay = document.querySelector("select[name='classDay']").value;
+            let classTime = document.querySelector("select[name='classTime']").value;
+            addRelevantClasses(unitCode,classDay,classTime);
+        })
+
+        function addRelevantClasses(unitId, classDay, classTime){
+            console.log("unit id: " + unitId + ' classDay: ' + classDay + ' classTime: ' + classTime);
+            $.ajax({
+                method: 'POST',
+                url:"<?php echo $this->Url->build(['controller'=>'admins','action'=>'addClassViaAjax'])?>",
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader('X-CSRF-Token','<?php echo $this->request->getParam('_csrfToken')?>')
+                },
+                data: {"tutor_id":1,"unit_id": unitId,"class_day": classDay,"class_time": classTime},
+                success: function(response){
+                    if(response.length != 0){
+                        console.log(response);
+                        console.log(response.name);
+                        var ulList = document.querySelector('#ajax');
+                        // ulList.innerHTML = '';
+                        let li = document.createElement('li');
+                        li.setAttribute('class','list-group-item');
+                        li.textContent = response.name;
+                        ulList.appendChild(li);
+                        // response.forEach(function(e){
+                        //     var li = document.createElement('li');
+                        //     li.setAttribute('class','list-group-item');
+                        //     li.textContent = e.class_name;
+                        //     console.log(li);
+                        //     ulList.appendChild(li);
+                        // })
+                    }else{
+
+                        var ulList = document.querySelector('#ajax');
+                        ulList.innerHTML = '';
+                        console.log(ulList.children == '');
+                        console.log(ulList.childNodes);
+                        if(ulList.childNodes.length == 0){
+                            console.log(3);
+                            var p = document.createElement('h4');
+                            p.setAttribute('class','text-gray ');
+                            p.textContent = "There is no class for this unit yet." ;
+                            ulList.appendChild(p);
+                        }
+                    }
+                    }
+            })
+        }
 
         function searchRelevantClasses(unitId){
             var data =unitId;
@@ -124,7 +177,6 @@ echo $this->Form->create(); ?>
                         console.log(ulList.children == '');
                         console.log(ulList.childNodes);
                         if(ulList.childNodes.length == 0){
-                            console.log(3);
                             var p = document.createElement('h4');
                             p.setAttribute('class','text-gray ');
                             p.textContent = "There is no class for this unit yet." ;
@@ -138,6 +190,9 @@ echo $this->Form->create(); ?>
             })
         }
     });
+
+
+// fetch form data;
 
 
 

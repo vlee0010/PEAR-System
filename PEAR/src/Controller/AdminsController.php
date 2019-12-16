@@ -60,10 +60,46 @@ class AdminsController extends AppController
             };
         }
     }
+
+    public function addClassViaAjax(){
+
+        if($this->request->is('POST')){
+            $classTable =  TableRegistry::getTableLocator()->get('classes');
+            $unitClassTable = TableRegistry::getTableLocator()->get('units_classes');
+            $this->loadModel('units');
+            $this->loadModel('Users');
+
+            $newClassRow = $classTable->newEntity();
+            $tutorId = $this->Users->find()->first()->id;
+            $unitId = $this->request->getData('unit_id');
+            $classDay = $this->request->getData('class_day');
+            $classTime = $this->request->getData('class_time');
+            $unitCodeName = $this->Units->find()->where(['id'=>$unitId])->first()->code;
+            $classNameConcat =$unitCodeName . ' - ' . $classDay .' - ' . $classTime;
+            $newClassRow->tutor_id = $tutorId;
+            $newClassRow->class_name = $classNameConcat;
+            if($this->Classes->save($newClassRow)){
+                $this->loadModel('units_classes');
+                $classId = $newClassRow->id;
+                $newUnitClassRow = $unitClassTable->newEntity();
+                $newUnitClassRow->class_id= $classId;
+                $newUnitClassRow->unit_id = $unitId;
+                if($this->units_classes->save($newUnitClassRow)){
+                    return $this->response
+                        ->withType('application/json')
+                        ->withStringBody(json_encode(['name'=>$classNameConcat]));
+                }else{
+                    return 'error';
+                }
+            }
+
+        }
+
+    }
     public function returnRelevantClasses(){
-        $units_classes_query = $this->loadModel('units_classes');
+
         if($this->request->is('post')) {
-            $this->loadComponent('Csrf');
+            $units_classes_query = $this->loadModel('units_classes');
             $unitId = $this->request->getData('unitId');
             $units_classes=$units_classes_query->find()->where(['unit_id'=>$unitId]);
             $classArray=[];
