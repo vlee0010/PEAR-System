@@ -128,6 +128,7 @@ echo $this->Form->create(); ?>
                             var p = document.createElement('h4');
                             p.setAttribute('class','text-gray ');
                             p.textContent = "There is no class for this unit yet." ;
+                            ulList.appendChild(p);
                         }
                     }
 
