@@ -488,11 +488,13 @@ class AdminsController extends AppController
 
                     if (count($selectArray) == 0) {
                         $newUser = $usersTable->newEntity();
+                        $myToken = Security::hash(Security::randomBytes(32));
                         $newUser->email = $userEmail;
                         $newUser->firstname = $data[$key]['Firstname'];
                         $newUser->lastname = $data[$key]['Lastname'];
                         $newUser->role = Role::STAFF;
                         $newUser->password = $userName;
+                        $newUser->token = $myToken;
                         $newUser->verified = 1;
                         $newUser->studentid = $data[$key]['StaffId'];
 
@@ -779,11 +781,13 @@ class AdminsController extends AppController
                     $selectArray = $selectQ->toArray();
                     if (count($selectArray) == 0) {
                         $newUser = $usersTable->newEntity();
+                        $myToken = Security::hash(Security::randomBytes(32));
                         $newUser->email = $userEmail;
                         $newUser->firstname = $data[$key]['Firstname'];
                         $newUser->lastname = $data[$key]['Lastname'];
                         $newUser->role = Role::STUDENT;
                         $newUser->password = $userName;
+                        $newUser->token = $myToken;
                         $newUser->verified = 1;
                         $newUser->studentid = $data[$key]['StudentId'];
 
