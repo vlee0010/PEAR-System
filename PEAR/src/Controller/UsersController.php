@@ -215,7 +215,7 @@ class UsersController extends AppController
                     $email = $this->request->getData('email');
                     $user = $this->Users->find()->where(['email' => $email])->first();
                     $subject = "Password reset";
-                    $body = "Hi " . $user->firstname . " " . $user->lastname . "<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/NandS/team123-app/PEAR/users/reset/" . $user->token . ">Click here to reset</a>";
+                    $body = "Hi " . $user->firstname . " " . $user->lastname . "<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/iteration4-1/team123-app/PEAR/users/reset/" . $user->token . ">Click here to reset</a>";
                     $this->sendEmailToUser($email, $subject, $body);
                     $this->Flash->success('Check your email to reset your password');
                     return $this->redirect(['action' => 'login']);
@@ -384,7 +384,7 @@ class UsersController extends AppController
                 $body = 'Hi, ' . $myFirstName . ' ' . $myLastName;
                 $body .= "<br><br>Please Click the link below to verify your registration.";
 //                $body .= "<br><br><a href=http://localhost:8888/PEAR/PEAR/users/verification/".$myToken.">Verification Link</a>" ;
-                $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/NandS/team123-app/PEAR/users/verification/" . $myToken . ">Verification Link</a>";
+                $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/iteration4-1/team123-app/PEAR/users/verification/" . $myToken . ">Verification Link</a>";
 
 
                 $email = new Email('default');

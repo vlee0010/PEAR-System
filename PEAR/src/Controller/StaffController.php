@@ -694,7 +694,7 @@ class StaffController extends AppController
             $message .= "The data for the following activity will be closed soon: <br><br>";
             $message .= "<i>Activity: " . $activity_title . " </i><br> ";
             $message .= "<i>Unit: " . $unit_code . " " . "$unit_year" . " S" . $unit_semester . "</i><br>";
-            $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/NandS/team123-app/PEAR/'>PEAR Monash</a></br> ";
+            $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/iteration4-1/team123-app/PEAR/'>PEAR Monash</a></br> ";
             $message .= "<br>";
             $message .= $email->message;
             if ($this->request->is('post')) {
