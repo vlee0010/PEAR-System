@@ -118,7 +118,8 @@ echo $this->Form->create(); ?>
                         console.log(response.name);
                         var ulList = document.querySelector('#ajax');
                         var noClassP = document.querySelector('.noClass');
-                        if('xxxxx:'+ ulList.contains(noClassP)){
+                        if(ulList.contains(noClassP)){
+                            console.log(ulList.contains(noClassP))
                             noClassP.remove();
                         }
                         // ulList.innerHTML = '';
