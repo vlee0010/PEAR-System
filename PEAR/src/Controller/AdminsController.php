@@ -944,9 +944,7 @@ class AdminsController extends AppController
 
 
             }
-//            debug($matches);
 //            echo $unitCode . $semester . $year;
-//            debug(count($this->request->getData()));
         }
 
     }
