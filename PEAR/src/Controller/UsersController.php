@@ -384,7 +384,7 @@ class UsersController extends AppController
                 $body = 'Hi, ' . $myFirstName . ' ' . $myLastName;
                 $body .= "<br><br>Please Click the link below to verify your registration.";
 //                $body .= "<br><br><a href=http://localhost:8888/PEAR/PEAR/users/verification/".$myToken.">Verification Link</a>" ;
-                $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/iteration3/team123-app/pear/team123-app/PEAR/users/verification/" . $myToken . ">Verification Link</a>";
+                $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/NandS/team123-app/PEAR/users/verification/" . $myToken . ">Verification Link</a>";
 
 
                 $email = new Email('default');
