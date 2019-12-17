@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * Units Controller
@@ -12,6 +13,7 @@ use App\Controller\AppController;
  */
 class UnitsController extends AppController
 {
+
     /**
      * Index method
      *
@@ -38,7 +40,14 @@ class UnitsController extends AppController
         $unit = $this->Units->get($id, [
             'contain' => ['Users', 'PeerReviews', 'Teams']
         ]);
+        $unitTutorTable = TableRegistry::getTableLocator()->get('units_tutors');
+        $user = $this->paginate($this->Units->users->find('all')->where(['role' => 1]));
+        $lala = $this->paginate = [
+            'contain' => ['Users']
+        ];
+        $this->set('unitPa', $this->paginate($this->Units));
 
+        $this->set(compact('user'));
         $this->set('unit', $unit);
     }
 
