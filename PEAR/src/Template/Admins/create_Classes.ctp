@@ -7,6 +7,20 @@ $this->layout = 'default-staff';
         border:none;
         background-color: transparent;
     }
+
+    @keyframes example {
+        from {background-color: lightgoldenrodyellow;}
+        to {background-color: white;}
+    }
+
+    ul{
+      list-style: none;
+    }
+
+    .example-animation{
+        animation-name:exmaple;
+        animation-duration: 4s;
+    }
 </style>
 
 <h1>Create Classes</h1>
@@ -100,7 +114,12 @@ echo $this->Form->create(); ?>
             let unitCode = document.querySelector("select[name='selectUnit']").value;
             let classDay = document.querySelector("select[name='classDay']").value;
             let classTime = document.querySelector("select[name='classTime']").value;
-            addRelevantClasses(unitCode,classDay,classTime);
+            if (unitCode != '' && classDay != '' && classTime != ''){
+                addRelevantClasses(unitCode,classDay,classTime);
+            }else{
+                alert('Please select all inputs');
+            }
+
         })
 
         function addRelevantClasses(unitId, classDay, classTime){
@@ -125,7 +144,9 @@ echo $this->Form->create(); ?>
                         // ulList.innerHTML = '';
                         let li = document.createElement('li');
                         li.setAttribute('class','list-group-item');
+                        li.setAttribute('class','example-animation');
                         li.textContent = response.name;
+                        console.log('Hooooray');
                         ulList.appendChild(li);
                         // response.forEach(function(e){
                         //     var li = document.createElement('li');
@@ -171,6 +192,7 @@ echo $this->Form->create(); ?>
                     response.forEach(function(e){
                         var li = document.createElement('li');
                         li.setAttribute('class','list-group-item');
+                        li.setAttribute('class','example-animation');
                         li.textContent = e.class_name;
                         console.log(li);
                         ulList.appendChild(li);
