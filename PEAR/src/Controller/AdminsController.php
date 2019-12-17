@@ -43,6 +43,13 @@ class AdminsController extends AppController
 
     public function index()
     {
+        $this->loadModel('users');
+        $this->loadModel('peer_reviews');
+        $userTable = $this->Users->find();
+        $peerTable = $this->peer_reviews->find();
+        $userCount = $this->Users->find()->count();
+        $peerCount = $this->peer_reviews->find()->count();
+        $this->set(compact(['userCount','peerCount','peerTable']));
 
     }
 
@@ -51,15 +58,70 @@ class AdminsController extends AppController
         $questionTable = TableRegistry::getTableLocator()->get('questions');
         if ($this->request->is('post')) {
             $questionDescription = $this->request->getData('question');
+            $secondLastRow = $questionTable->find('all',[]);
 //            debug($questionDescription);
             $newQuestion = $questionTable->newEntity();
             $newQuestion->description = $questionDescription;
+
             if ($this->Questions->save($newQuestion)) {
                 $this->Flash->success("New question ''" . $newQuestion->description . "'' has been added into the Question Bank Successfully!");
             };
         }
     }
 
+    public function addClassViaAjax(){
+
+        if($this->request->is('POST')){
+            $classTable =  TableRegistry::getTableLocator()->get('classes');
+            $unitClassTable = TableRegistry::getTableLocator()->get('units_classes');
+            $this->loadModel('units');
+            $this->loadModel('Users');
+
+            $newClassRow = $classTable->newEntity();
+            $tutorId = $this->Users->find()->first()->id;
+            $unitId = $this->request->getData('unit_id');
+            $classDay = $this->request->getData('class_day');
+            $classTime = $this->request->getData('class_time');
+            $unitCodeName = $this->Units->find()->where(['id'=>$unitId])->first()->code;
+            $classNameConcat =$unitCodeName . ' - ' . $classDay .' - ' . $classTime;
+            $newClassRow->tutor_id = $tutorId;
+            $newClassRow->class_name = $classNameConcat;
+            if($this->Classes->save($newClassRow)){
+                $this->loadModel('units_classes');
+                $classId = $newClassRow->id;
+                $newUnitClassRow = $unitClassTable->newEntity();
+                $newUnitClassRow->class_id= $classId;
+                $newUnitClassRow->unit_id = $unitId;
+                if($this->units_classes->save($newUnitClassRow)){
+                    return $this->response
+                        ->withType('application/json')
+                        ->withStringBody(json_encode(['name'=>$classNameConcat]));
+                }else{
+                    return 'error';
+                }
+            }
+
+        }
+
+    }
+    public function returnRelevantClasses(){
+
+        if($this->request->is('post')) {
+            $units_classes_query = $this->loadModel('units_classes');
+            $unitId = $this->request->getData('unitId');
+            $units_classes=$units_classes_query->find()->where(['unit_id'=>$unitId]);
+            $classArray=[];
+            foreach ($units_classes as $units_class){
+                $class=TableRegistry::getTableLocator()->get('classes')->find()->where(['id'=>$units_class->class_id])->first();
+                array_push($classArray,$class);
+            }
+
+
+            return $this->response
+                ->withType('application/json')
+                ->withStringBody(json_encode($classArray));
+        }
+    }
     public function checkUnitExists()
     {
 

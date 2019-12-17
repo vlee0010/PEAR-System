@@ -20,6 +20,7 @@
             <tbody>
             <?php foreach ($questionList as $question):?>
                 <?php if ($question->is_text == 0): ?>
+
                 <div id="myModal" class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="margin: 0 auto">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
