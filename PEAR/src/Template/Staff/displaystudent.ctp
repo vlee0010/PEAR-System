@@ -57,7 +57,7 @@
                             <?= $this->element('Staff/Buttons/results', ['url' => ['action' => 'viewAllResults', $unit_activity['peer_id']]]) ?>
                             <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal'.$unit_activity['peer_id']]); ?>
                             <!-- Modal -->
-                            <div class="modal fade" id="exampleModal<?=$unit_activity['peer_id'] ?>" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="exampleModal<?=$unit_activity['peer_id']?>" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalLabel"
                                  aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -109,7 +109,7 @@
                         </div>
                         <div class="modal-footer">
                             <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
-                                <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', $unit_activity->peer_id]]) ?>
+                                <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', $peer_id]]) ?>
                         </div>
                     </div>
                 </div>
