@@ -61,7 +61,7 @@
 
 
 
-
+    <?= $this->Html->meta('icon', 'favicon.ico', ['type'=>'image/png']) ?>
 
 
 

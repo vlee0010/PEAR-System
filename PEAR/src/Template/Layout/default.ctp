@@ -30,6 +30,7 @@ $cakeDescription = 'PEAR Monash: Peer Evaluation & Assessment Resource';
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
     <?= $this->Html->meta('icon') ?>
+    <?= $this->Html->meta('icon', 'favicon.ico', ['type'=>'image/png']) ?>
 
 
     <?= $this->Html->css('nucleo-icons.css') ?>
