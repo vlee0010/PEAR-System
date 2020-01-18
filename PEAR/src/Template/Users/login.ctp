@@ -64,7 +64,7 @@
                                                 <div class="modal-body">
                                                     <?= $this->Form->create();?>
                                                     <?= $this->Form->input('_type', ['type'=>'hidden', 'value' => 'reset']);?>
-                                                    <?=$this->Form->text('email',array('type'=>'email','auto-complete'=>'none','style'=>'color:black','name'=>'email','class'=>'form-control','placeholder'=>'Enter Your Monash Email','pattern'=>'[a-z0-9]+@student+\.+monash+\.+edu'));?>
+                                                    <?=$this->Form->text('email',array('type'=>'email','auto-complete'=>'none','style'=>'color:black','name'=>'email','class'=>'form-control','placeholder'=>'Enter Your Monash Email','pattern'=>'[a-z0-9]+@student+\.+monash+\.+edu|(?:[a-z]{4}[0-9]{3}@student.monash.edu)|(?:[a-z]+.+?@monash.edu.?.+)|(?:.+\..+@monash.edu.*)'));?>
 
 
                                                 </div>
