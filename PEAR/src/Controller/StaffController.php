@@ -8,6 +8,7 @@ use App\Model\Entity\Emails;
 use Cake\Mailer\Email;
 use Cake\I18n\Number;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use Cake\View\Helper\BreadcrumbsHelper;
 use Cake\Mailer\TransportFactory;
 use Cake\Event\Event;
@@ -687,6 +688,7 @@ class StaffController extends AppController
                 $emailArray = $email->toArray();
                 $email = $emailArray[0];
             }
+            $webLink = Router::url(array("controller"=>"users","action"=>"login"),true);
             $from = $unit_code . " Role via Pear Monash";
             $subject = $email->emailSubject;
             $header = $email->header;
@@ -694,7 +696,7 @@ class StaffController extends AppController
             $message .= "The data for the following activity will be closed soon: <br><br>";
             $message .= "<i>Activity: " . $activity_title . " </i><br> ";
             $message .= "<i>Unit: " . $unit_code . " " . "$unit_year" . " S" . $unit_semester . "</i><br>";
-            $message .= "<br>Please follow this link to complete: <a href='http://ie.infotech.monash.edu/team123/iteration4-1/team123-app/PEAR/'>PEAR Monash</a></br> ";
+            $message .= "<br>Please follow this link to complete: <a href= ".$webLink.">PEAR Monash</a></br> ";
             $message .= "<br>";
             $message .= $email->message;
             if ($this->request->is('post')) {
@@ -707,8 +709,7 @@ class StaffController extends AppController
                     ->subject($subject)
                     ->setHeaders([$header])
                     ->emailFormat('html')
-                    ->bcc(['vlee0010@student.monash.edu'])
-//                    ->bcc($student_email_list)
+                    ->bcc($student_email_list)
                     ->send($message);
 
                 //            return $this->redirect(['action' => 'displaystudent',1,2]);
