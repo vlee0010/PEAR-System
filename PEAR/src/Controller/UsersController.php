@@ -12,6 +12,7 @@ use Cake\Controller\Exception\SecurityException;
 use Cake\Utility\Security;
 use Cake\Mailer\Email;
 use App\Model\Entity\Role;
+use Cake\Routing\Router;
 
 /**
  * Users Controller
@@ -214,8 +215,9 @@ class UsersController extends AppController
                 if ($userTable->find()->where(['email' => $userEmail])->first()) {
                     $email = $this->request->getData('email');
                     $user = $this->Users->find()->where(['email' => $email])->first();
+                    $resetLink = Router::url(array("controller"=>"users","action"=>"reset",$user->token),true);
                     $subject = "Password reset";
-                    $body = "Hi " . $user->firstname . " " . $user->lastname . "<br / >Please reset your password through the link below<br /><a href=http://ie.infotech.monash.edu/team123/iteration4-1/team123-app/PEAR/users/reset/" . $user->token . ">Click here to reset</a>";
+                    $body = "Hi " . $user->firstname . " " . $user->lastname . "<br / >Please reset your password through the link below<br /><a href=".$resetLink.">Click here to reset</a>";
                     $this->sendEmailToUser($email, $subject, $body);
                     $this->Flash->success('Check your email to reset your password');
                     return $this->redirect(['action' => 'login']);
@@ -379,12 +381,13 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->set('Your Registration is successful, your confirmation email has been sent to your email address. Please Verify.', ['element' => 'success']);
 
+                $verifiedLink = Router::url(array("controller"=>"users","action"=>"verification", $myToken),true);
 //                if all info passed in successful, then send email confirmation to users
                 $subject = 'Please Click the link to confirm your Email Verification';
                 $body = 'Hi, ' . $myFirstName . ' ' . $myLastName;
                 $body .= "<br><br>Please Click the link below to verify your registration.";
 //                $body .= "<br><br><a href=http://localhost:8888/PEAR/PEAR/users/verification/".$myToken.">Verification Link</a>" ;
-                $body .= "<br><br><a href=http://ie.infotech.monash.edu/team123/iteration4-1/team123-app/PEAR/users/verification/" . $myToken . ">Verification Link</a>";
+                $body .= "<br><br><a href=" . $verifiedLink . ">Verification Link</a>";
 
 
                 $email = new Email('default');
