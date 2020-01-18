@@ -52,6 +52,37 @@ class AdminsController extends AppController
         $this->set(compact(['userCount','peerCount','peerTable']));
 
     }
+    public function viewUsers(){
+        $this->loadModel(('users'));
+        $users = $this->paginate($this->Users);
+        $this->set(compact('users'));
+    }
+    public function changeUserInfo($id= null){
+        $user = $this->Users->get($id, [
+            'contain' => ['PeerReviews', 'Teams', 'Units', 'Responses']
+        ]);
+        if ($this->request->is('post')){
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            $userFirst = $user->firstname;
+            $userLast = $user->lastname;
+            $email = $user->email;
+            $password = $user->password;
+            $encryptedPassword = (new DefaultPasswordHasher)->hash($password);
+            $query = $this->Users->query();
+            if ($query->update()
+                ->set(['firstname' => $userFirst,'lastname'=>$userLast,'email'=>$email,'password'=>$password])
+                ->where(['id' => $id])
+                ->execute()){
+                $this->Flash->success("The information has been updated.");
+            }else{
+                $this->Flash->error('The information cannot be saved.');
+            }
+
+        }
+        $this->set('user', $user);
+
+
+    }
 
     public function addQuestions()
     {

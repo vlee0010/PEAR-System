@@ -178,6 +178,18 @@
                     </a>
                 </li>
 
+                <li id="viewUsers" class="nav-item ">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "viewUsers",
+                        ]
+                    );?>>
+                        <i class="material-icons">bubble_chart</i>
+                        <p>User Info</p>
+                    </a>
+                </li>
+
 <!--                <li class="nav-item ">-->
 <!--                    <a class="nav-link" href="./typography.html">-->
 <!--                        <i class="material-icons">library_books</i>-->

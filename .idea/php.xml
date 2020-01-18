@@ -78,6 +78,15 @@
       <path value="$PROJECT_DIR$/PEAR/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/PEAR/vendor/friendsofcake/cakephp-csvview" />
       <path value="$PROJECT_DIR$/PEAR/vendor/proloser/cakephp-csv" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/zendframework/zend-diactoros" />
+      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/vendor/proloser/cakephp-csv" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/aura/intl" />
+      <path value="$PROJECT_DIR$/vendor/cakephp/cakephp" />
+      <path value="$PROJECT_DIR$/vendor/cakephp/chronos" />
     </include_path>
   </component>
   <component name="PhpUnit">
