@@ -39,7 +39,7 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group" >
             <label for="start">Start:</label>
             <br>
-            <input onpaste="return false;" onkeypress="return false;" required class="form-control" type="text" id="start" placeholder="Please Pick a start date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
+            <input onpaste="return false;" onkeypress="return false;" required class="form-control" name="start-date" type="text" id="start" placeholder="Please Pick a start date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
     </div>
 
@@ -47,7 +47,7 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group" >
             <label for="end">End:</label>
             <br>
-            <input onkeypress="return false;" onpaste="return false;" required class="form-control" type="text" id="end" placeholder="Please Pick an end date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
+            <input onkeypress="return false;" onpaste="return false;" required class="form-control" name="end-date"type="text" id="end" placeholder="Please Pick an end date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
     </div>
 </div>
@@ -58,7 +58,7 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group" >
             <label  for="reminder">Reminder:</label>
             <br>
-            <input onpaste="return false;" onkeypress="return false;" required class="form-control" type="text" id="reminder" placeholder="Please Pick start date and end date first" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
+            <input onpaste="return false;" onkeypress="return false;" required class="form-control" name="remimnder-date" type="text" id="reminder" placeholder="Please Pick start date and end date first" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
     </div>
 </div>
@@ -174,7 +174,7 @@ echo $this->Form->create(); ?>
             startPicker = new Pikaday({
                 field: document.getElementById('start'),
                 toString(date, format) {
-                    return moment(date).format('DD/MM/YYYY');
+                    return moment(date).format('DD-MM-YYYY');
                 },
                 minDate: new Date(),
                 maxDate: new Date(2030, 12, 31),
@@ -189,7 +189,7 @@ echo $this->Form->create(); ?>
                 field: document.getElementById('end'),
                 format: 'DD/MM/YYYY',
                 toString(date, format) {
-                    return moment(date).format('DD/MM/YYYY');
+                    return moment(date).format('DD-MM-YYYY');
                 },
                 minDate: new Date(),
                 maxDate: new Date(2030, 12, 31),
@@ -207,7 +207,7 @@ echo $this->Form->create(); ?>
                 reminderPicker = new Pikaday({
                     field: document.getElementById('reminder'),
                     toString(date, format) {
-                        return moment(date).format('DD/MM/YYYY');
+                        return moment(date).format('DD-MM-YYYY');
                     },
                     minDate: new Date(),
                     maxDate: new Date(2030, 12, 31),
