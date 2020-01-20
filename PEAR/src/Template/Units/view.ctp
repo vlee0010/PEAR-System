@@ -12,7 +12,7 @@ use App\Model\Entity\Role;
 
 <?php $this->Breadcrumbs->templates([
     'wrapper' => '<nav aria-label="breadcrumb" role="navigation"><div class="breadcrumb">
-                       
+                
                         &nbsp;&nbsp;{{content}}</div></nav>',
     'item' => '<div class="breadcrumb-item" {{attrs}}><a href="{{url}}" {{innerAttrs}}> {{title}} </a> </div>{{separator}}',
     'itemWithoutLink' => '<div class="breadcrumb-item active" aria-current="page" {{attrs}}><span{{innerAttrs}}> <u>{{title}}</u></span></div>{{separator}}',
@@ -42,7 +42,7 @@ use App\Model\Entity\Role;
                 CSV</a>
         </div>
     </div>
-    <?= $this->Html->link('<i class="material-icons">edit</i> Customize Email ',['controller' => 'emails', 'action' => 'edit',$unit->id],['class' =>'btn btn-secondary','escape'=>false]) ?>
+    <?= $this->Html->link('<i class="material-icons">edit</i> Customize Email ', ['controller' => 'emails', 'action' => 'edit', $unit->id], ['class' => 'btn btn-secondary', 'escape' => false]) ?>
     <!-- Student Modal -->
     <div class="modal fade" id="studentModal<?= $unit->id ?>" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel"
@@ -89,46 +89,161 @@ use App\Model\Entity\Role;
     </div>
     <br>
     <br/>
-    <table class="table">
-        <tr>
-            <th scope="row"><?= __('Title') ?></th>
-            <td><?= h($unit->title) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Code') ?></th>
-            <td><?= h($unit->code) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Semester') ?></th>
-            <td><?= h($unit->semester) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Year') ?></th>
-            <td><?= h($unit->year) ?></td>
-        </tr>
+    <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h3 class="card-title">Offering</h3>
+                    <p class="card-category"></p>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table">
+                        <tbody>
+                        <tr></tr>
+                        <tr>
+                            <th scope="row"><?= __('Title') ?></th>
+                            <td><?= h($unit->title) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?= __('Code') ?></th>
+                            <td><?= h($unit->code) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?= __('Year') ?></th>
+                            <td><?= h($unit->year) ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?= __('Semester') ?></th>
+                            <td><?= h($unit->semester) ?></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h3 class="card-title"><?= __('Peer Reviews') ?></h3>
+                </div>
+                <div class="card-body table-responsive">
+                    <div class="related">
+                        <?php if (!empty($unit->peer_reviews)): ?>
+                            <table class="table">
+                                <tr>
+                                    <th scope="col"><?= __('Title') ?></th>
+                                    <th scope="col"><?= __('Date Start') ?></th>
+                                    <th scope="col"><?= __('Date End') ?></th>
+                                </tr>
+                                <?php foreach ($unit->peer_reviews as $peerReviews): ?>
+                                    <tr>
+                                        <td><?= $peerReviews->title ?></td>
+                                        <td><?= date("d-M-Y", strtotime($peerReviews->date_start)) ?></td>
+                                        <td><?= date("d-M-Y", strtotime($peerReviews->date_end)) ?></td>
 
-    </table>
-
-    <div class="related">
-        <h2><?= __('Peer Reviews') ?></h2>
-        <?php if (!empty($unit->peer_reviews)): ?>
-            <table class="table">
-                <tr>
-                    <th scope="col"><?= __('Title') ?></th>
-                    <th scope="col"><?= __('Date Start') ?></th>
-                    <th scope="col"><?= __('Date End') ?></th>
-                </tr>
-                <?php foreach ($unit->peer_reviews as $peerReviews): ?>
-                    <tr>
-                        <td><?= $peerReviews->title ?></td>
-                        <td><?= date("d-M-Y", strtotime($peerReviews->date_start)) ?></td>
-                        <td><?= date("d-M-Y", strtotime($peerReviews->date_end)) ?></td>
-
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php endif; ?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="card">
+        <div class="card-header card-header-tabs card-header-primary">
+            <div class="nav-tabs-navigation">
+                <div class="nav-tabs-wrapper">
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#student" data-toggle="tab">
+                                <i class="material-icons">sentiment_very_satisfiedt</i> Students
+                                <div class="ripple-container"></div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#staff" data-toggle="tab">
+                                <i class="material-icons">emoji_emotionss</i> Staff
+                                <div class="ripple-container"></div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="tab-content">
+                <div class="tab-pane active" id="student">
+                    <?php if (!empty($paginatorStudent)): ?>
+                        <table class="table">
+                            <tr>
+                                <th scope="col"><?= __('Student ID') ?></th>
+                                <th scope="col"><?= __('First name') ?></th>
+                                <th scope="col"><?= __('Last name') ?></th>
+                                <th scope="col"><?= __('Email') ?></th>
+                            </tr>
+                            <?php foreach ($paginatorStudent as $student): ?>
+                                <tr>
+                                    <td><?= $student->studentid ?></td>
+                                    <td><?= $student->firstname ?></td>
+                                    <td><?= $student->lastname ?></td>
+                                    <td><?= $student->email ?></td>
+
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    <?php endif; ?>
+                    <nav aria-label="...">
+                        <div class="paginator">
+                            <ul class="pagination">
+                                <?= $this->Paginator->first(__('first'),['model' => 'Users']) ?>
+                                <?= $this->Paginator->prev(__('previous'),['model' => 'Users']) ?>
+                                <?= $this->Paginator->numbers(['model' => 'Users']) ?>
+                                <?= $this->Paginator->next(__('next'),['model' => 'Users']) ?>
+                                <?= $this->Paginator->last(__('last'),['model' => 'Users']) ?>
+                            </ul>
+                            <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total'),'model'=> 'Users']) ?></p>
+                        </div>
+                    </nav>
+                </div>
+                <div class="tab-pane" id="staff">
+                    <?php if (!empty($paginatorStaff)): ?>
+                        <table class="table">
+                            <tr>
+                                <th scope="col"><?= __('Student ID') ?></th>
+                                <th scope="col"><?= __('First name') ?></th>
+                                <th scope="col"><?= __('Last name') ?></th>
+                                <th scope="col"><?= __('Email') ?></th>
+                            </tr>
+                            <?php foreach ($paginatorStaff as $staff): ?>
+                                <tr>
+                                    <td><?= $staff->studentid ?></td>
+                                    <td><?= $staff->firstname ?></td>
+                                    <td><?= $staff->lastname ?></td>
+                                    <td><?= $staff->email ?></td>
+
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    <?php endif; ?>
+                    <nav aria-label="...">
+                        <div class="paginator">
+                            <ul class="pagination">
+                                <?= $this->Paginator->first(__('first'),['model' => 'Users2']) ?>
+                                <?= $this->Paginator->prev( __('previous'),['model' => 'Users2']) ?>
+                                <?= $this->Paginator->numbers(['model' => 'Users2']) ?>
+                                <?= $this->Paginator->next(__('next'),['model' => 'Users2']) ?>
+                                <?= $this->Paginator->last(__('last'),['model' => 'Users2']) ?>
+                            </ul>
+                            <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total'),'model'=> 'Users2']) ?></p>
+                        </div>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>

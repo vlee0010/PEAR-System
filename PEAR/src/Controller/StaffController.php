@@ -266,7 +266,8 @@ class StaffController extends AppController
 
         $questions_desc = $response_query->select([
             'question_id' => "Questions.id",
-            'question' => "Questions.description"
+            'question' => "Questions.description",
+            'peer_review_id' => $peer_id,
         ])->innerJoinWith('Questions')
             ->where([
                 'Responses.is_text_number' => 0
