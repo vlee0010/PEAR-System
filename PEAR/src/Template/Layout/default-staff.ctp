@@ -97,6 +97,35 @@
                 </li>
 
 
+                <li id="add-user" class="nav-item" id="dashboard">
+                    <a  class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "addUsers",
+                        ]
+                    );?>>
+                        <i class="material-icons">add_circle_outline
+                        </i>
+                        <p>Add User</p>
+                    </a>
+                </li>
+
+                <li id="viewUsers" class="nav-item ">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "viewUsers",
+                        ]
+                    );?>>
+                        <i class="material-icons">account_circle</i>
+                        <p>User Info</p>
+                    </a>
+                </li>
+
+
+
+
+
                 <li id="create-unit" class="nav-item">
                     <a id="unit-link" class="nav-link" data-toggle="collapse" href="#unitExpand">
                         <i class="material-icons">queue</i>
@@ -178,17 +207,7 @@
                     </a>
                 </li>
 
-                <li id="viewUsers" class="nav-item ">
-                    <a class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "admins",
-                            "action" => "viewUsers",
-                        ]
-                    );?>>
-                        <i class="material-icons">bubble_chart</i>
-                        <p>User Info</p>
-                    </a>
-                </li>
+
 
 <!--                <li class="nav-item ">-->
 <!--                    <a class="nav-link" href="./typography.html">-->

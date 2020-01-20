@@ -95,7 +95,9 @@ echo $this->Form->create(); ?>
                     <div class="tab-pane active" id="profile">
                         <table class="table">
                             <tbody>
-
+                            <?php if (count($questions)==0) :?>
+                                pls create questions first
+                            <?php endif;?>
                 <?php foreach ($questions as $index => $question):?>
                             <tr>
                                 <td>
