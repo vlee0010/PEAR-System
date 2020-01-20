@@ -316,7 +316,62 @@ class AdminsController extends AppController
 //        }
         }
     }
+    public function addUsers(){
+        if ($this->request->is('post')){
 
+//            check if this email exist;
+            $userTable = TableRegistry::getTableLocator()->get('users');
+            $email = ($this->request->getData('email'));
+//            create an array to store matched user
+            $userMatchArray =[];
+            $userMatches = $userTable->find()->where(['email' => $email]);
+//            if there are any match result push into array
+            foreach ($userMatches as $userMatch){
+                array_push($userMatchArray,$userMatch);
+            }
+//            if number of userMatchArray >=1 then means the user admin wants to add already existed.
+            if(count($userMatchArray)){
+                $this->Flash->error("User you trying to insert has already existed.");
+            }else{
+
+                $role = ($this->request->getData('role'));
+                $email = ($this->request->getData('email'));
+                $firstname = ($this->request->getData('firstname'));
+                $lastname = ($this->request->getData('lastname'));
+                $password = $this->request->getData('password');
+
+
+                $token = Security::hash(Security::randomBytes(32));
+
+                $newUser = $userTable->newEntity();
+                $newUser->firstname  = $firstname;
+                $newUser->lastname = $lastname;
+                $newUser->role = $role;
+                $newUser->email = $email;
+                $newUser->password = $password;
+                $newUser->token = $token;
+
+
+
+                if($userTable->save($newUser)){
+                    $userRole = $newUser->role;
+                    if ($userRole == '1'){
+                        $userRole = 'Student';
+                    }elseif($userRole == '2'){
+                        $userRole = 'Staff';
+                    }elseif ($userRole == '3'){
+                        $userRole = 'Admin';
+                    }
+                    $this->Flash->success('User '.$newUser->email . 'has been added as ' . $userRole);
+                }else{
+                    $this->Flash->error('Sorry, user with  '. $newUser->email .'address can not be saved.') ;
+                }
+            }
+
+
+
+        }
+    }
     public function createPeerReview($unit_id = null)
     {
         $this->set(compact('unit_id'));
