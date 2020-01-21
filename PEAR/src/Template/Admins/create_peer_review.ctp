@@ -39,7 +39,7 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group" >
             <label for="start">Start:</label>
             <br>
-            <input onpaste="return false;" onkeypress="return false;" required class="form-control" name="start-date" type="text" id="start" placeholder="Please Pick a start date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
+            <input onpaste="return false;" onkeypress="return false;" required class="form-control"  type="text" id="start" placeholder="Please Pick a start date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
     </div>
 
@@ -47,7 +47,7 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group" >
             <label for="end">End:</label>
             <br>
-            <input onkeypress="return false;" onpaste="return false;" required class="form-control" name="end-date"type="text" id="end" placeholder="Please Pick an end date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
+            <input onkeypress="return false;" onpaste="return false;" required class="form-control" name="end-date" type="text" id="end" placeholder="Please Pick an end date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
     </div>
 </div>
@@ -56,9 +56,9 @@ echo $this->Form->create(); ?>
 <div class="row">
     <div class="col-md-6">
         <div class="form-group bmd-form-group" >
-            <label  for="reminder">Reminder:</label>
+            <label for="reminder">Reminder:</label>
             <br>
-            <input onpaste="return false;" onkeypress="return false;" required class="form-control" name="remimnder-date" type="text" id="reminder" placeholder="Please Pick start date and end date first" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
+            <input onpaste="return false;" onkeypress="return false;" required class="form-control" name="reminder-date" type="text" id="reminder" placeholder="Please Pick start date and end date first" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
     </div>
 </div>
@@ -95,9 +95,27 @@ echo $this->Form->create(); ?>
                     <div class="tab-pane active" id="profile">
                         <table class="table">
                             <tbody>
-                            <?php if (count($questions)==0) :?>
-                                pls create questions first
-                            <?php endif;?>
+                <?php
+                            $questionList = [];
+                            foreach ($questions as $question){
+                                array_push($questionList,$question);
+                            };
+
+                            ?>
+                            <?php if (count($questionList)==0) :?>
+                                <div class="info info-horizontal">
+                                    <div class="icon icon-rose">
+                                        <i class="material-icons">group_work</i>
+                                    </div>
+                                    <div class="description">
+                                        <h4 class="info-title">Reminder</h4>
+                                        <p> It seems like there is no question in the question Bank.
+                                            Please create one to proceed. </p>
+                                        <?php echo $this->Html->link( 'Create Question', ['controller'=>'admins','action'=>'addQuestions']);?>
+                                    </div>
+                                </div>
+
+                            <?php else :?>
                 <?php foreach ($questions as $index => $question):?>
                             <tr>
                                 <td>
@@ -114,6 +132,7 @@ echo $this->Form->create(); ?>
 
                             </tr>
                 <?php endforeach;?>
+                <?php endif;?>
                             </tbody>
                         </table>
                     </div>
@@ -179,7 +198,7 @@ echo $this->Form->create(); ?>
                     return moment(date).format('DD-MM-YYYY');
                 },
                 minDate: new Date(),
-                maxDate: new Date(2030, 12, 31),
+                maxDate: new Date(2050, 12, 31),
                 onSelect: function () {
                     startDate = this.getDate();
                     updateStartDate();
@@ -194,7 +213,7 @@ echo $this->Form->create(); ?>
                     return moment(date).format('DD-MM-YYYY');
                 },
                 minDate: new Date(),
-                maxDate: new Date(2030, 12, 31),
+                maxDate: new Date(2050, 12, 31),
                 onSelect: function () {
 
                     endDate = this.getDate();
@@ -212,7 +231,7 @@ echo $this->Form->create(); ?>
                         return moment(date).format('DD-MM-YYYY');
                     },
                     minDate: new Date(),
-                    maxDate: new Date(2030, 12, 31),
+                    maxDate: new Date(2050, 12, 31),
 
                     onSelect: function () {
                         startDate = this.getDate();

@@ -21,7 +21,7 @@ class AdminsController extends AppController
 {
 
     public $paginate = [
-        'limit' => 25,
+        'limit' => 10000,
         'order' => [
 //            'Users.firstname' => 'asc',
 
@@ -52,6 +52,67 @@ class AdminsController extends AppController
         $this->set(compact(['userCount','peerCount','peerTable']));
 
     }
+    
+    
+    public function addUsers(){
+        if ($this->request->is('post')){
+
+//            check if this email exist;
+            $userTable = TableRegistry::getTableLocator()->get('users');
+            $email = ($this->request->getData('email'));
+//            create an array to store matched user
+            $userMatchArray =[];
+            $userMatches = $userTable->find()->where(['email' => $email]);
+//            if there are any match result push into array
+            foreach ($userMatches as $userMatch){
+                array_push($userMatchArray,$userMatch);
+            }
+//            if number of userMatchArray >=1 then means the user admin wants to add already existed.
+            if(count($userMatchArray)){
+                $this->Flash->error("User you trying to insert has already existed.");
+            }else{
+
+                $role = ($this->request->getData('role'));
+                $email = ($this->request->getData('email'));
+                $firstname = ($this->request->getData('firstname'));
+                $lastname = ($this->request->getData('lastname'));
+                $password = $this->request->getData('password');
+
+
+                $token = Security::hash(Security::randomBytes(32));
+
+                $newUser = $userTable->newEntity();
+                $newUser->firstname  = $firstname;
+                $newUser->lastname = $lastname;
+                $newUser->role = $role;
+                $newUser->email = $email;
+                $newUser->password = $password;
+                $newUser->token = $token;
+                $newUser->verified = 1;
+
+
+
+                if($userTable->save($newUser)){
+                    $userRole = $newUser->role;
+                    if ($userRole == '1'){
+                        $userRole = 'Student';
+                    }elseif($userRole == '2'){
+                        $userRole = 'Staff';
+                    }elseif ($userRole == '3'){
+                        $userRole = 'Admin';
+                    }
+                    $this->Flash->success('User '.$newUser->email . 'has been added as ' . $userRole);
+                }else{
+                    $this->Flash->error('Sorry, user with  '. $newUser->email .'address can not be saved.') ;
+                }
+            }
+
+
+
+        }
+    }
+    
+    
     public function viewUsers(){
         $this->loadModel(('users'));
         $users = $this->paginate($this->Users);
@@ -84,6 +145,33 @@ class AdminsController extends AppController
 
     }
 
+    public function hideQuestion($question_id){
+
+        $question = TableRegistry::get('Questions');
+        $query = $question->query();
+        $query->update()
+            ->set(["is_show" => 0])
+            ->where(["id" => $question_id])
+            ->execute();
+            
+        $questionRow = $question->find()->where(['id'=>$question_id])->first();
+        $questionDescription = $questionRow->description;
+        $this->Flash->success("Record\n ".$questionDescription.' has been deleted successfully!');
+        sleep(1);
+        
+        return $this->redirect(
+            ['controller'=>'admins',
+                'action'=>'viewQuestions'
+            ]);
+
+    }
+    public function viewQuestions(){
+        $questionTable = TableRegistry::getTableLocator()->get('questions');
+        $questionsShow = $questionTable->find()->where(['is_show'=>1]);
+        $this->set('questionsShow',$questionsShow);
+    }
+    
+    
     public function addQuestions()
     {
         $questionTable = TableRegistry::getTableLocator()->get('questions');
@@ -316,62 +404,7 @@ class AdminsController extends AppController
 //        }
         }
     }
-    public function addUsers(){
-        if ($this->request->is('post')){
 
-//            check if this email exist;
-            $userTable = TableRegistry::getTableLocator()->get('users');
-            $email = ($this->request->getData('email'));
-//            create an array to store matched user
-            $userMatchArray =[];
-            $userMatches = $userTable->find()->where(['email' => $email]);
-//            if there are any match result push into array
-            foreach ($userMatches as $userMatch){
-                array_push($userMatchArray,$userMatch);
-            }
-//            if number of userMatchArray >=1 then means the user admin wants to add already existed.
-            if(count($userMatchArray)){
-                $this->Flash->error("User you trying to insert has already existed.");
-            }else{
-
-                $role = ($this->request->getData('role'));
-                $email = ($this->request->getData('email'));
-                $firstname = ($this->request->getData('firstname'));
-                $lastname = ($this->request->getData('lastname'));
-                $password = $this->request->getData('password');
-
-
-                $token = Security::hash(Security::randomBytes(32));
-
-                $newUser = $userTable->newEntity();
-                $newUser->firstname  = $firstname;
-                $newUser->lastname = $lastname;
-                $newUser->role = $role;
-                $newUser->email = $email;
-                $newUser->password = $password;
-                $newUser->token = $token;
-
-
-
-                if($userTable->save($newUser)){
-                    $userRole = $newUser->role;
-                    if ($userRole == '1'){
-                        $userRole = 'Student';
-                    }elseif($userRole == '2'){
-                        $userRole = 'Staff';
-                    }elseif ($userRole == '3'){
-                        $userRole = 'Admin';
-                    }
-                    $this->Flash->success('User '.$newUser->email . 'has been added as ' . $userRole);
-                }else{
-                    $this->Flash->error('Sorry, user with  '. $newUser->email .'address can not be saved.') ;
-                }
-            }
-
-
-
-        }
-    }
     public function createPeerReview($unit_id = null)
     {
         $this->set(compact('unit_id'));
@@ -383,8 +416,8 @@ class AdminsController extends AppController
         $staffList = $this->Users->find()->where(['role' => '2'])->orWhere(['role' => '3']);
         $this->set('staffList', $staffList);
         $peerReviewQuestionTable = TableRegistry::getTableLocator()->get('peer_reviews_questions');
-
-        $questions = $this->paginate($this->Questions);
+        $questionCandidate = $this->Questions->find()->where(['is_show' => 1]);
+        $questions = $this->paginate($questionCandidate);
 
         $this->set(compact('questions'));
 

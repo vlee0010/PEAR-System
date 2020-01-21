@@ -16,8 +16,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8" />
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
 <!--    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">-->
 <!--    <link rel="icon" type="image/png" href="../assets/img/favicon.png">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -96,7 +96,6 @@
                     </a>
                 </li>
 
-
                 <li id="add-user" class="nav-item" id="dashboard">
                     <a  class="nav-link" href=<?php echo $this->Url->build(
                         [
@@ -109,7 +108,7 @@
                         <p>Add User</p>
                     </a>
                 </li>
-
+                
                 <li id="viewUsers" class="nav-item ">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
@@ -117,12 +116,10 @@
                             "action" => "viewUsers",
                         ]
                     );?>>
-                        <i class="material-icons">account_circle</i>
+                        <i class="material-icons">bubble_chart</i>
                         <p>User Info</p>
                     </a>
                 </li>
-
-
 
 
 
@@ -208,6 +205,20 @@
                 </li>
 
 
+                <li id="vq" class="nav-item ">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "viewQuestions",
+                        ]
+                    );?>>
+                        <i class="material-icons">bubble_chart</i>
+                        <p>View Questions</p>
+                    </a>
+                </li>
+                
+                
+                
 
 <!--                <li class="nav-item ">-->
 <!--                    <a class="nav-link" href="./typography.html">-->
