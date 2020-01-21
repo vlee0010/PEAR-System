@@ -846,7 +846,7 @@ class AdminsController extends AppController
                                 if (!$teamTable->PeerReviews->link($newTeam, [$peerReview])) {
                                     $this->Flash->error('The peer-team could not be saved. Please, try again.');
                                 } else {
-                                    echo "haha";
+
                                 }
                             endforeach;
 //                        $success .= 'User added to database<br />';
@@ -923,15 +923,14 @@ class AdminsController extends AppController
                                 'name' => $data[$key]['Team'],
                                 'unit_id' => $unit_id,
                             ])->first();
-                            $existedTeamId = $existedTeam->id;
-                            $this->set('ehehe',$existedTeamId);
+                            $existedTeamId = $existedTeam->id_;
                             $unit = $usersTable->Units->findById($unit_id)->first();
                             if (!$usersTable->Units->link($newUser, [$unit])) {
                                 // $this->Flash->error('The unit could not be saved. Please, try again.');
                             } else {
                                 $unitUserSuccess = true;
                             }
-                            $team = $usersTable->Teams->findById($existedTeamId)->first();
+                            $team = $usersTable->Teams->findById_($existedTeamId)->first();
                             if (!$usersTable->Teams->link($newUser, [$team])) {
                                 // $this->Flash->error('The team-user could not be saved. Please, try again.');
                             } else {

@@ -66,6 +66,7 @@ class UnitsController extends AppController
         ]);
 
         $this->loadModel('Users');
+        $this->loadModel('units_tutors');
         $paginatorStudent = $this->paginate(
             $this->Units->Users
                 ->find()
@@ -89,11 +90,16 @@ class UnitsController extends AppController
             TableRegistry::getTableLocator()->get('Users2')
                 ->find()
                 ->where(['role' => Role::STAFF])
-                ->matching('Units', function (\Cake\ORM\Query $query) use ($unit) {
-                    return $query->where([
-                        'Units.id' => $unit->id
-                    ]);
-                }), [
+                ->join([
+                    'ut' => [
+                        'table' => 'units_tutors',
+                        'conditions' => [
+                            'Users2.id = ut.tutor_id',
+                            'ut.unit_id' => $unit->id
+                        ]
+                    ]
+                ])
+            , [
                 'model' => 'Users2',
                 'scope' => 'staff'
             ]
