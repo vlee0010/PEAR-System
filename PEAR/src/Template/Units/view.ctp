@@ -60,7 +60,7 @@ use App\Model\Entity\Role;
                 </div>
                 <div class="modal-footer">
                     <?= $this->Form->button('Close', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
-                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-behance', 'url' => ['controller' => 'units', 'action' => 'generateCsv', $unit->id, Role::STUDENT]]) ?>
+                    <?= $this->element('Staff/Buttons/generate_csv_student', ['class' => 'btn btn-behance', 'url' => ['controller' => 'units', 'action' => 'generateCsv', $unit->id, Role::STUDENT]]) ?>
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@ use App\Model\Entity\Role;
                 </div>
                 <div class="modal-footer">
                     <?= $this->Form->button('Close', ['class' => 'btn btn-default', 'data-dismiss' => 'modal']); ?>
-                    <?= $this->element('Staff/Buttons/generate_csv', ['class' => 'btn btn-behance', 'url' => ['controller' => 'units', 'action' => 'generateCsv', $unit->id, Role::STAFF]]) ?>
+                    <?= $this->element('Staff/Buttons/generate_csv_staff', ['class' => 'btn btn-behance', 'url' => ['controller' => 'units', 'action' => 'generateCsv', $unit->id, Role::STAFF]]) ?>
                 </div>
             </div>
         </div>
