@@ -263,13 +263,30 @@ class StaffController extends AppController
             'year' => 'Units.year',
         ])->innerJoinWith('Units');
 
-
         $questions_desc = $response_query->select([
-            'question_id' => "Questions.id",
-            'question' => "Questions.description"
-        ])->innerJoinWith('Questions')
+            'question_id' => "q.id",
+            'question' => "q.description",
+
+        ])->join([
+            'q' => [
+                'table' => 'questions',
+                'conditions' => [
+                    'q.id = Responses.question_id'
+                ]
+
+            ],
+            'pq' => [
+                'table' => 'peer_reviews_questions',
+                'conditions' => [
+                    'q.id = pq.question_id',
+                    'pq.peer_reviews_id' => $peer_id
+
+                ]
+            ]
+        ])
             ->where([
-                'Responses.is_text_number' => 0
+                'Responses.is_text_number' => 0,
+
             ])
             ->distinct();
 
@@ -290,6 +307,14 @@ class StaffController extends AppController
                 'table' => 'questions',
                 'conditions' => [
                     'q.id = Responses.question_id'
+                ]
+            ],
+            'pq' => [
+                'table' => 'peer_reviews_questions',
+                'conditions' => [
+                    'q.id = pq.question_id',
+                    'pq.peer_reviews_id' => $peer_id
+
                 ]
             ]
         ])
@@ -539,7 +564,6 @@ class StaffController extends AppController
             ]
         ])->distinct();
         $student_list->toArray();
-
         $team_query = $this->peer_reviews_teams->find()->where(['peer_review_id' => $peer_id]);
         $team_list = $team_query->select([
             'team_id' => 't.id_',

@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Role;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -13,6 +15,25 @@ use Cake\ORM\TableRegistry;
  */
 class UnitsController extends AppController
 {
+
+
+    public $paginate = [
+
+        'Users' => [
+            'scope' => 'students',
+            'limit' => 10,
+            'order' => [
+                'studentid' => 'desc',
+            ],
+        ],
+        'Users2' => [
+            'scope' => 'staff',
+            'limit' => 10,
+            'order' => [
+                'id' => 'desc',
+            ],
+        ],
+    ];
 
     /**
      * Index method
@@ -26,6 +47,7 @@ class UnitsController extends AppController
         $units = $this->paginate($this->Units);
         $units = $this->Units->find();
         $this->set(compact('units'));
+
     }
 
     /**
@@ -37,18 +59,50 @@ class UnitsController extends AppController
      */
     public function view($id = null)
     {
+        $this->loadComponent('Paginator');
+
         $unit = $this->Units->get($id, [
             'contain' => ['Users', 'PeerReviews', 'Teams']
         ]);
-        $unitTutorTable = TableRegistry::getTableLocator()->get('units_tutors');
-        $user = $this->paginate($this->Units->users->find('all')->where(['role' => 1]));
-        $lala = $this->paginate = [
-            'contain' => ['Users']
-        ];
-        $this->set('unitPa', $this->paginate($this->Units));
 
-        $this->set(compact('user'));
+        $this->loadModel('Users');
+        $paginatorStudent = $this->paginate(
+            $this->Units->Users
+                ->find()
+                ->where(['role' => Role::STUDENT])
+                ->matching('Units', function (\Cake\ORM\Query $query) use ($unit) {
+                    return $query->where([
+                        'Units.id' => $unit->id
+                    ]);
+                }), [
+                'model' => 'Users',
+                'scope' => 'students'
+            ]
+        );
+        // Register an additional table object to allow differentiating in pagination component
+        TableRegistry::config('Users2', [
+            'className' => 'App\Model\Table\UsersTable',
+            'table' => 'users',
+            'entityClass' => 'App\Model\Entity\User',
+        ]);
+        $paginatorStaff = $this->paginate(
+            TableRegistry::getTableLocator()->get('Users2')
+                ->find()
+                ->where(['role' => Role::STAFF])
+                ->matching('Units', function (\Cake\ORM\Query $query) use ($unit) {
+                    return $query->where([
+                        'Units.id' => $unit->id
+                    ]);
+                }), [
+                'model' => 'Users2',
+                'scope' => 'staff'
+            ]
+        );
+
+
+        $this->set(compact('paginatorStudent', 'paginatorStaff'));
         $this->set('unit', $unit);
+
     }
 
     /**
@@ -117,23 +171,24 @@ class UnitsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function generateCsv($unit_id,$role){
-        $unitQuery = $this->Units->find()->where(['id'=>$unit_id]);
+    public function generateCsv($unit_id, $role)
+    {
+        $unitQuery = $this->Units->find()->where(['id' => $unit_id]);
         $unitArray = [];
         $unitSelect = $unitQuery->select($this->Units);
         $unitSelect->toArray();
 
-        switch($role) {
+        switch ($role) {
             case 1:
                 $_header = ['Team', 'StudentId', 'Email', 'Firstname', 'Lastname', 'Class'];
                 foreach ($unitSelect as $unit):
-                    $file_name = 'PEARMONASH'.'_'.$unit->code . '_' . $unit->year . '_S' . $unit->semester . '_' . 'student_list.csv';
+                    $file_name = 'PEARMONASH' . '_' . $unit->code . '_' . $unit->year . '_S' . $unit->semester . '_' . 'student_list.csv';
                 endforeach;
                 break;
             case 2:
                 $_header = ['StaffId', 'Firstname', 'Lastname', 'Email', 'Class'];
                 foreach ($unitSelect as $unit):
-                    $file_name = 'PEARMONASH'.'_'.$unit->code . '_' . $unit->year . '_S' . $unit->semester . '_' .   'staff_list.csv';
+                    $file_name = 'PEARMONASH' . '_' . $unit->code . '_' . $unit->year . '_S' . $unit->semester . '_' . 'staff_list.csv';
                 endforeach;
                 break;
             default:
