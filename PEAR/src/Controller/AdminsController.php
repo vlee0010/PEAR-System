@@ -21,7 +21,6 @@ class AdminsController extends AppController
 {
 
     public $paginate = [
-        'limit' => 25,
         'order' => [
 //            'Users.firstname' => 'asc',
 
@@ -540,12 +539,14 @@ class AdminsController extends AppController
                     array_push($classArray, $data[$key]['Class']);
                     $classArrayUnique = array_unique($classArray);
                 endforeach;
+                $userTable = TableRegistry::getTableLocator()->get('users');
+                $adminId = $userTable->find()->where(['role'=>3])->first()->id;
 
                 foreach ($classArrayUnique as $class):
                     $className = $class;
                     $classTable = TableRegistry::getTableLocator()->get('classes');
                     $newClass = $classTable->newEntity();
-                    $newClass->tutor_id = 15;
+                    $newClass->tutor_id = $adminId;
                     $newClass->class_name = $className;
                     if (!$classTable->save($newClass)) {
                         // $this->Flash->error('The class could not be saved. Please, try again.');
@@ -558,7 +559,6 @@ class AdminsController extends AppController
                         }
                     }
                 endforeach;
-
                 foreach ($data as $key => $value):
 // User
                     $unitUserSuccess = false;
@@ -833,11 +833,14 @@ class AdminsController extends AppController
                     }
                 endforeach;
 
+                $userTable = TableRegistry::getTableLocator()->get('users');
+                $adminId = $userTable->find()->where(['role'=>3])->first()->id;
+
                 foreach ($classArrayUnique as $class):
                     $className = $class;
                     $classTable = TableRegistry::getTableLocator()->get('classes');
                     $newClass = $classTable->newEntity();
-                    $newClass->tutor_id = 15;
+                    $newClass->tutor_id = $adminId;
                     $newClass->class_name = $className;
                     if (!$classTable->save($newClass)) {
                         // $this->Flash->error('The class could not be saved. Please, try again.');
