@@ -340,12 +340,14 @@ class AdminsController extends AppController
             $classesTable = TableRegistry::getTableLocator()->get('classes');
             $unitId = $this->request->getData('selectUnit');
             $staffId = $this->Users->find()->first()->id;
-            $classDay = $this->request->getData('classDay');
+            $classDay = strtoupper($this->request->getData('classDay'));
             $classTime = $this->request->getData('classTime');
 
             $unitCode = $this->Units->find()->where(['id' => $unitId])->firstOrFail()->code;
+            $unitYear = $this->Units->find()->where(['id'=>$unitId])->firstOrFail()->year;
+            $unitSemester =  $this->Units->find()->where(['id'=>$unitId])->firstOrFail()->semester;
             $newClass = $classesTable->newEntity();
-            $classInfo = $unitCode . ' - ' . $classDay . ' - ' . $classTime;
+            $classInfo = $unitCode . ' ' . $unitYear. ' S' . $unitSemester .' - ' . $classDay . ' - ' . $classTime;
 
             $newClass->class_name = $classInfo;
             $newClass->tutor_id = $staffId;
