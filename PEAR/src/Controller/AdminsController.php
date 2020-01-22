@@ -180,7 +180,6 @@ class AdminsController extends AppController
         if ($this->request->is('post')) {
             $questionDescription = $this->request->getData('question');
             $secondLastRow = $questionTable->find('all',[]);
-//            debug($questionDescription);
             $newQuestion = $questionTable->newEntity();
             $newQuestion->description = $questionDescription;
 
@@ -255,12 +254,9 @@ class AdminsController extends AppController
             $year = $this->request->getData('year');
             $unitMatches = $unitTable->find()->where(['code' => $unitCode, 'semester' => $semester, 'year' => $year]);
             $matches = [];
-//            debug($matches);
             foreach ($unitMatches as $unitMatch) {
-//                debug($matches);
                 array_push($matches, $unitMatch->id);
             }
-//            debug($matches);
             if (count($matches)) {
                 return [(count($matches)), $matches[0]];
             } else {
@@ -431,7 +427,6 @@ class AdminsController extends AppController
         if ($this->request->is('post')) {
 
 
-//            debug($this->request->getData('question'));
 
 
 //                fetching data from the form
@@ -646,7 +641,8 @@ class AdminsController extends AppController
                             $classTutorTable = TableRegistry::getTableLocator()->get('classes_tutors');
                             $classTable = TableRegistry::getTableLocator()->get('classes');
                             $classQuery = $classTable->find()->where(['class_name' => $data[$key]['Class']]);
-                            $classSelect = $classQuery->select($this->Classes);
+                            $classSelect = $classQuery->select()->innerJoinWith('Units')->where(['Units.id' => $unit_id]);
+//                            $classSelect = $classQuery->select($this->Classes);
                             $classSelectarray = $classSelect->toArray();
                             $chosenClass = $classSelectarray[0];
                             $classTutorExist = $classTutorTable->exists([
@@ -658,7 +654,7 @@ class AdminsController extends AppController
                                 $newClassTutor = $classTutorTable->newEntity();
                                 $newClassTutor->unit_id = $unit_id;
                                 $newClassTutor->tutor_id = $newUser->id;
-                                $newClassTutor->class_id = $chosenClass['Classes']['id'];
+                                $newClassTutor->class_id = $chosenClass['id'];
                                 if (!$classTutorTable->save($newClassTutor)) {
                                     // $this->Flash->error('The class-user could not be saved. Please, try again.');
                                 } else {
@@ -702,11 +698,11 @@ class AdminsController extends AppController
                             $dataClassName = $data[$key]['Class'];
                             $classTutorTable = TableRegistry::getTableLocator()->get('classes_tutors');
                             $classTable = TableRegistry::getTableLocator()->get('classes');
-                            $classQuery = $classTable->find()->where(['class_name' => $dataClassName]);
-                            $classSelect = $classQuery->select($this->Classes);
-
-                            $classSelectArray = $classSelect->toArray();
-                            $chosenClass = $classSelectArray[0];
+                            $classQuery = $classTable->find()->where(['class_name' => $data[$key]['Class']]);
+                            $classSelect = $classQuery->select()->innerJoinWith('Units')->where(['Units.id' => $unit_id]);
+//                            $classSelect = $classQuery->select($this->Classes);
+                            $classSelectarray = $classSelect->toArray();
+                            $chosenClass = $classSelectarray[0];
                             $classTutorExist = $classTutorTable->exists([
                                 'class_id' => $chosenClass->id,
                                 'tutor_id' => $user->id,
@@ -716,7 +712,7 @@ class AdminsController extends AppController
                                 $newClassTutor = $classTutorTable->newEntity();
                                 $newClassTutor->unit_id = $unit_id;
                                 $newClassTutor->tutor_id = $user->id;
-                                $newClassTutor->class_id = $chosenClass['Classes']['id'];
+                                $newClassTutor->class_id = $chosenClass['id'];
                                 if (!$classTutorTable->save($newClassTutor)) {
                                     $this->Flash->error('The class-user could not be saved. Please, try again.');
                                 } else {
@@ -848,7 +844,7 @@ class AdminsController extends AppController
                                 if (!$teamTable->PeerReviews->link($newTeam, [$peerReview])) {
                                     $this->Flash->error('The peer-team could not be saved. Please, try again.');
                                 } else {
-                                    echo "haha";
+
                                 }
                             endforeach;
 //                        $success .= 'User added to database<br />';
@@ -925,15 +921,14 @@ class AdminsController extends AppController
                                 'name' => $data[$key]['Team'],
                                 'unit_id' => $unit_id,
                             ])->first();
-                            $existedTeamId = $existedTeam->id;
-                            $this->set('ehehe',$existedTeamId);
+                            $existedTeamId = $existedTeam->id_;
                             $unit = $usersTable->Units->findById($unit_id)->first();
                             if (!$usersTable->Units->link($newUser, [$unit])) {
                                 // $this->Flash->error('The unit could not be saved. Please, try again.');
                             } else {
                                 $unitUserSuccess = true;
                             }
-                            $team = $usersTable->Teams->findById($existedTeamId)->first();
+                            $team = $usersTable->Teams->findById_($existedTeamId)->first();
                             if (!$usersTable->Teams->link($newUser, [$team])) {
                                 // $this->Flash->error('The team-user could not be saved. Please, try again.');
                             } else {
