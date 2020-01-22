@@ -200,10 +200,13 @@ class AdminsController extends AppController
             $newClassRow = $classTable->newEntity();
             $tutorId = $this->Users->find()->first()->id;
             $unitId = $this->request->getData('unit_id');
-            $classDay = $this->request->getData('class_day');
+            $classDay = strtoupper($this->request->getData('class_day'));
             $classTime = $this->request->getData('class_time');
             $unitCodeName = $this->Units->find()->where(['id'=>$unitId])->first()->code;
-            $classNameConcat =$unitCodeName . ' - ' . $classDay .' - ' . $classTime;
+            $unitCodeYear = $this->Units->find()->where(['id'=>$unitId])->first()->year;
+            $unitCodeSemester = $this->Units->find()->where(['id'=>$unitId])->first()->semester;
+
+            $classNameConcat =$unitCodeName .' ' .$unitCodeYear.' S'. $unitCodeSemester. ' - ' . $classDay .' - ' . $classTime;
             $newClassRow->tutor_id = $tutorId;
             $newClassRow->class_name = $classNameConcat;
             if($this->Classes->save($newClassRow)){

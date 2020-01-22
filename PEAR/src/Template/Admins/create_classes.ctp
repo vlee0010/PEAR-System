@@ -134,7 +134,7 @@ echo $this->Form->create(); ?>
                 success: function(response){
                     if(response.length != 0){
                         console.log(response);
-                        console.log(response.name);
+                        console.log("responseName: "+response.name);
                         var ulList = document.querySelector('#ajax');
                         var noClassP = document.querySelector('.noClass');
                         if(ulList.contains(noClassP)){
@@ -176,7 +176,6 @@ echo $this->Form->create(); ?>
         function searchRelevantClasses(unitId){
             var data =unitId;
             $.ajax({
-
                 method: 'POST',
                 url:"<?php echo $this->Url->build(['controller'=>'admins','action'=>'returnRelevantClasses'])?>",
                 beforeSend: function(xhr){
@@ -184,12 +183,12 @@ echo $this->Form->create(); ?>
                 },
                 data: {unitId:data},
                 success:function(response){
-                    console.log(response);
                     if(response.length != 0){
-                    console.log(response.length);
+
                     var ulList = document.querySelector('#ajax');
                         ulList.innerHTML = '';
                     response.forEach(function(e){
+
                         var li = document.createElement('li');
                         li.setAttribute('class','list-group-item');
                         li.setAttribute('class','example-animation');
@@ -201,8 +200,7 @@ echo $this->Form->create(); ?>
 
                         var ulList = document.querySelector('#ajax');
                         ulList.innerHTML = '';
-                        console.log(ulList.children == '');
-                        console.log(ulList.childNodes);
+
                         if(ulList.childNodes.length == 0){
                             var p = document.createElement('h4');
                             p.setAttribute('class','text-gray noClass');
