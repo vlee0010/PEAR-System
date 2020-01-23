@@ -393,7 +393,7 @@ class UsersController extends AppController
                 $email = new Email('default');
                 $email
                     ->transport('gmail')
-                    ->from(['monashietesting@gmail.com' => 'Team 123 PEAR'])
+                    ->from(['pearmonash@gmail.com' => 'Team 123 PEAR'])
                     ->subject($subject)
                     ->emailFormat('html')
                     ->to($myEmail)

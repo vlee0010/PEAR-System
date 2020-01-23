@@ -20,6 +20,7 @@ $this->layout = 'default-staff';
     </tr>
     </thead>
     <tbody>
+    <?php echo debug($questionsShow)?>
     <?php foreach ($questionsShow as $question): ?>
         <tr>
 

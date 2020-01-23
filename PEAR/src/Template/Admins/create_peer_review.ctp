@@ -39,7 +39,7 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group" >
             <label for="start">Start:</label>
             <br>
-            <input onpaste="return false;" onkeypress="return false;" required class="form-control"  type="text" id="start" placeholder="Please Pick a start date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
+            <input onpaste="return false;" onkeypress="return false;" required class="form-control"  name="start-date" type="text" id="start" placeholder="Please Pick a start date" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
         </div>
     </div>
 

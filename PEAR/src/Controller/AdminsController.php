@@ -170,6 +170,7 @@ class AdminsController extends AppController
     public function viewQuestions(){
         $questionTable = TableRegistry::getTableLocator()->get('questions');
         $questionsShow = $questionTable->find()->where(['is_show'=>1]);
+        debug($questionsShow);
         $this->set('questionsShow',$questionsShow);
     }
 
