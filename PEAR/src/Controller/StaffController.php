@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use App\Model\Entity\Role;
 use App\Model\Entity\Emails;
+use Cake\Http\Exception\BadRequestException;
 use Cake\Mailer\Email;
 use Cake\I18n\Number;
 use Cake\ORM\TableRegistry;
@@ -77,135 +78,163 @@ class StaffController extends AppController
             'unit_id' => $id,
             'tutor_id' => $tutor_id,
         ]);
-
         $classQuery->toArray();
-        $classListAll = $this->Classes->find('all');
-        $classListAll->toArray();
+        $test=false;
+        foreach ($classQuery as $item){
+            if($item) {
+                $test = true;
+            }
+        }
+        if($test) {
+            $classListAll = $this->Classes->find('all');
+            $classListAll->toArray();
 
-        $selectedClassList = [];
+            $selectedClassList = [];
 
-        foreach ($classListAll as $class) {
-            foreach ($classQuery as $item) {
-                if ($class->id == $item->class_id) {
-                    array_push($selectedClassList, $class);
+            foreach ($classListAll as $class) {
+                foreach ($classQuery as $item) {
+                    if ($class->id == $item->class_id) {
+                        array_push($selectedClassList, $class);
+                    }
                 }
             }
-        }
 
-        $this->set('selectedClassList', $selectedClassList);
+            $this->set('selectedClassList', $selectedClassList);
 
-        if ($peer_review) {
-            $peer_id = $peer_review->id;
+            if ($peer_review) {
+                $peer_id = $peer_review->id;
 
-            $this->set(compact('peer_id'));
+                $this->set(compact('peer_id'));
 
-        } else {
-            $peer_id = 0;
-            $this->set(compact('peer_id'));
-        }
-        foreach ($unit_class_list as $unit_class) {
-            array_push($class_id_list, $unit_class->class_id);
-        }
-        $class_list = [];
-        foreach ($class_id_list as $class_id) {
-            if ($this->Classes->find()->where(['id' => $class_id, 'tutor_id' => $this->Auth->user('id')])->first()) {
-                array_push($class_list, $this->Classes->find()->where(['id' => $class_id, 'tutor_id' => $this->Auth->user('id')])->first());
+            } else {
+                $peer_id = 0;
+                $this->set(compact('peer_id'));
+            }
+            foreach ($unit_class_list as $unit_class) {
+                array_push($class_id_list, $unit_class->class_id);
+            }
+            $class_list = [];
+            foreach ($class_id_list as $class_id) {
+                if ($this->Classes->find()->where(['id' => $class_id, 'tutor_id' => $this->Auth->user('id')])->first()) {
+                    array_push($class_list, $this->Classes->find()->where(['id' => $class_id, 'tutor_id' => $this->Auth->user('id')])->first());
+                }
+
             }
 
+
+            $this->set('unit_id', $id);
+            $this->set(compact('class_list'));
+        }else{
+//            return $this->redirect($this->referer());
+//            $this->controller->response->statusCode(404);
+//            $this->controller->render('/ErrorController/error/404');
+//            $this->controller->response->send();
+            throw new BadRequestException();
+
         }
-
-
-        $this->set('unit_id', $id);
-        $this->set(compact('class_list'));
     }
 
-    public function displaystudent($id = null, $peer_id = null)
+    public function displaystudent($unit_id=null,$id = null,$peer_id = null)
     {
-        $this->set('classId', $id);
-        $this->set('peerId', $peer_id);
-        $students_classes_query = $this->students_classes->find()->where(['class_id' => $id]);
+        $unit_class=TableRegistry::getTableLocator()->get('units_classes')->find()->where(['class_id'=>$id,'unit_id'=>$unit_id])->first();
+        if($unit_class) {
+            $class_tutor=TableRegistry::getTableLocator()->get('classes_tutors')->find()->where(['unit_id'=>$unit_id,'tutor_id'=>$this->Auth->user('id'),'class_id'=>$id])->first();
+            if($class_tutor) {
+                $peer_review_unit=TableRegistry::getTableLocator()->get('peer_reviews')->find()->where(['id'=>$peer_id,'unit_id'=>$unit_id])->first();
+                if($peer_review_unit) {
+                    $students_classes_query = $this->students_classes->find()->where(['class_id' => $id]);
+                    $studentClassList = $students_classes_query->select([
+                        'id' => 'u.id',
+                        'firstname' => 'u.firstname',
+                        'lastname' => 'u.lastname',
+                    ])->join([
+                        'c' => [
+                            'table' => 'classes',
+                            'conditions' => [
+                                'students_classes.class_id = c.id',
+                            ]
+                        ],
+                        'u' => [
+                            'table' => 'users',
+                            'conditions' => [
+                                'students_classes.user_id = u.id',
+                            ]
+                        ]
+                    ])->distinct();
 
-        $studentClassList = $students_classes_query->select([
-            'id' => 'u.id',
-            'firstname' => 'u.firstname',
-            'lastname' => 'u.lastname',
-        ])->join([
-            'c' => [
-                'table' => 'classes',
-                'conditions' => [
-                    'students_classes.class_id = c.id',
-                ]
-            ],
-            'u' => [
-                'table' => 'users',
-                'conditions' => [
-                    'students_classes.user_id = u.id',
-                ]
-            ]
-        ])->distinct();
+                    $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id]);
 
-        $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id]);
+                    $peer_review = $this->peer_reviews->find()->where(['id' => $peer_id])->first();
 
-        $peer_review = $this->peer_reviews->find()->where(['id' => $peer_id])->first();
+                    $peer_query = $this->units_classes->find()->where(['class_id' => $id]);
+                    $unit_activity = $peer_query->select([
+                        'unit_id' => 'u.id',
+                        'unitname' => 'u.title',
+                        'unitcode' => 'u.code',
+                        'activity' => 'p.title',
+                        'datestart' => 'p.date_start',
+                        'dateend' => 'p.date_end',
+                        'peer_id' => 'p.id'
+                    ])->join([
+                        'u' => [
+                            'table' => 'units',
+                            'conditions' => [
+                                'u.id = units_classes.unit_id',
+                            ]
+                        ],
+                        'p' => [
+                            'table' => 'peer_reviews',
+                            'conditions' => [
+                                'p.unit_id = units_classes.unit_id',
+                            ]
+                        ]
 
-        $peer_query = $this->units_classes->find()->where(['class_id' => $id]);
-        $unit_activity = $peer_query->select([
-            'unit_id' => 'u.id',
-            'unitname' => 'u.title',
-            'unitcode' => 'u.code',
-            'activity' => 'p.title',
-            'datestart' => 'p.date_start',
-            'dateend' => 'p.date_end',
-            'peer_id' => 'p.id'
-        ])->join([
-            'u' => [
-                'table' => 'units',
-                'conditions' => [
-                    'u.id = units_classes.unit_id',
-                ]
-            ],
-            'p' => [
-                'table' => 'peer_reviews',
-                'conditions' => [
-                    'p.unit_id = units_classes.unit_id',
-                ]
-            ]
+                    ]);
 
-        ]);
-
-        $queryTerms = $this->getRequest()->getQuery('query');
-        if (!empty($queryTerms)) {
-            $student_list = [];
-            $queryTermsWithWildCard = '%' . $queryTerms . '%';
-            foreach ($studentClassList as $user_id) {
-                array_push($student_list, $this->Users->find()->where([
-                    'id' => $user_id->id,
-                    'OR' => [
-                        'firstname LIKE' => $queryTermsWithWildCard,
-                        'lastname LIKE' => $queryTermsWithWildCard,
-                        'email LIKE' => $queryTermsWithWildCard,
-                    ]
-                ])->first());
+                    $queryTerms = $this->getRequest()->getQuery('query');
+                    if (!empty($queryTerms)) {
+                        $student_list = [];
+                        $queryTermsWithWildCard = '%' . $queryTerms . '%';
+                        foreach ($studentClassList as $user_id) {
+                            array_push($student_list, $this->Users->find()->where([
+                                'id' => $user_id->id,
+                                'OR' => [
+                                    'firstname LIKE' => $queryTermsWithWildCard,
+                                    'lastname LIKE' => $queryTermsWithWildCard,
+                                    'email LIKE' => $queryTermsWithWildCard,
+                                ]
+                            ])->first());
+                        }
+                        $student_list = array_filter($student_list);
+                    } else {
+                        $student_list = [];
+                        foreach ($studentClassList as $user_id) {
+                            array_push($student_list, $this->Users->find()->where(['id' => $user_id->id])->first());
+                        }
+                    }
+                    $unit_activity_array = [];
+                    foreach ($unit_activity as $item) {
+                        $unit_activity_item = $item->toArray();
+                        $peer_review_user = $this->peer_reviews_users->find()->where(['peer_review_id' => $item->peer_id])->toArray();
+                        array_push($unit_activity_item, $peer_review_user);
+                        array_push($unit_activity_array, $unit_activity_item);
+                    }
+                    $this->set('classId', $id);
+                    $this->set('peerId', $peer_id);
+                    $this->set('unit_activity', $unit_activity);
+                    $this->set('peerReviewUser', $peer_review_user_query);
+                    $this->set('studentClassList', $studentClassList);
+                    $this->set('query', $queryTerms);
+                    $this->set(compact('student_list', 'peer_review', "peer_id", 'unit_activity_array'));
+                }else{
+                    throw new BadRequestException();
+                }
+            }else{
+                throw new BadRequestException();
             }
-            $student_list = array_filter($student_list);
-        } else {
-            $student_list = [];
-            foreach ($studentClassList as $user_id) {
-                array_push($student_list, $this->Users->find()->where(['id' => $user_id->id])->first());
-            }
+        }else{
+            throw new BadRequestException();
         }
-        $unit_activity_array = [];
-        foreach ($unit_activity as $item) {
-            $unit_activity_item = $item->toArray();
-            $peer_review_user = $this->peer_reviews_users->find()->where(['peer_review_id' => $item->peer_id])->toArray();
-            array_push($unit_activity_item, $peer_review_user);
-            array_push($unit_activity_array, $unit_activity_item);
-        }
-        $this->set('unit_activity', $unit_activity);
-        $this->set('peerReviewUser', $peer_review_user_query);
-        $this->set('studentClassList', $studentClassList);
-        $this->set('query', $queryTerms);
-        $this->set(compact('student_list', 'peer_review', "peer_id", 'unit_activity_array'));
 
     }
 

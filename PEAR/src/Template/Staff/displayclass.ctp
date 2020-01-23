@@ -20,7 +20,7 @@
 
                         <h3 class="display-4" align="center">
                             <a style="justify-content: center"class="btn btn-success" id="class-list-item"
-                               href=<?= $this->Url->build(['action' => 'displaystudent', $class->id, $peer_id]); ?>><?= $class->class_name ?></a>
+                               href=<?= $this->Url->build(['action' => 'displaystudent',$unit_id,$class->id, $peer_id]); ?>><?= $class->class_name ?></a>
                         </h3>
                     </div>
                     <?php else:?>
