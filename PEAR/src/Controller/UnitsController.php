@@ -19,21 +19,28 @@ class UnitsController extends AppController
 
     public $paginate = [
 
-    'Users' => [
-        'scope' => 'students',
-        'limit' => 10,
-        'order' => [
-            'studentid' => 'asc',
+        'Users' => [
+            'scope' => 'students',
+            'limit' => 10,
+            'order' => [
+                'studentid' => 'asc',
+            ],
         ],
-    ],
-    'Users2' => [
-        'scope' => 'staff',
-        'limit' => 10,
-        'order' => [
-            'id' => 'asc',
+        'Users2' => [
+            'scope' => 'staff',
+            'limit' => 10,
+            'order' => [
+                'id' => 'asc',
+            ],
         ],
-    ],
-];
+        'Classes' => [
+            'scope' => 'classes',
+            'limit' => 3,
+            'order' => [
+                'id' => 'asc',
+            ],
+        ],
+    ];
 
     /**
      * Index method
@@ -70,7 +77,19 @@ class UnitsController extends AppController
             if ($peerReview->status) {
                 $countPublishedPeerReview += 1;
             }
-            endforeach;
+        endforeach;
+        $paginatorClass = $this->paginate(
+            $this->Units->Classes
+                ->find()
+                ->matching('Units', function (\Cake\ORM\Query $query) use ($unit) {
+                    return $query->where([
+                        'Units.id' => $unit->id
+                    ]);
+                }), [
+                'model' => 'Classes',
+                'scope' => 'classes'
+            ]
+        );
 
         $this->loadModel('Users');
         $this->loadModel('units_tutors');
@@ -113,9 +132,9 @@ class UnitsController extends AppController
         );
 
 
-        $this->set(compact('paginatorStudent', 'paginatorStaff'));
+        $this->set(compact('paginatorStudent', 'paginatorStaff','paginatorClass'));
         $this->set('unit', $unit);
-        $this->set('count',$countPublishedPeerReview);
+        $this->set('count', $countPublishedPeerReview);
 
     }
 

@@ -90,7 +90,7 @@ use App\Model\Entity\Role;
     <br>
     <br/>
     <div class="row">
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-3 col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
                     <h3 class="card-title">Offering</h3>
@@ -118,6 +118,40 @@ use App\Model\Entity\Role;
                         </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h3 class="card-title">Classes</h3>
+                    <p class="card-category"></p>
+                </div>
+                <div class="card-body table-responsive">
+                    <div class="related">
+                        <?php if (!empty($paginatorClass)): ?>
+                            <table class="table">
+                                <tr>
+                                    <th scope="col"><?= __('Class') ?></th>
+                                </tr>
+                                <?php foreach ($paginatorClass as $class): ?>
+                                    <tr>
+                                        <td><?= $class->class_name ?></td>
+
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        <?php endif; ?>
+                        <nav aria-label="...">
+                            <div class="paginator">
+                                <ul class="pagination justify-content-center">
+                                    <?= $this->Paginator->prev(__('previous'),['model' => 'Classes']) ?>
+                                    <?= $this->Paginator->numbers(['model' => 'Classes']) ?>
+                                    <?= $this->Paginator->next(__('next'),['model' => 'Classes']) ?>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
