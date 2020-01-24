@@ -15,6 +15,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\PeerReview[] $peer_reviews
  * @property \App\Model\Entity\Team[] $teams
  * @property \App\Model\Entity\User[] $users
+ * @property \App\Model\Entity\Class[] $classes
  */
 class Unit extends Entity
 {
@@ -34,7 +35,8 @@ class Unit extends Entity
         'year' => true,
         'peer_reviews' => true,
         'teams' => true,
-        'users' => true
+        'users' => true,
+        'classes' => true
     ];
 
     protected function _getFullTitle()

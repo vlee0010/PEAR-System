@@ -19,21 +19,21 @@ class UnitsController extends AppController
 
     public $paginate = [
 
-        'Users' => [
-            'scope' => 'students',
-            'limit' => 10,
-            'order' => [
-                'studentid' => 'desc',
-            ],
+    'Users' => [
+        'scope' => 'students',
+        'limit' => 10,
+        'order' => [
+            'studentid' => 'asc',
         ],
-        'Users2' => [
-            'scope' => 'staff',
-            'limit' => 10,
-            'order' => [
-                'id' => 'desc',
-            ],
+    ],
+    'Users2' => [
+        'scope' => 'staff',
+        'limit' => 10,
+        'order' => [
+            'id' => 'asc',
         ],
-    ];
+    ],
+];
 
     /**
      * Index method
@@ -62,8 +62,15 @@ class UnitsController extends AppController
         $this->loadComponent('Paginator');
 
         $unit = $this->Units->get($id, [
-            'contain' => ['Users', 'PeerReviews', 'Teams']
+            'contain' => ['Users', 'PeerReviews', 'Teams', 'Classes']
         ]);
+
+        $countPublishedPeerReview = 0;
+        foreach ($unit->peer_reviews as $peerReview):
+            if ($peerReview->status) {
+                $countPublishedPeerReview += 1;
+            }
+            endforeach;
 
         $this->loadModel('Users');
         $this->loadModel('units_tutors');
@@ -108,6 +115,7 @@ class UnitsController extends AppController
 
         $this->set(compact('paginatorStudent', 'paginatorStaff'));
         $this->set('unit', $unit);
+        $this->set('count',$countPublishedPeerReview);
 
     }
 
