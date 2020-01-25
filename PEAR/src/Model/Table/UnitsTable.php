@@ -9,8 +9,12 @@ use Cake\Validation\Validator;
 /**
  * Units Model
  *
+ * @property &\Cake\ORM\Association\HasMany $ClassesTutors
+ * @property &\Cake\ORM\Association\HasMany $Emails
  * @property \App\Model\Table\PeerReviewsTable&\Cake\ORM\Association\HasMany $PeerReviews
  * @property \App\Model\Table\TeamsTable&\Cake\ORM\Association\HasMany $Teams
+ * @property &\Cake\ORM\Association\HasMany $UnitsTutors
+ * @property \App\Model\Table\ClassesTable&\Cake\ORM\Association\BelongsToMany $Classes
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
  *
  * @method \App\Model\Entity\Unit get($primaryKey, $options = [])
@@ -38,20 +42,30 @@ class UnitsTable extends Table
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
+        $this->hasMany('ClassesTutors', [
+            'foreignKey' => 'unit_id'
+        ]);
+        $this->hasMany('Emails', [
+            'foreignKey' => 'unit_id'
+        ]);
         $this->hasMany('PeerReviews', [
             'foreignKey' => 'unit_id'
         ]);
         $this->hasMany('Teams', [
             'foreignKey' => 'unit_id'
         ]);
+        $this->hasMany('UnitsTutors', [
+            'foreignKey' => 'unit_id'
+        ]);
+        $this->belongsToMany('Classes', [
+            'foreignKey' => 'unit_id',
+            'targetForeignKey' => 'class_id',
+            'joinTable' => 'units_classes'
+        ]);
         $this->belongsToMany('Users', [
             'foreignKey' => 'unit_id',
             'targetForeignKey' => 'user_id',
             'joinTable' => 'units_users'
-        ]);
-        $this->hasMany('Classes',[
-            'foreignKey' => 'unit_id',
-            'joinTable' => 'units_classes'
         ]);
     }
 

@@ -300,7 +300,8 @@ class UsersController extends AppController
             'unitSemester' => 'u.semester',
             'unitYear' => 'u.year',
             'peer_id' => 'p.id',
-            'status' => 'peer_reviews_users.status'
+            'status' => 'peer_reviews_users.status',
+            'peerReviewStatus' => 'p.status'
         ])->join([
             'p' => [
                 'table' => 'peer_reviews',

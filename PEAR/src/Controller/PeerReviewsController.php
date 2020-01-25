@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Http\Exception\NotFoundException;
 
 /**
  * PeerReviews Controller
@@ -128,4 +129,46 @@ class PeerReviewsController extends AppController
             $this->redirect(['controller' => 'staff', 'action' => 'displayclass']);
         }
     }
+
+    public function publish($id = null, $count)
+    {
+        if ($count > 0) {
+            $this->Flash->error(__('Unable to publish peer review. Please close other peer review before publishing'));
+            return $this->redirect($this->referer());
+        }
+
+        $peerReview = $this->PeerReviews->get($id);
+        if ($peerReview == null) {
+            throw new NotFoundException();
+        }
+
+        $peerReview->status = 1;
+
+        if ($this->PeerReviews->save($peerReview)) {
+            $this->Flash->success(__('Peer review has been published.'));
+        } else {
+            $this->Flash->error(__('Unable to publish peer review.'));
+        }
+
+        return $this->redirect($this->referer());
+    }
+
+    public function close($id = null)
+    {
+        $peerReview = $this->PeerReviews->get($id);
+        if ($peerReview == null) {
+            throw new NotFoundException();
+        }
+
+        $peerReview->status = 0;
+
+        if ($this->PeerReviews->save($peerReview)) {
+            $this->Flash->success(__('Peer review has been closed.'));
+        } else {
+            $this->Flash->error(__('Unable to close peer review.'));
+        }
+
+        return $this->redirect($this->referer());
+    }
+
 }

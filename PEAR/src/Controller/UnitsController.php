@@ -23,14 +23,21 @@ class UnitsController extends AppController
             'scope' => 'students',
             'limit' => 10,
             'order' => [
-                'studentid' => 'desc',
+                'studentid' => 'asc',
             ],
         ],
         'Users2' => [
             'scope' => 'staff',
             'limit' => 10,
             'order' => [
-                'id' => 'desc',
+                'id' => 'asc',
+            ],
+        ],
+        'Classes' => [
+            'scope' => 'classes',
+            'limit' => 3,
+            'order' => [
+                'id' => 'asc',
             ],
         ],
     ];
@@ -62,8 +69,27 @@ class UnitsController extends AppController
         $this->loadComponent('Paginator');
 
         $unit = $this->Units->get($id, [
-            'contain' => ['Users', 'PeerReviews', 'Teams']
+            'contain' => ['Users', 'PeerReviews', 'Teams', 'Classes']
         ]);
+
+        $countPublishedPeerReview = 0;
+        foreach ($unit->peer_reviews as $peerReview):
+            if ($peerReview->status) {
+                $countPublishedPeerReview += 1;
+            }
+        endforeach;
+        $paginatorClass = $this->paginate(
+            $this->Units->Classes
+                ->find()
+                ->matching('Units', function (\Cake\ORM\Query $query) use ($unit) {
+                    return $query->where([
+                        'Units.id' => $unit->id
+                    ]);
+                }), [
+                'model' => 'Classes',
+                'scope' => 'classes'
+            ]
+        );
 
         $this->loadModel('Users');
         $this->loadModel('units_tutors');
@@ -106,8 +132,9 @@ class UnitsController extends AppController
         );
 
 
-        $this->set(compact('paginatorStudent', 'paginatorStaff'));
+        $this->set(compact('paginatorStudent', 'paginatorStaff','paginatorClass'));
         $this->set('unit', $unit);
+        $this->set('count', $countPublishedPeerReview);
 
     }
 

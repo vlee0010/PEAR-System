@@ -90,7 +90,7 @@ use App\Model\Entity\Role;
     <br>
     <br/>
     <div class="row">
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-3 col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
                     <h3 class="card-title">Offering</h3>
@@ -121,10 +121,44 @@ use App\Model\Entity\Role;
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-primary">
+                    <h3 class="card-title">Classes</h3>
+                    <p class="card-category"></p>
+                </div>
+                <div class="card-body table-responsive">
+                    <div class="related">
+                        <?php if (!empty($paginatorClass)): ?>
+                            <table class="table">
+                                <tr>
+                                    <th scope="col"><?= __('Class') ?></th>
+                                </tr>
+                                <?php foreach ($paginatorClass as $class): ?>
+                                    <tr>
+                                        <td><?= $class->class_name ?></td>
+
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        <?php endif; ?>
+                        <nav aria-label="...">
+                            <div class="paginator">
+                                <ul class="pagination justify-content-center">
+                                    <?= $this->Paginator->prev(__('previous'),['model' => 'Classes']) ?>
+                                    <?= $this->Paginator->numbers(['model' => 'Classes']) ?>
+                                    <?= $this->Paginator->next(__('next'),['model' => 'Classes']) ?>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header card-header-primary">
-                    <h3 class="card-title"><?= __('Peer Reviews') ?></h3>
+                    <h3 class="card-title">Peer Reviews</h3>
                 </div>
                 <div class="card-body table-responsive">
                     <div class="related">
@@ -134,13 +168,18 @@ use App\Model\Entity\Role;
                                     <th scope="col"><?= __('Title') ?></th>
                                     <th scope="col"><?= __('Date Start') ?></th>
                                     <th scope="col"><?= __('Date End') ?></th>
+                                    <th></th>
                                 </tr>
                                 <?php foreach ($unit->peer_reviews as $peerReviews): ?>
                                     <tr>
                                         <td><?= $peerReviews->title ?></td>
                                         <td><?= date("d-M-Y", strtotime($peerReviews->date_start)) ?></td>
                                         <td><?= date("d-M-Y", strtotime($peerReviews->date_end)) ?></td>
-
+                                        <?php if ($peerReviews->status) { ?>
+                                            <td><?= $this->element('Staff/Buttons/close', ['url' => ['controller' => 'peer_reviews', 'action' => 'close', $peerReviews->id]]) ?></td>
+                                        <?php } else {?>
+                                            <td><?= $this->element('Staff/Buttons/publish', ['url' => ['controller' => 'peer_reviews', 'action' => 'publish', $peerReviews->id,$count]]) ?></td>
+                                        <?php } ?>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>
