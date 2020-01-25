@@ -24,7 +24,6 @@ echo $this->Form->create(); ?>
         <div class="form-group bmd-form-group" >
             <br>
             <select required name="role" class="form-control" type="select" value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>">
-                <option value="1">Student</option>
                 <option value="2">Staff</option>
                 <option value="3">Admin</option>
             </select>
