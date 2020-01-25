@@ -51,7 +51,7 @@ class AdminsController extends AppController
         $peerTable = $this->peer_reviews->find();
         $userCount = $this->Users->find()->count();
         $peerCount = $this->peer_reviews->find()->count();
-        $this->set(compact(['userCount','peerCount','peerTable']));
+        $this->set(compact(['userCount', 'peerCount', 'peerTable']));
 
     }
 
@@ -63,16 +63,16 @@ class AdminsController extends AppController
             $userTable = TableRegistry::getTableLocator()->get('users');
             $email = ($this->request->getData('email'));
 //            create an array to store matched user
-            $userMatchArray =[];
+            $userMatchArray = [];
             $userMatches = $userTable->find()->where(['email' => $email]);
 //            if there are any match result push into array
-            foreach ($userMatches as $userMatch){
-                array_push($userMatchArray,$userMatch);
+            foreach ($userMatches as $userMatch) {
+                array_push($userMatchArray, $userMatch);
             }
 //            if number of userMatchArray >=1 then means the user admin wants to add already existed.
-            if(count($userMatchArray)){
+            if (count($userMatchArray)) {
                 $this->Flash->error("User you trying to insert has already existed.");
-            }else{
+            } else {
 
                 $role = ($this->request->getData('role'));
                 $email = ($this->request->getData('email'));
@@ -84,7 +84,7 @@ class AdminsController extends AppController
                 $token = Security::hash(Security::randomBytes(32));
 
                 $newUser = $userTable->newEntity();
-                $newUser->firstname  = $firstname;
+                $newUser->firstname = $firstname;
                 $newUser->lastname = $lastname;
                 $newUser->role = $role;
                 $newUser->email = $email;
@@ -93,38 +93,39 @@ class AdminsController extends AppController
                 $newUser->verified = 1;
 
 
-
-                if($userTable->save($newUser)){
+                if ($userTable->save($newUser)) {
                     $userRole = $newUser->role;
-                    if ($userRole == '1'){
+                    if ($userRole == '1') {
                         $userRole = 'Student';
-                    }elseif($userRole == '2'){
+                    } elseif ($userRole == '2') {
                         $userRole = 'Staff';
-                    }elseif ($userRole == '3'){
+                    } elseif ($userRole == '3') {
                         $userRole = 'Admin';
                     }
-                    $this->Flash->success('User '.$newUser->email . 'has been added as ' . $userRole);
-                }else{
-                    $this->Flash->error('Sorry, user with  '. $newUser->email .'address can not be saved.') ;
+                    $this->Flash->success('User ' . $newUser->email . 'has been added as ' . $userRole);
+                } else {
+                    $this->Flash->error('Sorry, user with  ' . $newUser->email . 'address can not be saved.');
                 }
             }
-
 
 
         }
     }
 
 
-    public function viewUsers(){
+    public function viewUsers()
+    {
         $this->loadModel(('users'));
         $users = $this->paginate($this->Users);
         $this->set(compact('users'));
     }
-    public function changeUserInfo($id= null){
+
+    public function changeUserInfo($id = null)
+    {
         $user = $this->Users->get($id, [
             'contain' => ['PeerReviews', 'Teams', 'Units', 'Responses']
         ]);
-        if ($this->request->is('post')){
+        if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             $userFirst = $user->firstname;
             $userLast = $user->lastname;
@@ -133,11 +134,11 @@ class AdminsController extends AppController
             $encryptedPassword = (new DefaultPasswordHasher)->hash($password);
             $query = $this->Users->query();
             if ($query->update()
-                ->set(['firstname' => $userFirst,'lastname'=>$userLast,'email'=>$email,'password'=>$password])
+                ->set(['firstname' => $userFirst, 'lastname' => $userLast, 'email' => $email, 'password' => $password])
                 ->where(['id' => $id])
-                ->execute()){
+                ->execute()) {
                 $this->Flash->success("The information has been updated.");
-            }else{
+            } else {
                 $this->Flash->error('The information cannot be saved.');
             }
 
@@ -147,7 +148,8 @@ class AdminsController extends AppController
 
     }
 
-    public function hideQuestion($question_id){
+    public function hideQuestion($question_id)
+    {
 
         $question = TableRegistry::get('Questions');
         $query = $question->query();
@@ -156,22 +158,24 @@ class AdminsController extends AppController
             ->where(["id" => $question_id])
             ->execute();
 
-        $questionRow = $question->find()->where(['id'=>$question_id])->first();
+        $questionRow = $question->find()->where(['id' => $question_id])->first();
         $questionDescription = $questionRow->description;
-        $this->Flash->success("Record\n ".$questionDescription.' has been deleted successfully!');
+        $this->Flash->success("Record\n " . $questionDescription . ' has been deleted successfully!');
         sleep(1);
 
         return $this->redirect(
-            ['controller'=>'admins',
-                'action'=>'viewQuestions'
+            ['controller' => 'admins',
+                'action' => 'viewQuestions'
             ]);
 
     }
-    public function viewQuestions(){
+
+    public function viewQuestions()
+    {
         $questionTable = TableRegistry::getTableLocator()->get('questions');
-        $questionsShow = $questionTable->find()->where(['is_show'=>1]);
+        $questionsShow = $questionTable->find()->where(['is_show' => 1]);
         debug($questionsShow);
-        $this->set('questionsShow',$questionsShow);
+        $this->set('questionsShow', $questionsShow);
     }
 
 
@@ -180,7 +184,7 @@ class AdminsController extends AppController
         $questionTable = TableRegistry::getTableLocator()->get('questions');
         if ($this->request->is('post')) {
             $questionDescription = $this->request->getData('question');
-            $secondLastRow = $questionTable->find('all',[]);
+            $secondLastRow = $questionTable->find('all', []);
             $newQuestion = $questionTable->newEntity();
             $newQuestion->description = $questionDescription;
 
@@ -190,10 +194,11 @@ class AdminsController extends AppController
         }
     }
 
-    public function addClassViaAjax(){
+    public function addClassViaAjax()
+    {
 
-        if($this->request->is('POST')){
-            $classTable =  TableRegistry::getTableLocator()->get('classes');
+        if ($this->request->is('POST')) {
+            $classTable = TableRegistry::getTableLocator()->get('classes');
             $unitClassTable = TableRegistry::getTableLocator()->get('units_classes');
             $this->loadModel('units');
             $this->loadModel('Users');
@@ -203,24 +208,24 @@ class AdminsController extends AppController
             $unitId = $this->request->getData('unit_id');
             $classDay = strtoupper($this->request->getData('class_day'));
             $classTime = $this->request->getData('class_time');
-            $unitCodeName = $this->Units->find()->where(['id'=>$unitId])->first()->code;
-            $unitCodeYear = $this->Units->find()->where(['id'=>$unitId])->first()->year;
-            $unitCodeSemester = $this->Units->find()->where(['id'=>$unitId])->first()->semester;
+            $unitCodeName = $this->Units->find()->where(['id' => $unitId])->first()->code;
+            $unitCodeYear = $this->Units->find()->where(['id' => $unitId])->first()->year;
+            $unitCodeSemester = $this->Units->find()->where(['id' => $unitId])->first()->semester;
 
-            $classNameConcat =$unitCodeName .' ' .$unitCodeYear.' S'. $unitCodeSemester. ' - ' . $classDay .' - ' . $classTime;
+            $classNameConcat = $unitCodeName . ' ' . $unitCodeYear . ' S' . $unitCodeSemester . ' - ' . $classDay . ' - ' . $classTime;
             $newClassRow->tutor_id = $tutorId;
             $newClassRow->class_name = $classNameConcat;
-            if($this->Classes->save($newClassRow)){
+            if ($this->Classes->save($newClassRow)) {
                 $this->loadModel('units_classes');
                 $classId = $newClassRow->id;
                 $newUnitClassRow = $unitClassTable->newEntity();
-                $newUnitClassRow->class_id= $classId;
+                $newUnitClassRow->class_id = $classId;
                 $newUnitClassRow->unit_id = $unitId;
-                if($this->units_classes->save($newUnitClassRow)){
+                if ($this->units_classes->save($newUnitClassRow)) {
                     return $this->response
                         ->withType('application/json')
-                        ->withStringBody(json_encode(['name'=>$classNameConcat]));
-                }else{
+                        ->withStringBody(json_encode(['name' => $classNameConcat]));
+                } else {
                     return 'error';
                 }
             }
@@ -228,16 +233,18 @@ class AdminsController extends AppController
         }
 
     }
-    public function returnRelevantClasses(){
 
-        if($this->request->is('post')) {
+    public function returnRelevantClasses()
+    {
+
+        if ($this->request->is('post')) {
             $units_classes_query = $this->loadModel('units_classes');
             $unitId = $this->request->getData('unitId');
-            $units_classes=$units_classes_query->find()->where(['unit_id'=>$unitId]);
-            $classArray=[];
-            foreach ($units_classes as $units_class){
-                $class=TableRegistry::getTableLocator()->get('classes')->find()->where(['id'=>$units_class->class_id])->first();
-                array_push($classArray,$class);
+            $units_classes = $units_classes_query->find()->where(['unit_id' => $unitId]);
+            $classArray = [];
+            foreach ($units_classes as $units_class) {
+                $class = TableRegistry::getTableLocator()->get('classes')->find()->where(['id' => $units_class->class_id])->first();
+                array_push($classArray, $class);
             }
 
 
@@ -246,6 +253,7 @@ class AdminsController extends AppController
                 ->withStringBody(json_encode($classArray));
         }
     }
+
     public function checkUnitExists()
     {
 
@@ -344,10 +352,10 @@ class AdminsController extends AppController
             $classTime = $this->request->getData('classTime');
 
             $unitCode = $this->Units->find()->where(['id' => $unitId])->firstOrFail()->code;
-            $unitYear = $this->Units->find()->where(['id'=>$unitId])->firstOrFail()->year;
-            $unitSemester =  $this->Units->find()->where(['id'=>$unitId])->firstOrFail()->semester;
+            $unitYear = $this->Units->find()->where(['id' => $unitId])->firstOrFail()->year;
+            $unitSemester = $this->Units->find()->where(['id' => $unitId])->firstOrFail()->semester;
             $newClass = $classesTable->newEntity();
-            $classInfo = $unitCode . ' ' . $unitYear. ' S' . $unitSemester .' - ' . $classDay . ' - ' . $classTime;
+            $classInfo = $unitCode . ' ' . $unitYear . ' S' . $unitSemester . ' - ' . $classDay . ' - ' . $classTime;
 
             $newClass->class_name = $classInfo;
             $newClass->tutor_id = $staffId;
@@ -431,8 +439,6 @@ class AdminsController extends AppController
         if ($this->request->is('post')) {
 
 
-
-
 //                fetching data from the form
 
             $unitId = $this->request->getData('selectUnit');
@@ -470,7 +476,27 @@ class AdminsController extends AppController
                 $newPeerReview->unit_id = $unitId;
                 if ($peerReviewTable->save($newPeerReview)) {
 //               get the newly created peerReview Id;
+                    $unit = $this->Units->get($unitId, [
+                        'contain' => ['Users', 'Teams']
+                    ]);
+                    $this->set('unit',$unit);
+                    foreach ($unit->users as $user):
+                        if ($user->role == Role::STUDENT) {
+                            if (!$peerReviewTable->Users->link($newPeerReview, [$user])) {
 
+                            } else {
+                                $peerUserSuccess = true;
+                            }
+                        }
+                    endforeach;
+                    foreach ($unit->teams as $team):
+                        if (!$peerReviewTable->Teams->link($newPeerReview, [$team])) {
+
+                        } else {
+                            $peerTeamSuccess = true;
+                        }
+
+                    endforeach;
                     $peer_reviews_id = $newPeerReview->id;
                     $questions = ($this->request->getData('question'));
 
@@ -483,7 +509,7 @@ class AdminsController extends AppController
                         $peerReviewQuestionTable->save($newPeerReviewQuestion);
                         $good = 1;
                     }
-                    if ($good == 1) {
+                    if ($good == 1 && $peerUserSuccess && $peerTeamSuccess) {
                         $this->Flash->success('This peer review has been successfully added!');
                     }
 
@@ -577,7 +603,7 @@ class AdminsController extends AppController
                     $classArrayUnique = array_unique($classArray);
                 endforeach;
                 $userTable = TableRegistry::getTableLocator()->get('users');
-                $adminId = $userTable->find()->where(['role'=>3])->first()->id;
+                $adminId = $userTable->find()->where(['role' => 3])->first()->id;
 
                 foreach ($classArrayUnique as $class):
                     $className = $class;
@@ -872,7 +898,7 @@ class AdminsController extends AppController
                 endforeach;
 
                 $userTable = TableRegistry::getTableLocator()->get('users');
-                $adminId = $userTable->find()->where(['role'=>3])->first()->id;
+                $adminId = $userTable->find()->where(['role' => 3])->first()->id;
 
                 foreach ($classArrayUnique as $class):
                     $className = $class;

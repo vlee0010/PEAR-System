@@ -199,9 +199,9 @@ class StaffController extends AppController
                             array_push($student_list, $this->Users->find()->where([
                                 'id' => $user_id->id,
                                 'OR' => [
-                                    'firstname LIKE' => $queryTermsWithWildCard,
-                                    'lastname LIKE' => $queryTermsWithWildCard,
-                                    'email LIKE' => $queryTermsWithWildCard,
+                                    'firstname LIKE' => "%" .$queryTermsWithWildCard. "%",
+                                    'lastname LIKE' => "%" .$queryTermsWithWildCard. "%",
+                                    'email LIKE' => "%" .$queryTermsWithWildCard. "%",
                                 ]
                             ])->first());
                         }
