@@ -109,6 +109,19 @@
                     </a>
                 </li>
 
+                <li id="ac" class="nav-item ">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "assignToClass",
+                        ]
+                    );?>>
+                        <i class="material-icons">assignment_ind</i>
+                        <p>Assign Staff To Class</p>
+                    </a>
+                </li>
+
+
                 <li id="viewUsers" class="nav-item ">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
@@ -116,7 +129,7 @@
                             "action" => "viewUsers",
                         ]
                     );?>>
-                        <i class="material-icons">bubble_chart</i>
+                        <i class="material-icons">accessibility</i>
                         <p>User Info</p>
                     </a>
                 </li>
@@ -167,19 +180,6 @@
                     </a>
                 </li>
 
-
-                <li id="assignstafftounit" class="nav-item ">
-                    <a class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "admins",
-                            "action" => "assignStaffToUnit",
-                        ]
-                    );?>>
-                        <i class="material-icons">assignment_ind</i>
-                        <p>Assign staff to unit</p>
-                    </a>
-                </li>
-
                 <li id="cc" class="nav-item ">
                     <a class="nav-link" href=<?php echo $this->Url->build(
                         [
@@ -199,7 +199,7 @@
                             "action" => "addQuestions",
                         ]
                     );?>>
-                        <i class="material-icons">bubble_chart</i>
+                        <i class="material-icons">note_add</i>
                         <p>Create Question</p>
                     </a>
                 </li>
@@ -212,23 +212,13 @@
                             "action" => "viewQuestions",
                         ]
                     );?>>
-                        <i class="material-icons">bubble_chart</i>
+                        <i class="material-icons">visibility</i>
                         <p>View Questions</p>
                     </a>
                 </li>
 
 
-                <li id="ac" class="nav-item ">
-                    <a class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "admins",
-                            "action" => "assignToClass",
-                        ]
-                    );?>>
-                        <i class="material-icons">bubble_chart</i>
-                        <p>Assign Staff To Class</p>
-                    </a>
-                </li>
+
 
 
 
