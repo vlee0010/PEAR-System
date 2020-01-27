@@ -8,23 +8,13 @@ $this->layout = 'default-staff';
 <table id="myTable"class="table table-flush" cellpadding="0" cellspacing="0">
     <thead>
     <tr>
-
         <th scope="col"><?= $this->Paginator->sort('Question Description') ?></th>
-
-
-
-
-
-
         <th scope="col" class="actions"><?= __('Actions') ?></th>
     </tr>
     </thead>
     <tbody>
-    <?php echo debug($questionsShow)?>
     <?php foreach ($questionsShow as $question): ?>
         <tr>
-
-
             <td><?= h($question->description) ?></td>
 
             <td class="actions">
