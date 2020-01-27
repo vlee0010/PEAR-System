@@ -316,6 +316,68 @@ class AdminsController extends AppController
 
 
     }
+    public function getUserName($id = null){
+        $userTable = TableRegistry::getTableLocator()->get('users');
+        $userRecord = $userTable->find()->where(['id'=>$id])->first();
+        $userName = $userRecord->firstname . ' '.$userRecord->lastname;
+        return $userName;
+    }
+
+    public function getClassName($classId = nul){
+        $classTable = TableRegistry::getTableLocator()->get('classes');
+        $classRecord = $classTable->find()->where(['id'=>$classId])->first();
+        return $className = $classRecord->class_name;
+
+    }
+    public function assignToClass(){
+        $this->set(compact('unit_id'));
+        $unitList = $this->Units->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_title'
+        ])->order(['year' => 'DESC', 'semester' => 'DESC']);
+        $this->set('unitList', $unitList);
+
+
+        $staffList = $this->Users->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_name'
+        ])->where(['role' => 2])->orWhere(['role' => 3])->order(['role' => 'DESC', 'created' => 'DESC']);
+        $this->set('staffList', $staffList);
+        if ($this->request->is('post')){
+            $unitsTutorsTable = TableRegistry::getTableLocator()->get('units_tutors');
+            $unitsClassesTable = TableRegistry::getTableLocator()->get('units_classes');
+            $classesTutorTable = TableRegistry::getTableLocator()->get('classes_tutors');
+            $unitCode =  $this->request->getData('selectUnit');
+            $staffId = $this->request->getData('selectStaff');
+            $classId =  $this->request->getData('selectClass');
+
+//          insert unitsTutors Object
+            $newUnitsTutorsObject = $unitsTutorsTable->newEntity();
+            $newUnitsTutorsObject->unit_id = $unitCode;
+            $newUnitsTutorsObject->tutor_id = $staffId;
+
+//            insert unitsClasses Object
+          $newUnitsClassesObject = $unitsClassesTable->newEntity();
+          $newUnitsClassesObject->unit_id = $unitCode;
+          $newUnitsClassesObject->class_id = $classId;
+
+//          insert classTutor Object
+            $newClassesTutorObject = $unitsTutorsTable->newEntity();
+            $newClassesTutorObject->unit_id = $unitCode;
+            $newClassesTutorObject->class_id = $classId;
+            $newClassesTutorObject->tutor_id = $staffId;
+
+
+            if ($unitsTutorsTable->save($newUnitsTutorsObject) && $unitsClassesTable->save($newUnitsClassesObject) && $classesTutorTable->save($newClassesTutorObject)){
+                $this->Flash->success('Staff: ' . $this->getUserName($staffId) .' has been added to class ' . $this->getClassName($classId) );
+            }else{
+                $this->Flash->error('Staff: ' . $this->getUserName($staffId) .' cannot be added to class ' . $this->getClassName($classId));
+            }
+
+
+
+        }
+    }
 
     public function createClasses($unit_id = null)
     {
