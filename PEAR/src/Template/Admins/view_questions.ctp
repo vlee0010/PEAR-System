@@ -20,7 +20,7 @@ $this->layout = 'default-staff';
     </tr>
     </thead>
     <tbody>
-    <?php echo debug($questionsShow)?>
+
     <?php foreach ($questionsShow as $question): ?>
         <tr>
 
@@ -37,6 +37,12 @@ $this->layout = 'default-staff';
 </table>
 
 <script>
+    const questionTab = document.querySelector('#question-tab');
+    questionTab.classList.add('active');
+
+    const questionExpand = document.querySelector('#questionExpand');
+
+    questionExpand.classList.add('show');
     const vQ = document.querySelector('#vq');
     vQ.classList.add('active');
 </script>

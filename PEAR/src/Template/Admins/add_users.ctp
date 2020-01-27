@@ -72,5 +72,13 @@ echo $this->Form->create(); ?>
 <script>
     const addUser = document.querySelector('#add-user');
     addUser.classList.add('active');
+    const user = document.querySelector('#user');
+    user.classList.add('active');
+    const userExpand = document.querySelector('#userExpand');
+
+    userExpand.classList.add('show');
+
+
+
 </script>
 

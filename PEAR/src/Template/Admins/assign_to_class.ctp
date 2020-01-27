@@ -97,12 +97,12 @@ echo $this->Form->create(); ?>
 
         $('.js-example-basic-single').select2();
         // $('.simple').select2();
-        $('#selectUnit').on('select2:select', function(e){
-            console.log($('#selectUnit').val());
-            $selectedUnitId = $('#selectUnit').val();
-            var classDropdown = document.querySelector('#selectClass');
-            searchRelevantClasses($selectedUnitId);
-        });
+        // $('#selectUnit').on('select2:select', function(e){
+        //        //     console.log($('#selectUnit').val());
+        //        //     $selectedUnitId = $('#selectUnit').val();
+        //        //     var classDropdown = document.querySelector('#selectClass');
+        //        //     searchRelevantClasses($selectedUnitId);
+        //        // });
         $('#selectStaff').on('select2:select',function(e){
             console.log($('#selectStaff').val());
         });
@@ -209,7 +209,6 @@ echo $this->Form->create(); ?>
                             option.textContent = e.class_name;
                             option.value = e.id;
                             classDropdown.add(option);
-
 
 
                         })
