@@ -42,7 +42,7 @@
                                 } elseif ($item->status == 0 && $item->peerReviewStatus == 1) {
                                     echo "<a class='btn btn-warning' href=".$this->Html->Url->build(['controller' => 'questions','action' => 'index', $team->teamID,$item->peer_id]).">Incomplete</a>";
                                 } elseif ($item->status == 0 && $item->peerReviewStatus == 0){
-                                    echo '<a href="#" disabled class="btn btn-neutral">Not Published&nbsp;&nbsp;&nbsp;</a>';
+                                    echo '<a href="#" disabled class="btn btn-neutral">Not Available&nbsp;&nbsp;&nbsp;</a>';
                                 }
 
                                 ?></td>
