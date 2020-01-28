@@ -17,7 +17,7 @@
 <html lang="en">
 
 <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    
+
 <!--    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">-->
 <!--    <link rel="icon" type="image/png" href="../assets/img/favicon.png">-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -64,7 +64,11 @@
     <?= $this->Html->meta('icon', 'favicon.ico', ['type'=>'image/png']) ?>
 
 
-
+<style>
+    a i{
+        line-height: 30px !important;
+    }
+</style>
 
 </head>
 
@@ -96,38 +100,11 @@
                     </a>
                 </li>
 
-                <li id="add-user" class="nav-item" id="dashboard">
-                    <a  class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "admins",
-                            "action" => "addUsers",
-                        ]
-                    );?>>
-                        <i class="material-icons">add_circle_outline
-                        </i>
-                        <p>Add User</p>
-                    </a>
-                </li>
-                
-                <li id="viewUsers" class="nav-item ">
-                    <a class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "admins",
-                            "action" => "viewUsers",
-                        ]
-                    );?>>
-                        <i class="material-icons">bubble_chart</i>
-                        <p>User Info</p>
-                    </a>
-                </li>
-
-
-
                 <li id="create-unit" class="nav-item">
                     <a id="unit-link" class="nav-link" data-toggle="collapse" href="#unitExpand">
                         <i class="material-icons">queue</i>
                         <p>Units
-                        <b class="caret"></b>
+                            <b class="caret"></b>
                         </p>
                     </a>
                     <div class="collapse" id="unitExpand">
@@ -151,9 +128,65 @@
 
                         </ul>
                     </div>
-
-
                 </li>
+
+                <li id="user" class="nav-item">
+                    <a id="unit-link" class="nav-link" data-toggle="collapse" href="#userExpand">
+                        <i class="material-icons">supervisor_account</i>
+                        <p>Users
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <div class="collapse" id="userExpand">
+                        <ul class="nav">
+                            <li id="add-user" class="nav-item">
+                                <a  class="nav-link" href=<?php echo $this->Url->build(
+                                    [
+                                        "controller" => "admins",
+                                        "action" => "addUsers",
+                                    ]
+                                );?>>
+                                    <i class="material-icons">add_circle_outline
+                                    </i>
+                                    <p>Add User</p>
+                                </a>
+                            </li>
+
+                            <li id="viewUsers" class="nav-item ">
+                                <a class="nav-link" href=<?php echo $this->Url->build(
+                                    [
+                                        "controller" => "admins",
+                                        "action" => "viewUsers",
+                                    ]
+                                );?>>
+                                    <i class="material-icons">accessibility</i>
+                                    <p>User Info</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+
+
+                <li id="ac" class="nav-item ">
+                    <a class="nav-link" href=<?php echo $this->Url->build(
+                        [
+                            "controller" => "admins",
+                            "action" => "assignToClass",
+                        ]
+                    );?>>
+                        <i class="material-icons">assignment_ind</i>
+                        <p>Assign Staff To Class</p>
+                    </a>
+                </li>
+
+
+
+
+
+
+
 
                 <li class="nav-item " id="pr">
                     <a class="nav-link" href=<?php echo $this->Url->build(
@@ -164,19 +197,6 @@
                     );?>>
                         <i class="material-icons">content_paste</i>
                         <p>Create Peer Reviews</p>
-                    </a>
-                </li>
-
-
-                <li id="assignstafftounit" class="nav-item ">
-                    <a class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "admins",
-                            "action" => "assignStaffToUnit",
-                        ]
-                    );?>>
-                        <i class="material-icons">assignment_ind</i>
-                        <p>Assign staff to unit</p>
                     </a>
                 </li>
 
@@ -192,33 +212,51 @@
                     </a>
                 </li>
 
-                <li id="cnq" class="nav-item ">
-                    <a class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "admins",
-                            "action" => "addQuestions",
-                        ]
-                    );?>>
-                        <i class="material-icons">bubble_chart</i>
-                        <p>Create Question</p>
+                <li id="question-tab" class="nav-item">
+                    <a id="unit-link" class="nav-link" data-toggle="collapse" href="#questionExpand">
+                        <i class="material-icons">queue</i>
+                        <p>Peer Review Questions
+                            <b class="caret"></b>
+                        </p>
                     </a>
+                    <div class="collapse" id="questionExpand">
+                        <ul class="nav">
+                            <li id="cnq" class="nav-item ">
+                                <a class="nav-link" href=<?php echo $this->Url->build(
+                                    [
+                                        "controller" => "admins",
+                                        "action" => "addQuestions",
+                                    ]
+                                );?>>
+                                    <i class="material-icons">note_add</i>
+                                    <p>Create Question</p>
+                                </a>
+                            </li>
+
+
+                            <li id="vq" class="nav-item ">
+                                <a class="nav-link" href=<?php echo $this->Url->build(
+                                    [
+                                        "controller" => "admins",
+                                        "action" => "viewQuestions",
+                                    ]
+                                );?>>
+                                    <i class="material-icons">visibility</i>
+                                    <p>View Questions</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
                 </li>
 
 
-                <li id="vq" class="nav-item ">
-                    <a class="nav-link" href=<?php echo $this->Url->build(
-                        [
-                            "controller" => "admins",
-                            "action" => "viewQuestions",
-                        ]
-                    );?>>
-                        <i class="material-icons">bubble_chart</i>
-                        <p>View Questions</p>
-                    </a>
-                </li>
-                
-                
-                
+
+
+
+
+
+
 
 <!--                <li class="nav-item ">-->
 <!--                    <a class="nav-link" href="./typography.html">-->

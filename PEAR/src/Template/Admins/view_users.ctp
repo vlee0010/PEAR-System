@@ -66,4 +66,11 @@ $this->layout = 'default-staff';
 <script>
     const userTab = document.querySelector('#viewUsers');
     userTab.classList.add('active');
+    const user = document.querySelector('#add-user');
+    user.classList.add('show');
+    const userExpand = document.querySelector('#userExpand');
+    const users = document.querySelector('#user');
+    users.classList.add('active');
+
+    userExpand.classList.add('show');
 </script>

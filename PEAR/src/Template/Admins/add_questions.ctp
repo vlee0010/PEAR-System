@@ -20,10 +20,16 @@ echo $this->Form->create(); ?>
 
     <script>
         // Create Peer Review highlight Tab
+        const questionTab = document.querySelector('#question-tab');
+        questionTab.classList.add('active');
         const cnqTab = document.querySelector('#cnq');
         cnqTab.classList.add('active');
         const submit = document.querySelector('.submit');
         submit.classList.add('m-auto');
+
+        const questionExpand = document.querySelector('#questionExpand');
+
+        questionExpand.classList.add('show');
 
         //    "<i class=\"material-icons\">create</i>"
         //     const submitBtn = document.querySelector('#submit-btn');
