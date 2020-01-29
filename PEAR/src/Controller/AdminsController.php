@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Model\Entity\Role;
+use App\Model\Table\UnitsTable;
 use Cake\ORM\TableRegistry;
 use Cake\View\Helper\FlashHelper;
 use App\Controller\AppController;
@@ -16,7 +17,11 @@ use Cake\Utility\Security;
 use Cake\Mailer\Email;
 use Cake\I18n\Time;
 
-
+/**
+ * Class AdminsController
+ *
+ * @package App\Controller
+ */
 class AdminsController extends AppController
 {
 
@@ -56,6 +61,9 @@ class AdminsController extends AppController
     }
 
 
+    /**
+     *
+     */
     public function addUsers(){
         if ($this->request->is('post')){
 
@@ -174,7 +182,6 @@ class AdminsController extends AppController
     {
         $questionTable = TableRegistry::getTableLocator()->get('questions');
         $questionsShow = $questionTable->find()->where(['is_show' => 1]);
-        debug($questionsShow);
         $this->set('questionsShow', $questionsShow);
     }
 
