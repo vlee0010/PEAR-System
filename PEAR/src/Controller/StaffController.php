@@ -70,7 +70,7 @@ class StaffController extends AppController
         //        bug,tutor class
         $unit_class_list = $this->units_classes->find()->where(['unit_id' => $id]);
         $class_id_list = [];
-        $peer_review = $this->peer_reviews->find()->where(['unit_id' => $id, 'status' => 1])->first();
+        $peer_review = $this->peer_reviews->find()->where(['unit_id' => $id])->first();
 
         $tutor_id = $this->Auth->user('id');
 
