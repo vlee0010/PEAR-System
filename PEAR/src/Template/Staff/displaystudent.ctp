@@ -210,16 +210,16 @@
 <?= $this->Html->script('blk-design-system.min.js?v=1.0.0') ?>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script>
-    $('.progress-ani').each(function () {
-        var $this = $(this);
-        jQuery({ Counter: 0 }).animate({ Counter: $this.text() }, {
-            duration: 2000,
-            easing: 'swing',
-            step: function () {
-                $this.text(this.Counter.toFixed(2));
-            }
-        });
-    });
+    // $('.progress-ani').each(function () {
+    //     var $this = $(this);
+    //     jQuery({ Counter: 0 }).animate({ Counter: $this.text() }, {
+    //         duration: 2000,
+    //         easing: 'swing',
+    //         step: function () {
+    //             $this.text(this.Counter.toFixed(2));
+    //         }
+    //     });
+    // });
 </script>
 </body>
 </html>
