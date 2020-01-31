@@ -45,7 +45,7 @@ class StaffController extends AppController
 
     public function isAuthorized($user)
     {
-        // If you are a user, you can access this dashboard.
+        // If you are a staff, you can access this dashboard.
         return Role::isStaff($user['role']);
     }
 
