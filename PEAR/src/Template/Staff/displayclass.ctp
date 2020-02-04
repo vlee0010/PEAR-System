@@ -6,32 +6,34 @@
 ?>
 
 <!--starts here-->
-<?php $this->Breadcrumbs->add($unit->code. ' '.$unit->title) ?>
+<?php $this->Breadcrumbs->add($unit->code . ' ' . $unit->title) ?>
 <div id="staff-container" class="container">
     <div class="container-fluid">
         <main class="col-12 col-md-auto col-xl-auto py-md-3 pl-md-6 bd-content" role="main">
-            <h1><?= $unit->code?> Class List</h1>
+            <h1><?= $unit->code ?> Class List</h1>
             <div style="justify-content: center" class="row" align="center">
-                <?php if(count($selectedClassList)!=0):?>
-                <?php foreach ($selectedClassList as $class): ?>
-                <div style="position:relative; min-height:100px; min-width:600px; justify-content: center" class="d-flex col-12 col-md-4 col-lg-3">
-                    <?php if($peer_id): ?>
-                    <div style="position: absolute;top:50%;left:50%;transform: translate(-50%,-50%);" class="card-img">
+                <?php if (count($selectedClassList) != 0): ?>
+                    <?php foreach ($selectedClassList as $class): ?>
+                        <div style="position:relative; min-height:100px; min-width:600px; justify-content: center"
+                             class="d-flex col-12 col-md-4 col-lg-3">
+                            <?php if ($peer_id): ?>
+                                <div style="position: absolute;top:50%;left:50%;transform: translate(-50%,-50%);"
+                                     class="card-img">
 
-                        <h3 class="display-4" align="center">
-                            <a style="justify-content: center"class="btn btn-success" id="class-list-item"
-                               href=<?= $this->Url->build(['action' => 'displaystudent',$unit->id,$class->id, $peer_id]); ?>><?= $class->class_name ?></a>
-                        </h3>
-                    </div>
-                    <?php else:?>
-                    <h3>no class</h3>
-                    <?php endif;?>
+                                    <h3 class="display-4" align="center">
+                                        <a style="justify-content: center" class="btn btn-success" id="class-list-item"
+                                           href=<?= $this->Url->build(['action' => 'displaystudent', $unit->id, $class->id, $peer_id]); ?>><?= $class->class_name ?></a>
+                                    </h3>
+                                </div>
+                            <?php else: ?>
+                                <h3>No class</h3>
+                            <?php endif; ?>
 
-                </div>
-                <?php endforeach; ?>
-                <?php else:?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
                     <h1>No class</h1>
-                <?php endif;?>
+                <?php endif; ?>
                 <br>
             </div>
         </main>

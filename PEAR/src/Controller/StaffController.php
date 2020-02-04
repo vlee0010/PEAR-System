@@ -169,7 +169,8 @@ class StaffController extends AppController
 
                     $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_review_id' => $peer_id]);
 
-                    $peer_review = $this->peer_reviews->find()->where(['id' => $peer_id])->first();
+//                    $peer_review = $this->peer_reviews->find()->where(['id' => $peer_id])->first();
+                    $peer_review = $this->peer_reviews->find()->where(['unit_id' => $unit_id,'status' => 1])->first();
 
                     $peer_query = $this->units_classes->find()->where(['class_id' => $id]);
                     $unit_activity = $peer_query->select([
