@@ -45,7 +45,7 @@ echo $this->Form->create(); ?>
             //                    array_push($staffAll,$staffInformation);
             //                }
 
-            echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control simple js-example-basic-single','id'=>'selectUnit','value'=>$unit_id]);?>
+            echo $this->Form->input('selectUnit',['required'=>true,'type'=>'select','options'=>$unitList,'label'=>'','showParents' => true,'empty'=>'Select Unit','data-style'=>'btn btn-link','class'=>'form-control simple js-example-basic-single','id'=>'selectUnit']);?>
         </div>
 
     </div>
@@ -54,7 +54,7 @@ echo $this->Form->create(); ?>
     <div class="col-md-6">
         <div class="form-group bmd-form-group">
 
-            <?php echo $this->Form->input('selectStaff',['required'=>true,'type'=>'select','options'=>$staffList,'label'=>'','showParents' => true,'empty'=>'Select Staff','data-style'=>'btn btn-link','class'=>'form-control simple js-example-basic-single','id'=>'selectStaff','value'=>$staff_id]);?>
+            <?php echo $this->Form->input('selectStaff',['required'=>true,'type'=>'select','options'=>$staffList,'label'=>'','showParents' => true,'empty'=>'Select Staff','data-style'=>'btn btn-link','class'=>'form-control simple js-example-basic-single','id'=>'selectStaff']);?>
 
         </div>
     </div>

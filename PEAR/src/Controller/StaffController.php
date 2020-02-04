@@ -45,7 +45,7 @@ class StaffController extends AppController
 
     public function isAuthorized($user)
     {
-        // If you are a staff, you can access this dashboard.
+        // If you are a user, you can access this dashboard.
         return Role::isStaff($user['role']);
     }
 
@@ -757,7 +757,7 @@ class StaffController extends AppController
                 $this->Flash->success(__('Email Sent'));
                 $newEmail = new Email('default');
                 $newEmail
-                    ->transport('gmail')
+                    //->transport('gmail')
                     ->from(['pearmonash@gmail.com' => $from])
                     ->subject($subject)
                     ->setHeaders([$header])
