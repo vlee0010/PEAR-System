@@ -9,7 +9,7 @@
 
 <!--starts here-->
 <?php foreach ($unit_activity as $unit_activity1): ?>
-    <?php $this->Breadcrumbs->add('Class', ['controller' => 'staff', 'action' => 'displayclass', $unit_activity1->unit_id]) ?>
+    <?php $this->Breadcrumbs->add($unit->code.' '.$unit->title, ['controller' => 'staff', 'action' => 'displayclass', $unit_activity1->unit_id]) ?>
     <?php $this->Breadcrumbs->add('Student List') ?>
     <?php break; ?>
 <?php endforeach; ?>

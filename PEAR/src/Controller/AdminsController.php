@@ -61,9 +61,6 @@ class AdminsController extends AppController
     }
 
 
-    /**
-     *
-     */
     public function addUsers(){
         if ($this->request->is('post')){
 

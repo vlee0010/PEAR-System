@@ -74,6 +74,9 @@ class StaffController extends AppController
 
         $tutor_id = $this->Auth->user('id');
 
+        $unit = $this->Units->find()->where(['id' => $id])->first();
+        $this->set('unit', $unit);
+
         $classQuery = $this->classes_tutors->find('all')->where([
             'unit_id' => $id,
             'tutor_id' => $tutor_id,
@@ -136,6 +139,8 @@ class StaffController extends AppController
 
     public function displaystudent($unit_id=null,$id = null,$peer_id = null)
     {
+        $unit = $this->Units->find()->where(['id' => $unit_id])->first();
+        $this->set('unit', $unit);
         $unit_class=TableRegistry::getTableLocator()->get('units_classes')->find()->where(['class_id'=>$id,'unit_id'=>$unit_id])->first();
         if($unit_class) {
             $class_tutor=TableRegistry::getTableLocator()->get('classes_tutors')->find()->where(['unit_id'=>$unit_id,'tutor_id'=>$this->Auth->user('id'),'class_id'=>$id])->first();
