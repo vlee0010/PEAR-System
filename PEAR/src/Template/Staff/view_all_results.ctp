@@ -63,7 +63,13 @@ $SEVENTY_PERCENT = 0.7;
                         <?php foreach ($questions_desc as $item): ?>
                             <th class="text-center"><?= $item->question ?></th>
                         <?php endforeach; ?>
-                        <th>Total Score</th>
+                        <th class="text-center">Total Score
+                            <button type="button" class="btn btn-neutral btn-simple btn-icon btn-sm"
+                                    data-container="body" data-toggle="popover" data-placement="top"
+                                    data-trigger="focus"
+                                    data-content="The color pink highlights all students who have not completed peer review or have a total score under 70%">
+                                    <i class="tim-icons icon-alert-circle-exc"></i>
+                            </button></th>
                         <th>Comment</th>
 
                     </tr>
