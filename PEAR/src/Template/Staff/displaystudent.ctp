@@ -9,7 +9,7 @@
 
 <!--starts here-->
 <?php foreach ($unit_activity as $unit_activity1): ?>
-    <?php $this->Breadcrumbs->add($unit->code.' '.$unit->title, ['controller' => 'staff', 'action' => 'displayclass', $unit_activity1->unit_id]) ?>
+    <?php $this->Breadcrumbs->add($unit->code . ' ' . $unit->title, ['controller' => 'staff', 'action' => 'displayclass', $unit_activity1->unit_id]) ?>
     <?php $this->Breadcrumbs->add('Student List') ?>
     <?php break; ?>
 <?php endforeach; ?>
@@ -37,12 +37,12 @@
 
                     as $unit_activity): ?>
                     <?php
-                    $countStudent=0;
-                    $countComplete=0;
-                    foreach ($unit_activity[0] as $individual){
-                        $countStudent=$countStudent+1;
-                        if($individual->status==true){
-                            $countComplete+=1;
+                    $countStudent = 0;
+                    $countComplete = 0;
+                    foreach ($unit_activity[0] as $individual) {
+                        $countStudent = $countStudent + 1;
+                        if ($individual->status == true) {
+                            $countComplete += 1;
                         }
                     }
 
@@ -52,12 +52,14 @@
                         <td><?= $unit_activity['activity'] ?></td>
                         <td><?= date("d-M-Y", strtotime($unit_activity['datestart'])) ?></td>
                         <td><?= date("d-M-Y", strtotime($unit_activity['dateend'])) ?></td>
-                        <td><span class="progress-ani"><?=round(100*($countComplete/$countStudent),2)?></span>%</td>
+                        <td><span class="progress-ani"><?= round(100 * ($countComplete / $countStudent), 2) ?></span>%
+                        </td>
                         <td class="actions" align="center">
                             <?= $this->element('Staff/Buttons/results', ['url' => ['action' => 'viewAllResults', $unit_activity['peer_id']]]) ?>
-                            <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal'.$unit_activity['peer_id']]); ?>
+                            <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal' . $unit_activity['peer_id']]); ?>
                             <!-- Modal -->
-                            <div class="modal fade" id="exampleModal<?=$unit_activity['peer_id']?>" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="exampleModal<?= $unit_activity['peer_id'] ?>" tabindex="-1"
+                                 role="dialog"
                                  aria-labelledby="exampleModalLabel"
                                  aria-hidden="true">
                                 <div class="modal-dialog" role="document">
@@ -109,7 +111,7 @@
                         </div>
                         <div class="modal-footer">
                             <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
-                                <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', $peer_id]]) ?>
+                            <?= $this->element('Staff/Buttons/send', ['url' => ['action' => 'sendReminderEmail', $peer_id]]) ?>
                         </div>
                     </div>
                 </div>
@@ -127,70 +129,94 @@
                 <?= $this->Form->button('Send Reminder', ['class' => 'btn btn-secondary', 'data-toggle' => 'modal', 'data-target' => '#exampleModal2', 'data-dismiss' => 'modal']); ?>
             </div>
             <br>
-            <table id="student-table" class="table">
-                <thead>
-                <tr>
-                    <!--            <th>Student ID</th>-->
-                    <th>Student Name</th>
-                    <th>Peer Review Name</th>
-                    <th>Status</th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-
-                </thead>
-                <tbody>
-                <?php foreach ($student_list as $student): ?>
+            <?php if ($peer_review !== null): ?>
+                <table id="student-table" class="table">
+                    <thead>
                     <tr>
-                        <td><?= $student->firstname . ' ' . $student->lastname ?></td>
-                        <td><?= $peer_review->title ?></td>
+                        <!--            <th>Student ID</th>-->
+                        <th>Student Name</th>
+                        <th>Peer Review Name</th>
+                        <th>Status</th>
+                        <th class="actions"><?= __('Actions') ?></th>
+                    </tr>
 
-                        <?php foreach ($peerReviewUser as $peer_review_user): ?>
-                            <?php if ($peer_review_user->user_id == $student->id): ?>
-                                <?php if ($peer_review_user->status == 0): ?>
-                                    <td><?= 'Incomplete' ?></td>
-                                    <td>
-                                        <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm disabled', 'data-toggle' => 'modal', 'data-target' => '#exampleModal3']); ?>
-                                    </td>
-                                <?php else: ?>
-                                    <td><?= 'Complete' ?></td>
-                                    <td>
-                                        <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm', 'data-toggle' => 'modal', 'data-target' => '#exampleModal_' . $student->id . '_' . $peer_review->id]); ?>
-                                        <!-- Modal -->
-                                        <div class="modal fade"
-                                             id="exampleModal_<?= $student->id . '_' . $peer_review->id ?>"
-                                             tabindex="-1" role="dialog"
-                                             aria-labelledby="exampleModalLabel2"
-                                             aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h3 class="modal-title" id="exampleModalLabel">System Alert</h3>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <h4 style="color: #0a0c0d">Reset Response
-                                                            for <?= $student->firstname . ' ' . $student->lastname ?>
-                                                            ?</h4>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
-                                                        <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse', $student->id, $peer_review->id]]) ?>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($student_list as $student): ?>
+                        <tr>
+                            <td><?= $student->firstname . ' ' . $student->lastname ?></td>
+                            <td><?= $peer_review->title ?></td>
+
+                            <?php foreach ($peerReviewUser as $peer_review_user): ?>
+                                <?php if ($peer_review_user->user_id == $student->id): ?>
+                                    <?php if ($peer_review_user->status == 0): ?>
+                                        <td><?= 'Incomplete' ?></td>
+                                        <td>
+                                            <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm disabled', 'data-toggle' => 'modal', 'data-target' => '#exampleModal3']); ?>
+                                        </td>
+                                    <?php else: ?>
+                                        <td><?= 'Complete' ?></td>
+                                        <td>
+                                            <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm', 'data-toggle' => 'modal', 'data-target' => '#exampleModal_' . $student->id . '_' . $peer_review->id]); ?>
+                                            <!-- Modal -->
+                                            <div class="modal fade"
+                                                 id="exampleModal_<?= $student->id . '_' . $peer_review->id ?>"
+                                                 tabindex="-1" role="dialog"
+                                                 aria-labelledby="exampleModalLabel2"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h3 class="modal-title" id="exampleModalLabel">System
+                                                                Alert</h3>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h4 style="color: #0a0c0d">Reset Response
+                                                                for <?= $student->firstname . ' ' . $student->lastname ?>
+                                                                ?</h4>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
+                                                            <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse', $student->id, $peer_review->id]]) ?>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
+                                        </td>
+                                    <?php endif; ?>
                                 <?php endif; ?>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
 
-                    </tr>
-                <?php endforeach; ?>
-                </tbody>
-            </table>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <?php if (!empty($paginatorStudent)): ?>
+                    <table id="student-table" class="table">
+                        <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                        </tr>
+
+                        </thead>
+                        <tbody>
+                        <?php foreach ($paginatorStudent as $student): ?>
+                            <tr>
+                                <td><?= $student->id ?></td>
+                                <td><?= $student->firstname . ' ' . $student->lastname ?></td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+            <?php endif; ?>
         </main>
     </div>
 </div>
@@ -212,7 +238,7 @@
 <script>
     $('.progress-ani').each(function () {
         var $this = $(this);
-        jQuery({ Counter: 0 }).animate({ Counter: $this.text() }, {
+        jQuery({Counter: 0}).animate({Counter: $this.text()}, {
             duration: 2000,
             easing: 'swing',
             step: function () {
