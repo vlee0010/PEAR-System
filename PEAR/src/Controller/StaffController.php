@@ -20,7 +20,7 @@ use Cake\Utility\Security;
 /**
  * Staff Controller
  *
- * @method \App\Model\Entity\Unit[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class StaffController extends AppController
 {
@@ -175,7 +175,7 @@ class StaffController extends AppController
                         'c' => [
                             'table' => 'classes',
                             'conditions' => [
-                                'students_classes.class_id = c.id',
+                                'c.id' => $id,
                             ]
                         ],
                         'u' => [
@@ -183,21 +183,27 @@ class StaffController extends AppController
                             'conditions' => [
                                 'students_classes.user_id = u.id',
                             ],
-                            'contain' => ['teams']
                         ]
-                    ])->distinct();
-                    $paginatorStudent = $this->paginate($studentClassList,['model' => 'Users','scope'=>'students']);
+                    ]);
+                    $paginatorStudent = $this->paginate($this->Users
+                        ->find()
+                        ->where(['class_id' => $id])
+                        ->matching('Classes', function (\Cake\ORM\Query $query) use ($id) {
+                            return $query->where([
+                                'Classes.id' => $id
+                            ]);
+                        })
+                        ,['model' => 'Users','scope'=>'students']);
                     $this->set('paginatorStudent',$paginatorStudent);
 
 
 
 
 //                    $peer_review = $this->peer_reviews->find()->where(['id' => $peer_id])->first();
-
                     $peer_review = $this->peer_reviews->find()->where(['unit_id' => $unit_id,'status' => 1])->first();
-                    $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_review_id' => $peer_review->id]);
-
-
+                    if (!empty($peer_review)) {
+                        $peer_review_user_query = $this->peer_reviews_users->find()->where(['peer_review_id' => $peer_review->id]);
+                    }
                     $peer_query = $this->units_classes->find()->where(['class_id' => $id]);
                     $unit_activity = $peer_query->select([
                         'unit_id' => 'u.id',
@@ -231,9 +237,9 @@ class StaffController extends AppController
                             array_push($student_list, $this->Users->find()->where([
                                 'id' => $user_id->id,
                                 'OR' => [
-                                    'firstname LIKE' => "%" .$queryTermsWithWildCard. "%",
-                                    'lastname LIKE' => "%" .$queryTermsWithWildCard. "%",
-                                    'email LIKE' => "%" .$queryTermsWithWildCard. "%",
+                                    'firstname LIKE' => $queryTermsWithWildCard,
+                                    'lastname LIKE' => $queryTermsWithWildCard,
+                                    'email LIKE' => $queryTermsWithWildCard,
                                 ]
                             ])->first());
                         }
@@ -254,7 +260,9 @@ class StaffController extends AppController
                     $this->set('classId', $id);
                     $this->set('peerId', $peer_id);
                     $this->set('unit_activity', $unit_activity);
-                    $this->set('peerReviewUser', $peer_review_user_query);
+                    if (!empty($peer_review)) {
+                        $this->set('peerReviewUser', $peer_review_user_query);
+                    }
                     $this->set('studentClassList', $studentClassList);
                     $this->set('query', $queryTerms);
                     $this->set(compact('student_list', 'peer_review', "peer_id", 'unit_activity_array'));

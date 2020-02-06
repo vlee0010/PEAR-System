@@ -1,9 +1,10 @@
 <?php
 /**
  * @var \App\View\AppView $this
+ * @var \App\Model\Entity\User $user
  * @var string $query
  */
-
+$this->layout = 'staff';
 
 ?>
 
@@ -130,71 +131,89 @@
             </div>
             <br>
             <?php if ($peer_review !== null): ?>
-                <table id="student-table" class="table">
-                    <thead>
-                    <tr>
-                        <!--            <th>Student ID</th>-->
-                        <th>Student Name</th>
-                        <th>Peer Review Name</th>
-                        <th>Status</th>
-                        <th class="actions"><?= __('Actions') ?></th>
-                    </tr>
-
-                    </thead>
-                    <tbody>
-                    <?php foreach ($student_list as $student): ?>
+                <?php if (!empty($paginatorStudent)): ?>
+                    <table id="student-table" class="table">
+                        <thead>
                         <tr>
-                            <td><?= $student->firstname . ' ' . $student->lastname ?></td>
-                            <td><?= $peer_review->title ?></td>
+                            <!--            <th>Student ID</th>-->
+                            <th>Student Name</th>
+                            <th>Peer Review Name</th>
+                            <th>Status</th>
+                            <th class="actions"><?= __('Actions') ?></th>
+                        </tr>
 
-                            <?php foreach ($peerReviewUser as $peer_review_user): ?>
-                                <?php if ($peer_review_user->user_id == $student->id): ?>
-                                    <?php if ($peer_review_user->status == 0): ?>
-                                        <td><?= 'Incomplete' ?></td>
-                                        <td>
-                                            <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm disabled', 'data-toggle' => 'modal', 'data-target' => '#exampleModal3']); ?>
-                                        </td>
-                                    <?php else: ?>
-                                        <td><?= 'Complete' ?></td>
-                                        <td>
-                                            <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm', 'data-toggle' => 'modal', 'data-target' => '#exampleModal_' . $student->id . '_' . $peer_review->id]); ?>
-                                            <!-- Modal -->
-                                            <div class="modal fade"
-                                                 id="exampleModal_<?= $student->id . '_' . $peer_review->id ?>"
-                                                 tabindex="-1" role="dialog"
-                                                 aria-labelledby="exampleModalLabel2"
-                                                 aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h3 class="modal-title" id="exampleModalLabel">System
-                                                                Alert</h3>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <h4 style="color: #0a0c0d">Reset Response
-                                                                for <?= $student->firstname . ' ' . $student->lastname ?>
-                                                                ?</h4>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
-                                                            <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse', $student->id, $peer_review->id]]) ?>
+                        </thead>
+                        <tbody>
+                        <?php if (!empty($query)) {
+                            $paginatorStudent = $student_list;
+                        } ?>
+                        <?php foreach ($paginatorStudent as $student): ?>
+                            <tr>
+                                <td><?= $student->firstname . ' ' . $student->lastname ?></td>
+                                <td><?= $peer_review->title ?></td>
+
+                                <?php foreach ($peerReviewUser as $peer_review_user): ?>
+                                    <?php if ($peer_review_user->user_id == $student->id): ?>
+                                        <?php if ($peer_review_user->status == 0): ?>
+                                            <td><?= 'Incomplete' ?></td>
+                                            <td>
+                                                <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm disabled', 'data-toggle' => 'modal', 'data-target' => '#exampleModal3']); ?>
+                                            </td>
+                                        <?php else: ?>
+                                            <td><?= 'Complete' ?></td>
+                                            <td>
+                                                <?= $this->Form->button('<i class="tim-icons icon-refresh-01"></i> Reset', ['class' => 'btn btn-info btn-sm', 'data-toggle' => 'modal', 'data-target' => '#exampleModal_' . $student->id . '_' . $peer_review->id]); ?>
+                                                <!-- Modal -->
+                                                <div class="modal fade"
+                                                     id="exampleModal_<?= $student->id . '_' . $peer_review->id ?>"
+                                                     tabindex="-1" role="dialog"
+                                                     aria-labelledby="exampleModalLabel2"
+                                                     aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h3 class="modal-title" id="exampleModalLabel">System
+                                                                    Alert</h3>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h4 style="color: #0a0c0d">Reset Response
+                                                                    for <?= $student->firstname . ' ' . $student->lastname ?>
+                                                                    ?</h4>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <?= $this->Form->button('Close', ['class' => 'btn btn-warning', 'data-dismiss' => 'modal']); ?>
+                                                                <?= $this->element('Staff/Buttons/reset_response', ['url' => ['action' => 'resetResponse', $student->id, $peer_review->id]]) ?>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
+                                        <?php endif; ?>
                                     <?php endif; ?>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
 
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <?php if (empty($query)): ?>
+                        <nav aria-label="...">
+                            <div class="paginator">
+                                <ul class="pagination justify-content-center">
+                                    <?= $this->Paginator->first(__('first'),['model' => 'Users']) ?>
+                                    <?= $this->Paginator->prev(__('previous'),['model' => 'Users']) ?>
+                                    <?= $this->Paginator->numbers(['model' => 'Users']) ?>
+                                    <?= $this->Paginator->next(__('next'),['model' => 'Users']) ?>
+                                    <?= $this->Paginator->last(__('last'),['model' => 'Users']) ?>
+                                </ul>
+                            </div>
+                        </nav>
+                    <?php endif; ?>
+                <?php endif; ?>
             <?php else: ?>
                 <?php if (!empty($paginatorStudent)): ?>
                     <table id="student-table" class="table">
@@ -203,18 +222,32 @@
                             <th>Student ID</th>
                             <th>Student Name</th>
                         </tr>
-
                         </thead>
                         <tbody>
+                        <?php if (!empty($query)) {
+                            $paginatorStudent = $student_list;
+                        } ?>
                         <?php foreach ($paginatorStudent as $student): ?>
                             <tr>
                                 <td><?= $student->id ?></td>
                                 <td><?= $student->firstname . ' ' . $student->lastname ?></td>
-
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <?php if (empty($query)): ?>
+                        <nav aria-label="...">
+                            <div class="paginator">
+                                <ul class="pagination justify-content-center">
+                                    <?= $this->Paginator->first(__('first'),['model' => 'Users']) ?>
+                                    <?= $this->Paginator->prev(__('previous'),['model' => 'Users']) ?>
+                                    <?= $this->Paginator->numbers(['model' => 'Users']) ?>
+                                    <?= $this->Paginator->next(__('next'),['model' => 'Users']) ?>
+                                    <?= $this->Paginator->last(__('last'),['model' => 'Users']) ?>
+                                </ul>
+                            </div>
+                        </nav>
+                    <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
         </main>
