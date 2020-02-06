@@ -242,15 +242,7 @@ use App\Model\Entity\Role;
                                 <th scope="col"><?= __('First name') ?></th>
                                 <th scope="col"><?= __('Last name') ?></th>
                                 <th scope="col"><?= __('Email') ?></th>
-                                <?php
-                                    $peer_review_id_list = [];
-                                ?>
-                                <?php foreach ($unit->peer_reviews as $peerReviews): ?>
 
-                                    <?php array_push($peer_review_id_list,$peerReviews->id);?>
-
-                                    <th><?= $peerReviews->title ?></th>
-                                <?php endforeach;?>
 
                             </tr>
                             <?php foreach ($paginatorStudent as $student): ?>
