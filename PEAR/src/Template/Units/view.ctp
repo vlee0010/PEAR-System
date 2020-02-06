@@ -168,13 +168,35 @@ use App\Model\Entity\Role;
                                     <th scope="col"><?= __('Title') ?></th>
                                     <th scope="col"><?= __('Date Start') ?></th>
                                     <th scope="col"><?= __('Date End') ?></th>
+                                    <th scope="col"><?= __('Progress') ?></th>
                                     <th></th>
                                 </tr>
                                 <?php foreach ($unit->peer_reviews as $peerReviews): ?>
+
                                     <tr>
                                         <td><?= $peerReviews->title ?></td>
                                         <td><?= date("d-M-Y", strtotime($peerReviews->date_start)) ?></td>
                                         <td><?= date("d-M-Y", strtotime($peerReviews->date_end)) ?></td>
+                                        <?php
+                                            $peerReviews_id = $peerReviews->id;
+                                            $allRecords = $peer_reviews_users->where(['peer_review_id'=>$peerReviews_id]);
+                                            $total = 0;
+                                            $complete = 0;
+                                            foreach ($allRecords as $record){
+                                                $total = $total + 1;
+                                                if ($record->status){
+                                                    $complete = $complete +1;
+                                                }
+
+                                            }?>
+
+                                        <td style="text-align: center"><?php
+                                            if($complete!=0)
+                                            { echo round($complete / $total * 100,2) . '%';
+                                            }else{echo 0 . '%';}?>
+
+
+                                        </td>
                                         <?php if ($peerReviews->status) { ?>
                                             <td><?= $this->element('Staff/Buttons/close', ['url' => ['controller' => 'peer_reviews', 'action' => 'close', $peerReviews->id]]) ?></td>
                                         <?php } else {?>
@@ -220,6 +242,16 @@ use App\Model\Entity\Role;
                                 <th scope="col"><?= __('First name') ?></th>
                                 <th scope="col"><?= __('Last name') ?></th>
                                 <th scope="col"><?= __('Email') ?></th>
+                                <?php
+                                    $peer_review_id_list = [];
+                                ?>
+                                <?php foreach ($unit->peer_reviews as $peerReviews): ?>
+
+                                    <?php array_push($peer_review_id_list,$peerReviews->id);?>
+
+                                    <th><?= $peerReviews->title ?></th>
+                                <?php endforeach;?>
+
                             </tr>
                             <?php foreach ($paginatorStudent as $student): ?>
                                 <tr>
