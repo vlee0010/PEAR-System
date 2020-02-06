@@ -10,7 +10,6 @@ use Cake\ORM\TableRegistry;
  * Units Controller
  *
  * @property \App\Model\Table\UnitsTable $Units
- *
  * @method \App\Model\Entity\Unit[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UnitsController extends AppController
@@ -50,10 +49,12 @@ class UnitsController extends AppController
     public function index()
     {
         $this->loadModel('users');
+
 //        $units = $this->paginate($this->units->find());
         $units = $this->paginate($this->Units);
         $units = $this->Units->find();
         $this->set(compact('units'));
+
 
     }
 
@@ -66,6 +67,7 @@ class UnitsController extends AppController
      */
     public function view($id = null)
     {
+
         $this->loadComponent('Paginator');
 
         $unit = $this->Units->get($id, [
@@ -130,11 +132,12 @@ class UnitsController extends AppController
                 'scope' => 'staff'
             ]
         );
-
-
+        $this->loadModel('peer_reviews_users');
+        $peer_reviews_users = $this->peer_reviews_users->find();
         $this->set(compact('paginatorStudent', 'paginatorStaff','paginatorClass'));
         $this->set('unit', $unit);
         $this->set('count', $countPublishedPeerReview);
+        $this->set('peer_reviews_users',$peer_reviews_users);
 
     }
 
@@ -143,6 +146,8 @@ class UnitsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
+
+
     public function add()
     {
         $unit = $this->Units->newEntity();

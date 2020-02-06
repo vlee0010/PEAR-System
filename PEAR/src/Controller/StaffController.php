@@ -154,7 +154,6 @@ class StaffController extends AppController
     public function displaystudent($unit_id=null,$id = null,$peer_id = null)
     {
         $this->loadComponent('Paginator');
-
         $haha = $this->Classes  ->get($id, [
             'contain' => ['Users']
         ]);
@@ -196,6 +195,7 @@ class StaffController extends AppController
                         })
                         ,['model' => 'Users','scope'=>'students']);
                     $this->set('paginatorStudent',$paginatorStudent);
+
 
 
 
