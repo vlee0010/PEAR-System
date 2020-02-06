@@ -144,7 +144,7 @@ use App\Model\Entity\Role;
                         <?php endif; ?>
                         <nav aria-label="...">
                             <div class="paginator">
-                                <ul class="pagination justify-content-center">
+                                <ul class="pagination justify-content-center" style="flex-wrap: wrap">
                                     <?= $this->Paginator->prev(__('previous'),['model' => 'Classes']) ?>
                                     <?= $this->Paginator->numbers(['model' => 'Classes']) ?>
                                     <?= $this->Paginator->next(__('next'),['model' => 'Classes']) ?>
@@ -172,14 +172,15 @@ use App\Model\Entity\Role;
                                     <th></th>
                                 </tr>
                                 <?php foreach ($unit->peer_reviews as $peerReviews): ?>
-
                                     <tr>
                                         <td><?= $peerReviews->title ?></td>
                                         <td><?= date("d-M-Y", strtotime($peerReviews->date_start)) ?></td>
                                         <td><?= date("d-M-Y", strtotime($peerReviews->date_end)) ?></td>
                                         <?php
+//                                        echo 'pr '.$peerReviews->id .'<br>';
                                             $peerReviews_id = $peerReviews->id;
-                                            $allRecords = $peer_reviews_users->where(['peer_review_id'=>$peerReviews_id]);
+//                                            echo $peerReviews_id. '<br>';
+                                            $allRecords = $peer_reviews_users->find()->where(['peer_review_id'=>$peerReviews_id]);
                                             $total = 0;
                                             $complete = 0;
                                             foreach ($allRecords as $record){
@@ -188,12 +189,21 @@ use App\Model\Entity\Role;
                                                     $complete = $complete +1;
                                                 }
 
-                                            }?>
+//                                                echo 'status'.$record->status;
+//                                                echo '<br>';
+                                            }
+//                                        echo $total;
+//                                        echo '<br>';
+                                        ?>
 
-                                        <td style="text-align: center"><?php
-                                            if($complete!=0)
-                                            { echo round($complete / $total * 100,2) . '%';
-                                            }else{echo 0 . '%';}?>
+                                        <td style="text-align: center">
+                                            <?php
+                                            if($total) {
+                                                echo round(($complete * 100) / $total, 2) . '%';
+                                            }else{
+                                                echo "0%";
+                                            }
+                                            ?>
 
 
                                         </td>
@@ -258,7 +268,7 @@ use App\Model\Entity\Role;
                     <?php endif; ?>
                     <nav aria-label="...">
                         <div class="paginator">
-                            <ul class="pagination">
+                            <ul class="pagination" >
                                 <?= $this->Paginator->first(__('first'),['model' => 'Users']) ?>
                                 <?= $this->Paginator->prev(__('previous'),['model' => 'Users']) ?>
                                 <?= $this->Paginator->numbers(['model' => 'Users']) ?>

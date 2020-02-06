@@ -133,7 +133,7 @@ class UnitsController extends AppController
             ]
         );
         $this->loadModel('peer_reviews_users');
-        $peer_reviews_users = $this->peer_reviews_users->find();
+        $peer_reviews_users = $this->peer_reviews_users;
         $this->set(compact('paginatorStudent', 'paginatorStaff','paginatorClass'));
         $this->set('unit', $unit);
         $this->set('count', $countPublishedPeerReview);
