@@ -75,6 +75,7 @@ class ResponsesController extends AppController
      */
     public function edit($id = null)
     {
+        // function to record the resonse from users 
         $response = $this->Responses->get($id, [
             'contain' => []
         ]);

@@ -145,13 +145,15 @@ class UsersController extends AppController
     {
 
     }
-
+// Function to process login request
     public function login()
     {
+        // if user is logged then redirect to their page
         if ($this->Auth->user()) {
             return $this->redirect(["controller" => "users", "action" => "studentdash"]);
         }
         if ($this->request->is('post')) {
+            // Since we have two form on the same page we use hidden html to check if the request is login or reset password.
             if ($this->request->data('_type') === 'login') {
                 $user = $this->Auth->identify();
                 if ($user) {
@@ -234,7 +236,7 @@ class UsersController extends AppController
 
     }
 
-
+// Log out , cakephp logout
     public function logout()
     {
 
@@ -245,11 +247,12 @@ class UsersController extends AppController
 
 
     }
-
+// Function to reset the password
     public function reset($token)
     {
         $password = $this->request->getData('password');
         if ($password) {
+            // if password exist from the form then hash the password
             $encryptedPassword = (new DefaultPasswordHasher)->hash($password);
 
 
@@ -257,7 +260,7 @@ class UsersController extends AppController
             return $this->redirect(["action" => 'login']);
         }
     }
-
+// Process for verification, if user click the verification link set its verification status to 1. 
     public function verification($token)
     {
         $user = TableRegistry::get('Users');
@@ -285,6 +288,8 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+
+    //  redirect student to their student dashboard
     public function studentdash()
     {
 
@@ -344,7 +349,7 @@ class UsersController extends AppController
         $this->set(compact('dashResult'));
         $this->set(compact('studentid'));
     }
-
+// Create user instance and fill in to info based on the form submitted.
     public function register()
     {
         $user = $this->Users->newEntity();
@@ -381,7 +386,7 @@ class UsersController extends AppController
 
             if ($this->Users->save($user)) {
                 $this->Flash->set('Your Registration is successful, your confirmation email has been sent to your email address. Please Verify.', ['element' => 'success']);
-
+// Sending Emails to user to verify account.
                 $verifiedLink = Router::url(array("controller"=>"users","action"=>"verification", $myToken),true);
 //                if all info passed in successful, then send email confirmation to users
                 $subject = 'Please Click the link to confirm your Email Verification';
@@ -425,6 +430,8 @@ class UsersController extends AppController
 //        $this->set(compact('user'));
 //        $this->set('_serialize',['user']);
 //    }
+
+// User access control
     public function beforeFilter(Event $event)
     {
 

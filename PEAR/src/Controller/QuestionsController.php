@@ -31,11 +31,16 @@ class QuestionsController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
+
+
+    //  function to find out all questions and send it to the VIEW, if 
+    // everythings is correct, the system will change the staus of the peer review to finish.
     public function index($team_id = null,$peer_id = null)
     {
         $questions = $this->paginate($this->Questions);
         $this->loadModel('peer_reviews_questions');
-
+        // INitialize the array to store questions,
+// find questions and push into question array list.
         $peerReviewsQuestionsRecord = $this->peer_reviews_questions->find()->where(['peer_reviews_id'=>$peer_id]);
         $questionIdList = [];
         $questionList = [];
@@ -48,9 +53,8 @@ class QuestionsController extends AppController
         foreach($questionIdList as $individualQuestionId){
             $questionIdRecord = $this->Questions->find()->where(['id'=>$individualQuestionId])->first();
             array_push($questionList,$questionIdRecord);
-
         }
-
+// Pass questionList for VIEW to loop through
         $this->set('questionList',$questionList);
         $this->set('questionIdList',$questionIdList);
         $this->set('peerReviewQuestionsRecord',$peerReviewsQuestionsRecord);
@@ -70,7 +74,7 @@ class QuestionsController extends AppController
         ])->innerJoinWith('Teams')
             ->where(['Teams.id_' => $team_id]);
         $commentId = $this->Questions->find()->where(['is_text'=>'1'])->first()->id;
-
+// Fetch form data and fill it into the response instance to save into the database.
         if ($this->request->is('post')) {
             foreach ($question_query as $question) {
                 foreach ($userList as $user) {

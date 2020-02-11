@@ -34,7 +34,7 @@ class AdminsController extends AppController
 
         ]
     ];
-
+// initialize the database object for later retrieve
     public function initialize()
     {
         $this->loadComponent('Paginator');
@@ -47,7 +47,7 @@ class AdminsController extends AppController
         $this->loadModel('UnitsClasses');
         $this->loadModel('peer_reviews_questions');
     }
-
+// Initialize all Table for retrieve
     public function index()
     {
         $this->loadModel('users');
@@ -60,7 +60,7 @@ class AdminsController extends AppController
 
     }
 
-
+// Function to add user manually based on the form submitted.
     public function addUsers(){
         if ($this->request->is('post')){
 
@@ -117,7 +117,7 @@ class AdminsController extends AppController
         }
     }
 
-
+// Function to view all the users and paginate them
     public function viewUsers()
     {
         $this->loadModel(('users'));
@@ -125,6 +125,8 @@ class AdminsController extends AppController
         $this->set(compact('users'));
     }
 
+
+    // Function to Change user's Info based on the form submitted.
     public function changeUserInfo($id = null)
     {
         $user = $this->Users->get($id, [
@@ -152,7 +154,7 @@ class AdminsController extends AppController
 
 
     }
-
+// Function to "Delete"(Hide) the pear review questions created previously.
     public function hideQuestion($question_id)
     {
 
@@ -174,7 +176,7 @@ class AdminsController extends AppController
             ]);
 
     }
-
+// Function to view all questions have "Is_show" to 0.
     public function viewQuestions()
     {
         $questionTable = TableRegistry::getTableLocator()->get('questions');
@@ -182,7 +184,7 @@ class AdminsController extends AppController
         $this->set('questionsShow', $questionsShow);
     }
 
-
+// Function to add Peer review question based on the form submitted.
     public function addQuestions()
     {
         $questionTable = TableRegistry::getTableLocator()->get('questions');
@@ -198,6 +200,8 @@ class AdminsController extends AppController
         }
     }
 
+
+    // Function to add the class to the database via ajax
     public function addClassViaAjax()
     {
 
@@ -237,7 +241,7 @@ class AdminsController extends AppController
         }
 
     }
-
+// Function to get the classes list response sent back.
     public function returnRelevantClasses()
     {
 
@@ -257,7 +261,8 @@ class AdminsController extends AppController
                 ->withStringBody(json_encode($classArray));
         }
     }
-
+// Function to check if unit is already exists in the database.
+// To prevent redundant record being creaeted. 
     public function checkUnitExists()
     {
 
@@ -281,7 +286,7 @@ class AdminsController extends AppController
 
         }
     }
-
+// Function to assign staff to Unit based on the form submitted.
     public function assignStaffToUnit()
     {
         $unitList = $this->Units->find('list', [
@@ -320,19 +325,24 @@ class AdminsController extends AppController
 
 
     }
+
+    // Function to get the user name of the logged user.
     public function getUserName($id = null){
         $userTable = TableRegistry::getTableLocator()->get('users');
         $userRecord = $userTable->find()->where(['id'=>$id])->first();
         $userName = $userRecord->firstname . ' '.$userRecord->lastname;
         return $userName;
     }
-
+// Function to get the class name based on the class id.
     public function getClassName($classId = nul){
         $classTable = TableRegistry::getTableLocator()->get('classes');
         $classRecord = $classTable->find()->where(['id'=>$classId])->first();
         return $className = $classRecord->class_name;
 
     }
+
+    // Function to assign personnel to the class based on the form submitted.
+    // Within this function, we Filter the userlist whose role is role 2,3 which are staff, admin.
     public function assignToClass(){
         $this->set(compact('unit_id'));
         $unitList = $this->Units->find('list', [
@@ -382,7 +392,7 @@ class AdminsController extends AppController
 
         }
     }
-
+// Fucntion to create class based on the form submitted...
     public function createClasses($unit_id = null)
     {
         $this->set(compact('unit_id'));
@@ -482,9 +492,14 @@ class AdminsController extends AppController
 //        }
         }
     }
-
+// Function to create a peer review (based on the unit id passed in.)
+// Validation to check the date inputs are valid.
+// Loop through the question list and display on the ctp file.
+// 2 loops to make sure the comment question always sit as the last question.
     public function createPeerReview($unit_id = null)
     {
+
+        // Get the attribute from the Unit Table and fetch all related info.
         $this->set(compact('unit_id'));
         $unitList = $this->Units->find('list', [
             'keyField' => 'id',
@@ -589,7 +604,8 @@ class AdminsController extends AppController
 
 
     }
-
+// Function to change access
+// using Keyfield Cakephp method to fetch data out
     public function changeAccess()
     {
 
@@ -1132,7 +1148,7 @@ class AdminsController extends AppController
         $unitQuery = $this->Units->find('all')->where(['id' => $unit_id])->first();
         $this->set('unit', $unitQuery);
     }
-
+// FUnction to create a unit based on the form submitted.
     public function create()
     {
         $unitTable = TableRegistry::getTableLocator()->get('units');
@@ -1183,7 +1199,7 @@ class AdminsController extends AppController
             var_dump($this->request->getData());
         }
     }
-
+// User controller make sure only users with correct role can enter into correct page.
     public function beforeFilter($event)
     {
         parent::beforeFilter($event);
